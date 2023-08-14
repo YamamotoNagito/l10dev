@@ -17,6 +17,8 @@ services:
       context: ./docker/php
     depends_on:
       - l10dev-mysql
+    ports:
+      - 5173:5173
     volumes:
       - ./:/src
       - /src/node_modules
