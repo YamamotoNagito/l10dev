@@ -21,6 +21,7 @@ https://chigusa-web.com/blog/windows%E3%81%ABdocker%E3%82%92%E3%82%A4%E3%83%B3%E
 3: このリポジトリに移動してくる
 
 4: Dockerのappサーバーに入る
+参考サイト:https://qiita.com/hitotch/items/869070c3a9f474a358ea#comment-8632d9b827cb0190f769
 docker compose exec l10dev-app bash
 
 5: サーバーには入れたら、comoposer・npmのインストールなどを行う
@@ -31,6 +32,9 @@ npm run dev
 
 6: localhost:9001を確認して、画面が移っていれば成功
 もしエラーがあれば連絡ください
+
+※vueの導入に関するサイトは以下
+https://qiita.com/yuto_dev/items/d1cc909897ac8277baea
 
 ## About Laravel
 
