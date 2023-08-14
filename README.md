@@ -26,6 +26,7 @@ docker compose exec l10dev-app bash
 5: サーバーには入れたら、comoposer・npmのインストールなどを行う
 composer install
 npm install 
+npm install --save-dev vue @vitejs/plugin-vue
 npm run dev
 
 6: localhost:9001を確認して、画面が移っていれば成功
