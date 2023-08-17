@@ -92,4 +92,11 @@ class UserController extends Controller
     {
        return view('profile');
     }
+
+    public function logout()
+    {
+       Auth::logout();
+
+       return redirect('/');
+    }
 }

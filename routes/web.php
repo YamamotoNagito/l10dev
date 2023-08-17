@@ -23,6 +23,8 @@ Route::get('/register', function () {
 
 Route::post('/register',[\App\Http\Controllers\UserController::class,'register']);
 
+Route::post('/logout',[\App\Http\Controllers\UserController::class,'logout'])->name('user.logout');
+
 Route::middleware('auth')->group(function (){
     Route::get('/profile',[\App\Http\Controllers\UserController::class,'profile'])->name('profile');
 });
