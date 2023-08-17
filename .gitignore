@@ -18,4 +18,5 @@ yarn-error.log
 /.idea
 /.vscode
 docker/mysql
-docker/nginx/logs
+docker/nginx/logs/access.log
+docker/nginx/logs/error.log

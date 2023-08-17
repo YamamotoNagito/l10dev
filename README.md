@@ -20,14 +20,24 @@ https://chigusa-web.com/blog/windows%E3%81%ABdocker%E3%82%92%E3%82%A4%E3%83%B3%E
 
 3: このリポジトリに移動してくる
 
+3: Dockerの起動
+docker-compose up -d
+
 4: Dockerのappサーバーに入る
 参考サイト:https://qiita.com/hitotch/items/869070c3a9f474a358ea#comment-8632d9b827cb0190f769
 docker compose exec l10dev-app bash
 
 5: サーバーには入れたら、comoposer・npmのインストールなどを行う
+初回
+php artisan key:generate
 composer install
 npm install 
 npm install --save-dev vue @vitejs/plugin-vue
+npm run dev
+
+2回目以降
+composer install
+npm install 
 npm run dev
 
 6: localhost:9001を確認して、画面が移っていれば成功
@@ -35,6 +45,10 @@ npm run dev
 
 ※vueの導入に関するサイトは以下
 https://qiita.com/yuto_dev/items/d1cc909897ac8277baea
+
+※Dockerの再起動コマンド
+docker compose down
+docker-compose build; docker-compose up -d
 
 ## About Laravel
 
