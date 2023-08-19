@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue/dist/vue.esm-bundler.js';
 import App from '../components/App.vue'
 
 // Vuetify
@@ -12,4 +12,10 @@ const vuetify = createVuetify({
   directives,
 })
 
-createApp(App).use(vuetify).mount('#app')
+createApp({
+    components: {
+          App,
+  },
+})
+.use(vuetify)
+.mount("#app")
