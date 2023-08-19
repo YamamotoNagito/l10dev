@@ -4,15 +4,15 @@ import vuetify from '../js/vuetify';
 import { mdiAccount } from '@mdi/js'
 </script>
 <template>
-    <header>
-        <v-app dark>
-            <v-app-bar dark>
+    <div>
+        <v-app style="max-height: 64px;">
+            <v-app-bar color="primary" app>
             <v-app-bar-nav-icon />
             <v-toolbar-title>かえで ~広大生の学びを支える情報サイト~</v-toolbar-title>
             <v-spacer />
 
-            <!-- ホームアイコンを使用したい際には以下 -->
-            <!-- <v-btn icon>
+             <!-- ホームアイコンを使用したい際には以下 
+            <v-btn icon>
             <v-icon>mdi-home</v-icon>
             </v-btn> -->
 
@@ -24,11 +24,11 @@ import { mdiAccount } from '@mdi/js'
             </v-btn>
             </v-app-bar>
         </v-app>
-    </header>
+    </div>
   </template>
   
   <style>
-  h1 {
+  /* h1 {
     line-height: 48px;
     text-align: center;
   }
@@ -82,13 +82,12 @@ import { mdiAccount } from '@mdi/js'
   
   nav a:first-of-type {
     border: 0;
-  }
+  } */
   
-  @media (min-width: 1024px) {
+  /* @media (min-width: 1024px) {
     header {
       display: flex;
       justify-content: center;
-      /* place-items: center; */
       padding-right: calc(var(--section-gap) / 2);
     }
   
@@ -104,7 +103,6 @@ import { mdiAccount } from '@mdi/js'
   
     nav {
       text-align: left;
-      /* margin-left: -1rem; */
       font-size: 1rem;
   
       padding: 1rem 0;
@@ -116,6 +114,6 @@ import { mdiAccount } from '@mdi/js'
     text-align: center;
     }
   
-  }
+  } */
   </style>
   
