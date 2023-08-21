@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -93,6 +94,13 @@ class UserController extends Controller
        return view('profile');
     }
 
+    public function profile2()
+    {
+        Log::debug("profile2の実行");
+        view('profile');
+    //    view('profile.blade.php');
+    }
+
     public function logout()
     {
        Auth::logout();
@@ -107,14 +115,19 @@ class UserController extends Controller
     
     public function login(Request $request)
     {
+        Log::debug($request);
+        
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
+        Log::debug($credentials);
+        
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
 
+            $request->session()->regenerate();
+            Log::debug("メアド・パスワードの両方あってます");
             return redirect()->intended('profile');
         }
 

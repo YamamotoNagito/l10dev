@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <div>
       <div class="wrapper">
           <nav>
             Developed by SOS団
@@ -7,27 +7,7 @@
             <a href="/Contact">問い合わせ</a>
           </nav>
       </div>
-
-      <!-- <v-app dark>
-            <v-app-bar dark>
-            <v-app-bar-nav-icon />
-            <v-toolbar-title>かえで ~広大生の学びを支える情報サイト~</v-toolbar-title>
-            <v-spacer />
-
-            ホームアイコンを使用したい際には以下
-            <v-btn icon>
-            <v-icon>mdi-home</v-icon>
-            </v-btn>
-
-            <v-btn href="login">
-                ログイン
-            </v-btn>
-            <v-btn href="register">
-                新規登録
-            </v-btn>
-            </v-app-bar>
-        </v-app> -->
-    </footer>
+    </div>
   </template>
   
   <style>

@@ -8,8 +8,7 @@ const message = ref('Hello World!')
 </script>
 
 <template>
-  <Header></Header>
-  <!-- <h1>ねむい</h1> -->
-  <RouterView />
-  <Footer></Footer>
+  <h1>○○さんようこそ</h1>
+  <p>laravel側からユーザー情報を取得すること</p>
+  <button>ログアウト</button>
 </template>

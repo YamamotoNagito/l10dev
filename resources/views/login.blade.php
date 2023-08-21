@@ -6,9 +6,10 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ログイン画面</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <h1>ログイン画面</h1>
+    <!-- <h1>ログイン画面</h1>
     <form action="" method="post">
         @csrf
         <label for="email">メールアドレス</label>
@@ -16,6 +17,9 @@
         <label for="password">パスワード</label>
         <input type="password" name="password" id="password">
         <button type="submit">送信</button>
-    </form>
+    </form> -->
+    <div id="app">
+        <login-view></login-view>
+    </div>
 </body>
 </html>

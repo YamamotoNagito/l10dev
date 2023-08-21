@@ -8,8 +8,6 @@ const message = ref('Hello World!')
 </script>
 
 <template>
-  <Header></Header>
-  <!-- <h1>ねむい</h1> -->
-  <RouterView />
-  <Footer></Footer>
+  <h1>ようこそ</h1>
+  <p>このサイトは広大生の学びを支えるサイト</p>
 </template>
