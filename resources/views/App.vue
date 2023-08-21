@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import vuetify from '../js/vuetify';
-import Header from './Header.vue'
-import Footer from './Footer.vue'
+import Header from '../components/Header.vue'
+import Footer from '../components/Footer.vue'
 
 const message = ref('Hello World!')
 </script>

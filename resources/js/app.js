@@ -1,9 +1,13 @@
 import { createApp } from 'vue/dist/vue.esm-bundler.js';
-import App from '../components/App.vue'
-import LoginView from '../components/LoginView.vue'
-import WelcomeView from '../components/WelcomeView.vue'
-import ProfileView from '../components/ProfileView.vue'
-import RegisterView from '../components/RegisterView.vue'
+import App from '../views/App.vue'
+import LoginView from '../views/LoginView.vue'
+import WelcomeView from '../views/WelcomeView.vue'
+import ProfileView from '../views/ProfileView.vue'
+import RegisterView from '../views/RegisterView.vue'
+import RessetPasswordView from '../views/RessetPasswordView.vue'
+import ClassListView from '../views/ClassListView.vue'
+import ReviewListView from '../views/ReviewListView.vue'
+import ReviewFormView from '../views/ReviewFormView.vue'
 import axios from 'axios';
 
 // Vuetify
@@ -25,6 +29,10 @@ const router = createRouter({
     { path: '/login', component: LoginView },
     { path: '/profile', component: ProfileView },
     { path: '/register', component: RegisterView },
+    { path: '/resset_password', component: RessetPasswordView },
+    { path: '/class_list', component: ClassListView },
+    { path: '/review_list', component: ReviewListView },
+    { path: '/review_form', component: ReviewFormView },
   ]
 });
 

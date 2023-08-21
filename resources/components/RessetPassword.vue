@@ -1,19 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import vuetify from '../js/vuetify';
-import Header from './Header.vue'
-import Footer from './Footer.vue'
 import axios from 'axios';
-import { jsx } from 'vue/jsx-runtime';
 import { useRouter } from 'vue-router'
 
-const router = useRouter()
-
-const name = ref('');
 const email = ref('');
-const password = ref('');
 
-// 新規登録に関するapiを呼び出してくる 
+// パスワード再設定に関するapiを呼び出してくる 
 // 書き方は,Login.vueを参照すること
 const clickButton = async() => {
   console.log("クリックされたで");    
@@ -25,25 +18,14 @@ const clickButton = async() => {
     <v-app>
         <v-main>
             <v-container>
-                <h1 style="font-size: 2rem;">登録画面</h1>
+                <p>ここに記述をしていく</p>
+                <p>メールアドレスを入力してボタンを押すと、メールなどを届かせて、アクセスできるようにしたい</p>
                 <v-form action="" method="post">
-                    <v-text-field
-                    v-model="name"
-                    label="名前"
-                    name="name"
-                    type="name"
-                    ></v-text-field>
                     <v-text-field
                     v-model="email"
                     label="メールアドレス"
                     name="email"
                     type="email"
-                    ></v-text-field>
-                    <v-text-field
-                    v-model="password"
-                    label="パスワード"
-                    name="password"
-                    type="password"
                     ></v-text-field>
                     <v-btn @click="clickButton">送信</v-btn>
                 </v-form>
