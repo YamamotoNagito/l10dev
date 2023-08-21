@@ -3,13 +3,12 @@ import { ref } from 'vue'
 import vuetify from '../js/vuetify';
 import Header from './Header.vue'
 import Footer from './Footer.vue'
-
-const message = ref('Hello World!')
+import Login from './Login.vue'
+import axios from 'axios';
 </script>
 
 <template>
-  <Header></Header>
-  <!-- <h1>ねむい</h1> -->
-  <RouterView />
-  <Footer></Footer>
+  <!-- <Header></Header> -->
+  <Login></Login>
+  <!-- <Footer></Footer> -->
 </template>
