@@ -23,10 +23,13 @@
   }
   
   .wrapper {
+    position: fixed;
+    bottom: 0;
     width: 100%;
     display: flex;
     justify-content: center;
     line-height: 1.5;
+    background-color: rgb(145, 144, 230);
     /* max-height: 100vh; */
   }
   
