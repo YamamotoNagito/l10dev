@@ -9,7 +9,7 @@ import { useRouter } from 'vue-router'
 <template>
     <v-app>
         <v-main>
-            <v-container>
+            <v-container class="bg-green-lighten-3 rounded-lg" height="400px">
                 <p>ここに記述をしていく</p>
                 <p>ClassList</p>
             </v-container>
