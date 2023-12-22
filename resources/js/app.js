@@ -8,6 +8,13 @@ import RessetPasswordView from '../views/RessetPasswordView.vue'
 import ClassListView from '../views/ClassListView.vue'
 import ReviewListView from '../views/ReviewListView.vue'
 import ReviewFormView from '../views/ReviewFormView.vue'
+import ProfileEditView from '../views/ProfileEditView.vue'
+import ClassDetailView from '../views/ClassDetailView.vue'
+import ClassPostView from '../views/ClassPostView.vue'
+import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
+import TermsView from '../views/TermsView.vue'
+import ContactView from '../views/ContactView.vue'
+import AboutUsView from '../views/AboutUsView.vue'
 import axios from 'axios';
 
 // Vuetify
@@ -25,14 +32,21 @@ const vuetify = createVuetify({
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', component: WelcomeView },
-    { path: '/login', component: LoginView },
-    { path: '/profile', component: ProfileView },
+
+    { path: '/welcome', component: WelcomeView },
     { path: '/register', component: RegisterView },
-    { path: '/resset_password', component: RessetPasswordView },
-    { path: '/class_list', component: ClassListView },
-    { path: '/review_list', component: ReviewListView },
-    { path: '/review_form', component: ReviewFormView },
+    { path: '/login', component: LoginView },
+    { path: '/resset-password', component: RessetPasswordView },
+    { path: '/profile', component: ProfileView },
+    { path: '/profile/edit', component:  ProfileEditView },
+    { path: '/class-list', component: ClassListView },
+    { path: '/class/detail', component: ClassDetailView },
+    { path: '/class/post', component: ClassPostView },
+    { path: '/privacy-policy', component: PrivacyPolicyView },
+    { path: '/terms', component: TermsView },
+    { path: '/contact', component: ContactView },
+    { path: '/about-us', component: AboutUsView },
+
   ]
 });
 
