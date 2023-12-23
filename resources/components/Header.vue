@@ -2,12 +2,18 @@
 import { ref } from 'vue'
 import vuetify from '../js/vuetify';
 import { mdiAccount } from '@mdi/js'
+
+//ドロワーの開閉を制御する処理
+
+
+// ログアウトの処理
+
 </script>
 <template>
     <div>
         <v-app style="max-height: 64px;">
-            <v-app-bar color="primary" app>
-            <v-app-bar-nav-icon />
+            <v-app-bar color="orange" hide-on-scroll>
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
             <v-toolbar-title>かえで ~広大生の学びを支える情報サイト~</v-toolbar-title>
             <v-spacer />
 
@@ -23,6 +29,10 @@ import { mdiAccount } from '@mdi/js'
                 新規登録
             </v-btn>
             </v-app-bar>
+
+            <!-- ハンバーガーメニューの中身（サイドバー） -->
+
+
         </v-app>
     </div>
   </template>
