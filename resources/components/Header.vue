@@ -21,10 +21,8 @@ const drawer = ref(false);
             <v-spacer />
 
             <v-btn href="login">
+              <v-icon>mdi-login</v-icon>
                 ログイン
-            </v-btn>
-            <v-btn href="register">
-                新規登録
             </v-btn>
             </v-app-bar>
 
