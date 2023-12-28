@@ -6,14 +6,20 @@ import Footer from './Footer.vue'
 import axios from 'axios';
 import { jsx } from 'vue/jsx-runtime';
 import { useRouter } from 'vue-router';
-import Button from './Button.vue'
+import Button from './Button.vue';
+import { useStore } from 'vuex';
 
 const router = useRouter()
+const store = useStore()
 
 const email = ref('');
 const password = ref('');
 
+store.dispatch('login', { email: data.email, password: data.password });
+
 const clickButton = async() => {
+
+  // const store = useStore()
   console.log("クリックされたで");
   // console.log("クリックされたで2");
   // const res = await axios.get("/register");
@@ -34,6 +40,9 @@ const clickButton = async() => {
       // axios.get("/profile2");
       // const url = '/profile'
       // window.location.href = url
+      store.dispatch('login', data);
+      // store.dispatch('login', { email: data.email, password: data.password });
+      // this.$store.dispatch('login', { email: data.email, password: data.password });
       router.push('/profile')
     }else{
 

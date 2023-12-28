@@ -16,6 +16,7 @@ import TermsView from '../views/TermsView.vue'
 import ContactView from '../views/ContactView.vue'
 import AboutUsView from '../views/AboutUsView.vue'
 import axios from 'axios';
+import store from '../store'; // Vuex ストアのインポート
 
 // Vuetify
 import 'vuetify/styles'
@@ -59,4 +60,5 @@ const router = createRouter({
 createApp(App)
 .use(vuetify)
 .use(router)
+.use(store)
 .mount("#app")
