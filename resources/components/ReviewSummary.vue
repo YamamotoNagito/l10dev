@@ -4,9 +4,13 @@ import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
+import RadarChart from "./RadarChart.vue";
+
 const props = defineProps(["reviewData"]);
 
 const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
+
+const radarChartData = ref([props.reviewData.ease, props.reviewData.interesting, props.reviewData.qualityOfTeacher, props.reviewData.support, props.reviewData.skills])
 
 const isLiked = ref(false);
 const isReported = ref(false);
@@ -65,7 +69,7 @@ const toggleReported = () => {
         <v-expansion-panel-title> 詳細情報 </v-expansion-panel-title>
         <v-expansion-panel-text>
           <v-container class="d-flex flex-row align-center">
-            <v-container>ここにレーダーチャートを表示する</v-container>
+            <RadarChart :radarChartData="radarChartData"></RadarChart>
             <v-container>
               <v-table>
                 <tbody>
