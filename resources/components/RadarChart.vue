@@ -8,7 +8,7 @@ const loadChartJS = () => {
   return new Promise((resolve, reject) => {
     const scriptChartJS = document.createElement("script");
     scriptChartJS.src =
-      "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"; // Update the Chart.js version if needed
+      "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.js"; // Update the Chart.js version if needed
     scriptChartJS.defer = true;
     document.head.appendChild(scriptChartJS);
 
