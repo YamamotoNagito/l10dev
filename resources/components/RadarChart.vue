@@ -8,20 +8,12 @@ const loadChartJS = () => {
   return new Promise((resolve, reject) => {
     const scriptChartJS = document.createElement("script");
     scriptChartJS.src =
-      "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js";
+      "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"; // Update the Chart.js version if needed
     scriptChartJS.defer = true;
     document.head.appendChild(scriptChartJS);
 
     scriptChartJS.onload = resolve;
     scriptChartJS.onerror = reject;
-    // scriptChartJS.onload = () => {
-    //   // Vue Chart.jsを読み込みたいが、404not foundが出て読み込めない
-    //   const scriptVueChartJS = document.createElement("script");
-    //   scriptVueChartJS.src =
-    //     "https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js";
-    //   scriptVueChartJS.defer = true;
-    //   document.head.appendChild(scriptVueChartJS);
-    // };
   });
 };
 
@@ -49,6 +41,16 @@ const chartData = {
 onMounted(async () => {
   await loadChartJS();
 
+  // Wait for the script to be executed
+  await new Promise((resolve) => {
+    const checkExist = setInterval(() => {
+      if (typeof Chart !== "undefined") {
+        clearInterval(checkExist);
+        resolve();
+      }
+    }, 100);
+  });
+
   // Create Radar Chart
   const context = radarChart.value.getContext("2d");
   new Chart(context, {
@@ -60,11 +62,11 @@ onMounted(async () => {
           beginAtZero: true,
           min: 0,
           max: 5, // Adjust the max value as needed
-          stepSize: 1, //Adjust the step size as needed
+          stepSize: 1, // Adjust the step size as needed
         },
-        maintainAspectRatio: false,
-        responsive: true,
       },
+      maintainAspectRatio: false,
+      responsive: true,
     },
   });
 });
