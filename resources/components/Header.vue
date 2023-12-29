@@ -1,10 +1,35 @@
 <script setup>
 import { ref } from 'vue'
 import vuetify from '../js/vuetify';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+
 // import { mdiAccount, mdiLogout } from '@mdi/js';
 
 // ドロワーの開閉状態を管理する変数
 const drawer = ref(false);
+
+const router = useRouter()
+const store = useStore()
+
+const email = ref('');
+const password = ref('');
+
+const clickLogoutButton = async() => {
+  await axios.post("/api/logout")
+  .then((response) => {
+    // ちゃんと送信できたか確認用
+    // console.log(response.data.success);
+    // if(response.data.success){
+      // } 
+      store.dispatch('logout');
+      router.push('/profile')
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 
 // ログアウトの処理
 
@@ -39,7 +64,7 @@ const drawer = ref(false);
                   </v-btn>
                 </v-list-item>
                 <v-list-item>
-                  <v-btn block variant="text" color="red" @click="console.log('logoutの処理')">
+                  <v-btn block variant="text" color="red" @click="clickLogoutButton">
                     <v-icon>mdi-logout</v-icon>
                       ログアウト
                   </v-btn>
