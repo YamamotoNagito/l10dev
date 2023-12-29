@@ -1,12 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import vuetify from '../js/vuetify';
-import { mdiAccount } from '@mdi/js'
+// import { mdiAccount, mdiLogout } from '@mdi/js';
 
-//ドロワーの開閉を制御する処理
-
+// ドロワーの開閉状態を管理する変数
+const drawer = ref(false);
 
 // ログアウトの処理
+
 
 </script>
 <template>
@@ -14,25 +15,37 @@ import { mdiAccount } from '@mdi/js'
         <v-app style="max-height: 64px;">
             <v-app-bar color="orange" hide-on-scroll>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-            <v-toolbar-title>かえで ~広大生の学びを支える情報サイト~</v-toolbar-title>
+            <v-toolbar-title>
+              かえで ~広大生の学びを支える情報サイト~
+            </v-toolbar-title>
             <v-spacer />
 
-             <!-- ホームアイコンを使用したい際には以下 
-            <v-btn icon>
-            <v-icon>mdi-home</v-icon>
-            </v-btn> -->
-
             <v-btn href="login">
+              <v-icon>mdi-login</v-icon>
                 ログイン
-            </v-btn>
-            <v-btn href="register">
-                新規登録
             </v-btn>
             </v-app-bar>
 
             <!-- ハンバーガーメニューの中身（サイドバー） -->
+            <v-navigation-drawer
+             v-model="drawer"
+              temporary >
 
-
+              <v-list nav>
+                <v-list-item>
+                  <v-btn block variant="text" href="profile">
+                    <v-icon>mdi-account</v-icon>
+                    マイページ
+                  </v-btn>
+                </v-list-item>
+                <v-list-item>
+                  <v-btn block variant="text" color="red" @click="console.log('logoutの処理')">
+                    <v-icon>mdi-logout</v-icon>
+                      ログアウト
+                  </v-btn>
+                </v-list-item>
+              </v-list>
+            </v-navigation-drawer>
         </v-app>
     </div>
   </template>
