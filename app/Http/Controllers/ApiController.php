@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 class ApiController extends Controller
 {
@@ -24,6 +26,28 @@ class ApiController extends Controller
         // return view('profile.blade.php');
         return view('profile');
     //    return View::make('profile.blade.php');
+    }
+
+    public function register(Request $request)
+    {
+        // メールアドレスがすでに存在するか確認
+        $existingUser = User::where('email', $request['email'])->first();
+
+        if ($existingUser) {
+            // 既に存在する場合はエラーを返すか、任意の処理を行う
+            throw ValidationException::withMessages(['email' => 'このメールアドレスはすでに使用されています']);
+        }
+
+        $user = User::query()->create([
+            'name'=>$request['name'],
+            'email'=>$request['email'],
+            'password'=>Hash::make($request['password'])
+        ]);
+ 
+        Auth::login($user);
+ 
+        return back();
+        // return redirect()->route('profile');
     }
 
     public function login(Request $request)
@@ -49,9 +73,6 @@ class ApiController extends Controller
             // return redirect()->intended('profile');
             
             return response()->json(['success' => true]);
-            
-            // return redirect()->route('profile');
-            // return redirect()->route('profile');
 
             // return view('profile');
 
@@ -62,5 +83,13 @@ class ApiController extends Controller
         }
 
         return back();
+    }
+
+    public function logout()
+    {
+       Auth::logout();
+       return back();
+
+    //    return redirect('/');
     }
 }

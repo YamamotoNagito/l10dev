@@ -16,6 +16,7 @@ import TermsView from '../views/TermsView.vue'
 import ContactView from '../views/ContactView.vue'
 import AboutUsView from '../views/AboutUsView.vue'
 import axios from 'axios';
+// import store from '../store'; // Vuex ストアのインポート
 
 // Vuetify
 import 'vuetify/styles'
@@ -23,6 +24,11 @@ import { createVuetify } from 'vuetify'
 import { createRouter, createWebHistory } from 'vue-router';
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+
+import { useStore } from 'vuex';
+import store from '../store/index.js';
+
+// const store = useStore()
 
 const vuetify = createVuetify({
   components,
@@ -36,18 +42,36 @@ const router = createRouter({
     { path: '/welcome', component: WelcomeView },
     { path: '/register', component: RegisterView },
     { path: '/login', component: LoginView },
-    { path: '/resset-password', component: RessetPasswordView },
-    { path: '/profile', component: ProfileView },
-    { path: '/profile/edit', component:  ProfileEditView },
+    { path: '/resset-password', component: RessetPasswordView, meta: { requiresAuth: true }, },
+    // 後々/profileにmeta: { requiresAuth: true },を追加する(ログインしていないと見れない)
+    { path: '/profile', component: ProfileView},
+    { path: '/profile/edit', component:  ProfileEditView, meta: { requiresAuth: true }, },
     { path: '/class-list', component: ClassListView },
-    { path: '/class/detail', component: ClassDetailView },
-    { path: '/class/post', component: ClassPostView },
+    { path: '/class/detail', component: ClassDetailView, meta: { requiresAuth: true }, },
+    { path: '/class/post', component: ClassPostView, meta: { requiresAuth: true }, },
     { path: '/privacy-policy', component: PrivacyPolicyView },
     { path: '/terms', component: TermsView },
     { path: '/contact', component: ContactView },
     { path: '/about-us', component: AboutUsView },
 
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  // Check if the route requires authentication
+  if (to.meta.requiresAuth) {
+    // Check if the user is logged in
+    if (store.getters.isLoggedIn) {
+      // User is authenticated, proceed to the route
+      next();
+    } else {
+      // User is not logged in, redirect to the login page
+      next('/login');
+    }
+  } else {
+    // Route does not require authentication, proceed
+    next();
+  }
 });
 
 // createApp({
@@ -59,4 +83,5 @@ const router = createRouter({
 createApp(App)
 .use(vuetify)
 .use(router)
+.use(store)
 .mount("#app")

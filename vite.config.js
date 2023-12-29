@@ -19,4 +19,7 @@ export default defineConfig({
           usePolling: true,
         },
     },
+    // router: {
+    //     middleware: ['auth'],
+    //   }
 });
