@@ -63,4 +63,12 @@ class ApiController extends Controller
 
         return back();
     }
+
+    public function logout()
+    {
+       Auth::logout();
+       return back();
+
+    //    return redirect('/');
+    }
 }

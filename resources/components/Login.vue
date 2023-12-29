@@ -15,7 +15,20 @@ const store = useStore()
 const email = ref('');
 const password = ref('');
 
-store.dispatch('login', { email: data.email, password: data.password });
+const clickLogoutButton = async() => {
+  await axios.post("/api/logout")
+  .then((response) => {
+    // ちゃんと送信できたか確認用
+    // console.log(response.data.success);
+    // if(response.data.success){
+      // } 
+      store.dispatch('logout');
+      router.push('/profile')
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+}
 
 const clickButton = async() => {
 
@@ -91,6 +104,8 @@ const clickButton = async() => {
         <!-- <v-btn @click="clickButton">送信</v-btn> -->
         <Button @click="clickButton" title="送信"></Button>
       </v-form>
+
+      <Button @click="clickLogoutButton" title="ログアウト"></Button>
       <!-- </form> -->
       <!-- <v-btn @click="clickButton">送信</v-btn> -->
 </template>

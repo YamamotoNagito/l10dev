@@ -1,11 +1,15 @@
 // store/index.js
 
-import Vue from 'vue'
-import Vuex from 'vuex'
+// import Vue from 'vue'
+// import Vue from 'vue/dist/vue.esm.js'
+// import Vuex from 'vuex'
+import { createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate'
 
-Vue.use(Vuex)
+// Vue.use(Vuex)
 
-const store = new Vuex.Store({
+const store = createStore({
+// const store = new Vuex.Store({
 // export default new Vuex.Store({
   state: {
     isLoggedIn: false, // ログイン状態を保持する変数
@@ -20,6 +24,9 @@ const store = new Vuex.Store({
     setUserInfo(state, userInfo) {
       state.userInfo = userInfo;
     }
+  },getters: {
+    isLoggedIn: (state) => state.isLoggedIn,
+    userInfo: (state) => state.userInfo,
   },
   actions: {
     // ログイン処理
@@ -37,5 +44,8 @@ const store = new Vuex.Store({
       commit('setUserInfo', null);
     }
   },
-  modules: {}
+  modules: {},
+  plugins: [createPersistedState()],
 })
+
+export default store;
