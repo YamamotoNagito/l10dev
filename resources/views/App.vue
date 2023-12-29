@@ -9,7 +9,6 @@ const message = ref('Hello World!')
 
 <template>
   <Header></Header>
-  <!-- <h1>ねむい</h1> -->
   <RouterView />
   <Footer></Footer>
 </template>
