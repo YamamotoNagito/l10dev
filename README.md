@@ -37,6 +37,11 @@ docker/nginx/logs/access.log
 docker compose exec l10dev-app bash
 ```
 
+(追記：記事を参考にappサーバーに入った後以下のコマンドを打つ)
+```
+cd/src
+```
+
 5: サーバーには入れたら、comoposer・npmのインストールなどを行う
 初回
 ```
