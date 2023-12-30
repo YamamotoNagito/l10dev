@@ -6,10 +6,6 @@ import vuetify from "../js/vuetify";
 <script>
 export default {
   data: () => ({
-    // ここからv-ifに関する変数
-    // 詳細な条件を表示するかどうか
-    showDetailedtotalEvaluationList: true,
-
     // ここから検索に関する変数
     // 検索事項のリスト。検索するときはこれをbackendに投げる
     searchContents: {
@@ -139,7 +135,12 @@ export default {
   <v-container class="mb-16">
     <v-row justify="center">
       <v-card width="900px">
-        <v-tabs v-model="tab" align-tabs="center" bg-color="orange" height="60px">
+        <v-tabs
+          v-model="tab"
+          align-tabs="center"
+          bg-color="orange"
+          height="60px"
+        >
           <v-tab value="one"
             ><v-content class="tab-name">条件で探す</v-content></v-tab
           >
@@ -147,7 +148,7 @@ export default {
             ><v-content class="tab-name">講義コードで探す</v-content></v-tab
           >
         </v-tabs>
-  
+
         <v-card-text>
           <v-window v-model="tab">
             <v-window-item value="one">
@@ -167,119 +168,123 @@ export default {
                   v-model="searchContents.teacherName"
                 ></v-text-field>
               </v-container>
-  
-              <v-switch
-                label="より詳しい条件で探す"
-                color="orange"
-                v-model="showDetailedtotalEvaluationList"
-              ></v-switch>
-              <v-container
-                class="detailed-totalEvaluationList-list-container"
-                v-if="showDetailedtotalEvaluationList"
-              >
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">開講場所</p>
-                  <v-select
-                    :items="placeList"
-                    v-model="searchContents.place"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">開講部局</p>
-                  <v-select
-                    :items="departmentList"
-                    v-model="searchContents.department"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">開講区分</p>
-                  <v-select
-                    :items="classificationList"
-                    v-model="searchContents.classification"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">曜日</p>
-                  <v-select
-                    :items="dayList"
-                    v-model="searchContents.day"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">時間</p>
-                  <v-select
-                    :items="timeList"
-                    v-model="searchContents.time"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">履修年次</p>
-                  <v-select
-                    :items="gradeList"
-                    v-model="searchContents.grade"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">総合評価</p>
-                  <v-select
-                    :items="totalEvaluationList"
-                    v-model="searchContents.totalEvaluation"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">単位取得のしやすさ</p>
-                  <v-select
-                    :items="totalEvaluationList"
-                    v-model="searchContents.ease"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">面白さ</p>
-                  <v-select
-                    :items="totalEvaluationList"
-                    v-model="searchContents.interesting"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">教員の質</p>
-                  <v-select
-                    :items="totalEvaluationList"
-                    v-model="searchContents.qualityOfTeacher"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">サポート体制</p>
-                  <v-select
-                    :items="totalEvaluationList"
-                    v-model="searchContents.support"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-                <v-container class="category-name-and-content-container">
-                  <p class="category-name">スキルが身につくか</p>
-                  <v-select
-                    :items="totalEvaluationList"
-                    v-model="searchContents.skill"
-                    class="pulldown-list"
-                  ></v-select>
-                </v-container>
-              </v-container>
+
+              <v-expansion-panels class="mb-4">
+                <v-expansion-panel>
+                  <v-expansion-panel-title
+                    >より詳しい条件で探す</v-expansion-panel-title
+                  >
+                  <v-expansion-panel-text>
+                    <v-container
+                      class="detailed-totalEvaluationList-list-container"
+                    >
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">開講場所</p>
+                        <v-select
+                          :items="placeList"
+                          v-model="searchContents.place"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">開講部局</p>
+                        <v-select
+                          :items="departmentList"
+                          v-model="searchContents.department"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">開講区分</p>
+                        <v-select
+                          :items="classificationList"
+                          v-model="searchContents.classification"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">曜日</p>
+                        <v-select
+                          :items="dayList"
+                          v-model="searchContents.day"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">時間</p>
+                        <v-select
+                          :items="timeList"
+                          v-model="searchContents.time"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">履修年次</p>
+                        <v-select
+                          :items="gradeList"
+                          v-model="searchContents.grade"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">総合評価</p>
+                        <v-select
+                          :items="totalEvaluationList"
+                          v-model="searchContents.totalEvaluation"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">単位取得のしやすさ</p>
+                        <v-select
+                          :items="totalEvaluationList"
+                          v-model="searchContents.ease"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">面白さ</p>
+                        <v-select
+                          :items="totalEvaluationList"
+                          v-model="searchContents.interesting"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">教員の質</p>
+                        <v-select
+                          :items="totalEvaluationList"
+                          v-model="searchContents.qualityOfTeacher"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">サポート体制</p>
+                        <v-select
+                          :items="totalEvaluationList"
+                          v-model="searchContents.support"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">スキルが身につくか</p>
+                        <v-select
+                          :items="totalEvaluationList"
+                          v-model="searchContents.skill"
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+                    </v-container>
+                  </v-expansion-panel-text>
+                </v-expansion-panel>
+              </v-expansion-panels>
+
               <v-btn @click="searchByCondition" color="orange"
                 ><v-icon start icon="mdi-checkbox-marked-circle"></v-icon
                 >検索</v-btn
               >
             </v-window-item>
-  
+
             <v-window-item value="two">
               <v-container class="category-and-content-container">
                 <p class="category-name">講義コード</p>
