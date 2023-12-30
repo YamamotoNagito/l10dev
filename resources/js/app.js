@@ -48,7 +48,7 @@ const router = createRouter({
     { path: '/profile/edit', component:  ProfileEditView, meta: { requiresAuth: true }, },
     { path: '/class-list', component: ClassListView },
     { path: '/class/detail', component: ClassDetailView, meta: { requiresAuth: true }, },
-    { path: '/class/post', component: ClassPostView, meta: { requiresAuth: true }, },
+    { path: '/class/post', component: ClassPostView},
     { path: '/privacy-policy', component: PrivacyPolicyView },
     { path: '/terms', component: TermsView },
     { path: '/contact', component: ContactView },
