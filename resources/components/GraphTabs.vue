@@ -4,6 +4,9 @@ import { ref } from "vue"
 
 <template>
     <v-container>
-        <p>This is graph tabs!!!</p>
+        <v-tabs class="mx-auto justify-center">
+            <v-tab>Item1</v-tab>
+            <v-tab>Item2</v-tab>
+        </v-tabs>
     </v-container>
 </template>
