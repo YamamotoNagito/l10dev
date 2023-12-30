@@ -25,6 +25,12 @@ https://chigusa-web.com/blog/windows%E3%81%ABdocker%E3%82%92%E3%82%A4%E3%83%B3%E
 docker-compose up -d
 ```
 
+nginxが起動しない場合
+```
+docker/nginx/logs/access.log
+```
+を作成
+
 4: Dockerのappサーバーに入る
 参考サイト:https://qiita.com/hitotch/items/869070c3a9f474a358ea#comment-8632d9b827cb0190f769
 ```
