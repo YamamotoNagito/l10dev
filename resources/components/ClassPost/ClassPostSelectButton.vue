@@ -10,12 +10,17 @@ const attendYearOptions = ref([
     { label: '2024', value: 'option1' },
     { label: '2023', value: 'option2' },
     { label: '2022', value: 'option3' },
+    { label: '2021', value: 'option4' },
+    { label: '2020', value: 'option5' },
+    { label: '2019', value: 'option6' },
+    { label: '2018', value: 'option7' },
+    { label: '2017', value: 'option8' },
 ]);
 
 const attendanceSelected = ref(null);
 const attendanceOptions = ref([
-  { label: '出席あり', value: 'yes' },
-  { label: '出席なし', value: 'no' },
+  { label: '毎回', value: 'yes' },
+  { label: 'たまに', value: 'no' },
 ]);
 
 </script>
@@ -41,10 +46,8 @@ const attendanceOptions = ref([
                 {{ option.label }}
               </v-btn>
             </v-btn-toggle>
-          </v-container>
-
-          <v-container>
-            <p class="text-decoration-underline">出席の有無</p>
+            <br>
+            <p class="text-decoration-underline text-lg-h6 ma-3">出席の有無</p>
             <!-- 出席の有無のセレクトボックス -->
             <v-btn-toggle v-model="attendanceSelected" color="blue">
               <v-btn
@@ -60,8 +63,6 @@ const attendanceOptions = ref([
               </v-btn>
             </v-btn-toggle>
           </v-container>
-
-          <!-- 他の項目も同様に追加 -->
         </v-card-text>
       </v-card>
     </v-row>
