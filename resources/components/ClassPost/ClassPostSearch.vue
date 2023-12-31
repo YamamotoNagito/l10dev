@@ -4,6 +4,7 @@ import vuetify from '../../js/vuetify';
 import axios from 'axios';
 import { useRouter } from 'vue-router'
 import ClassPostSelectRadio from './ClassPostSelectRadio.vue';
+import ClassPostSelectButton from './ClassPostSelectButton.vue';
 
 </script>
 
@@ -49,6 +50,7 @@ export default {
               color="warning"
             ></v-divider>
             <ClassPostSelectRadio></ClassPostSelectRadio>
+            <ClassPostSelectButton></ClassPostSelectButton>
         </v-card-text>
       </v-card>
     </v-row>

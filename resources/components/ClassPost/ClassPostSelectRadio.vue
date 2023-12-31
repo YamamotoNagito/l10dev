@@ -68,6 +68,17 @@ const dailyAssignmentOptions = ref([
       ></v-radio>
     </v-radio-group>
     <!-- リファクタリング後に残りの項目を追加する -->
+    <p class="text-decoration-underline text-lg-h6 ma-2">単位の取りやすさ</p>
+    <v-rating
+              hover
+              v-model="rating"
+              class="ma-2"
+              density="compact"
+              :length="5"
+              :item-labels="['易しい', '', '', '', '難しい']"
+              item-label-position="top"
+              active-color="blue"
+            />
   </v-container>
 </template>
 
