@@ -1,9 +1,12 @@
 <script setup>
 import ClassPostSearch from '../components/ClassPost/ClassPostSearch.vue'
-import ClassPostSelect from '../components/ClassPost/ClassPostSelect.vue';
+import ClassPostSelectRadio from '../components/ClassPost/ClassPostSelectRadio.vue';
+import ClassPostSelectButton from '../components/ClassPost/ClassPostSelectButton.vue';
+
 </script>
 
 <template>
     <ClassPostSearch></ClassPostSearch>
-    <ClassPostSelect></ClassPostSelect>
+    <ClassPostSelectRadio></ClassPostSelectRadio>
+    <ClassPostSelectButton></ClassPostSelectButton>
 </template>
