@@ -14,25 +14,31 @@ const radioOptions = ref([
 </script>
 
 <template>
-    <v-container class="mb-16">
-      <v-row justify="center">
-        <v-card width="900px">
-          <v-card-text>
-            <v-container>
-              <p>学年</p>
-            </v-container>
-            <!-- ラジオボタンを行で揃えて表示する -->
-            <v-radio-group inline v-model="selectedOption">
-              <v-radio
-                  v-for="option in radioOptions"
-                  :key="option.value"
-                  :label="option.label"
-                  :value="option.value"
-              ></v-radio>
-            </v-radio-group>
-          </v-card-text>
-        </v-card>
-      </v-row>
-    </v-container>
-  </template>
+  <v-container class="mb-16">
+    <v-row justify="center">
+      <v-card width="900px">
+        <v-card-text>
+          <v-container>
+            <p>学年</p>
+          </v-container>
+          <v-btn-toggle v-model="selectedOption" color="blue">
+            <v-btn
+              v-for="option in radioOptions"
+              :key="option.value"
+              :value="option.value"
+              style="background-color: grey;" 
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-btn-toggle>
+        </v-card-text>
+      </v-card>
+    </v-row>
+  </v-container>
+</template>
 
+<style>
+.v-btn {
+  margin: 0 10px; /* 左右に10pxのマージンを追加 */
+}
+</style>
