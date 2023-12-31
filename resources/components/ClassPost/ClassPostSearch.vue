@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import vuetify from '../../js/vuetify';
 import axios from 'axios';
 import { useRouter } from 'vue-router'
+import ClassPostSelectRadio from './ClassPostSelectRadio.vue';
 
 </script>
 
@@ -42,6 +43,12 @@ export default {
                 v-model="searchContents.teacherName"
               ></v-text-field>
             </v-container>
+            <v-divider
+              :thickness="5"
+              class="border-opacity-50"
+              color="warning"
+            ></v-divider>
+            <ClassPostSelectRadio></ClassPostSelectRadio>
         </v-card-text>
       </v-card>
     </v-row>

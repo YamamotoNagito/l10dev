@@ -7,6 +7,6 @@ import ClassPostSelectButton from '../components/ClassPost/ClassPostSelectButton
 
 <template>
     <ClassPostSearch></ClassPostSearch>
-    <ClassPostSelectRadio></ClassPostSelectRadio>
-    <ClassPostSelectButton></ClassPostSelectButton>
+    <!-- <ClassPostSelectRadio></ClassPostSelectRadio> -->
+    <!-- <ClassPostSelectButton></ClassPostSelectButton> -->
 </template>
