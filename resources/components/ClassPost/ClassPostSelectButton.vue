@@ -26,7 +26,10 @@ const radioOptions = ref([
               v-for="option in radioOptions"
               :key="option.value"
               :value="option.value"
-              style="background-color: grey;" 
+              rounded="xl"
+              width="80"
+              height="45"
+              style="background-color: LightGray;"
             >
               {{ option.label }}
             </v-btn>
@@ -39,6 +42,6 @@ const radioOptions = ref([
 
 <style>
 .v-btn {
-  margin: 0 10px; /* 左右に10pxのマージンを追加 */
+  margin: 0 10px;
 }
 </style>
