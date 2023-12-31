@@ -32,10 +32,11 @@ const dailyAssignmentOptions = ref([
 
 </script>
 
+<!-- アクティブクラスで色を変える？ -->
 <template>
   <v-container>
     <p class="text-decoration-underline text-lg-h6 ma-2">受講年度</p>
-    <v-radio-group inline v-model="attendYearSelected" mandatory="false">
+    <v-radio-group inline v-model="attendYearSelected" mandatory="false" light="true" active-class="v-item--active">
       <v-radio
         v-for="option in attendYearOptions"
         :key="option.value"
@@ -70,15 +71,27 @@ const dailyAssignmentOptions = ref([
     <!-- リファクタリング後に残りの項目を追加する -->
     <p class="text-decoration-underline text-lg-h6 ma-2">単位の取りやすさ</p>
     <v-rating
-              hover
-              v-model="rating"
-              class="ma-2"
-              density="compact"
-              :length="5"
-              :item-labels="['易しい', '', '', '', '難しい']"
-              item-label-position="top"
-              active-color="blue"
-            />
+      hover
+      v-model="rating"
+      class="ma-2"
+      density="compact"
+      :length="5"
+      :item-labels="['難', '', '', '', '楽']"
+      item-label-position="top"
+      active-color="yellow"
+    />
+    <v-row>
+    <p class="text-decoration-underline text-lg-h6 ma-2">単位の取りやすさ</p>
+      <v-rating
+      hover
+      v-model="rating"
+      class="ma-2"
+      density="compact"
+      :length="5"
+      item-label-position="top"
+      active-color="yellow"
+    />
+    </v-row>
   </v-container>
 </template>
 

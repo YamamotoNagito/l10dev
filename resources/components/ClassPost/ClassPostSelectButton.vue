@@ -49,7 +49,8 @@ const classInterestingOptions = ref([
           rounded="xl"
           width="10%"
           height="45"
-          style="background-color: LightGray;"
+
+          variant="outlined"
         >
           {{ option.label }}
         </v-btn>
@@ -64,13 +65,13 @@ const classInterestingOptions = ref([
         rounded="xl"
         width="80"
         height="45"
-        style="background-color: LightGray;"
+        variant="outlined"
       >
         {{ option.label }}
       </v-btn>
     </v-btn-toggle>
     <p class="text-decoration-underline text-lg-h6 ma-3">面白さ</p>
-    <v-btn-toggle v-model="classInterestingSelected" color="blue">
+    <v-btn-toggle v-model="classInterestingSelected">
       <v-btn
         v-for="option in classInterestingOptions"
         :key="option.value"
@@ -78,7 +79,7 @@ const classInterestingOptions = ref([
         rounded="xl"
         width="80"
         height="45"
-        style="background-color: LightGray;"
+        variant="outlined"
       >
         {{ option.label }}
       </v-btn>
