@@ -1,6 +1,6 @@
 <script setup>
 import Welcome from "../components/Welcome.vue";
-import SearchClassesView from "../components/SearchClassesView.vue";
+import SearchClasses from "../components/SearchClasses.vue";
 import vuetify from "../js/vuetify";
 </script>
 
@@ -9,7 +9,7 @@ import vuetify from "../js/vuetify";
       <v-main>
             <v-row justify="center">
                 <Welcome></Welcome>
-                <SearchClassesView></SearchClassesView>
+                <SearchClasses></SearchClasses>
             </v-row>
         </v-main>
   </v-app>
