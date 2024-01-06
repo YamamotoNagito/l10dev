@@ -110,7 +110,15 @@ const radarChartData = ref([3, 4, 5, 3, 4]);
   <v-app>
     <v-main>
       <v-container class="ma-auto mb-15">
-        <h2 class="text-h3 text-center">{{ classInformationData.lectureName }}</h2>
+        <v-container class="d-flex flex-row justify-center align-center">
+            <h2 class="text-h3 text-center">{{ classInformationData.lectureName }}</h2>
+            <v-btn
+              class="d-flex flex-row ml-5"
+              color="orange"
+              ><v-icon>mdi-comment-plus</v-icon>
+              <p>レビューを作成</p>
+            </v-btn>
+        </v-container>
         <v-expansion-panels class="ma-auto w-75">
           <v-expansion-panel>
             <v-expansion-panel-title> 基本情報 </v-expansion-panel-title>
