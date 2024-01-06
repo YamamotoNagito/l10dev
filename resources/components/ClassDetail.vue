@@ -4,9 +4,9 @@ import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import ReviewListVue from "./ReviewList.vue";
+import GraphTabs from './GraphTabs.vue';
 import ClassInformationTable from "./ClassInformationTable.vue";
 import RadarChart from "./RadarChart.vue";
-
 
 const classInformationData = ref({
   lectureName: "一攫千金特論",
@@ -131,6 +131,7 @@ const radarChartData = ref([3, 4, 5, 3, 4]);
             </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>
+        <GraphTabs></GraphTabs>
         <ReviewListVue :reviewDataList="reviewDataList"></ReviewListVue>
       </v-container>
     </v-main>
