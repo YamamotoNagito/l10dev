@@ -26,22 +26,22 @@ export default {
   <v-container>
     <!-- 授業検索 -->
     <v-sheet>
-        <v-row justify="center">
-            <v-col cols="8">
-            <p class="text-h6">授業名</p>
-            <v-text-field
-                placeholder="一攫千金特論"
-                class="input-field"
-                v-model="searchContents.lectureName"
-            ></v-text-field>
-            <p class="text-h6">担当教員名</p>
-            <v-text-field
-                placeholder="服部淳生"
-                class="input-field"
-                v-model="searchContents.teacherName"
-            ></v-text-field>
-            </v-col>
-        </v-row>
+      <v-row justify="center">
+        <v-col cols="8">
+        <p class="text-h6">授業名</p>
+        <v-text-field
+          placeholder="一攫千金特論"
+          class="input-field"
+          v-model="searchContents.lectureName"
+        ></v-text-field>
+        <p class="text-h6">担当教員名</p>
+        <v-text-field
+          placeholder="服部淳生"
+          class="input-field"
+          v-model="searchContents.teacherName"
+        ></v-text-field>
+        </v-col>
+      </v-row>
     </v-sheet>
   </v-container>
 </template>
