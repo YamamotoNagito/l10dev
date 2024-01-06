@@ -28,7 +28,7 @@ export default {
     <v-sheet>
         <v-row justify="center">
             <v-col cols="8">
-            <p class="category-name">授業名</p>
+            <p class="text-h6">授業名</p>
             <v-text-field
                 placeholder="一攫千金特論"
                 class="input-field"
