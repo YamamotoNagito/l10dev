@@ -22,7 +22,7 @@ const reviewDataList = ref([
   {
     reviewId: "1",
     name: "碇シンジ",
-    totalEvaluation: "5",
+    totalEvaluation: 3,
     likeOnReview: 100,
     yearOfAttendance: 2024,
     date: "",
@@ -43,7 +43,7 @@ const reviewDataList = ref([
   {
     reviewId: "2",
     name: "Yuki Takahara",
-    totalEvaluation: "5",
+    totalEvaluation: 4,
     likeOnReview: 10000,
     yearOfAttendance: 2024,
     date: "",
@@ -64,7 +64,7 @@ const reviewDataList = ref([
   {
     reviewId: "3",
     name: "Karl Marx",
-    totalEvaluation: "5",
+    totalEvaluation: 5,
     likeOnReview: 100,
     yearOfAttendance: 2024,
     date: "2023年12月25日",
@@ -84,7 +84,7 @@ const reviewDataList = ref([
   {
     reviewId: "4",
     name: "Marcus Aurelius Antoninus",
-    totalEvaluation: "5",
+    totalEvaluation: 3,
     likeOnReview: 2000,
     yearOfAttendance: 2024,
     date: "",

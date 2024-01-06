@@ -5,6 +5,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 import RadarChart from "./RadarChart.vue";
+import StarRading from "./StarRading.vue";
 
 const props = defineProps(["reviewData"]);
 
@@ -34,7 +35,8 @@ const toggleReported = () => {
     <v-container class="d-flex flex-row align-center justify-space-around ma-0">
       <v-container class="d-flex flex-row align-center ma-0 pa-0 ga-5">
         <v-card-title class="text-h5">{{ reviewData.name }}</v-card-title>
-        <p class="text-h6">★★★★★</p>
+        <!-- <p class="text-h6">★★★★★</p> -->
+        <StarRading :totalEvaluation="reviewData.totalEvaluation"></StarRading>
       </v-container>
       <v-container class="d-flex flex-row align-center justify-end ma-0 pa-0">
         <v-btn
