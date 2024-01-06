@@ -23,7 +23,7 @@ const reviewDataList = ref([
   {
     reviewId: "1",
     name: "碇シンジ",
-    totalEvaluation: "5",
+    totalEvaluation: 3,
     likeOnReview: 100,
     yearOfAttendance: 2024,
     date: "",
@@ -44,7 +44,7 @@ const reviewDataList = ref([
   {
     reviewId: "2",
     name: "Yuki Takahara",
-    totalEvaluation: "5",
+    totalEvaluation: 4,
     likeOnReview: 10000,
     yearOfAttendance: 2024,
     date: "",
@@ -65,7 +65,7 @@ const reviewDataList = ref([
   {
     reviewId: "3",
     name: "Karl Marx",
-    totalEvaluation: "5",
+    totalEvaluation: 5,
     likeOnReview: 100,
     yearOfAttendance: 2024,
     date: "2023年12月25日",
@@ -85,7 +85,7 @@ const reviewDataList = ref([
   {
     reviewId: "4",
     name: "Marcus Aurelius Antoninus",
-    totalEvaluation: "5",
+    totalEvaluation: 3,
     likeOnReview: 2000,
     yearOfAttendance: 2024,
     date: "",
@@ -111,7 +111,15 @@ const radarChartData = ref([3, 4, 5, 3, 4]);
   <v-app>
     <v-main>
       <v-container class="ma-auto mb-15">
-        <h2 class="text-h3 text-center">{{ classInformationData.lectureName }}</h2>
+        <v-container class="d-flex flex-row justify-center align-center">
+            <h2 class="text-h3 text-center">{{ classInformationData.lectureName }}</h2>
+            <v-btn
+              class="d-flex flex-row ml-5"
+              color="orange"
+              ><v-icon>mdi-comment-plus</v-icon>
+              <p>レビューを作成</p>
+            </v-btn>
+        </v-container>
         <v-expansion-panels class="ma-auto w-75">
           <v-expansion-panel>
             <v-expansion-panel-title> 基本情報 </v-expansion-panel-title>
