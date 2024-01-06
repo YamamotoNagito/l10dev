@@ -53,6 +53,7 @@ npm run dev
 
 2回目以降
 ```
+php artisan migrate
 composer install
 npm install 
 npm run dev

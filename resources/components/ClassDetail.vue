@@ -7,6 +7,7 @@ import ReviewListVue from "./ReviewList.vue";
 import ClassInformationTable from "./ClassInformationTable.vue";
 import RadarChart from "./RadarChart.vue";
 
+
 const classInformationData = ref({
   lectureName: "一攫千金特論",
   teacherName: "服部淳生",
