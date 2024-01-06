@@ -3,8 +3,7 @@ import { ref } from 'vue'
 import vuetify from '../../js/vuetify';
 import axios from 'axios';
 import { useRouter } from 'vue-router'
-import ClassPostSelectRadio from './ClassPostSelectRadio.vue';
-import ClassPostSelectButton from './ClassPostSelectButton.vue';
+import ClassPostSelectButton from './ClassPostSelect.vue';
 
 </script>
 
@@ -24,41 +23,25 @@ export default {
 </script>
 
 <template>
-  <v-container class="mb-16">
-    <v-row justify="center">
-      <v-card width="900px">
-        <v-card-text>
-            <v-container>
-              <p class="category-name">授業名</p>
-              <v-text-field
+  <v-container>
+    <!-- 授業検索 -->
+    <v-sheet>
+        <v-row justify="center">
+            <v-col cols="8">
+            <p class="category-name">授業名</p>
+            <v-text-field
                 placeholder="一攫千金特論"
                 class="input-field"
                 v-model="searchContents.lectureName"
-              ></v-text-field>
-            </v-container>
-            <v-container>
-              <p class="category-name">担当教員名</p>
-              <v-text-field
+            ></v-text-field>
+            <p class="text-h6">担当教員名</p>
+            <v-text-field
                 placeholder="服部淳生"
                 class="input-field"
                 v-model="searchContents.teacherName"
-              ></v-text-field>
-            </v-container>
-            <v-divider
-              :thickness="5"
-              class="border-opacity-50"
-              color="warning"
-            ></v-divider>
-            <ClassPostSelectRadio></ClassPostSelectRadio>
-            <ClassPostSelectButton></ClassPostSelectButton>
-        </v-card-text>
-      </v-card>
-    </v-row>
+            ></v-text-field>
+            </v-col>
+        </v-row>
+    </v-sheet>
   </v-container>
 </template>
-
-<style scoped>
-.category-name {
-  font-size: 1.3rem;
-}
-</style>
