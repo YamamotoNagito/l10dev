@@ -13,10 +13,10 @@ class CreateLectureDetailsTable extends Migration
             $table->foreign('lecture_id')->references('lecture_id')->on('lectures')->onDelete('cascade');
             $table->string('lecture_code');
             $table->string('syllabus_url');
-            $table->string('lecture_location');
-            $table->string('lecture_faculty');
-            $table->string('lecture_category');
-            $table->string('lecture_grade');
+            $table->string('location');
+            $table->string('faculty');
+            $table->string('category');
+            $table->string('grade');
             $table->timestamps();
         });
     }

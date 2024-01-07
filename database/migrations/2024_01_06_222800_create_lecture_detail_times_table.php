@@ -11,9 +11,9 @@ class CreateLectureDetailTimesTable extends Migration
             $table->increments('lecture_time_id'); // 自動増分の主キー
             $table->uuid('lecture_detail_id');
             $table->foreign('lecture_detail_id')->references('lecture_detail_id')->on('lecture_details')->onDelete('cascade');
-            $table->string('lecture_term');
-            $table->string('lecture_day_of_week');
-            $table->string('lecture_time_period');
+            $table->string('term');
+            $table->string('day_of_week');
+            $table->string('time_period');
             $table->timestamps();
         });
     }

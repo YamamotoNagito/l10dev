@@ -10,7 +10,7 @@ class CreateLecturesTable extends Migration
         Schema::create('lectures', function (Blueprint $table) {
             $table->uuid('lecture_id')->primary();
             $table->string('lecture_name');
-            $table->string('teature_name');
+            $table->string('teacher_name');
             $table->timestamps();
         });
     }
@@ -18,6 +18,7 @@ class CreateLecturesTable extends Migration
     public function down()
     {
         Schema::table('reviews', function (Blueprint $table) {
+            // 修正: reviews テーブルが存在し、外部キー制約が正しいことを確認
             $table->dropForeign(['lecture_id']);
         });
         
