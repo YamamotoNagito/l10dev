@@ -23,9 +23,8 @@ export default {
 </script>
 
 <template>
-  <v-container>
-    <!-- 授業検索 -->
-    <v-sheet>
+  <!-- 授業検索 -->
+  <v-sheet>
       <v-row justify="center">
         <v-col cols="8">
         <p class="text-h6">授業名</p>
@@ -43,5 +42,4 @@ export default {
         </v-col>
       </v-row>
     </v-sheet>
-  </v-container>
 </template>
