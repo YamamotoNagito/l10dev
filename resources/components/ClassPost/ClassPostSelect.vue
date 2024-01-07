@@ -35,117 +35,38 @@ const classInterestingOptions = ref([
 </script>
 
 <template>
-  <v-sheet>
-    <v-row justify="center">
-      <v-col cols="8">
-        <v-row>
-          <v-col>
-            <p class="text-decoration-underline text-h6">受講年度</p>
-          </v-col>
-        </v-row>
-        <v-btn-toggle v-model="attendYear" color="blue">
-          <v-row justify="start" no-gutters color="">
-            <v-col
-              cols="12"
-              sm="6"
-              md="4"
-              lg="2"
-              v-for="option in attendYearOptions"
-              :key="option.value"
-            >
-              <v-btn
-                :value="option.value"
-                block
-                rounded="xl"
-                variant="outlined"
-                class="ma-0"
-              >
-                {{ option.label }}
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-btn-toggle>
-      </v-col>
-    </v-row>
-  </v-sheet>
-  <!-- 自分用 -->
-  <v-sheet>
-    <v-row justify="center">
-      <v-col cols="8">
-        <v-row>
-          <v-col>
-            <p class="text-decoration-underline text-h6">自分用：受講年度</p>
-          </v-col>
-        </v-row>
-        <v-btn-toggle v-model="attendYear" color="blue">
-          <v-row justify="start" no-gutters>
-            <v-col
-              cols="12"
-              sm="6"
-              md="4"
-              lg="2"
-              v-for="option in attendYearOptions"
-              :key="option.value"
-            >
-              <v-btn
-                :value="option.value"
-                block
-                rounded="xl"
-                variant="outlined"
-                class="ma-0"
-              >
-                {{ option.label }}
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-btn-toggle>
-      </v-col>
-    </v-row>
-  </v-sheet>
-
-  <!-- なぎと先輩 -->
-  <v-container>
-    <v-sheet>
-      <v-row justify="center">
-        <v-col cols="8">
-          <v-row>
-            <v-col>
-              <p class="text-decoration-underline text-h6">受講年度</p>
-            </v-col>
-          </v-row>
-          <v-btn-toggle v-model="attendYear" color="blue" class="full-height">
-            <v-row justify="start" no-gutters>
-              <v-col
-                cols="12"
-                sm="12"
-                md="4"
-                lg="2"
-                v-for="option in attendYearOptions"
-                :key="option.value"
-              >
-                <v-btn
-                  :value="option.value"
-                  block
-                  rounded="xl"
-                  variant="outlined"
-                  class="ma-0"
-                >
-                  {{ option.label }}
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-btn-toggle>
+  <v-row justify="center">
+    <v-col cols="8">
+      <v-row>
+        <v-col>
+          <p class="text-decoration-underline text-h6">受講年度</p>
         </v-col>
       </v-row>
-    </v-sheet>
-  </v-container>
+      <v-btn-toggle v-model="attendYear" color="blue" class="full-height">
+        <v-row justify="center" no-gutters="">
+          <v-col
+            cols="12"
+            sm="12"
+            md="12"
+            lg=""
+            v-for="option in attendYearOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              block
+              rounded="xl"
+              variant="outlined"
+              class="ma-0"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+    </v-col>
+  </v-row>
 </template>
-
-<!-- <style>
-.v-btn {
-  margin: 0 10px;
-}
-</style> -->
 
 <style>
   .v-btn {
