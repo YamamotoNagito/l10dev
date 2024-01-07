@@ -37,17 +37,17 @@ const items = ref([
   {
     categoryName: "開講場所",
     // information : props.classInformationData.teacherName
-    information: props.classInformationData.teacherName,
+    information: props.classInformationData.place,
   },
   {
     categoryName: "開港時期",
     // information : props.classInformationData.teacherName
-    information: props.classInformationData.teacherName,
+    information: props.classInformationData.term + ",  " + props.classInformationData.day + ",  " + props.classInformationData.period,
   },
   {
     categoryName: "シラバス",
     // information : props.classInformationData.teacherName
-    information: props.classInformationData.teacherName,
+    information: props.classInformationData.syllabus,
   },
 ]);
 
@@ -108,7 +108,6 @@ const items = ref([
     <v-data-table
       :headers="headers"
       :items="items"
-      hide-default-header
       hide-default-footer
     >
     </v-data-table>
