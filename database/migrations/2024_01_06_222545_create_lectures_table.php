@@ -17,6 +17,10 @@ class CreateLecturesTable extends Migration
 
     public function down()
     {
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->dropForeign(['lecture_id']);
+        });
+        
         Schema::dropIfExists('lectures');
     }
 };
