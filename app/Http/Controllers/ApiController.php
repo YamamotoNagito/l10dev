@@ -31,17 +31,22 @@ class ApiController extends Controller
     public function register(Request $request)
     {
         // メールアドレスがすでに存在するか確認
-        $existingUser = User::where('email', $request['email'])->first();
+        $existingUser = User::where('user_email', $request['user_email'])->first();
 
         if ($existingUser) {
             // 既に存在する場合はエラーを返すか、任意の処理を行う
-            throw ValidationException::withMessages(['email' => 'このメールアドレスはすでに使用されています']);
+            throw ValidationException::withMessages(['user_email' => 'このメールアドレスはすでに使用されています']);
         }
 
         $user = User::query()->create([
-            'name'=>$request['name'],
-            'email'=>$request['email'],
-            'password'=>Hash::make($request['password'])
+            'user_name'=>$request['user_name'],
+            'user_email'=>$request['user_email'],
+            'password'=>Hash::make($request['password']),
+            'category'=>$request['category'],
+            'faculty'=>$request['faculty'],
+            'department'=>$request['department'],
+            'admission_year'=>$request['admission_year'],
+            'last_login_at'=>now(),
         ]);
  
         Auth::login($user);
@@ -55,20 +60,32 @@ class ApiController extends Controller
         Log::debug($request);
         
         // $credentials = $request->validate([
-        //     'email' => ['required', 'email'],
+        //     'user_email' => ['required', 'email'],
         //     'password' => ['required'],
         // ]);
-        $credentials = $request->only('email', 'password');
+        $credentials = [
+            'user_email' => $request->input('user_email'),
+            'password' => $request->input('password'),
+        ];
+
+        $credentials = $request->only('user_email', 'password');
+
+        $user_email = $request->input('user_email');
+        $password = $request->input('password');
 
         Log::debug($credentials);
+        Log::debug(Auth::attempt($credentials));
         
-        if (Auth::attempt($credentials)) {
-            
+        // if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){         
             
             // $request->session()->regenerate();
             
             Log::debug("メアド・パスワードの両方あってます");
-            // Log::debug("メアド・パスワードの両方あってます2");
+
+            //最終ログイン日時の更新
+            // $user = Auth::user();
+            // $user->update(['last_login_at' => now()]);
             
             // return redirect()->intended('profile');
             

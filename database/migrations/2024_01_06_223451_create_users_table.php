@@ -8,18 +8,18 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->uuid('user_id')->primary(); // UUID型の主キー
+            $table->id('user_id'); // 通常の自動増分の主キー
             $table->string('user_name');
-            $table->string('email_address')->unique();
+            $table->string('user_email')->unique();
             $table->string('password');
-            $table->string('university_name');
+            $table->string('university_name')->default("広島大学");
             $table->string('category');
             $table->string('faculty');
             $table->string('department');
             $table->integer('admission_year');
-            $table->timestamp('created_at')->useCurrent(); // 投稿時間
-            $table->timestamp('updated_at')->useCurrent(); // 更新時間
-            $table->timestamp('last_login_at')->nullable(); // 最終ログイン（nullableはNULLを許可）
+            $table->boolean('is_active')->default(true);
+            $table->timestamps(0); // created_atとupdated_atはtimestampsが担う
+            $table->timestamp('last_login_at');
 
             // 他の必要なカラムや制約を追加
             // $table->id();
@@ -29,6 +29,9 @@ class CreateUsersTable extends Migration
             // $table->string('password');
             // $table->rememberToken();
             // $table->timestamps();
+
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
         });
     }
 

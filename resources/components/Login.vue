@@ -12,7 +12,7 @@ import { useStore } from 'vuex';
 const router = useRouter()
 const store = useStore()
 
-const email = ref('');
+const user_email = ref('');
 const password = ref('');
 
 const clickLogoutButton = async() => {
@@ -40,7 +40,7 @@ const clickButton = async() => {
   // console.log(res);
   
   const data = {
-    email:email.value,
+    user_email:user_email.value,
     password:password.value
   }
   console.log(data)
@@ -54,8 +54,8 @@ const clickButton = async() => {
       // const url = '/profile'
       // window.location.href = url
       store.dispatch('login', data);
-      // store.dispatch('login', { email: data.email, password: data.password });
-      // this.$store.dispatch('login', { email: data.email, password: data.password });
+      // store.dispatch('login', { user_email: data.user_email, password: data.password });
+      // this.$store.dispatch('login', { user_email: data.user_email, password: data.password });
       router.push('/profile')
     }else{
 
@@ -70,7 +70,7 @@ const clickButton = async() => {
 };
 
 // return{
-//   email,
+//   user_email,
 //   password
 // }
 
@@ -81,8 +81,8 @@ const clickButton = async() => {
     <!-- <form action="" method="post"> -->
       <!-- @csrf -->
       <!-- <div>
-        <label for="email">メールアドレス</label>
-        <v-input type="email" name="email" id="email"></v-input>
+        <label for="user_email">メールアドレス</label>
+        <v-input type="user_email" name="user_email" id="user_email"></v-input>
       </div>
       <label for="password">パスワード</label>
       <input type="password" name="password" id="password">
@@ -90,9 +90,9 @@ const clickButton = async() => {
       <v-btn type="submit">送信</v-btn> -->
       <v-form action="" method="post">
         <v-text-field
-          v-model="email"
+          v-model="user_email"
           label="メールアドレス"
-          name="email"
+          name="user_email"
           type="email"
         ></v-text-field>
         <v-text-field

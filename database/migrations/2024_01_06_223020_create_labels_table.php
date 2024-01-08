@@ -8,7 +8,7 @@ class CreateLabelsTable extends Migration
     public function up()
     {
         Schema::create('labels', function (Blueprint $table) {
-            $table->uuid('label_id')->primary();
+            $table->id('label_id');
             $table->string('label_name');
             $table->timestamps();
         });

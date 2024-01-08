@@ -8,8 +8,8 @@ class CreateLectureLabelsTable extends Migration
     public function up()
     {
         Schema::create('lecture_labels', function (Blueprint $table) {
-            $table->uuid('lecture_id');
-            $table->uuid('label_id');
+            $table->unsignedBigInteger('lecture_id');
+            $table->unsignedBigInteger('label_id');
             
             // 外部キー制約を追加
             $table->foreign('lecture_id')->references('lecture_id')->on('lectures')->onDelete('cascade');
