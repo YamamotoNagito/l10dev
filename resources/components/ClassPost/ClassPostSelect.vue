@@ -177,10 +177,10 @@ const skillLevel = ref([
 const { name } = useDisplay()
 const btnSize = computed(() => {
   switch (name.value) {
-    case 'xs': return 'x-small';
-    case 'sm': return 'x-small';
-    case 'md': return 'small';
-    case 'lg': return 'small';
+    case 'xs': return 'small';
+    case 'sm': return 'small';
+    case 'md': return 'default';
+    case 'lg': return 'default';
     case 'xl': return 'default';
     case 'xxl': return 'default';
   }
