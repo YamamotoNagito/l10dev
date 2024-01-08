@@ -39,25 +39,24 @@ const classInterestingOptions = ref([
     <v-col cols="8">
       <v-row>
         <v-col>
-          <p class="text-decoration-underline text-h6">受講年度</p>
+          <p class="text-h6">受講年度</p>
         </v-col>
       </v-row>
       <v-btn-toggle v-model="attendYear" color="blue" class="full-height">
-        <v-row justify="center" no-gutters="">
+        <v-row no-gutters>
           <v-col
-            cols="12"
-            sm="12"
-            md="12"
+            cols="4"
+            sm="2"
+            md=""
             lg=""
             v-for="option in attendYearOptions"
             :key="option.value"
           >
             <v-btn
               :value="option.value"
-              block
               rounded="xl"
               variant="outlined"
-              class="ma-0"
+              class="ml-0"
             >
               {{ option.label }}
             </v-btn>

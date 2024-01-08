@@ -5,6 +5,8 @@ import ClassPostSelect from '../components/ClassPost/ClassPostSelect.vue';
 </script>
 
 <template>
+  <v-container>
     <ClassPostSearch></ClassPostSearch>
     <ClassPostSelect></ClassPostSelect>
+  </v-container>
 </template>
