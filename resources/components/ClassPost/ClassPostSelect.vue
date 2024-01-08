@@ -1,9 +1,96 @@
+<template>
+  <v-row justify="center">
+    <v-col cols="8">
+      <!-- 受講年度 -->
+      <v-row>
+        <v-col>
+          <p class="text-h6">受講年度</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="attendYear" variant="outlined" class="full-height">
+        <v-row no-gutters class="my-2">
+          <v-col
+            v-for="option in attendYearOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              :size="btnSize"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+      <!-- 出席の有無 -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="text-h6">出席の有無</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="attendanceConfirm" variant="outlined" class="full-height">
+        <v-row no-gutters  class="my-2">
+          <v-col
+            cols="4"
+            sm=""
+            md=""
+            lg=""
+            v-for="option in attendanceConfirmOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+      <!-- 毎回のレポート・テスト -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="text-h6">毎回のレポート・テスト</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="weeklyAssignments" variant="outlined" class="full-height">
+        <v-row no-gutters class="my-2">
+          <v-col
+            cols=""
+            sm=""
+            md=""
+            lg=""
+            v-for="option in weeklyAssignmentsOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+    </v-col>
+  </v-row>
+</template>
+
 <script setup>
 import { ref } from "vue";
 import vuetify from "../../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import Button from "../Button.vue";
+import { computed } from 'vue'
+import { useDisplay } from 'vuetify'
 
 const attendYear = ref("2024");
 const attendYearOptions = ref([
@@ -17,55 +104,90 @@ const attendYearOptions = ref([
   { label: "2017", value: "2017" },
 ]);
 
-const attendanceConfirm = ref("毎回");
+const attendanceConfirm = ref("なし");
 const attendanceConfirmOptions = ref([
+  { label: "なし", value: "なし" },
   { label: "毎回", value: "毎回" },
   { label: "たまに", value: "たまに" },
+]);
+
+const weeklyAssignments = ref("なし");
+const weeklyAssignmentsOptions = ref([
+  { label: "なし", value: "なし" },
+  { label: "レポートのみ", value: "レポート" },
+  { label: "テストのみ", value: "テスト" },
+  { label: "レポート&テスト", value: "レポテス" },
+]);
+
+const midtermAssignments = ref("なし");
+const midtermAssignmentsOptions = ref([
+  { label: "なし", value: "なし" },
+  { label: "レポートのみ", value: "レポート" },
+  { label: "テストのみ", value: "テスト" },
+  { label: "レポート&テスト", value: "レポテス" },
+]);
+
+const finalAssignments = ref("なし");
+const finalAssignmentsOptions = ref([
+  { label: "なし", value: "なし" },
+  { label: "レポートのみ", value: "レポート" },
+  { label: "テストのみ", value: "テスト" },
+  { label: "レポート&テスト", value: "レポテス" },
+]);
+
+// valueは文字列として受け渡しをするので、+を用いたくない
+const pastExamPossession = ref("過去問題レポート");
+const pastExamPossessionOptions = ref([
+  { label: "過去問＋過去レポート", value: "レポ問" },
+  { label: "過去問のみ", value: "過去問" },
+  { label: "過去レポートのみ", value: "過去レポート" },
   { label: "なし", value: "なし" },
 ]);
 
-const classInterestingSelected = ref("普通");
-const classInterestingOptions = ref([
-  { label: "激難", value: "激難" },
-  { label: "難", value: "難" },
-  { label: "普通", value: "普通" },
-  { label: "楽", value: "楽" },
-  { label: "超楽", value: "超楽" },
+// 平均値など取るため文字列ではなく数値でもいいかも
+const creditLevelSelected = ref("3");
+const creditLevel = ref([
+  { label: "激難", value: "1" },
+  { label: "難", value: "2" },
+  { label: "普通", value: "3" },
+  { label: "楽", value: "4" },
+  { label: "超楽", value: "5" },
 ]);
-</script>
 
-<template>
-  <v-row justify="center">
-    <v-col cols="8">
-      <v-row>
-        <v-col>
-          <p class="text-h6">受講年度</p>
-        </v-col>
-      </v-row>
-      <v-btn-toggle v-model="attendYear" color="blue" class="full-height">
-        <v-row no-gutters>
-          <v-col
-            cols="4"
-            sm="2"
-            md=""
-            lg=""
-            v-for="option in attendYearOptions"
-            :key="option.value"
-          >
-            <v-btn
-              :value="option.value"
-              rounded="xl"
-              variant="outlined"
-              class="ml-0"
-            >
-              {{ option.label }}
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-btn-toggle>
-    </v-col>
-  </v-row>
-</template>
+const insterestLevelSelected = ref("3");
+const insterestLevel = ref([
+  { label: "最悪", value: "1" },
+  { label: "悪い", value: "2" },
+  { label: "普通", value: "3" },
+  { label: "良い", value: "4" },
+  { label: "最良", value: "5" },
+]);
+
+// ラベル後回し
+const skillLevelSelected = ref("3");
+const skillLevel = ref([
+  { label: "", value: "1" },
+  { label: "", value: "2" },
+  { label: "", value: "3" },
+  { label: "", value: "4" },
+  { label: "", value: "5" },
+]);
+
+// 画面サイズに合わせてボタンのサイズを返す
+const { name } = useDisplay()
+const btnSize = computed(() => {
+  switch (name.value) {
+    case 'xs': return 'x-small';
+    case 'sm': return 'x-small';
+    case 'md': return 'small';
+    case 'lg': return 'small';
+    case 'xl': return 'default';
+    case 'xxl': return 'default';
+  }
+  return 'default';
+})
+
+</script>
 
 <style>
   .v-btn {
@@ -75,3 +197,4 @@ const classInterestingOptions = ref([
     height: auto !important;
   }
 </style>
+
