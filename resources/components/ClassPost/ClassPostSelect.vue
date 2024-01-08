@@ -12,6 +12,11 @@
           <v-col
             v-for="option in attendYearOptions"
             :key="option.value"
+            cols="4"
+              sm="2"
+              md="2"
+              lg=""
+              xl=""
           >
             <v-btn
               :value="option.value"
