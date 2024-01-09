@@ -25,6 +25,10 @@ class DatabaseSeeder extends Seeder
             LectureDetailTimesTableSeeder ::class,
             UsersTableSeeder::class,
             LabelsTableSeeder::class,
+            LectureLabelsTableSeeder::class,
+            ReviewsTableSeeder::class,
+            LikesTableSeeder::class,
+            DeleteReviewRequestsTableSeeder::class,
             // 他のSeederクラスがあればここに追加
         ]);
     }
