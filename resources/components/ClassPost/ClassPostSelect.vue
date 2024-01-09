@@ -4,7 +4,8 @@
       <!-- 受講年度 -->
       <v-row>
         <v-col>
-          <p class="text-h6">受講年度</p>
+          <!-- sm(600px)未満の場合でも文字サイズが小さくなる？ -->
+          <p class="custom-text-style">受講年度</p>
         </v-col>
       </v-row>
       <v-btn-toggle v-model="attendYear" variant="outlined" class="full-height">
@@ -33,7 +34,7 @@
       <!-- 出席の有無 -->
       <v-row class="mt-5">
         <v-col>
-          <p class="text-h6">出席の有無</p>
+          <p class="custom-text-style">出席の有無</p>
         </v-col>
       </v-row>
       <v-btn-toggle v-model="attendanceConfirm" variant="outlined" class="full-height">
@@ -43,7 +44,36 @@
             sm=""
             md=""
             lg=""
+            xl=""
             v-for="option in attendanceConfirmOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              :size="btnSize"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+      <!-- 毎回のレポート・テスト -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="custom-text-style">毎回のレポート・テスト</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="weeklyAssignments" variant="outlined" class="full-height">
+        <v-row no-gutters class="my-2">
+          <v-col
+            cols=""
+            sm=""
+            md=""
+            lg=""
+            v-for="option in weeklyAssignmentsOptions"
             :key="option.value"
           >
             <v-btn
@@ -57,20 +87,182 @@
           </v-col>
         </v-row>
       </v-btn-toggle>
-      <!-- 毎回のレポート・テスト -->
+      <!-- 中間のレポート・テスト -->
       <v-row class="mt-5">
         <v-col>
-          <p class="text-h6">毎回のレポート・テスト</p>
+          <p class="custom-text-style">中間のレポート・テスト</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="weeklyAssignments" variant="outlined" class="full-height">
+      <v-btn-toggle v-model="midtermAssignments" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col
             cols=""
             sm=""
             md=""
             lg=""
-            v-for="option in weeklyAssignmentsOptions"
+            v-for="option in midtermAssignmentsOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+      <!-- 期末のレポート・テスト -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="custom-text-style">期末のレポート・テスト</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="finalAssignments" variant="outlined" class="full-height">
+        <v-row no-gutters class="my-2">
+          <v-col
+            cols=""
+            sm=""
+            md=""
+            lg=""
+            v-for="option in finalAssignmentsOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+      <!-- 過去問・レポートの有無 -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="custom-text-style">過去問・レポートの有無</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="pastExamPossession" variant="outlined" class="full-height">
+        <v-row no-gutters class="my-2">
+          <v-col
+            cols=""
+            sm=""
+            md=""
+            lg=""
+            v-for="option in pastExamPossessionOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+      <!-- 成績 -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="custom-text-style">成績</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="grades" variant="outlined" class="full-height">
+        <v-row no-gutters class="my-2">
+          <v-col
+            cols=""
+            sm=""
+            md=""
+            lg=""
+            v-for="option in gradesOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+      <!-- 単位取得のしやすさ -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="custom-text-style">単位取得のしやすさ</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="creditLevel" variant="outlined" class="full-height">
+        <v-row no-gutters class="my-2">
+          <v-col
+            cols=""
+            sm=""
+            md=""
+            lg=""
+            v-for="option in creditLevelOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+      <!-- 面白さ -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="custom-text-style">面白さ</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="insterestLevel" variant="outlined" class="full-height">
+        <v-row no-gutters class="my-2">
+          <v-col
+            cols=""
+            sm=""
+            md=""
+            lg=""
+            v-for="option in interestLevelOptions"
+            :key="option.value"
+          >
+            <v-btn
+              :value="option.value"
+              rounded="xl"
+              class="ml-0"
+              color="indigo"
+            >
+              {{ option.label }}
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-btn-toggle>
+      <!-- スキル習得 -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="custom-text-style">スキル習得</p>
+        </v-col>
+      </v-row>
+      <v-btn-toggle v-model="insterestLevel" variant="outlined" class="full-height">
+        <v-row no-gutters class="my-2">
+          <v-col
+            cols=""
+            sm=""
+            md=""
+            lg=""
+            v-for="option in interestLevelOptions"
             :key="option.value"
           >
             <v-btn
@@ -141,41 +333,49 @@ const finalAssignmentsOptions = ref([
 ]);
 
 // valueは文字列として受け渡しをするので、+を用いたくない
-const pastExamPossession = ref("過去問題レポート");
+const pastExamPossession = ref("なし");
 const pastExamPossessionOptions = ref([
+  { label: "なし", value: "なし" },
   { label: "過去問＋過去レポート", value: "レポ問" },
   { label: "過去問のみ", value: "過去問" },
   { label: "過去レポートのみ", value: "過去レポート" },
-  { label: "なし", value: "なし" },
 ]);
 
-// 平均値など取るため文字列ではなく数値でもいいかも
-const creditLevelSelected = ref("3");
-const creditLevel = ref([
-  { label: "激難", value: "1" },
+const grades = ref("秀");
+const gradesOptions = ref([
+  { label: "秀", value: "秀" },
+  { label: "優", value: "優" },
+  { label: "良", value: "良" },
+  { label: "可", value: "可" },
+  { label: "不可", value: "不可" },
+]);
+
+const creditLevel = ref("3");
+const creditLevelOptions = ref([
+  { label: "激難", value: "" },
   { label: "難", value: "2" },
   { label: "普通", value: "3" },
   { label: "楽", value: "4" },
   { label: "超楽", value: "5" },
 ]);
 
-const insterestLevelSelected = ref("3");
-const insterestLevel = ref([
-  { label: "最悪", value: "1" },
-  { label: "悪い", value: "2" },
+const insterestLevel = ref("3");
+const insterestLevelOptions = ref([
+  { label: "まったく面白くない", value: "1" },
+  { label: "面白くない", value: "2" },
   { label: "普通", value: "3" },
-  { label: "良い", value: "4" },
-  { label: "最良", value: "5" },
+  { label: "面白い", value: "4" },
+  { label: "とても面白い", value: "5" },
 ]);
 
 // ラベル後回し
-const skillLevelSelected = ref("3");
-const skillLevel = ref([
-  { label: "", value: "1" },
-  { label: "", value: "2" },
-  { label: "", value: "3" },
-  { label: "", value: "4" },
-  { label: "", value: "5" },
+const skillLevel = ref("3");
+const skillLevelOptions = ref([
+  { label: "まったく役に立たない", value: "1" },
+  { label: "あまり役に立たない", value: "2" },
+  { label: "普通", value: "3" },
+  { label: "役立つ", value: "4" },
+  { label: "とても役立つ", value: "5" },
 ]);
 
 // 画面サイズに合わせてボタンのサイズを返す
@@ -201,5 +401,9 @@ const btnSize = computed(() => {
   .full-height {
     height: auto !important;
   }
+  .custom-text-style {
+  @apply text-md-h5 text-sm-h6;
+}
+
 </style>
 
