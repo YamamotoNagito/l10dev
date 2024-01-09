@@ -16,7 +16,6 @@ class CreateLectureLabelsTable extends Migration
             $table->foreign('label_id')->references('label_id')->on('labels')->onDelete('cascade');
 
             $table->primary(['lecture_id', 'label_id']);
-            $table->timestamps();
         });
     }
 

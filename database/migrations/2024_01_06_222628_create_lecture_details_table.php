@@ -17,7 +17,6 @@ class CreateLectureDetailsTable extends Migration
             $table->string('faculty');
             $table->string('category');
             $table->string('grade');
-            $table->timestamps();
         });
     }
 

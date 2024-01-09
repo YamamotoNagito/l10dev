@@ -11,7 +11,6 @@ class CreateLecturesTable extends Migration
             $table->id('lecture_id');
             $table->string('lecture_name');
             $table->string('teacher_name');
-            $table->timestamps();
         });
     }
 

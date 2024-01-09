@@ -23,7 +23,7 @@ class CreateReviewsTable extends Migration
             $table->integer('credit_level');
             $table->integer('interest_level');
             $table->integer('skill_level');
-            $table->text('comments')->nullable();
+            $table->text('comments',2048)->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps(); // created_at と updated_at カラムの追加
         });

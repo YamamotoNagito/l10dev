@@ -14,7 +14,8 @@ class CreateDeleteReviewRequestsTable extends Migration
             $table->foreign('review_id')->references('review_id')->on('reviews')->onDelete('cascade');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
 
-            $table->timestamps();
+            // $table->timestamps();
+            $table->timestamp('created_at')->default(now());
         });
     }
 
