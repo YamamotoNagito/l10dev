@@ -4,7 +4,17 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Application Charset
+    |--------------------------------------------------------------------------
+    |
+    | This value defines the default charset for your application.
+    |
+    */
 
+    'charset' => 'UTF-8',
+    
     /*
     |--------------------------------------------------------------------------
     | Application Name
