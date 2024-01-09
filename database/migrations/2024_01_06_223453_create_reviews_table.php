@@ -20,9 +20,9 @@ class CreateReviewsTable extends Migration
             $table->string('final_assignments');
             $table->string('past_exam_possession');
             $table->string('grades');
-            $table->string('credit_level');
-            $table->string('interest_level');
-            $table->string('skill_level');
+            $table->integer('credit_level');
+            $table->integer('interest_level');
+            $table->integer('skill_level');
             $table->text('comments')->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps(); // created_at と updated_at カラムの追加

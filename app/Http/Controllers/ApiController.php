@@ -46,7 +46,6 @@ class ApiController extends Controller
             'faculty'=>$request['faculty'],
             'department'=>$request['department'],
             'admission_year'=>$request['admission_year'],
-            'last_login_at'=>now(),
         ]);
  
         Auth::login($user);
@@ -63,32 +62,39 @@ class ApiController extends Controller
         //     'user_email' => ['required', 'email'],
         //     'password' => ['required'],
         // ]);
-        $credentials = [
-            'user_email' => $request->input('user_email'),
-            'password' => $request->input('password'),
-        ];
+        // $credentials = [
+        //     'user_email' => $request->input('user_email'),
+        //     'password' => $request->input('password'),
+        // ];
 
-        $credentials = $request->only('user_email', 'password');
+        // $credentials = $request->only('user_email', 'password');
 
         $user_email = $request->input('user_email');
         $password = $request->input('password');
 
-        Log::debug($credentials);
-        Log::debug(Auth::attempt($credentials));
+        $user = User::where('user_email', $user_email)->first();
         
-        // if (Auth::attempt($credentials)) {
         if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){         
             
             // $request->session()->regenerate();
-            
-            Log::debug("メアド・パスワードの両方あってます");
 
             //最終ログイン日時の更新
             // $user = Auth::user();
             // $user->update(['last_login_at' => now()]);
+            // $user = Auth::user();
+            // Log::debug($user);
+            // $user->timestamps = false; // タイムスタンプの自動更新を無効化
+            // $user->update(['last_login_at' => now()]);
+            // $user->update(['last_login_at' => now()]);
+            // $user->update(['last_login_at' => now()], ['id' => $user->id]);
+
+            $user = Auth::user();
+            $user->updateLastLogin();
+
+            // $user->timestamps = true; // タイムスタンプの自動更新を有効化
             
-            // return redirect()->intended('profile');
-            
+            Log::debug("メアド・パスワードの両方あってます");
+          
             return response()->json(['success' => true]);
 
             // return view('profile');

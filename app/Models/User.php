@@ -14,6 +14,15 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use HasRoles; // 権限の更新に必要
 
+    // 主キーを 'user_id' に設定する例
+    protected $primaryKey = 'user_id';
+
+    // ユーザーの最終ログイン日時を更新するメソッド
+    public function updateLastLogin()
+    {
+        $this->update(['last_login_at' => now()]);
+    }
+
     /**
      * The attributes that are mass assignable.
      *

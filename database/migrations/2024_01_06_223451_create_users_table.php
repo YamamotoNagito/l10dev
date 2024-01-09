@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('department');
             $table->integer('admission_year');
             $table->boolean('is_active')->default(true);
-            $table->timestamps(0); // created_atとupdated_atはtimestampsが担う
-            $table->timestamp('last_login_at');
+            $table->timestamps(0); // created_at(ユーザー作成日時)とupdated_at(最終ログイン日時)はtimestampsが担う,
+            $table->timestamp('last_login_at')->default(now());
 
             // 他の必要なカラムや制約を追加
             // $table->id();
