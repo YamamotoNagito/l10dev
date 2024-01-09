@@ -10,12 +10,11 @@ class CreateLikesTable extends Migration
         Schema::create('likes', function (Blueprint $table) {
             $table->unsignedBigInteger('review_id');
             $table->unsignedBigInteger('user_id');
-
             $table->foreign('review_id')->references('review_id')->on('reviews')->onDelete('cascade');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-
-            // $table->timestamps();
             $table->timestamp('created_at')->default(now());
+
+            $table->unique(['review_id', 'user_id']);
         });
     }
 

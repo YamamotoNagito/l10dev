@@ -15,7 +15,7 @@ class CreateLectureLabelsTable extends Migration
             $table->foreign('lecture_id')->references('lecture_id')->on('lectures')->onDelete('cascade');
             $table->foreign('label_id')->references('label_id')->on('labels')->onDelete('cascade');
 
-            $table->primary(['lecture_id', 'label_id']);
+            $table->unique(['lecture_id', 'label_id']);
         });
     }
 

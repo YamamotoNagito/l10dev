@@ -20,18 +20,6 @@ class CreateUsersTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->timestamps(); // created_at(ユーザー作成日時)とupdated_at(最終ログイン日時)はtimestampsが担う,
             $table->timestamp('last_login_at')->default(now());
-
-            // 他の必要なカラムや制約を追加
-            // $table->id();
-            // $table->string('name');
-            // $table->string('email')->unique();
-            // $table->timestamp('email_verified_at')->nullable();
-            // $table->string('password');
-            // $table->rememberToken();
-            // $table->timestamps();
-
-            $table->charset = 'utf8mb4';
-            $table->collation = 'utf8mb4_unicode_ci';
         });
     }
 
