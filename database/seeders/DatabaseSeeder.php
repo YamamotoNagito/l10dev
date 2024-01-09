@@ -21,7 +21,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             LecturesTableSeeder::class,
+            LectureDetailsSeeder::class,
+            LectureDetailTimesTableSeeder ::class,
             UsersTableSeeder::class,
+            LabelsTableSeeder::class,
             // 他のSeederクラスがあればここに追加
         ]);
     }
