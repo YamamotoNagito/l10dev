@@ -15,14 +15,16 @@ class ContactSeeder extends Seeder
             'category' => '削除依頼',
             'message' => '私の授業の悪口を削除してほしい',
             'created_at' => now(),
+            // 'updated_at' => now(),
         ]);
-
+        
         DB::table('contact')->insert([
             'name' => '斎藤次郎',
             'email' => 'jirou@com',
             'category' => '広告依頼',
             'message' => 'いいサイトだと思ったので広告を載せたい',
             'created_at' => now(),
+            // 'updated_at' => now(),
         ]);
 
     }
