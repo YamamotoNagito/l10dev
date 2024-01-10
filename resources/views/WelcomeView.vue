@@ -7,10 +7,12 @@ import vuetify from "../js/vuetify";
 <template>
   <v-app>
       <v-main>
+        <v-container>
             <v-row justify="center">
                 <Welcome></Welcome>
                 <SearchClasses></SearchClasses>
             </v-row>
-        </v-main>
+        </v-container>
+      </v-main>
   </v-app>
 </template>
