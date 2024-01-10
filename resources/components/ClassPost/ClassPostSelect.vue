@@ -228,7 +228,7 @@
           <p class="custom-text-style">面白さ</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="insterestLevel" variant="outlined" class="full-height">
+      <v-btn-toggle v-model="interestLevel" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col
             cols=""
@@ -255,14 +255,14 @@
           <p class="custom-text-style">スキル習得</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="insterestLevel" variant="outlined" class="full-height">
+      <v-btn-toggle v-model="skillLevel" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col
             cols=""
             sm=""
             md=""
             lg=""
-            v-for="option in interestLevelOptions"
+            v-for="option in skillLevelOptions"
             :key="option.value"
           >
             <v-btn
@@ -276,6 +276,12 @@
           </v-col>
         </v-row>
       </v-btn-toggle>
+      <!-- スキル習得 -->
+      <v-row class="mt-5">
+        <v-col>
+          <p class="custom-text-style">コメント</p>
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
 </template>
@@ -352,15 +358,15 @@ const gradesOptions = ref([
 
 const creditLevel = ref("3");
 const creditLevelOptions = ref([
-  { label: "激難", value: "" },
+  { label: "激難", value: "1" },
   { label: "難", value: "2" },
   { label: "普通", value: "3" },
   { label: "楽", value: "4" },
   { label: "超楽", value: "5" },
 ]);
 
-const insterestLevel = ref("3");
-const insterestLevelOptions = ref([
+const interestLevel = ref("3");
+const interestLevelOptions = ref([
   { label: "まったく面白くない", value: "1" },
   { label: "面白くない", value: "2" },
   { label: "普通", value: "3" },
