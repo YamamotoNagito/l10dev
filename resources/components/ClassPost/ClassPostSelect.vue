@@ -422,6 +422,8 @@ const clickButton = async() => {
   console.log("クリックされたで");
 
   const data = {
+    lectureName: "一攫千金特論",
+    teacherName: "服部淳生",
     attendYear:attendYear.value,
     attendanceConfirm:attendanceConfirm.value,
     weeklyAssignments:weeklyAssignments.value,
