@@ -9,7 +9,7 @@ const props = defineProps(["totalEvaluation"])
   <v-rating
     readonly
     :length="5"
-    :size="32"
+    :size="20"
     :model-value="totalEvaluation"
     active-color="blue"
   />
