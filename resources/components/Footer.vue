@@ -1,6 +1,6 @@
 <template>
     <v-app>
-      <v-footer class="bg-grey-lighten-1" app>
+      <v-footer class="bg-grey-lighten-1" app absolute>
         <v-row justify="center" no-gutters>
           <v-btn
             href="/about-us"
