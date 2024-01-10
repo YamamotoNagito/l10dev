@@ -286,6 +286,7 @@
         <v-col>
           <v-textarea
             variant="outlined"
+            v-model="comments"
             auto-grow
           ></v-textarea>
         </v-col>
@@ -399,6 +400,8 @@ const skillLevelOptions = ref([
   { label: "役立つ", value: "4" },
   { label: "とても役立つ", value: "5" },
 ]);
+
+const comments = ref('');
 
 // 画面サイズに合わせてボタンのサイズを返す
 const { name } = useDisplay()
