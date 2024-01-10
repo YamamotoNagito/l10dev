@@ -294,6 +294,7 @@
       <v-row >
         <v-col class="text-center custom-text-style">
           <v-btn
+            @click="clickButton"
             text="投稿する"
             color="indigo"
           ></v-btn>
@@ -417,18 +418,38 @@ const btnSize = computed(() => {
   return 'default';
 })
 
-// ボタンが押されたら新規登録を行う
 const clickButton = async() => {
-  try {
-    // LaravelのAPIエンドポイントにリクエストを送る
-    // const response = await axios.get('/api/class-list'); // パスは実際の設定に合わせる
-    await axios.post('/api/class/post'); // パスは実際の設定に合わせる
-    console.log(response);
+  console.log("クリックされたで");
 
-  } catch (error) {
-    console.error('Error fetching reviews:', error);
+  const data = {
+    attendYear:attendYear.value,
+    attendanceConfirm:attendanceConfirm.value,
+    weeklyAssignments:weeklyAssignments.value,
+    midtermAssignments:midtermAssignments.value,
+    finalAssignments:finalAssignments.value,
+    pastExamPossession:pastExamPossession.value,
+    grades:grades.value,
+    creditLevel: creditLevel.value,
+    interestLevel: interestLevel.value,
+    skillLevel: skillLevel.value,
+    comments: comments.value,
   }
-}
+
+try {
+    await axios.post("/api/class/post", data);
+    router.push('/class/post')
+
+  // その他の処理
+  } catch (error) {
+    if (error.response) {
+      // サーバーからのエラーレスポンスがある場合
+      console.error(error.response.data); // エラーレスポンスをコンソールに出力
+    } else {
+      // リクエストがサーバーに届かなかった場合など
+      console.error(error.message);
+    }
+  }
+};
 
 </script>
 
