@@ -414,6 +414,19 @@ const btnSize = computed(() => {
   return 'default';
 })
 
+// ボタンが押されたら新規登録を行う
+const clickButton = async() => {
+  try {
+    // LaravelのAPIエンドポイントにリクエストを送る
+    const response = await axios.get('/api/class-list'); // パスは実際の設定に合わせる
+    // this.reviews = response.data;
+    console.log(response);
+
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+  }
+}
+
 </script>
 
 <style>
