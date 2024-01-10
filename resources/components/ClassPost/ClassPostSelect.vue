@@ -419,7 +419,7 @@ const clickButton = async() => {
   try {
     // LaravelのAPIエンドポイントにリクエストを送る
     // const response = await axios.get('/api/class-list'); // パスは実際の設定に合わせる
-    await axios.post('/api/class-list'); // パスは実際の設定に合わせる
+    await axios.post('/api/class/post'); // パスは実際の設定に合わせる
     console.log(response);
 
   } catch (error) {
