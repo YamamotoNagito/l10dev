@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             ReviewsTableSeeder::class,
             LikesTableSeeder::class,
             DeleteReviewRequestsTableSeeder::class,
+            ContactSeeder::class,
             // 他のSeederクラスがあればここに追加
         ]);
     }
