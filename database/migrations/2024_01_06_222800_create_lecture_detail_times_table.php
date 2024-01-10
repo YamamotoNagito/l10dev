@@ -11,6 +11,7 @@ class CreateLectureDetailTimesTable extends Migration
             $table->id('lecture_time_id'); // 自動増分の主キー
             $table->unsignedBigInteger('lecture_detail_id');
             $table->foreign('lecture_detail_id')->references('lecture_detail_id')->on('lecture_details')->onDelete('cascade');
+            $table->integer('year');
             $table->string('term');
             $table->string('day_of_week');
             $table->string('time_period');
