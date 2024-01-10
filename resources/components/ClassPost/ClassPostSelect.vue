@@ -276,10 +276,26 @@
           </v-col>
         </v-row>
       </v-btn-toggle>
-      <!-- スキル習得 -->
+      <!-- コメント -->
       <v-row class="mt-5">
         <v-col>
           <p class="custom-text-style">コメント</p>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-textarea
+            variant="outlined"
+            auto-grow
+          ></v-textarea>
+        </v-col>
+      </v-row>
+      <v-row >
+        <v-col class="text-center custom-text-style">
+          <v-btn
+            text="投稿する"
+            color="indigo"
+          ></v-btn>
         </v-col>
       </v-row>
     </v-col>

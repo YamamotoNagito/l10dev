@@ -56,18 +56,18 @@ class ApiController extends Controller
 
     public function login(Request $request)
     {
-
         $user_email = $request->input('user_email');
         $password = $request->input('password');
 
         $user = User::where('user_email', $user_email)->first();
         
-        if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){         
-
+        if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){  
+          
             $user = Auth::user();
             $user->updateLastLogin();
             Log::debug($user); // ユーザー情報の取得
             Log::debug(Auth::user()->user_id); //ユーザーidの取得
+
             
             Log::debug("メアド・パスワードの両方あってます");
           

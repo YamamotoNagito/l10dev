@@ -23,9 +23,6 @@ class User extends Authenticatable
         $this->update(['last_login_at' => now()]);
     }
 
-    // ユーザーのidを返却するメソッド
-    
-
     /**
      * The attributes that are mass assignable.
      *
