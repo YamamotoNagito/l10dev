@@ -7,12 +7,12 @@ import { useRouter } from 'vue-router'
 </script>
 
 <template>
-    <v-app>
-        <v-main>
-            <v-container class="bg-green-lighten-3 rounded-lg" height="400px">
-                <p>ここに記述をしていく</p>
-                <p>ClassList</p>
-            </v-container>
-        </v-main>
-    </v-app>
+  <v-app>
+      <v-main>
+        <v-container class="bg-green-lighten-3 rounded-lg" height="400px">
+          <p>ここに記述をしていく</p>
+          <p>ClassList</p>
+        </v-container>
+      </v-main>
+  </v-app>
 </template>
