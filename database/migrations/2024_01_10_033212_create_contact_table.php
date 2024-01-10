@@ -14,6 +14,7 @@ class CreateContactTable extends Migration
             $table->string('category');
             $table->text('message',2048);
             $table->timestamp('created_at')->default(now());
+            // $table->timestamp(0);
         });
     }
 

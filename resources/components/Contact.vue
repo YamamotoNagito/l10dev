@@ -4,6 +4,8 @@ import vuetify from '../js/vuetify';
 import axios from 'axios';
 import { useRouter } from 'vue-router'
 
+const router = useRouter();
+
 const name = ref('');
 const email = ref('');
 const message = ref('');

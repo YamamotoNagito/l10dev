@@ -2,6 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
+use App\Models\User;
+use Illuminate\Validation\ValidationException;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -27,7 +35,17 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Log::Debug($request);
+
+        Contact::query()->create([
+            'name'=>$request['name'],
+            'email'=>$request['email'],
+            'category'=>$request['category'],
+            'message'=>$request['message'],
+            'created_at'=>now(),
+        ]);
+
+        return back();
     }
 
     /**
