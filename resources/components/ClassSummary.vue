@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -19,6 +19,33 @@ const twitterShare = () => {
   var shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;  
   location.href = shareURL;
 }
+
+// Lineで共有するための関数
+const LineShare = () => {
+  //シェアされるURL
+  var url = "http://localhost:9001/class-list"
+  
+  // LineへのURL
+  // var shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;  
+  var shareURL = "https://social-plugins.line.me/lineit/share?url=" + url;  
+  location.href = shareURL;
+}
+
+
+onMounted(() => {
+  // Lineボタンのスクリプトを動的に生成し、挿入
+  const lineButtonScript = document.createElement("script");
+  lineButtonScript.src = "https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js";
+  lineButtonScript.async = true;
+  lineButtonScript.defer = true;
+
+  // コンポーネントがマウントされた後に挿入するためにrefを使用
+  if (lineButtonContainer.value) {
+    lineButtonContainer.value.appendChild(lineButtonScript);
+  }
+});
+
+
 </script>
 
 
@@ -49,7 +76,7 @@ const twitterShare = () => {
                 </p></v-btn
               ></v-container
             >
-
+            
             <!-- Twitter共有ボタンの配置-->
             <v-container
               class="d-flex flex-row align-center justify-end ma-0 pa-0"
@@ -58,6 +85,15 @@ const twitterShare = () => {
                 </p></v-btn
               ></v-container
             >
+             <!-- Line共有ボタンの配置-->
+            <v-container
+              class="d-flex flex-row align-center justify-end ma-0 pa-0"
+              ><v-btn color="blue" @click="LineShare"
+                ><p>Lineで共有する
+                </p></v-btn
+              ></v-container
+            >
+            <!-- <div ref="lineButtonContainer">LINEで共有</div> -->
           </v-container>
         </v-container>
       </v-card>
