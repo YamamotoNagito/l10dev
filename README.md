@@ -11,7 +11,8 @@
 1: .envファイルの作成
 .env .exampleをコピーして、.envファイルを作成する
 
-.envファイルは下記のリンク（notionを参照）
+.envファイルはnotionを参照
+DB設計(.env)
 
 2:Docker Desktopのインストール
 以下の記事を参考にDockerをインストールすること
