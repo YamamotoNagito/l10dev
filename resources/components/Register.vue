@@ -49,7 +49,9 @@ const clickButton = async() => {
 //     console.log(err);
 //   });  
 try {
-    await axios.post("/api/register", data);
+    const response = await axios.post("/api/register", data);
+    data['role'] = response.data.role;
+    // console.log(data['role'])
     store.dispatch('login', data);
     router.push('/profile')
 

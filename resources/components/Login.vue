@@ -50,12 +50,13 @@ const clickButton = async() => {
     // ちゃんと送信できたか確認用
     console.log(response.data.success);
     if(response.data.success){
-      // axios.get("/profile2");
-      // const url = '/profile'
-      // window.location.href = url
+      
+      data['role'] = response.data.role;
+      // console.log(response)
+      // console.log(response.data.role)
+      // console.log(data['role'])
+      // console.log(data)
       store.dispatch('login', data);
-      // store.dispatch('login', { user_email: data.user_email, password: data.password });
-      // this.$store.dispatch('login', { user_email: data.user_email, password: data.password });
       router.push('/profile')
     }else{
 
