@@ -4,7 +4,7 @@ import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-import StarRading from "./StarRading.vue";
+import StarRading from "./StarRating.vue";
 
 const props = defineProps(["classData"]);
 
