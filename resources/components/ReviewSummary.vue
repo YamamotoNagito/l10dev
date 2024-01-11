@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 
 import RadarChart from "./RadarChart.vue";
-import StarRading from "./StarRading.vue";
+import StarRading from "./StarRating.vue";
 
 const props = defineProps(["reviewData"]);
 

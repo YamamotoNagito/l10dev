@@ -14,7 +14,7 @@ const props = defineProps(["totalEvaluation"])
         :size="20"
         :model-value="totalEvaluation"
         active-color="blue"
-      />
+      ></v-rating>
     </v-col>
     </v-row>
 </template>
