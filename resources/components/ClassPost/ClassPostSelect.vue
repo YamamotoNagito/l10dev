@@ -1,6 +1,22 @@
 <template>
   <v-row justify="center">
     <v-col cols="8">
+      <v-row>
+        <v-col>
+          <p class="text-h6">授業名</p>
+          <v-text-field
+            placeholder="一攫千金特論"
+            class="input-field"
+            v-model="searchContents.lectureName"
+          ></v-text-field>
+          <p class="text-h6">担当教員名</p>
+          <v-text-field
+            placeholder="服部淳生"
+            class="input-field"
+            v-model="searchContents.teacherName"
+          ></v-text-field>
+        </v-col>
+      </v-row>
       <!-- 受講年度 -->
       <v-row>
         <v-col>
@@ -313,6 +329,14 @@ import Button from "../Button.vue";
 import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 
+const searchContents = ref({
+  // 授業名
+  lectureName: null,
+  // 担当教員名
+  teacherName: null,
+});
+
+
 const attendYear = ref("2024");
 const attendYearOptions = ref([
   { label: "2024", value: "2024" },
@@ -438,8 +462,8 @@ const clickButton = async() => {
   }
 
 try {
-    await axios.post("/api/class/post", data);
-    router.push('/class/post')
+    await axios.post("/api/reviews", data);
+    router.push('/reviews')
 
   // その他の処理
   } catch (error) {
