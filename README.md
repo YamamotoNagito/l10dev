@@ -11,6 +11,8 @@
 1: .envファイルの作成
 .env .exampleをコピーして、.envファイルを作成する
 
+.envファイルは下記のリンク（notionを参照）
+
 2:Docker Desktopのインストール
 以下の記事を参考にDockerをインストールすること
 https://chigusa-web.com/blog/windows%E3%81%ABdocker%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%81%A6python%E7%92%B0%E5%A2%83%E3%82%92%E6%A7%8B%E7%AF%89/
@@ -46,8 +48,9 @@ cd/src
 ```
 php artisan key:generate
 composer install
-npm install 
+npm install
 npm install --save-dev vue @vitejs/plugin-vue
+php artisan migrate:fresh --seed
 npm run dev
 ```
 
@@ -55,7 +58,7 @@ npm run dev
 ```
 composer install
 php artisan migrate
-npm install 
+npm install
 npm run dev
 ```
 
