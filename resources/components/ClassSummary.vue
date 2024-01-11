@@ -38,11 +38,6 @@ onMounted(() => {
   lineButtonScript.src = "https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js";
   lineButtonScript.async = true;
   lineButtonScript.defer = true;
-
-  // コンポーネントがマウントされた後に挿入するためにrefを使用
-  if (lineButtonContainer.value) {
-    lineButtonContainer.value.appendChild(lineButtonScript);
-  }
 });
 
 
@@ -93,7 +88,6 @@ onMounted(() => {
                 </p></v-btn
               ></v-container
             >
-            <!-- <div ref="lineButtonContainer">LINEで共有</div> -->
           </v-container>
         </v-container>
       </v-card>
