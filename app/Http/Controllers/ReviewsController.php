@@ -38,28 +38,45 @@ class ReviewsController extends Controller
     // リクエストデータをログに記録
     Log::Debug($request);
 
-    $validated = $request->validate([
-      'lecture_id' => 'required|exists:lectures,lecture_id',
-      'user_id' => 'required|exists:users,user_id',
-      'attendance_year' => 'required|integer',
-      'attendance_confirm' => 'required|string',
-      'weekly_assignments' => 'required|string',
-      'midterm_assignments' => 'required|string',
-      'final_assignments' => 'required|string',
-      'past_exam_possession' => 'required|string',
-      'grades' => 'required|string|',
-      'credit_level' => 'required|integer',
-      'interest_level' => 'required|integer',
-      'skill_level' => 'required|integer',
-      'comments' => 'nullable|string|max:2048',
-      'is_visible' => 'required|boolean'
+    Reviews::query()->create([
+      'lecture_id' => $request['lecture_id'],
+      'user_id' => $request['user_id'],
+      'attendance_year' => $request['attendance_year'],
+      'attendance_confirm' => $request['attendance_confirm'],
+      'weekly_assignments' => $request['weekly_assignments'],
+      'midterm_assignments' => $request['midterm_assignments'],
+      'final_assignments' => $request['final_assignments'],
+      'past_exam_possession' => $request['past_exam_possession'],
+      'grades' => $request['grades'],
+      'credit_level' => $request['credit_level'],
+      'interest_level' => $request['interest_level'],
+      'skill_level' => $request['skill_level'],
+      'comments' => $request['comments'],
+      'is_visible' => $request['is_visible'],
   ]);
 
-  $review = new Reviews($validated);
+  //   $validated = $request->validate([
+  //     'lecture_id' => 'required|exists:lectures,lecture_id',
+  //     'user_id' => 'required|exists:users,user_id',
+  //     'attendance_year' => 'required|integer',
+  //     'attendance_confirm' => 'required|string',
+  //     'weekly_assignments' => 'required|string',
+  //     'midterm_assignments' => 'required|string',
+  //     'final_assignments' => 'required|string',
+  //     'past_exam_possession' => 'required|string',
+  //     'grades' => 'required|string|',
+  //     'credit_level' => 'required|integer',
+  //     'interest_level' => 'required|integer',
+  //     'skill_level' => 'required|integer',
+  //     'comments' => 'nullable|string|max:2048',
+  //     'is_visible' => 'required|boolean'
+  // ]);
 
-  // レビューをデータベースに保存
-  $review->save();
-  
+  // $review = new Reviews($validated);
+
+  // // レビューをデータベースに保存
+  // $review->save();
+
     // ユーザーを前のページにリダイレクト
     return back();
   }

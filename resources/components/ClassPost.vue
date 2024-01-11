@@ -7,13 +7,13 @@
           <v-text-field
             placeholder="一攫千金特論"
             class="input-field"
-            v-model="searchContents.lectureName"
+            v-model="lectureName"
           ></v-text-field>
           <p class="text-h6">担当教員名</p>
           <v-text-field
             placeholder="服部淳生"
             class="input-field"
-            v-model="searchContents.teacherName"
+            v-model="teacherName"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -322,20 +322,15 @@
 
 <script setup>
 import { ref } from "vue";
-import vuetify from "../../js/vuetify";
+import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import Button from "../Button.vue";
+import Button from "./Button.vue";
 import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 
-const searchContents = ref({
-  // 授業名
-  lectureName: null,
-  // 担当教員名
-  teacherName: null,
-});
-
+const lectureName = ref("一攫千金特論");
+const teacherName = ref("服部淳生");
 
 const attendYear = ref("2024");
 const attendYearOptions = ref([
@@ -446,8 +441,8 @@ const clickButton = async() => {
   console.log("クリックされたで");
 
   const data = {
-    lectureName: "一攫千金特論",
-    teacherName: "服部淳生",
+    lecture_id: '1',
+    teacher_id: '1',
     attendYear:attendYear.value,
     attendanceConfirm:attendanceConfirm.value,
     weeklyAssignments:weeklyAssignments.value,
@@ -479,7 +474,7 @@ try {
 
 </script>
 
-<style>
+<style scoped>
   .v-btn {
     margin: 0 10px;
   }
