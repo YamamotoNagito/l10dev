@@ -11,4 +11,8 @@ use Spatie\Permission\Traits\HasRoles;
 class Reviews extends Model
 {
     use HasFactory;
+
+    protected $table = 'reviews';
+
+    protected $primaryKey = 'review_id';
 }
