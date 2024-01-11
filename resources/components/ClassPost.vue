@@ -332,16 +332,17 @@ import { useDisplay } from 'vuetify'
 const lectureName = ref("一攫千金特論");
 const teacherName = ref("服部淳生");
 
-const attendYear = ref("2024");
+
+const attendYear = ref(2024);
 const attendYearOptions = ref([
-  { label: "2024", value: "2024" },
-  { label: "2023", value: "2023" },
-  { label: "2022", value: "2022" },
-  { label: "2021", value: "2021" },
-  { label: "2020", value: "2020" },
-  { label: "2019", value: "2019" },
-  { label: "2018", value: "2018" },
-  { label: "2017", value: "2017" },
+  { label: 2024, value: 2024 },
+  { label: 2023, value: 2023 },
+  { label: 2022, value: 2022 },
+  { label: 2021, value: 2021 },
+  { label: 2020, value: 2020 },
+  { label: 2019, value: 2019 },
+  { label: 2018, value: 2018 },
+  { label: 2017, value: 2017 },
 ]);
 
 const attendanceConfirm = ref("なし");
@@ -441,9 +442,9 @@ const clickButton = async() => {
   console.log("クリックされたで");
 
   const data = {
-    lecture_id: '1',
-    teacher_id: '1',
-    attendYear:attendYear.value,
+    lecture_id: 1,
+    user_id: 1,
+    attendYear: attendYear.value,
     attendanceConfirm:attendanceConfirm.value,
     weeklyAssignments:weeklyAssignments.value,
     midtermAssignments:midtermAssignments.value,
