@@ -5,7 +5,6 @@ import vuetify from "../js/vuetify";
 const props = defineProps(["totalEvaluation"])
 </script>
 
-<template>
   <v-row class="ml-1">
     <v-col>
       <v-rating
