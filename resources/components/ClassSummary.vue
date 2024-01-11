@@ -9,6 +9,16 @@ const props = defineProps(["classData"])
 const moveToReview = () => {
   console.log("moveToReview")
 }
+
+// Twitterで共有するための関数
+const twitterShare = () => {
+  //シェアされるURL
+  var url = "http://localhost:9001/class-list"
+  
+  // TwitterへのURL
+  var shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;  
+  location.href = shareURL;
+}
 </script>
 
 
@@ -36,6 +46,15 @@ const moveToReview = () => {
               ><v-btn color="blue" @click="moveToReview"
                 ><v-icon>mdi-comment-plus-outline</v-icon>
                 <p>レビューする
+                </p></v-btn
+              ></v-container
+            >
+
+            <!-- Twitter共有ボタンの配置-->
+            <v-container
+              class="d-flex flex-row align-center justify-end ma-0 pa-0"
+              ><v-btn color="blue" @click="twitterShare"
+                ><p>Twitterで共有する
                 </p></v-btn
               ></v-container
             >
