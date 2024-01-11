@@ -14,8 +14,8 @@
 .envファイルは下記のリンク（notionを参照）
 
 2:Docker Desktopのインストール
-以下の記事を参考にDockerをインストールすること
-https://chigusa-web.com/blog/windows%E3%81%ABdocker%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%81%A6python%E7%92%B0%E5%A2%83%E3%82%92%E6%A7%8B%E7%AF%89/
+以下のページを参考にDockerをインストールすること
+https://www.notion.so/DB-5c5bab8907474e24b27562974032a0fb?pvs=4#06a18740bf624dbdb978ac99ce4b87ba
 
 手順1: wsl2のインストール(windowsのみ)
 手順2: Docker Desktopのインストール
