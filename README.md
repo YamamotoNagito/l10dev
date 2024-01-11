@@ -48,6 +48,7 @@ cd/src
 ```
 php artisan key:generate
 composer install
+composer require spatie/laravel-permission
 npm install
 npm install --save-dev vue @vitejs/plugin-vue
 php artisan migrate:fresh --seed
