@@ -61,23 +61,6 @@ onMounted(() => {
             <v-container class="ma-auto pa-1"
               >{{ classData.teacherName }} 先生</v-container
             >
-            <!-- Twitter共有ボタンの配置-->
-            <v-container
-              class="d-flex flex-row align-center justify-end ma-0 pa-0"
-              ><v-btn color="blue" @click="twitterShare"
-                ><p>Twitterで共有する
-                </p></v-btn
-              ></v-container
-            >
-             <!-- Line共有ボタンの配置-->
-            <v-container
-              class="d-flex flex-row align-center justify-end ma-0 pa-0"
-              ><v-btn color="blue" @click="LineShare"
-                ><p>Lineで共有する
-                </p></v-btn
-              ></v-container
-            >
-          </v-container>
           </v-col>
         </v-row>
       </v-col>
@@ -93,6 +76,22 @@ onMounted(() => {
               <p class="text-h9">レビュー</p></v-btn
             ></v-container
           >
+              <!-- Twitter共有ボタンの配置-->
+              <v-container
+              class="d-flex flex-row align-center justify-end ma-0 pa-0"
+              ><v-btn color="blue" @click="twitterShare"
+                ><p>Twitterで共有する
+                </p></v-btn
+              ></v-container
+            >
+             <!-- Line共有ボタンの配置-->
+            <v-container
+              class="d-flex flex-row align-center justify-end ma-0 pa-0"
+              ><v-btn color="blue" @click="LineShare"
+                ><p>Lineで共有する
+                </p></v-btn
+              ></v-container
+            >
         </v-container>
       </v-col>
     </v-row>
