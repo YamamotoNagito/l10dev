@@ -46,10 +46,23 @@ class ReviewsController extends Controller
 
     Log::Debug("lecture_id");
     Log::Debug($lecture_id);
-
-    // lecture_idが存在しない場合にはエラーが出るようにする
     
-    // 同じuse_idかつ同じlecture_idの際にはエラーを返すようにする
+    // lecture_idが存在しない場合にはエラーが出るようにする
+    if($lecture_id == null){
+      return response()->json(['success' => false,'message' => '授業が存在しません']);
+    }
+    
+    Log::Debug("user_id");
+    Log::Debug($request['user_id']);
+    
+    // 既に同じuser_idかつ同じlecture_idが存在するかチェック
+    // あった際にはその旨を出力して登録できないようにする
+    $existingRecord = Reviews::where('user_id', $request['user_id'])
+                      ->where('lecture_id', $lecture_id)
+                      ->value('lecture_id'); 
+    if($existingRecord){
+        return response()->json(['success' => false, 'message' => '既に同じユーザーと授業の組み合わせが存在します']);
+    }
 
 
     Reviews::query()->create([
@@ -91,8 +104,8 @@ class ReviewsController extends Controller
   // // レビューをデータベースに保存
   // $review->save();
 
-    // ユーザーを前のページにリダイレクト
-    return back();
+    // 登録処理を行う
+    return response()->json(['success' => true,'message' => '授業を登録します']);
   }
 
   /**

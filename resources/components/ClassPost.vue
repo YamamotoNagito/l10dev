@@ -316,6 +316,11 @@
           ></v-btn>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <p v-show="message != ''" class="text-h6">{{ message }}</p>
+        </v-col>  
+      </v-row>
     </v-col>
   </v-row>
 </template>
@@ -336,6 +341,7 @@ const router = useRouter();
 const lectureName = ref("プログラミング2");
 const teacherName = ref("山本太郎");
 
+const message = ref("")
 
 const attendanceYear = ref(2024);
 const attendanceYearOptions = ref([
@@ -467,8 +473,16 @@ const clickButton = async() => {
   }
 
 try {
-    await axios.post("/api/reviews", data);
-    router.push('/reviews')
+    const response = await axios.post("/api/reviews", data);
+    console.log("response");
+    
+    if(response.data.success){
+      router.push('/reviews');
+    }else{
+      console.log(response.data.message);
+      message.value = response.data.message;
+    }
+
 
   // その他の処理
   } catch (error) {
