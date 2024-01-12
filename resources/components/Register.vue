@@ -50,6 +50,10 @@ const clickButton = async() => {
 //   });  
 try {
     const response = await axios.post("/api/register", data);
+    console.log("response")
+    // console.log(response)
+    // console.log(response.data.id)
+    data['id'] = response.data.id;
     data['role'] = response.data.role;
     // console.log(data['role'])
     store.dispatch('login', data);

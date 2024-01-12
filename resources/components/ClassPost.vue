@@ -316,6 +316,11 @@
           ></v-btn>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <p v-show="message != ''" class="text-h6">{{ message }}</p>
+        </v-col>  
+      </v-row>
     </v-col>
   </v-row>
 </template>
@@ -328,12 +333,15 @@ import { useRouter } from "vue-router";
 import Button from "./Button.vue";
 import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
+import { useStore } from 'vuex';
 
+const store = useStore();
 const router = useRouter();
 
-const lectureName = ref("一攫千金特論");
-const teacherName = ref("服部淳生");
+const lectureName = ref("プログラミング2");
+const teacherName = ref("山本太郎");
 
+const message = ref("")
 
 const attendanceYear = ref(2024);
 const attendanceYearOptions = ref([
@@ -443,9 +451,13 @@ const btnSize = computed(() => {
 const clickButton = async() => {
   console.log("クリックされたで");
 
+  console.log(store.getters.userInfo.id);
+
   const data = {
-    lecture_id: 1,
-    user_id: 1,
+    // lecture_id: 1,
+    user_id: store.getters.userInfo.id,
+    lecture_name: lectureName.value,
+    teacher_name: teacherName.value,
     attendance_year: attendanceYear.value,
     attendance_confirm:attendanceConfirm.value,
     weekly_assignments:weeklyAssignments.value,
@@ -461,8 +473,16 @@ const clickButton = async() => {
   }
 
 try {
-    await axios.post("/api/reviews", data);
-    router.push('/reviews')
+    const response = await axios.post("/api/reviews", data);
+    console.log("response");
+    
+    if(response.data.success){
+      router.push('/reviews');
+    }else{
+      console.log(response.data.message);
+      message.value = response.data.message;
+    }
+
 
   // その他の処理
   } catch (error) {

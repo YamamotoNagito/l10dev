@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use App\Models\Reviews;
+use App\Models\Lectures;
 use Illuminate\Http\Request;
 
 class ReviewsController extends Controller
@@ -38,8 +39,34 @@ class ReviewsController extends Controller
     // リクエストデータをログに記録
     Log::Debug($request);
 
+    // レクチャーidの取得
+    $lecture_id = Lectures::where('lecture_name', $request['lecture_name'])
+                  ->where('teacher_name', $request['teacher_name'])
+                  ->value('lecture_id'); 
+
+    Log::Debug("lecture_id");
+    Log::Debug($lecture_id);
+    
+    // lecture_idが存在しない場合にはエラーが出るようにする
+    if($lecture_id == null){
+      return response()->json(['success' => false,'message' => '授業が存在しません']);
+    }
+    
+    Log::Debug("user_id");
+    Log::Debug($request['user_id']);
+    
+    // 既に同じuser_idかつ同じlecture_idが存在するかチェック
+    // あった際にはその旨を出力して登録できないようにする
+    $existingRecord = Reviews::where('user_id', $request['user_id'])
+                      ->where('lecture_id', $lecture_id)
+                      ->value('lecture_id'); 
+    if($existingRecord){
+        return response()->json(['success' => false, 'message' => '既に同じユーザーと授業の組み合わせが存在します']);
+    }
+
+
     Reviews::query()->create([
-      'lecture_id' => $request['lecture_id'],
+      'lecture_id' => $lecture_id,
       'user_id' => $request['user_id'],
       'attendance_year' => $request['attendance_year'],
       'attendance_confirm' => $request['attendance_confirm'],
@@ -77,8 +104,8 @@ class ReviewsController extends Controller
   // // レビューをデータベースに保存
   // $review->save();
 
-    // ユーザーを前のページにリダイレクト
-    return back();
+    // 登録処理を行う
+    return response()->json(['success' => true,'message' => '授業を登録します']);
   }
 
   /**
