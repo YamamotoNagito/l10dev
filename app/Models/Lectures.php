@@ -12,4 +12,13 @@ use Spatie\Permission\Traits\HasRoles;
 class Lectures extends Model
 {
     use HasFactory;
+
+    protected $table = 'lectures';
+    protected $primaryKey = 'lecture_id';
+    public $timestamps = true;
+
+    protected $fillable = [
+        'lecture_name',
+        'teacher_name',
+    ];
 }

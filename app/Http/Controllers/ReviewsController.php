@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use App\Models\Reviews;
+use App\Models\Lectures;
 use Illuminate\Http\Request;
 
 class ReviewsController extends Controller
@@ -38,8 +39,21 @@ class ReviewsController extends Controller
     // リクエストデータをログに記録
     Log::Debug($request);
 
+    // レクチャーidの取得
+    $lecture_id = Lectures::where('lecture_name', $request['lecture_name'])
+                  ->where('teacher_name', $request['teacher_name'])
+                  ->value('lecture_id'); 
+
+    Log::Debug("lecture_id");
+    Log::Debug($lecture_id);
+
+    // lecture_idが存在しない場合にはエラーが出るようにする
+    
+    // 同じuse_idかつ同じlecture_idの際にはエラーを返すようにする
+
+
     Reviews::query()->create([
-      'lecture_id' => $request['lecture_id'],
+      'lecture_id' => $lecture_id,
       'user_id' => $request['user_id'],
       'attendance_year' => $request['attendance_year'],
       'attendance_confirm' => $request['attendance_confirm'],

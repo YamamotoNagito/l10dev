@@ -52,13 +52,15 @@ class UserController extends Controller
 
         // 役割・権限の取得
         Log::Debug("ログイン中のユーザー情報:");
+        Log::Debug($user->user_id);
         Log::Debug($user->getRoleNames());
         Log::Debug($user->getDirectPermissions());
  
         Auth::login($user);
  
         // return back();
-        return response()->json(['success' => true,'role' => $user->getRoleNames()]);
+        // return response()->json(['success' => true,'role' => $user->getRoleNames()]);
+        return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
     }
 
     /**
@@ -123,7 +125,7 @@ class UserController extends Controller
             Log::Debug($user->getRoleNames());
             Log::Debug($user->getDirectPermissions());
           
-            return response()->json(['success' => true,'role' => $user->getRoleNames()]);
+            return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
 
         }
         else{

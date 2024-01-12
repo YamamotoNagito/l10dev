@@ -51,11 +51,12 @@ const clickButton = async() => {
     console.log(response.data.success);
     if(response.data.success){
       
+      data['id'] = response.data.id;
       data['role'] = response.data.role;
       // console.log(response)
       // console.log(response.data.role)
       // console.log(data['role'])
-      // console.log(data)
+      console.log(data)
       store.dispatch('login', data);
       router.push('/profile')
     }else{
