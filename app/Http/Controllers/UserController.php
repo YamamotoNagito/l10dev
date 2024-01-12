@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -44,10 +45,20 @@ class UserController extends Controller
             'department'=>$request['department'],
             'admission_year'=>$request['admission_year'],
         ]);
+        
+        // ユーザーに権限を付与;
+        $user->assignRole('user');
+        $user->givePermissionTo('user');
+
+        // 役割・権限の取得
+        Log::Debug("ログイン中のユーザー情報:");
+        Log::Debug($user->getRoleNames());
+        Log::Debug($user->getDirectPermissions());
  
         Auth::login($user);
  
-        return back();
+        // return back();
+        return response()->json(['success' => true,'role' => $user->getRoleNames()]);
     }
 
     /**
@@ -106,8 +117,13 @@ class UserController extends Controller
             Log::debug(Auth::user()->user_id); //ユーザーidの取得
             
             Log::debug("メアド・パスワードの両方あってます");
+
+            // 役割・権限の取得
+            Log::Debug("ログイン中のユーザー情報:");
+            Log::Debug($user->getRoleNames());
+            Log::Debug($user->getDirectPermissions());
           
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true,'role' => $user->getRoleNames()]);
 
         }
         else{

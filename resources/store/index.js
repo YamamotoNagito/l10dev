@@ -35,6 +35,9 @@ const store = createStore({
       // ログイン成功時にはcommitを使用してミューテーションを呼び出し、ログイン情報を更新
       commit('setLoggedIn', true);
       commit('setUserInfo', userCredentials);
+      
+      console.log("storeで保持した情報：")
+      console.log(userCredentials);
     },
     // ログアウト処理
     logout({ commit }) {

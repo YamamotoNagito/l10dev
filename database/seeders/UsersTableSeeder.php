@@ -6,6 +6,9 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Log;
 
 class UsersTableSeeder extends Seeder
 {
@@ -15,7 +18,7 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         // 初期データの挿入
-        DB::table('users')->insert([
+        $user = DB::table('users')->insertGetId([
             'user_name' => 'intmain1@com',
             'user_email' => 'intmain1@com',
             'password' => Hash::make('intmain1@com'),
@@ -26,7 +29,7 @@ class UsersTableSeeder extends Seeder
             'admission_year' => 2023,
         ]);
 
-        DB::table('users')->insert([
+        $user2 = DB::table('users')->insertGetId([
             'user_name' => 'intmain3@com',
             'user_email' => 'intmain3@com',
             'password' => Hash::make('intmain3@com'),
@@ -37,7 +40,7 @@ class UsersTableSeeder extends Seeder
             'admission_year' => 2022,
         ]);
 
-        DB::table('users')->insert([
+        $user3 = DB::table('users')->insertGetId([
             'user_name' => 'intmain6@com',
             'user_email' => 'intmain6@com',
             'password' => Hash::make('intmain6@com'),
@@ -47,5 +50,60 @@ class UsersTableSeeder extends Seeder
             'department' => '教育学科',
             'admission_year' => 2021,
         ]);
+
+        if ($user) {
+            // ユーザーにロールを割り当て
+            $adminRole = Role::create(['name' => 'admin']);
+            
+            // 権限作成
+            $adminPermission = Permission::create(['name' => 'admin']);
+        
+            // ユーザーに権限を付与
+            $userModel = \App\Models\User::find($user);
+            $userModel->assignRole('admin');
+            $userModel->givePermissionTo('admin');
+
+            // パーミッションを取得
+            Log::Debug("userModel:");
+            // Log::Debug($userModel);
+            
+            Log::Debug($userModel->getRoleNames());
+            Log::Debug($userModel->getDirectPermissions());
+        }
+        
+        if ($user2) {
+            // ユーザーにロールを割り当て
+            $adminRole = Role::create(['name' => 'user']);
+            
+            // 権限作成
+            $adminPermission = Permission::create(['name' => 'user']);
+            
+            // ユーザーに権限を付与
+            $userModel2 = \App\Models\User::find($user2);
+            $userModel2->assignRole('user');
+            $userModel2->givePermissionTo('user');
+            // $userModel->givePermissionTo('admin');
+
+            // パーミッションを取得
+            Log::Debug("userModel2:");
+            // Log::Debug($userModel2);
+            Log::Debug($userModel2->getRoleNames());
+            Log::Debug($userModel2->getDirectPermissions());
+        }
+        
+        if ($user3) {
+            
+            // ユーザーに権限を付与
+            $userModel3 = \App\Models\User::find($user3);
+            $userModel3->assignRole('user');
+            $userModel3->givePermissionTo('user');
+            // $userModel->givePermissionTo('admin');
+
+            // パーミッションを取得
+            Log::Debug("userModel3:");
+            // Log::Debug($userModel2);
+            Log::Debug($userModel3->getRoleNames());
+            Log::Debug($userModel3->getDirectPermissions());
+        }
     }
 }
