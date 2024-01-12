@@ -387,7 +387,7 @@ const pastExamPossessionOptions = ref([
   { label: "過去レポートのみ", value: "過去レポート" },
 ]);
 
-const grades = ref("秀");
+const grades = ref("良");
 const gradesOptions = ref([
   { label: "秀", value: "秀" },
   { label: "優", value: "優" },
