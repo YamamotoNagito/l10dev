@@ -1,6 +1,22 @@
 <template>
   <v-row justify="center">
     <v-col cols="8">
+      <v-row>
+        <v-col>
+          <p class="text-h6">授業名</p>
+          <v-text-field
+            placeholder="一攫千金特論"
+            class="input-field"
+            v-model="lectureName"
+          ></v-text-field>
+          <p class="text-h6">担当教員名</p>
+          <v-text-field
+            placeholder="服部淳生"
+            class="input-field"
+            v-model="teacherName"
+          ></v-text-field>
+        </v-col>
+      </v-row>
       <!-- 受講年度 -->
       <v-row>
         <v-col>
@@ -8,10 +24,10 @@
           <p class="custom-text-style">受講年度</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="attendYear" variant="outlined" class="full-height">
+      <v-btn-toggle v-model="attendanceYear" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col
-            v-for="option in attendYearOptions"
+            v-for="option in attendanceYearOptions"
             :key="option.value"
             cols="4"
               sm="2"
@@ -286,6 +302,7 @@
         <v-col>
           <v-textarea
             variant="outlined"
+            v-model="comments"
             auto-grow
           ></v-textarea>
         </v-col>
@@ -293,6 +310,7 @@
       <v-row >
         <v-col class="text-center custom-text-style">
           <v-btn
+            @click="clickButton"
             text="投稿する"
             color="indigo"
           ></v-btn>
@@ -304,23 +322,29 @@
 
 <script setup>
 import { ref } from "vue";
-import vuetify from "../../js/vuetify";
+import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import Button from "../Button.vue";
+import Button from "./Button.vue";
 import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 
-const attendYear = ref("2024");
-const attendYearOptions = ref([
-  { label: "2024", value: "2024" },
-  { label: "2023", value: "2023" },
-  { label: "2022", value: "2022" },
-  { label: "2021", value: "2021" },
-  { label: "2020", value: "2020" },
-  { label: "2019", value: "2019" },
-  { label: "2018", value: "2018" },
-  { label: "2017", value: "2017" },
+const router = useRouter();
+
+const lectureName = ref("一攫千金特論");
+const teacherName = ref("服部淳生");
+
+
+const attendanceYear = ref(2024);
+const attendanceYearOptions = ref([
+  { label: 2024, value: 2024 },
+  { label: 2023, value: 2023 },
+  { label: 2022, value: 2022 },
+  { label: 2021, value: 2021 },
+  { label: 2020, value: 2020 },
+  { label: 2019, value: 2019 },
+  { label: 2018, value: 2018 },
+  { label: 2017, value: 2017 },
 ]);
 
 const attendanceConfirm = ref("なし");
@@ -363,7 +387,7 @@ const pastExamPossessionOptions = ref([
   { label: "過去レポートのみ", value: "過去レポート" },
 ]);
 
-const grades = ref("秀");
+const grades = ref("良");
 const gradesOptions = ref([
   { label: "秀", value: "秀" },
   { label: "優", value: "優" },
@@ -372,22 +396,22 @@ const gradesOptions = ref([
   { label: "不可", value: "不可" },
 ]);
 
-const creditLevel = ref("3");
+const creditLevel = ref(3);
 const creditLevelOptions = ref([
-  { label: "激難", value: "1" },
-  { label: "難", value: "2" },
-  { label: "普通", value: "3" },
-  { label: "楽", value: "4" },
-  { label: "超楽", value: "5" },
+  { label: "激難", value: 1 },
+  { label: "難", value: 2 },
+  { label: "普通", value: 3 },
+  { label: "楽", value: 4 },
+  { label: "超楽", value: 5 },
 ]);
 
-const interestLevel = ref("3");
+const interestLevel = ref(3);
 const interestLevelOptions = ref([
-  { label: "まったく面白くない", value: "1" },
-  { label: "面白くない", value: "2" },
-  { label: "普通", value: "3" },
-  { label: "面白い", value: "4" },
-  { label: "とても面白い", value: "5" },
+  { label: "まったく面白くない", value: 1 },
+  { label: "面白くない", value: 2 },
+  { label: "普通", value: 3 },
+  { label: "面白い", value: 4 },
+  { label: "とても面白い", value: 5 },
 ]);
 
 // ラベル後回し
@@ -399,6 +423,8 @@ const skillLevelOptions = ref([
   { label: "役立つ", value: "4" },
   { label: "とても役立つ", value: "5" },
 ]);
+
+const comments = ref('');
 
 // 画面サイズに合わせてボタンのサイズを返す
 const { name } = useDisplay()
@@ -414,9 +440,45 @@ const btnSize = computed(() => {
   return 'default';
 })
 
+const clickButton = async() => {
+  console.log("クリックされたで");
+
+  const data = {
+    lecture_id: 1,
+    user_id: 1,
+    attendance_year: attendanceYear.value,
+    attendance_confirm:attendanceConfirm.value,
+    weekly_assignments:weeklyAssignments.value,
+    midterm_assignments:midtermAssignments.value,
+    final_assignments:finalAssignments.value,
+    past_exam_possession:pastExamPossession.value,
+    grades:grades.value,
+    credit_level: creditLevel.value,
+    interest_level: interestLevel.value,
+    skill_level: skillLevel.value,
+    comments: comments.value,
+    is_visible: true,
+  }
+
+try {
+    await axios.post("/api/reviews", data);
+    router.push('/reviews')
+
+  // その他の処理
+  } catch (error) {
+    if (error.response) {
+      // サーバーからのエラーレスポンスがある場合
+      console.error(error.response.data); // エラーレスポンスをコンソールに出力
+    } else {
+      // リクエストがサーバーに届かなかった場合など
+      console.error(error.message);
+    }
+  }
+};
+
 </script>
 
-<style>
+<style scoped>
   .v-btn {
     margin: 0 10px;
   }
