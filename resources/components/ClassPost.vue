@@ -329,6 +329,8 @@ import Button from "./Button.vue";
 import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 
+const router = useRouter();
+
 const lectureName = ref("一攫千金特論");
 const teacherName = ref("服部淳生");
 
@@ -455,6 +457,7 @@ const clickButton = async() => {
     interest_level: interestLevel.value,
     skill_level: skillLevel.value,
     comments: comments.value,
+    is_visible: true,
   }
 
 try {
