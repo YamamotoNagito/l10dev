@@ -1,12 +1,10 @@
 <script setup>
-import ClassPostSearch from '../components/ClassPost/ClassPostSearch.vue'
-import ClassPostSelect from '../components/ClassPost/ClassPostSelect.vue';
+import ClassPost from '../components/ClassPost.vue';
 
 </script>
 
 <template>
   <v-container>
-    <ClassPostSearch></ClassPostSearch>
-    <ClassPostSelect></ClassPostSelect>
+    <ClassPost></ClassPost>
   </v-container>
 </template>
