@@ -12,7 +12,7 @@ const props = defineProps(["classData"]);
 // Twitterで共有するための関数
 const twitterShare = () => {
   //シェアされるURL
-  var url = "http://localhost:9001/class-list"
+  var url = "http://localhost:9001/class"
   
   // TwitterへのURL
   var shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;  
@@ -22,7 +22,7 @@ const twitterShare = () => {
 // Lineで共有するための関数
 const LineShare = () => {
   //シェアされるURL
-  var url = "http://localhost:9001/class-list"
+  var url = "http://localhost:9001/class"
   
   // LineへのURL
   // var shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;  

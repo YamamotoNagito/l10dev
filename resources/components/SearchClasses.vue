@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 const router = useRouter();
 
@@ -34,10 +35,12 @@ const searchByDetailedCondition = () => {
 };
 
 const searchByLectureCode = async() => {
+
   try {
-    // const response = await axios.post("/api/register", data);
-    // console.log("response")
-    // data['lectureId'] = response.data.lectureId;
+    const response = await axios.post("/api/hasLectureCode", searchClassByLectureCode.value);
+    console.log("response");
+    console.log(response);
+    // // data['lectureId'] = response.data.lectureId;
     const lectureId = 1243
     const dataExists = false
     if(dataExists){

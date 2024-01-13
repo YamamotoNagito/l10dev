@@ -22,7 +22,7 @@ const clickButton = async() => {
     category:category.value,
     message:message.value,
   }
- 
+
 try {
     await axios.post("/api/contact", data);
     router.push('/contact');

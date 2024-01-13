@@ -5,14 +5,6 @@ import vuetify from "../js/vuetify";
 </script>
 
 <template>
-  <v-app>
-      <v-main>
-        <v-container>
-            <v-row justify="center">
-                <Welcome></Welcome>
-                <SearchClasses></SearchClasses>
-            </v-row>
-        </v-container>
-      </v-main>
-  </v-app>
+  <Welcome></Welcome>
+  <SearchClasses></SearchClasses>
 </template>
