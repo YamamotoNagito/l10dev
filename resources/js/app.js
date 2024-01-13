@@ -46,7 +46,7 @@ const router = createRouter({
     // 後々/profileにmeta: { requiresAuth: true },を追加する(ログインしていないと見れない)
     { path: '/profile', component: ProfileView},
     { path: '/profile/edit', component:  ProfileEditView, meta: { requiresAuth: true }, },
-    { path: '/class-list', component: ClassListView },
+    { path: '/class', component: ClassListView },
     { path: '/class/detail', component: ClassDetailView },
     { path: '/class/post', component: ClassPostView},
     { path: '/privacy-policy', component: PrivacyPolicyView },
