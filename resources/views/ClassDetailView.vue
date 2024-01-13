@@ -54,37 +54,39 @@ const classDetailData = {
     timePeriod: "2時限",
     syllabusUrl: "https://google.com",
   },
+  //総合評価
   classRadarChartData: {
     creditLevel : 2,
     interestLevel : 3,
     skillLevel : 5
   },
+  //レビュワーからのデータの統計
   classBarGraphData: {
-    grade: {
+    grades: {
       S: 20,
       A: 30,
       B: 30,
       C: 30,
       D: 80,
     },
-    attendance: {
+    attendanceConfirm: {
       everyday: 1,
       sometimes: 20,
       none: 200,
     },
-    pastTest: {
+    pastExamPossesion: {
       yes: 20,
       no: 300,
     },
-    assignment: {
+    weeklyAssignments: {
       yes: 20,
       no: 300,
     },
-    midtermTest: {
+    midtermAssignments: {
       yes: 300,
       no: 1,
     },
-    finalTest: {
+    finalAssignments: {
       yes: 300,
       no: 1,
     },
