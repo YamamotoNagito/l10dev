@@ -22,8 +22,14 @@ const clickButton = async() => {
     category:category.value,
     message:message.value,
   }
+
+  const data2 = {
+    lecture_code:"KA00001"
+  }
  
 try {
+    const info = await axios.post("/api/search", data2);
+    console.log(info);
     await axios.post("/api/contact", data);
     router.push('/contact');
 

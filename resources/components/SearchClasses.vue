@@ -119,6 +119,7 @@ export default {
   methods: {
     searchByCondition() {
       console.log(this.searchContents);
+      // axios.post("api/")
     },
     searchByLectureCode() {
       console.log(this.searchContents);
