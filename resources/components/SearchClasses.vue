@@ -40,11 +40,9 @@ const searchByLectureCode = async() => {
     const response = await axios.post("/api/hasLectureCode", searchClassByLectureCode.value);
     console.log("response");
     console.log(response);
-    // // data['lectureId'] = response.data.lectureId;
-    const lectureId = 1243
-    const dataExists = false
-    if(dataExists){
+    if(response.data.success){
       nonExistenceMessage.value = ""
+      const lectureId = response.data.lectureId;
       router.push({path : `class/${lectureId}/detail`}, {params : lectureId})
     }else{
       nonExistenceMessage.value = "存在しない講義コードです．"
@@ -53,14 +51,13 @@ const searchByLectureCode = async() => {
 
   // その他の処理
   } catch (error) {
-    console.log("error is observed ( ﾟДﾟ)")
-    // if (error.response) {
-    //   // サーバーからのエラーレスポンスがある場合
-    //   console.error(error.response.data); // エラーレスポンスをコンソールに出力
-    // } else {
-    //   // リクエストがサーバーに届かなかった場合など
-    //   console.error(error.message);
-    // }
+    if (error.response) {
+      // サーバーからのエラーレスポンスがある場合
+      console.error(error.response.data); // エラーレスポンスをコンソールに出力
+    } else {
+      // リクエストがサーバーに届かなかった場合など
+      console.error(error.message);
+    }
   }  
 };
 </script>
