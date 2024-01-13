@@ -45,7 +45,7 @@ class UserController extends Controller
             'department'=>$request['department'],
             'admission_year'=>$request['admission_year'],
         ]);
-        
+
         // ユーザーに権限を付与;
         $user->assignRole('user');
         $user->givePermissionTo('user');
@@ -55,9 +55,9 @@ class UserController extends Controller
         Log::Debug($user->user_id);
         Log::Debug($user->getRoleNames());
         Log::Debug($user->getDirectPermissions());
- 
+
         Auth::login($user);
- 
+
         // return back();
         // return response()->json(['success' => true,'role' => $user->getRoleNames()]);
         return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
@@ -76,7 +76,8 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::find($id);
+
     }
 
     /**
@@ -110,21 +111,21 @@ class UserController extends Controller
         $password = $request->input('password');
 
         $user = User::where('user_email', $user_email)->first();
-        
-        if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){         
+
+        if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){
 
             $user = Auth::user();
             $user->updateLastLogin();
             Log::debug($user); // ユーザー情報の取得
             Log::debug(Auth::user()->user_id); //ユーザーidの取得
-            
+
             Log::debug("メアド・パスワードの両方あってます");
 
             // 役割・権限の取得
             Log::Debug("ログイン中のユーザー情報:");
             Log::Debug($user->getRoleNames());
             Log::Debug($user->getDirectPermissions());
-          
+
             return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
 
         }
@@ -135,7 +136,7 @@ class UserController extends Controller
 
         return back();
     }
-    
+
     public function logout()
     {
        Auth::logout();
