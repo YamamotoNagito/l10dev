@@ -4,38 +4,67 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 const router = useRouter();
-
+// どっちのタブを開くのか，情報を格納する変数
 const tab = ref(null);
 
+// 条件で検索する際はこのデータをバックに送る
 const searchClassByDetailedCondition = ref({
   lectureName: null,
   teacherName: null,
-  place: null,
-  department: null,
-  classification: null,
-  day: null,
-  time: null,
+  location: null,
+  faculty: null,
+  categoty: null,
+  term : null,
+  dayOfWeek: null,
+  timePeriod: null,
   grade: null,
   totalEvaluation: null,
-  ease: null,
-  interesting: null,
-  qualityOfTeacher: null,
-  support: null,
-  skill: null,
+  creditLevel: null,
+  interestLevel: null,
+  skillLevel: null,
 });
-
+const locationList = [
+  "A", "B", "C", "D"
+]
+const facultyList = [
+  "A", "B", "C", "D"
+]
+const categoryList = [
+  "A", "B", "C", "D"
+]
+const termList = [
+  "A", "B", "C", "D"
+]
+const dayOfWeekList = [
+  "A", "B", "C", "D"
+]
+const timePeriodList = [
+  "A", "B", "C", "D"
+]
+const gradeList = [
+  "A", "B", "C", "D"
+]
+const totalEvaluationList = [
+  "1未満", "1以上", "2以上", "3以上", "4以上",
+]
+//講義コードで検索する際はこのデータをバックに送る
 const searchClassByLectureCode = ref({
   lectureCode: null,
 });
 
+// 講義コードで検索する際に，一致する講義コードがなかった時に表示するメッセージ
 const nonExistenceMessage = ref("")
 
-const searchByDetailedCondition = () => {
+// 条件で検索するボタンが押されたときに発火する関数
+//welcome内の検索機能と一覧内の検索機能を同じにしようとしたら，検索条件を/classに送信して，/class内で検索
+// 親コンポーネントごとに動きを分けるなら，親コンポーネントに変数を送って各親で別の関数を実行する
+const searchByDetailedCondition = async() => {
   console.log(searchClassByDetailedCondition.value);
+  router.push({path : "class/"}, {params : searchClassByDetailedCondition.value})
 };
 
+// 講義コードで検索する際に発火する関数
 const searchByLectureCode = async() => {
-
   try {
     const response = await axios.post("/api/hasLectureCode", searchClassByLectureCode.value);
     console.log("response");
@@ -61,8 +90,6 @@ const searchByLectureCode = async() => {
   }  
 };
 </script>
-
-
 
 <template>
   <v-container class="mb-16">
@@ -116,8 +143,8 @@ const searchByLectureCode = async() => {
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">開講場所</p>
                         <v-select
-                          :items="placeList"
-                          v-model="searchClassByDetailedCondition.place"
+                          :items="locationList"
+                          v-model="searchClassByDetailedCondition.location"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
@@ -125,8 +152,8 @@ const searchByLectureCode = async() => {
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">開講部局</p>
                         <v-select
-                          :items="departmentList"
-                          v-model="searchClassByDetailedCondition.department"
+                          :items="facultyList"
+                          v-model="searchClassByDetailedCondition.faculty"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
@@ -134,9 +161,20 @@ const searchByLectureCode = async() => {
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">開講区分</p>
                         <v-select
-                          :items="classificationList"
+                          :items="categoryList"
                           v-model="
-                            searchClassByDetailedCondition.classification
+                            searchClassByDetailedCondition.category
+                          "
+                          class="pulldown-list"
+                        ></v-select>
+                      </v-container>
+
+                      <v-container class="category-name-and-content-container">
+                        <p class="category-name">ターム</p>
+                        <v-select
+                          :items="termList"
+                          v-model="
+                            searchClassByDetailedCondition.termList
                           "
                           class="pulldown-list"
                         ></v-select>
@@ -145,8 +183,8 @@ const searchByLectureCode = async() => {
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">曜日</p>
                         <v-select
-                          :items="dayList"
-                          v-model="searchClassByDetailedCondition.day"
+                          :items="dayOfWeekList"
+                          v-model="searchClassByDetailedCondition.dayOfWeek"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
@@ -154,8 +192,8 @@ const searchByLectureCode = async() => {
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">時間</p>
                         <v-select
-                          :items="timeList"
-                          v-model="searchClassByDetailedCondition.time"
+                          :items="timePeriodList"
+                          v-model="searchClassByDetailedCondition.timePeriod"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
@@ -184,7 +222,7 @@ const searchByLectureCode = async() => {
                         <p class="category-name">単位取得のしやすさ</p>
                         <v-select
                           :items="totalEvaluationList"
-                          v-model="searchClassByDetailedCondition.ease"
+                          v-model="searchClassByDetailedCondition.creditLevel"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
@@ -193,7 +231,7 @@ const searchByLectureCode = async() => {
                         <p class="category-name">面白さ</p>
                         <v-select
                           :items="totalEvaluationList"
-                          v-model="searchClassByDetailedCondition.interesting"
+                          v-model="searchClassByDetailedCondition.interestLevel"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
@@ -222,7 +260,7 @@ const searchByLectureCode = async() => {
                         <p class="category-name">スキルが身につくか</p>
                         <v-select
                           :items="totalEvaluationList"
-                          v-model="searchClassByDetailedCondition.skill"
+                          v-model="searchClassByDetailedCondition.skillLevel"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
