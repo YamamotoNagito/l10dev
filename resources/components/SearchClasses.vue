@@ -1,137 +1,70 @@
 <script setup>
 import { ref } from "vue";
-import vuetify from "../js/vuetify";
-</script>
+import { useRouter } from 'vue-router'
 
-<script>
-export default {
-  data: () => ({
-    // ここから検索に関する変数
-    // 検索事項のリスト。検索するときはこれをbackendに投げる
-    searchContents: {
-      // 授業名
-      lectureName: null,
-      // 担当教員名
-      teacherName: null,
-      // 開講場所
-      place: null,
-      // 開講部局
-      department: null,
-      // 開講区分
-      classification: null,
-      // 曜日
-      day: null,
-      // 時限
-      time: null,
-      // 履修年次
-      grade: null,
-      // 総合評価
-      totalEvaluation: null,
-      // 単位取得のしやすさ
-      ease: null,
-      // 授業の面白さ
-      interesting: null,
-      // 教員の質
-      qualityOfTeacher: null,
-      // サポート体制
-      support: null,
-      // スキルが身につくか
-      skill: null,
-      // 講義コード
-      lectureCode: null,
-    },
+const router = useRouter();
 
-    // どのタブを表示するか
-    tab: null,
+const tab = ref(null);
 
-    // 検索条件のサンプル。後で消す
-    sampleList: [
-      "item A",
-      "item B",
-      "item C",
-      "item D",
-      "item E",
-      "item F",
-      "item G",
-    ],
-    // 開講場所
-    placeList: [
-      "item A",
-      "item B",
-      "item C",
-      "item D",
-      "item E",
-      "item F",
-      "item G",
-    ],
-    // 開講部局
-    departmentList: [
-      "item A",
-      "item B",
-      "item C",
-      "item D",
-      "item E",
-      "item F",
-      "item G",
-    ],
-    // 開講区分
-    classificationList: [
-      "item A",
-      "item B",
-      "item C",
-      "item D",
-      "item E",
-      "item F",
-      "item G",
-    ],
-    // 曜日
-    dayList: [
-      "月曜日",
-      "火曜日",
-      "水曜日",
-      "木曜日",
-      "金曜日",
-      "土曜日",
-      "日曜日",
-    ],
-    // 時限
-    timeList: [
-      "item A",
-      "item B",
-      "item C",
-      "item D",
-      "item E",
-      "item F",
-      "item G",
-    ],
-    // 履修年次
-    gradeList: [
-      "学部1年",
-      "学部2年",
-      "学部3年",
-      "学部4年",
-      "修士1年",
-      "修士2年",
-    ],
-    // 総合評価・単位取得のしやすさ・面白さ・教員の質・サポート体制・スキルが身につくか
-    totalEvaluationList: ["1以下", "2以下", "3以下", "4以下", "5以下"],
-  }),
-  methods: {
-    searchByCondition() {
-      console.log(this.searchContents);
-    },
-    searchByLectureCode() {
-      console.log(this.searchContents);
-    },
-  },
+const searchClassByDetailedCondition = ref({
+  lectureName: null,
+  teacherName: null,
+  place: null,
+  department: null,
+  classification: null,
+  day: null,
+  time: null,
+  grade: null,
+  totalEvaluation: null,
+  ease: null,
+  interesting: null,
+  qualityOfTeacher: null,
+  support: null,
+  skill: null,
+});
+
+const searchClassByLectureCode = ref({
+  lectureCode: null,
+});
+
+const nonExistenceMessage = ref("")
+
+const searchByDetailedCondition = () => {
+  console.log(searchClassByDetailedCondition.value);
+};
+
+const searchByLectureCode = async() => {
+  try {
+    // const response = await axios.post("/api/register", data);
+    // console.log("response")
+    // data['lectureId'] = response.data.lectureId;
+    const lectureId = 1243
+    const dataExists = false
+    if(dataExists){
+      nonExistenceMessage.value = ""
+      router.push({path : `class/${lectureId}/detail`}, {params : lectureId})
+    }else{
+      nonExistenceMessage.value = "存在しない講義コードです．"
+    }
+    
+
+  // その他の処理
+  } catch (error) {
+    console.log("error is observed ( ﾟДﾟ)")
+    // if (error.response) {
+    //   // サーバーからのエラーレスポンスがある場合
+    //   console.error(error.response.data); // エラーレスポンスをコンソールに出力
+    // } else {
+    //   // リクエストがサーバーに届かなかった場合など
+    //   console.error(error.message);
+    // }
+  }  
 };
 </script>
 
+
+
 <template>
-  <!-- <v-tabs align-tabs="center" color="orange">
-    <v-tab value="tab-1">One</v-tab>
-    <v-tab value="tab-2">Two</v-tab>
-  </v-tabs> -->
   <v-container class="mb-16">
     <v-row justify="center">
       <v-card width="900px">
@@ -157,7 +90,7 @@ export default {
                 <v-text-field
                   placeholder="一攫千金特論"
                   class="input-field"
-                  v-model="searchContents.lectureName"
+                  v-model="searchClassByDetailedCondition.lectureName"
                 ></v-text-field>
               </v-container>
               <v-container class="category-name-and-content-container">
@@ -165,9 +98,10 @@ export default {
                 <v-text-field
                   placeholder="服部淳生"
                   class="input-field"
-                  v-model="searchContents.teacherName"
+                  v-model="searchClassByDetailedCondition.teacherName"
                 ></v-text-field>
               </v-container>
+              <!-- 他の条件についても同様にコードを追加 -->
 
               <v-expansion-panels class="mb-4">
                 <v-expansion-panel>
@@ -178,111 +112,129 @@ export default {
                     <v-container
                       class="detailed-totalEvaluationList-list-container"
                     >
+                      <!-- 以下、他の条件の追加 -->
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">開講場所</p>
                         <v-select
                           :items="placeList"
-                          v-model="searchContents.place"
+                          v-model="searchClassByDetailedCondition.place"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">開講部局</p>
                         <v-select
                           :items="departmentList"
-                          v-model="searchContents.department"
+                          v-model="searchClassByDetailedCondition.department"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">開講区分</p>
                         <v-select
                           :items="classificationList"
-                          v-model="searchContents.classification"
+                          v-model="
+                            searchClassByDetailedCondition.classification
+                          "
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">曜日</p>
                         <v-select
                           :items="dayList"
-                          v-model="searchContents.day"
+                          v-model="searchClassByDetailedCondition.day"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">時間</p>
                         <v-select
                           :items="timeList"
-                          v-model="searchContents.time"
+                          v-model="searchClassByDetailedCondition.time"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">履修年次</p>
                         <v-select
                           :items="gradeList"
-                          v-model="searchContents.grade"
+                          v-model="searchClassByDetailedCondition.grade"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">総合評価</p>
                         <v-select
                           :items="totalEvaluationList"
-                          v-model="searchContents.totalEvaluation"
+                          v-model="
+                            searchClassByDetailedCondition.totalEvaluation
+                          "
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">単位取得のしやすさ</p>
                         <v-select
                           :items="totalEvaluationList"
-                          v-model="searchContents.ease"
+                          v-model="searchClassByDetailedCondition.ease"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">面白さ</p>
                         <v-select
                           :items="totalEvaluationList"
-                          v-model="searchContents.interesting"
+                          v-model="searchClassByDetailedCondition.interesting"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">教員の質</p>
                         <v-select
                           :items="totalEvaluationList"
-                          v-model="searchContents.qualityOfTeacher"
+                          v-model="
+                            searchClassByDetailedCondition.qualityOfTeacher
+                          "
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">サポート体制</p>
                         <v-select
                           :items="totalEvaluationList"
-                          v-model="searchContents.support"
+                          v-model="searchClassByDetailedCondition.support"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">スキルが身につくか</p>
                         <v-select
                           :items="totalEvaluationList"
-                          v-model="searchContents.skill"
+                          v-model="searchClassByDetailedCondition.skill"
                           class="pulldown-list"
                         ></v-select>
                       </v-container>
+                      <!-- 他の条件の追加ここまで -->
                     </v-container>
                   </v-expansion-panel-text>
                 </v-expansion-panel>
               </v-expansion-panels>
 
-              <v-btn @click="searchByCondition" color="orange"
-                ><v-icon start icon="mdi-checkbox-marked-circle"></v-icon
-                >検索</v-btn
-              >
+              <v-btn @click="searchByDetailedCondition" color="orange">
+                <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
+              </v-btn>
             </v-window-item>
 
             <v-window-item value="two">
@@ -290,13 +242,15 @@ export default {
                 <p class="category-name">講義コード</p>
                 <v-text-field
                   placeholder="KA*******"
-                  v-model="searchContents.lectureCode"
+                  v-model="searchClassByLectureCode.lectureCode"
                 ></v-text-field>
               </v-container>
-              <v-btn @click="searchByLectureCode" color="orange"
-                ><v-icon start icon="mdi-checkbox-marked-circle"></v-icon
-                >検索</v-btn
-              >
+              <v-container class="d-flex">
+                <v-btn @click="searchByLectureCode" color="orange">
+                  <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
+                </v-btn>
+                <p class="text-red text-center">{{ nonExistenceMessage }}</p>
+              </v-container>
             </v-window-item>
           </v-window>
         </v-card-text>
