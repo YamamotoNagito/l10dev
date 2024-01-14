@@ -5,7 +5,7 @@
           <v-col cols="0" sm="0" md="2" lg="2" xl="2"></v-col>
           <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center" >
             <v-btn
-              href="/about-us"
+              @click="router.push({ name: 'about-us'})"
               variant="text"
               rounded="xl" >
               Developed by SOS団
@@ -13,7 +13,7 @@
           </v-col>
           <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center" >
             <v-btn
-              href="/terms"
+              @click="router.push({ name: 'terms'})"
               variant="text"
               rounded="xl" >
               利用規約
@@ -21,7 +21,7 @@
           </v-col>
           <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center" >
             <v-btn
-              href="/privacy-policy"
+              @click="router.push({ name: 'privacy-policy'})"
               variant="text"
               rounded="xl" >
               プライバシーポリシー
@@ -29,7 +29,7 @@
           </v-col>
           <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center" >
             <v-btn
-              href="/contact"
+              @click="router.push({ name: 'contact'})"
               variant="text"
               rounded="xl" >
               お問い合わせ
@@ -43,6 +43,11 @@
       </v-footer>
     <!-- </v-app> -->
 </template>
+
+<script setup>
+import vuetify from '../js/vuetify';
+import { useRouter } from 'vue-router';
+</script>
 
 <style>
 </style>
