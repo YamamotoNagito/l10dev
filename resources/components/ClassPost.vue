@@ -331,8 +331,8 @@ import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import Button from "./Button.vue";
-import { computed } from 'vue'
-import { useDisplay } from 'vuetify'
+import { computed } from 'vue';
+import { useDisplay } from 'vuetify';
 import { useStore } from 'vuex';
 
 const store = useStore();
