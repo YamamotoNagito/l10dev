@@ -68,7 +68,7 @@ const clickLogoutButton = async() => {
                 <v-icon>mdi-login</v-icon>
                   ログイン
               </v-btn>
-              <v-btn href="welcome">
+              <v-btn @click="router.push({ name: 'welcome'})">
                 <v-icon>mdi-magnify</v-icon>
                   授業検索
               </v-btn>
