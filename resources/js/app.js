@@ -39,7 +39,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
 
-    { path: '/welcome', component: WelcomeView },
+    { path: '/welcome', name: 'welcome',component: WelcomeView },
     { path: '/register', component: RegisterView },
     { path: '/login', component: LoginView },
     { path: '/reset-password', component: RessetPasswordView, meta: { requiresAuth: true }, },
