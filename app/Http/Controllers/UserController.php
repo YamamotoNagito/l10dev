@@ -45,7 +45,7 @@ class UserController extends Controller
             'department'=>$request['department'],
             'admission_year'=>$request['admission_year'],
         ]);
-        
+
         // ユーザーに権限を付与;
         $user->assignRole('user');
         $user->givePermissionTo('user');
@@ -55,9 +55,9 @@ class UserController extends Controller
         Log::Debug($user->user_id);
         Log::Debug($user->getRoleNames());
         Log::Debug($user->getDirectPermissions());
- 
+
         Auth::login($user);
- 
+
         // return back();
         // return response()->json(['success' => true,'role' => $user->getRoleNames()]);
         return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
@@ -74,9 +74,30 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $user_id)
     {
-        //
+        Log::Debug("user_id");
+        Log::Debug($user_id);
+          // ユーザーを取得
+        $user = User::findOrFail($user_id);
+
+        // ユーザー情報を連想配列に格納
+        $userData = [
+            'user_name' => $user->user_name,
+            'user_email' => $user->user_email,
+            'university_name' => $user->university_name,
+            'category' => $user->category,
+            'faculty' => $user->faculty,
+            'department' => $user->department,
+            'admission_year' => $user->admission_year,
+            'is_active' => $user->is_active,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+            'last_login_at' => $user->last_login_at,
+        ];
+
+        // JSON形式でデータを返す
+        return response()->json($userData);
     }
 
     /**
@@ -110,21 +131,21 @@ class UserController extends Controller
         $password = $request->input('password');
 
         $user = User::where('user_email', $user_email)->first();
-        
-        if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){         
+
+        if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){
 
             $user = Auth::user();
             $user->updateLastLogin();
             Log::debug($user); // ユーザー情報の取得
             Log::debug(Auth::user()->user_id); //ユーザーidの取得
-            
+
             Log::debug("メアド・パスワードの両方あってます");
 
             // 役割・権限の取得
             Log::Debug("ログイン中のユーザー情報:");
             Log::Debug($user->getRoleNames());
             Log::Debug($user->getDirectPermissions());
-          
+
             return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
 
         }
@@ -135,7 +156,7 @@ class UserController extends Controller
 
         return back();
     }
-    
+
     public function logout()
     {
        Auth::logout();

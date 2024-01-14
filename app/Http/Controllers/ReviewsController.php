@@ -42,24 +42,24 @@ class ReviewsController extends Controller
     // レクチャーidの取得
     $lecture_id = Lectures::where('lecture_name', $request['lecture_name'])
                   ->where('teacher_name', $request['teacher_name'])
-                  ->value('lecture_id'); 
+                  ->value('lecture_id');
 
     Log::Debug("lecture_id");
     Log::Debug($lecture_id);
-    
+
     // lecture_idが存在しない場合にはエラーが出るようにする
     if($lecture_id == null){
       return response()->json(['success' => false,'message' => '授業が存在しません']);
     }
-    
+
     Log::Debug("user_id");
     Log::Debug($request['user_id']);
-    
+
     // 既に同じuser_idかつ同じlecture_idが存在するかチェック
     // あった際にはその旨を出力して登録できないようにする
     $existingRecord = Reviews::where('user_id', $request['user_id'])
                       ->where('lecture_id', $lecture_id)
-                      ->value('lecture_id'); 
+                      ->value('lecture_id');
     if($existingRecord){
         return response()->json(['success' => false, 'message' => '既に同じユーザーと授業の組み合わせが存在します']);
     }

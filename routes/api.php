@@ -29,5 +29,10 @@ Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout']);
 
 Route::post('/reviews', [ReviewsController::class, 'store']);
-// 問い合わせ 
+// 問い合わせ
 Route::post('/contact', [ContactController::class, 'store']);
+
+// プロフィール
+Route::get('/profile/{user_id}', [UserController::class, 'show']);
+
+
