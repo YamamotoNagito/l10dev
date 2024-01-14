@@ -4,8 +4,6 @@ import vuetify from '../js/vuetify';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-
-
 // import { mdiAccount, mdiLogout } from '@mdi/js';
 
 // ドロワーの開閉状態を管理する変数
@@ -51,137 +49,67 @@ const clickLogoutButton = async() => {
   });
 }
 
-
-// ログアウトの処理
-
-
 </script>
 <template>
-    <div>
-        <v-app style="max-height: 64px;">
-            <v-app-bar color="orange" hide-on-scroll>
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-            <v-toolbar-title>
-              かえで ~広大生の学びを支える情報サイト~
-            </v-toolbar-title>
-            <v-spacer />
+    <!-- v-app-bar での grid system の使い方が不明 -->
+    <!-- <v-container fluid>
+      <v-row>
+        <v-col cols="2"></v-col>
+        <v-col cols="8"> -->
+          <v-app style="max-height: 64px;">
+              <v-app-bar color="orange" scroll-behavior="hide">
+              <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer"/>
+              <v-toolbar-title class="hidden-md-and-down" @click="router.push({ name: 'welcome'})">
+                かえで ~広大生の学びを支える情報サイト~
+              </v-toolbar-title>
+              <v-spacer />
 
-            <v-btn href="login">
-              <v-icon>mdi-login</v-icon>
-                ログイン
-            </v-btn>
-            </v-app-bar>
+              <v-btn v-if="!store.getters.isLoggedIn" @click="router.push({ name: 'login'})">
+                <v-icon>mdi-login</v-icon>
+                  ログイン
+              </v-btn>
+              <v-btn @click="router.push({ name: 'welcome'})">
+                <v-icon>mdi-magnify</v-icon>
+                  授業検索
+              </v-btn>
+              <v-btn v-if="store.getters.isLoggedIn" @click="router.push({ name: 'class/post'})">
+                <v-icon>mdi-pencil</v-icon>
+                  レビュー投稿
+              </v-btn>
+              </v-app-bar>
 
-            <!-- ハンバーガーメニューの中身（サイドバー） -->
-            <v-navigation-drawer
-             v-model="drawer"
-              temporary >
+              <!-- ハンバーガーメニューの中身（サイドバー） -->
+              <v-navigation-drawer
+              v-model="drawer"
+                temporary >
 
-              <v-list nav>
-                <v-list-item>
-                  <v-btn block variant="text" @click="clickProfileButton">
-                    <v-icon>mdi-account</v-icon>
-                    プロフィール
-                  </v-btn>
-                </v-list-item>
-                <v-list-item>
-                  <v-btn block variant="text" color="red" @click="clickLogoutButton">
-                    <v-icon>mdi-logout</v-icon>
-                      ログアウト
-                  </v-btn>
-                </v-list-item>
-              </v-list>
-            </v-navigation-drawer>
-        </v-app>
-    </div>
-  </template>
+                <v-list nav>
+                  <v-list-item>
+                    <v-btn block variant="text" @click="clickProfileButton">
+                      <v-icon>mdi-account</v-icon>
+                      プロフィール
+                    </v-btn>
+                  </v-list-item>
+                  <!-- <v-list-item>
+                  <v-btn block variant="text" @click="router.push({ name: ''})">
+                    <v-icon>mdi-cog</v-icon>
+                      設定
+                    </v-btn>
+                  </v-list-item> -->
+                  <v-list-item>
+                    <v-btn block variant="text" color="red" @click="clickLogoutButton">
+                      <v-icon>mdi-logout</v-icon>
+                        ログアウト
+                    </v-btn>
+                  </v-list-item>
+                </v-list>
+              </v-navigation-drawer>
+          </v-app>
+        <!-- </v-col>
+        <v-col cols="2"></v-col>
+      </v-row>
+    </v-container> -->
+</template>
 
-  <style>
-  /* h1 {
-    line-height: 48px;
-    text-align: center;
-  }
-
-  h3 {
-    text-align: center;
-  }
-
-  .header-content {
-    display:flex;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-
-  .header-title{
-    text-align: center;
-  }
-
-  header {
-    display: flex;
-    justify-content: center;
-    line-height: 1.5;
-    max-height: 100vh;
-  }
-
-  .logo {
-    display: block;
-    margin: 0 auto 2rem;
-  }
-
-  nav {
-    width: 100%;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  nav a.router-link-exact-active {
-    color: var(--color-text);
-  }
-
-  nav a.router-link-exact-active:hover {
-    background-color: transparent;
-  }
-
-  nav a {
-    display: inline-block;
-    padding: 0 1rem;
-    border-left: 1px solid var(--color-border);
-  }
-
-  nav a:first-of-type {
-    border: 0;
-  } */
-
-  /* @media (min-width: 1024px) {
-    header {
-      display: flex;
-      justify-content: center;
-      padding-right: calc(var(--section-gap) / 2);
-    }
-
-    .logo {
-      margin: 0 2rem 0 0;
-    }
-
-    header .wrapper {
-      display: flex;
-      place-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    nav {
-      text-align: left;
-      font-size: 1rem;
-
-      padding: 1rem 0;
-      margin-top: 1rem;
-    }
-
-    h1 {
-    line-height: 48px;
-    text-align: center;
-    }
-
-  } */
-  </style>
+<style>
+</style>
