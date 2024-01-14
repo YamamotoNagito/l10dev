@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <!-- <v-app> -->
       <v-footer class="bg-grey-lighten-1" app absolute>
         <v-row justify="center" no-gutters>
           <v-btn
@@ -31,7 +31,7 @@
           </v-col>
         </v-row>
       </v-footer>
-    </v-app>
+    <!-- </v-app> -->
 </template>
 
 <style>

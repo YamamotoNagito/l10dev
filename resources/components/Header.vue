@@ -57,8 +57,8 @@ const clickLogoutButton = async() => {
 
 </script>
 <template>
-    <div>
-        <v-app style="max-height: 64px;">
+    <!-- <div> -->
+        <!-- <v-app style="max-height: 64px;"> -->
             <v-app-bar color="orange" hide-on-scroll>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
             <v-toolbar-title>
@@ -92,8 +92,8 @@ const clickLogoutButton = async() => {
                 </v-list-item>
               </v-list>
             </v-navigation-drawer>
-        </v-app>
-    </div>
+        <!-- </v-app> -->
+    <!-- </div> -->
   </template>
 
   <style>
