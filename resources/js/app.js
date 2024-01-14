@@ -39,20 +39,21 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
 
-    { path: '/welcome', name: 'welcome',component: WelcomeView },
-    { path: '/register', component: RegisterView },
-    { path: '/login', component: LoginView },
-    { path: '/reset-password', component: RessetPasswordView, meta: { requiresAuth: true }, },
+    { path: '/welcome', name: 'welcome', component: WelcomeView },
+    { path: '/register', name: 'register', component: RegisterView },
+    { path: '/login', name: 'login',component: LoginView },
+    { path: '/reset-password', name: 'reset-password',component: RessetPasswordView, meta: { requiresAuth: true }, },
     // 後々/profileにmeta: { requiresAuth: true },を追加する(ログインしていないと見れない)
     { path: '/profile/',  name: 'profile', component: ProfileView},
-    { path: '/profile/edit', component:  ProfileEditView, meta: { requiresAuth: true }, },
-    { path: '/class', component: ClassListView },
-    { path: '/class/detail', component: ClassDetailView },
-    { path: '/class/post', component: ClassPostView},
-    { path: '/privacy-policy', component: PrivacyPolicyView },
-    { path: '/terms', component: TermsView },
-    { path: '/contact', component: ContactView },
-    { path: '/about-us', component: AboutUsView },
+    { path: '/profile/edit', name: 'profile/edit', component:  ProfileEditView, meta: { requiresAuth: true }, },
+    { path: '/class', name: 'class', component: ClassListView },
+    { path: '/class/detail', name: 'class/detail', component: ClassDetailView },
+    { path: '/class/post', name: 'class/post', component: ClassPostView},
+    { path: '/privacy-policy', name: 'privacy-policy', component: PrivacyPolicyView },
+    { path: '/terms', name: 'terms', component: TermsView },
+    { path: '/contact', name: 'contact', component: ContactView },
+    { path: '/about-us', name: 'about-us', component: AboutUsView },
+    // 設定画面を追加する.
 
   ]
 });
