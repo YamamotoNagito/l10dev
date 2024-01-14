@@ -5,14 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
-
-use function Psy\debug;
 
 class UserController extends Controller
 {
@@ -38,7 +36,7 @@ class UserController extends Controller
             throw ValidationException::withMessages(['user_email' => 'このメールアドレスはすでに使用されています']);
         }
 
-        $id = User::query()->create([
+        $user = User::query()->create([
             'user_name'=>$request['user_name'],
             'user_email'=>$request['user_email'],
             'password'=>Hash::make($request['password']),
@@ -49,20 +47,20 @@ class UserController extends Controller
         ]);
 
         // ユーザーに権限を付与;
-        $id->assignRole('id');
-        $id->givePermissionTo('id');
+        $user->assignRole('id');
+        $user->givePermissionTo('id');
 
         // 役割・権限の取得
         Log::Debug("ログイン中のユーザー情報:");
-        Log::Debug($id->id);
-        Log::Debug($id->getRoleNames());
-        Log::Debug($id->getDirectPermissions());
+        Log::Debug($user->user_id);
+        Log::Debug($user->getRoleNames());
+        Log::Debug($user->getDirectPermissions());
 
-        Auth::login($id);
+        Auth::login($user);
 
         // return back();
-        // return response()->json(['success' => true,'role' => $id->getRoleNames()]);
-        return response()->json(['success' => true,'id' => $id->id,'role' => $id->getRoleNames()]);
+        // return response()->json(['success' => true,'role' => $user->getRoleNames()]);
+        return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
     }
 
     /**
@@ -132,23 +130,23 @@ class UserController extends Controller
         $user_email = $request->input('user_email');
         $password = $request->input('password');
 
-        $id = User::where('user_email', $user_email)->first();
+        $user = User::where('user_email', $user_email)->first();
 
         if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){
 
-            $id = Auth::id();
-            $id->updateLastLogin();
-            Log::debug($id); // ユーザー情報の取得
-            Log::debug(Auth::id()->id); //ユーザーidの取得
+            $user = Auth::user();
+            $user->updateLastLogin();
+            Log::debug($user); // ユーザー情報の取得
+            Log::debug(Auth::user()->user_id); //ユーザーidの取得
 
             Log::debug("メアド・パスワードの両方あってます");
 
             // 役割・権限の取得
             Log::Debug("ログイン中のユーザー情報:");
-            Log::Debug($id->getRoleNames());
-            Log::Debug($id->getDirectPermissions());
+            Log::Debug($user->getRoleNames());
+            Log::Debug($user->getDirectPermissions());
 
-            return response()->json(['success' => true,'id' => $id->id,'role' => $id->getRoleNames()]);
+            return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
 
         }
         else{
