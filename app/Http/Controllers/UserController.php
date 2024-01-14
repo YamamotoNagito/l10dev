@@ -47,8 +47,8 @@ class UserController extends Controller
         ]);
 
         // ユーザーに権限を付与;
-        $user->assignRole('id');
-        $user->givePermissionTo('id');
+        $user->assignRole('user');
+        $user->givePermissionTo('user');
 
         // 役割・権限の取得
         Log::Debug("ログイン中のユーザー情報:");
