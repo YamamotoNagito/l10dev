@@ -46,6 +46,7 @@ onMounted(() => {
 });
 
 // classDataListに授業情報を外部から取得してくる
+// Lecture_idの追加が必要
 const classDataList = ref([
   {
     className: "一攫千金特論",
