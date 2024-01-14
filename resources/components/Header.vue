@@ -51,51 +51,8 @@ const clickLogoutButton = async() => {
 
 </script>
 <template>
-
-            <v-app-bar color="orange" hide-on-scroll>
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-            <v-toolbar-title>
-              かえで ~広大生の学びを支える情報サイト~
-            </v-toolbar-title>
-            <v-spacer />
-
-            <v-btn href="login">
-              <v-icon>mdi-login</v-icon>
-                ログイン
-            </v-btn>
-            </v-app-bar>
-
-            <!-- ハンバーガーメニューの中身（サイドバー） -->
-            <v-navigation-drawer
-             v-model="drawer"
-              temporary >
-
-              <v-list nav>
-                <v-list-item>
-                  <v-btn block variant="text" @click="clickProfileButton">
-                    <v-icon>mdi-account</v-icon>
-                    プロフィール
-                  </v-btn>
-                </v-list-item>
-                <v-list-item>
-                  <v-btn block variant="text" color="red" @click="clickLogoutButton">
-                    <v-icon>mdi-logout</v-icon>
-                      ログアウト
-                  </v-btn>
-                </v-list-item>
-              </v-list>
-            </v-navigation-drawer>
-  </template>
-
-  <style>
-  </style>
-
     <!-- v-app-bar での grid system の使い方が不明 -->
-    <!-- <v-container fluid>
-      <v-row>
-        <v-col cols="2"></v-col>
-        <v-col cols="8"> -->
-          <v-app style="max-height: 64px;">
+
               <v-app-bar color="orange" scroll-behavior="hide">
               <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer"/>
               <v-toolbar-title class="hidden-md-and-down" @click="router.push({ name: 'welcome'})">
@@ -143,11 +100,6 @@ const clickLogoutButton = async() => {
                   </v-list-item>
                 </v-list>
               </v-navigation-drawer>
-          </v-app>
-        <!-- </v-col>
-        <v-col cols="2"></v-col>
-      </v-row>
-    </v-container> -->
 </template>
 
 <style>
