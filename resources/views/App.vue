@@ -8,7 +8,13 @@ const message = ref('Hello World!')
 </script>
 
 <template>
-  <Header></Header>
-  <RouterView />
-  <Footer></Footer>
+  <v-app>
+    <Header></Header>
+    <!-- grid system で v-main に対して レイアウトを定義する -->
+    <v-main>
+      <RouterView />
+    </v-main>
+    <Footer></Footer>
+  </v-app>
+
 </template>

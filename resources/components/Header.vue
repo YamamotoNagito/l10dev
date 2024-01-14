@@ -52,11 +52,7 @@ const clickLogoutButton = async() => {
 </script>
 <template>
     <!-- v-app-bar での grid system の使い方が不明 -->
-    <!-- <v-container fluid>
-      <v-row>
-        <v-col cols="2"></v-col>
-        <v-col cols="8"> -->
-          <v-app style="max-height: 64px;">
+
               <v-app-bar color="orange" scroll-behavior="hide">
               <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer"/>
               <v-toolbar-title class="hidden-md-and-down" @click="router.push({ name: 'welcome'})">
@@ -104,11 +100,6 @@ const clickLogoutButton = async() => {
                   </v-list-item>
                 </v-list>
               </v-navigation-drawer>
-          </v-app>
-        <!-- </v-col>
-        <v-col cols="2"></v-col>
-      </v-row>
-    </v-container> -->
 </template>
 
 <style>
