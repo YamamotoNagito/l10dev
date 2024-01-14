@@ -4,8 +4,6 @@ import vuetify from '../js/vuetify';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-
-
 // import { mdiAccount, mdiLogout } from '@mdi/js';
 
 // ドロワーの開閉状態を管理する変数
@@ -60,7 +58,7 @@ const clickLogoutButton = async() => {
         <v-col cols="8"> -->
           <v-app style="max-height: 64px;">
               <v-app-bar color="orange" scroll-behavior="hide">
-              <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
+              <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer"/>
               <v-toolbar-title class="hidden-md-and-down" @click="router.push({ name: 'welcome'})" >
                 かえで ~広大生の学びを支える情報サイト~
               </v-toolbar-title>
@@ -70,7 +68,7 @@ const clickLogoutButton = async() => {
                 <v-icon>mdi-login</v-icon>
                   ログイン
               </v-btn>
-              <v-btn v-if="store.getters.isLoggedIn" href="welcome">
+              <v-btn href="welcome">
                 <v-icon>mdi-magnify</v-icon>
                   授業検索
               </v-btn>
