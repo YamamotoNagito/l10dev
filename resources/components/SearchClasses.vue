@@ -23,6 +23,11 @@ const detailedCondition = ref({
   interestLevel: null,
   skillLevel: null,
 });
+
+// TODO
+// 検索項目はフロントでもつ
+// 評価を3つに絞る
+// minとmaxを持たせる
 const locationList = ["A", "B", "C", "D"];
 const facultyList = ["A", "B", "C", "D"];
 const categoryList = ["A", "B", "C", "D"];

@@ -52,7 +52,7 @@ const classDataList = ref([
     className: "一攫千金特論",
     classCode: "KA10000",
     teacherName: "服部淳生",
-    totalEvaluation: "5",
+    totalEvaluation: "5", 
     numberOfReviews: "70000",
   },
   {
