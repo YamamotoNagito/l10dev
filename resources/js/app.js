@@ -44,7 +44,7 @@ const router = createRouter({
     { path: '/login', component: LoginView },
     { path: '/reset-password', component: RessetPasswordView, meta: { requiresAuth: true }, },
     // 後々/profileにmeta: { requiresAuth: true },を追加する(ログインしていないと見れない)
-    { path: '/profile', component: ProfileView},
+    { path: '/profile/',  name: 'profile', component: ProfileView},
     { path: '/profile/edit', component:  ProfileEditView, meta: { requiresAuth: true }, },
     { path: '/class', component: ClassListView },
     { path: '/class/detail', component: ClassDetailView },

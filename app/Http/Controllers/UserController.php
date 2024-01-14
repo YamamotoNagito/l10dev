@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\View;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
+
+use function Psy\debug;
 
 class UserController extends Controller
 {
@@ -36,7 +38,7 @@ class UserController extends Controller
             throw ValidationException::withMessages(['user_email' => 'このメールアドレスはすでに使用されています']);
         }
 
-        $user = User::query()->create([
+        $id = User::query()->create([
             'user_name'=>$request['user_name'],
             'user_email'=>$request['user_email'],
             'password'=>Hash::make($request['password']),
@@ -47,20 +49,20 @@ class UserController extends Controller
         ]);
 
         // ユーザーに権限を付与;
-        $user->assignRole('user');
-        $user->givePermissionTo('user');
+        $id->assignRole('id');
+        $id->givePermissionTo('id');
 
         // 役割・権限の取得
         Log::Debug("ログイン中のユーザー情報:");
-        Log::Debug($user->user_id);
-        Log::Debug($user->getRoleNames());
-        Log::Debug($user->getDirectPermissions());
+        Log::Debug($id->id);
+        Log::Debug($id->getRoleNames());
+        Log::Debug($id->getDirectPermissions());
 
-        Auth::login($user);
+        Auth::login($id);
 
         // return back();
-        // return response()->json(['success' => true,'role' => $user->getRoleNames()]);
-        return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
+        // return response()->json(['success' => true,'role' => $id->getRoleNames()]);
+        return response()->json(['success' => true,'id' => $id->id,'role' => $id->getRoleNames()]);
     }
 
     /**
@@ -74,9 +76,30 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(string $user_id)
     {
-        return response()->json($user);
+        Log::Debug("user_id");
+        Log::Debug($user_id);
+          // ユーザーを取得
+        $user = User::findOrFail($user_id);
+
+        // ユーザー情報を連想配列に格納
+        $userData = [
+            'user_name' => $user->user_name,
+            'user_email' => $user->user_email,
+            'university_name' => $user->university_name,
+            'category' => $user->category,
+            'faculty' => $user->faculty,
+            'department' => $user->department,
+            'admission_year' => $user->admission_year,
+            'is_active' => $user->is_active,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+            'last_login_at' => $user->last_login_at,
+        ];
+
+        // JSON形式でデータを返す
+        return response()->json($userData);
     }
 
     /**
@@ -109,23 +132,23 @@ class UserController extends Controller
         $user_email = $request->input('user_email');
         $password = $request->input('password');
 
-        $user = User::where('user_email', $user_email)->first();
+        $id = User::where('user_email', $user_email)->first();
 
         if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){
 
-            $user = Auth::user();
-            $user->updateLastLogin();
-            Log::debug($user); // ユーザー情報の取得
-            Log::debug(Auth::user()->user_id); //ユーザーidの取得
+            $id = Auth::id();
+            $id->updateLastLogin();
+            Log::debug($id); // ユーザー情報の取得
+            Log::debug(Auth::id()->id); //ユーザーidの取得
 
             Log::debug("メアド・パスワードの両方あってます");
 
             // 役割・権限の取得
             Log::Debug("ログイン中のユーザー情報:");
-            Log::Debug($user->getRoleNames());
-            Log::Debug($user->getDirectPermissions());
+            Log::Debug($id->getRoleNames());
+            Log::Debug($id->getDirectPermissions());
 
-            return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
+            return response()->json(['success' => true,'id' => $id->id,'role' => $id->getRoleNames()]);
 
         }
         else{

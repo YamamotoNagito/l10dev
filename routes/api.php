@@ -33,5 +33,6 @@ Route::post('/reviews', [ReviewsController::class, 'store']);
 Route::post('/contact', [ContactController::class, 'store']);
 
 // プロフィール
-Route::get('/profile/{user}', [UserController::class, 'show']);
+Route::get('/profile/{user_id}', [UserController::class, 'show']);
+
 

@@ -17,26 +17,12 @@ const store = useStore()
 const email = ref('');
 const password = ref('');
 
-// $userId  = store.getters.userInfo.id,
 const clickProfileButton = async () => {
-  console.log("クリックされたで");
-  console.log(store.getters.userInfo.id);
+  // console.log("クリックされたで");
+  // console.log(store.getters.userInfo.id);
 
-  const data = {
-    user_id: store.getters.userInfo.id,
-  }
-  
   try {
-    const response = await axios.post("/api/reviews", data);
-    console.log("response");
-
-    if(response.data.success){
-      router.push('/reviews');
-    }else{
-      console.log(response.data.message);
-      message.value = response.data.message;
-    }
-
+    router.push({ name: 'profile'});
 
   // その他の処理
   } catch (error) {
