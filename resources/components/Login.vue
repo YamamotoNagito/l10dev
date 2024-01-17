@@ -110,4 +110,7 @@ const clickButton = async() => {
       <Button @click="clickLogoutButton" title="ログアウト"></Button>
       <!-- </form> -->
       <!-- <v-btn @click="clickButton">送信</v-btn> -->
+
+      <!-- 新規登録画面への遷移 -->
+      <Button @click="router.push({ name: 'register'})" title="アカウントを持っていない方はこちら"></Button>
 </template>
