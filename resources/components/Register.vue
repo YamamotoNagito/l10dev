@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import vuetify from '../js/vuetify';
 import Header from './Header.vue';
 import Footer from './Footer.vue';
@@ -65,6 +65,12 @@ const admission_year_items = ref([
   2023, 
   2024,
 ]);
+
+// facultyで選択された値が変更されたときに発火する関数
+// その他の変更時の発火処理はwatchを使うこと
+watch(faculty, () => {
+  updateDepartmentItems();
+});
 
 const updateDepartmentItems = () => {
   //選択された faculty に合わせて department_items の選択肢を変化させる
@@ -196,7 +202,6 @@ const clickButton = async() => {
                       label="学部・研究科"
                       name="faculty"
                       type="text"
-                      @update="updateDepartmentItems"
                     ></v-select>
                     <v-select
                       v-model="department"
