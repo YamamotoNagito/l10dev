@@ -13,8 +13,33 @@ const message = ref('');
 const category_items = ref(['退会したい', 'バグ報告', 'その他']);
 const category = ref(null);
 
+//e-mailのバリデーションチェック
+const emailRule = value => {
+  const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return pattern.test(value) || '有効なメールアドレスを入力してください。';
+};
+
+// バリデーションチェック
+const contactValidationCheck = () => {
+  if (name.value.length == 0) {
+    alert('名前を入力してください');
+    return;
+  } else if (message.value.length == 0) {
+    alert('お問い合わせ内容を入力してください');
+    return;
+  } else if (category.value.length == 0) {
+    alert('カテゴリを選択してください');
+    return;
+  } else {
+    console.log('バリデーションチェック通過(emailは除く)');
+    return;
+  }
+};
+
 const clickButton = async() => {
   console.log("クリックされたで");
+
+  contactValidationCheck();
 
   const data = {
     name:name.value,
@@ -55,6 +80,7 @@ try {
             ></v-text-field>
             <v-text-field
               v-model="email"
+              :rules="[emailRule]"
               label="メールアドレス"
               placeholder="Kaede@gmail.com"
               type="email"
