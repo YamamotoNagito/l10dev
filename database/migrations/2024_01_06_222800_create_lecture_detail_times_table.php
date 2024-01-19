@@ -7,21 +7,21 @@ class CreateLectureDetailTimesTable extends Migration
 {
     public function up()
     {
-        Schema::create('lecture_detail_times', function (Blueprint $table) {
-            $table->id('lecture_time_id'); // 自動増分の主キー
-            $table->unsignedBigInteger('lecture_detail_id');
-            $table->foreign('lecture_detail_id')->references('lecture_detail_id')->on('lecture_details')->onDelete('cascade');
+        Schema::create('lectureDetailTimes', function (Blueprint $table) {
+            $table->id('lectureTimeId'); // 自動増分の主キー
+            $table->unsignedBigInteger('lectureDetailId');
+            $table->foreign('lectureDetailId')->references('lectureDetailId')->on('lectureDetails')->onDelete('cascade');
             $table->integer('year');
             $table->string('term');
-            $table->string('day_of_week');
-            $table->string('time_period');
+            $table->string('dayOfWeek');
+            $table->string('timePeriod');
 
-            $table->unique(['term', 'day_of_week', 'time_period']);
+            $table->unique(['term', 'dayOfWeek', 'timePeriod']);
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('lecture_detail_times');
+        Schema::dropIfExists('lectureDetailTimes');
     }
 };

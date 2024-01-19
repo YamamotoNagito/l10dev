@@ -7,12 +7,12 @@ class CreateLectureDetailsTable extends Migration
 {
     public function up()
     {
-        Schema::create('lecture_details', function (Blueprint $table) {
-            $table->id('lecture_detail_id');
-            $table->unsignedBigInteger('lecture_id');
-            $table->foreign('lecture_id')->references('lecture_id')->on('lectures')->onDelete('cascade');
-            $table->string('lecture_code');
-            $table->string('syllabus_url');
+        Schema::create('lectureDetails', function (Blueprint $table) {
+            $table->id('lectureDetailId');
+            $table->unsignedBigInteger('lectureId');
+            $table->foreign('lectureId')->references('lectureId')->on('lectures')->onDelete('cascade');
+            $table->string('lectureCode');
+            $table->string('syllabusUrl');
             $table->string('location');
             $table->string('faculty');
             $table->string('category');
@@ -22,6 +22,6 @@ class CreateLectureDetailsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('lecture_details');
+        Schema::dropIfExists('lectureDetails');
     }
 };
