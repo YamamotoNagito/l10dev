@@ -42,7 +42,7 @@ class ContactController extends Controller
             'email'=>$request['email'],
             'category'=>$request['category'],
             'message'=>$request['message'],
-            'created_at'=>now(),
+            'createdAt'=>now(),
         ]);
 
         return back();
