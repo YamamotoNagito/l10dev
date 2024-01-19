@@ -18,7 +18,7 @@ const password = ref('');
 const category = ref('大学生');
 const faculty = ref('情報科学部');
 const department = ref('情報科学科');
-const admissionYear = ref(2023);
+const admissionYear = ref("2023");
 
 // 新規登録に関するapiを呼び出してくる 
 // 書き方は,Login.vueを参照すること

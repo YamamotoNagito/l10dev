@@ -26,7 +26,7 @@ class UsersTableSeeder extends Seeder
             'category' => '学部',
             'faculty' => '情報科学部',
             'department' => '情報科学科',
-            'admissionYear' => 2023,
+            'admissionYear' => "2023",
         ]);
 
         $user2 = DB::table('users')->insertGetId([
@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder
             'category' => '学部',
             'faculty' => '工学部',
             'department' => '第三類',
-            'admissionYear' => 2022,
+            'admissionYear' => "2022",
         ]);
 
         $user3 = DB::table('users')->insertGetId([
@@ -48,7 +48,7 @@ class UsersTableSeeder extends Seeder
             'category' => '学部',
             'faculty' => '教育学部',
             'department' => '教育学科',
-            'admissionYear' => 2021,
+            'admissionYear' => "2021",
         ]);
 
         if ($user) {

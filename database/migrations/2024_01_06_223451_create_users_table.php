@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
             $table->string('category');
             $table->string('faculty');
             $table->string('department');
-            $table->integer('admissionYear');
+            $table->string('admissionYear');
             $table->boolean('isActive')->default(true);
             $table->timestamp('createdAt')->default(now()); // createdAt(ユーザー作成日時)
             $table->timestamp('updatedAt')->default(now()); // updatedAt(最終ログイン日時)
