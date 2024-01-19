@@ -12,7 +12,7 @@ class Reviews extends Model
 
     protected $table = 'reviews';
     protected $primaryKey = 'reviewId';
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'lectureId',
@@ -29,6 +29,8 @@ class Reviews extends Model
         'skillLevel',
         'comments',
         'isVisible',
+        'createdAt',
+        'updatedAt',
     ];
 
     /**

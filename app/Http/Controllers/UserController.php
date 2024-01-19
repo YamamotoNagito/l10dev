@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
 
@@ -29,22 +29,29 @@ class UserController extends Controller
     public function create(Request $request)
     {
         // メールアドレスがすでに存在するか確認
-        $existingUser = User::where('user_email', $request['user_email'])->first();
+        $existingUser = User::where('userEmail', $request['userEmail'])->first();
 
         if ($existingUser) {
             // 既に存在する場合はエラーを返すか、任意の処理を行う
-            throw ValidationException::withMessages(['user_email' => 'このメールアドレスはすでに使用されています']);
+            throw ValidationException::withMessages(['userEmail' => 'このメールアドレスはすでに使用されています']);
         }
 
         $user = User::query()->create([
-            'user_name'=>$request['user_name'],
-            'user_email'=>$request['user_email'],
+            'userName'=>$request['userName'],
+            'userEmail'=>$request['userEmail'],
             'password'=>Hash::make($request['password']),
             'category'=>$request['category'],
             'faculty'=>$request['faculty'],
             'department'=>$request['department'],
-            'admission_year'=>$request['admission_year'],
+            'admissionYear'=>$request['admissionYear'],
+            'createdAt'=>now(),
+            'updatedAt'=>now(),
         ]);
+
+
+        // $user = Auth::user();
+        // $user->updateCreatedAt();
+        // $user->updateUpdatedAt();
 
         // ユーザーに権限を付与;
         $user->assignRole('user');
@@ -52,7 +59,7 @@ class UserController extends Controller
 
         // 役割・権限の取得
         Log::Debug("ログイン中のユーザー情報:");
-        Log::Debug($user->user_id);
+        Log::Debug($user->userId);
         Log::Debug($user->getRoleNames());
         Log::Debug($user->getDirectPermissions());
 
@@ -60,7 +67,7 @@ class UserController extends Controller
 
         // return back();
         // return response()->json(['success' => true,'role' => $user->getRoleNames()]);
-        return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
+        return response()->json(['success' => true,'id' => $user->userId,'role' => $user->getRoleNames()]);
     }
 
     /**
@@ -74,26 +81,26 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $user_id)
+    public function show(string $userId)
     {
-        Log::Debug("user_id");
-        Log::Debug($user_id);
+        Log::Debug("userId");
+        Log::Debug($userId);
           // ユーザーを取得
-        $user = User::findOrFail($user_id);
+        $user = User::findOrFail($userId);
 
         // ユーザー情報を連想配列に格納
         $userData = [
-            'user_name' => $user->user_name,
-            'user_email' => $user->user_email,
-            'university_name' => $user->university_name,
+            'userName' => $user->userName,
+            'userEmail' => $user->userEmail,
+            'universityName' => $user->universityName,
             'category' => $user->category,
             'faculty' => $user->faculty,
             'department' => $user->department,
-            'admission_year' => $user->admission_year,
-            'is_active' => $user->is_active,
-            'created_at' => $user->created_at,
-            'updated_at' => $user->updated_at,
-            'last_login_at' => $user->last_login_at,
+            'admissionYear' => $user->admissionYear,
+            'isActive' => $user->isActive,
+            'createdAt' => $user->createdAt,
+            'updatedAt' => $user->updatedAt,
+            'lastLoginAt' => $user->lastLoginAt,
         ];
 
         // JSON形式でデータを返す
@@ -127,17 +134,17 @@ class UserController extends Controller
     public function login(Request $request)
     {
 
-        $user_email = $request->input('user_email');
+        $userEmail = $request->input('userEmail');
         $password = $request->input('password');
 
-        $user = User::where('user_email', $user_email)->first();
+        $user = User::where('userEmail', $userEmail)->first();
 
-        if (Auth::attempt(['user_email' => $user_email, 'password' => $password])){
+        if (Auth::attempt(['userEmail' => $userEmail, 'password' => $password])){
 
             $user = Auth::user();
             $user->updateLastLogin();
             Log::debug($user); // ユーザー情報の取得
-            Log::debug(Auth::user()->user_id); //ユーザーidの取得
+            Log::debug(Auth::user()->userId); //ユーザーidの取得
 
             Log::debug("メアド・パスワードの両方あってます");
 
@@ -146,7 +153,7 @@ class UserController extends Controller
             Log::Debug($user->getRoleNames());
             Log::Debug($user->getDirectPermissions());
 
-            return response()->json(['success' => true,'id' => $user->user_id,'role' => $user->getRoleNames()]);
+            return response()->json(['success' => true,'id' => $user->userId,'role' => $user->getRoleNames()]);
 
         }
         else{

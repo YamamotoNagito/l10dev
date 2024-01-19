@@ -18,10 +18,22 @@ class User extends Authenticatable
     // 主キーを 'userId' に設定する例
     protected $primaryKey = 'userId';
 
+    public $timestamps = false; // created_atとupdated_atを無効にする
+
     // ユーザーの最終ログイン日時を更新するメソッド
     public function updateLastLogin()
     {
         $this->update(['lastLoginAt' => now()]);
+    }
+
+    public function updatecreatedAt()
+    {
+        $this->update(['createdAt' => now()]);
+    }
+
+    public function updateUpdatedAt()
+    {
+        $this->update(['updatedAt' => now()]);
     }
 
     /**

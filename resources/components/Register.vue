@@ -11,14 +11,14 @@ import { useStore } from 'vuex';
 const router = useRouter();
 const store = useStore();
 
-const user_name = ref('');
-const user_email = ref('');
+const userName = ref('');
+const userEmail = ref('');
 const password = ref('');
 // const university_name = ref('');
 const category = ref('大学生');
 const faculty = ref('情報科学部');
 const department = ref('情報科学科');
-const admission_year = ref(2023);
+const admissionYear = ref(2023);
 
 // 新規登録に関するapiを呼び出してくる 
 // 書き方は,Login.vueを参照すること
@@ -26,14 +26,14 @@ const clickButton = async() => {
   console.log("クリックされたで");
 
   const data = {
-    user_name:user_name.value,
-    user_email:user_email.value,
+    userName:userName.value,
+    userEmail:userEmail.value,
     password:password.value,
     university_name:"広島大学",
     category:category.value,
     faculty:faculty.value,
     department:department.value,
-    admission_year:admission_year.value,
+    admissionYear:admissionYear.value,
   }
 
 //   await axios.post("/api/register", data)
@@ -80,15 +80,15 @@ try {
                 <h1 style="font-size: 2rem;">登録画面</h1>
                 <v-form action="" method="post">
                     <v-text-field
-                    v-model="user_name"
+                    v-model="userName"
                     label="名前"
-                    name="user_name"
+                    name="userName"
                     type="name"
                     ></v-text-field>
                     <v-text-field
-                    v-model="user_email"
+                    v-model="userEmail"
                     label="メールアドレス"
-                    name="user_email"
+                    name="userEmail"
                     type="email"
                     ></v-text-field>
                     <v-text-field
@@ -116,9 +116,9 @@ try {
                     type="text"
                     ></v-text-field>
                     <v-text-field
-                    v-model="admission_year"
+                    v-model="admissionYear"
                     label="入学年度"
-                    name="admission_year"
+                    name="admissionYear"
                     type="number"
                     ></v-text-field>
                     <v-btn @click="clickButton">送信</v-btn>

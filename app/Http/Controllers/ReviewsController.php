@@ -40,51 +40,53 @@ class ReviewsController extends Controller
     Log::Debug($request);
 
     // レクチャーidの取得
-    $lecture_id = Lectures::where('lecture_name', $request['lecture_name'])
-                  ->where('teacher_name', $request['teacher_name'])
-                  ->value('lecture_id');
+    $lectureId = Lectures::where('lectureName', $request['lectureName'])
+                  ->where('teacherName', $request['teacherName'])
+                  ->value('lectureId');
 
-    Log::Debug("lecture_id");
-    Log::Debug($lecture_id);
+    Log::Debug("lectureId");
+    Log::Debug($lectureId);
 
-    // lecture_idが存在しない場合にはエラーが出るようにする
-    if($lecture_id == null){
+    // lectureIdが存在しない場合にはエラーが出るようにする
+    if($lectureId == null){
       return response()->json(['success' => false,'message' => '授業が存在しません']);
     }
 
-    Log::Debug("user_id");
-    Log::Debug($request['user_id']);
+    Log::Debug("userId");
+    Log::Debug($request['userId']);
 
-    // 既に同じuser_idかつ同じlecture_idが存在するかチェック
+    // 既に同じuserIdかつ同じlectureIdが存在するかチェック
     // あった際にはその旨を出力して登録できないようにする
-    $existingRecord = Reviews::where('user_id', $request['user_id'])
-                      ->where('lecture_id', $lecture_id)
-                      ->value('lecture_id');
+    $existingRecord = Reviews::where('userId', $request['userId'])
+                      ->where('lectureId', $lectureId)
+                      ->value('lectureId');
     if($existingRecord){
         return response()->json(['success' => false, 'message' => '既に同じユーザーと授業の組み合わせが存在します']);
     }
 
 
     Reviews::query()->create([
-      'lecture_id' => $lecture_id,
-      'user_id' => $request['user_id'],
-      'attendance_year' => $request['attendance_year'],
-      'attendance_confirm' => $request['attendance_confirm'],
-      'weekly_assignments' => $request['weekly_assignments'],
-      'midterm_assignments' => $request['midterm_assignments'],
-      'final_assignments' => $request['final_assignments'],
-      'past_exam_possession' => $request['past_exam_possession'],
+      'lectureId' => $lectureId,
+      'userId' => $request['userId'],
+      'attendanceYear' => $request['attendanceYear'],
+      'attendanceConfirm' => $request['attendanceConfirm'],
+      'weeklyAssignments' => $request['weeklyAssignments'],
+      'midtermAssignments' => $request['midtermAssignments'],
+      'finalAssignments' => $request['finalAssignments'],
+      'pastExamPossession' => $request['pastExamPossession'],
       'grades' => $request['grades'],
-      'credit_level' => $request['credit_level'],
-      'interest_level' => $request['interest_level'],
-      'skill_level' => $request['skill_level'],
+      'creditLevel' => $request['creditLevel'],
+      'interestLevel' => $request['interestLevel'],
+      'skillLevel' => $request['skillLevel'],
       'comments' => $request['comments'],
-      'is_visible' => $request['is_visible'],
+      'isVisible' => $request['isVisible'],
+      'createdAt' => now(),
+      'updatedAt' => now(),
   ]);
 
   //   $validated = $request->validate([
-  //     'lecture_id' => 'required|exists:lectures,lecture_id',
-  //     'user_id' => 'required|exists:users,user_id',
+  //     'lectureId' => 'required|exists:lectures,lectureId',
+  //     'userId' => 'required|exists:users,userId',
   //     'attendance_year' => 'required|integer',
   //     'attendance_confirm' => 'required|string',
   //     'weekly_assignments' => 'required|string',
