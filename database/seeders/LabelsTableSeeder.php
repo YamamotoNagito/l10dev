@@ -11,27 +11,27 @@ class LabelsTableSeeder extends Seeder
     {
         // ラベルデータの追加
         DB::table('labels')->insert([
-            'label_name' => '数学',
+            'labelName' => '数学',
         ]);
 
         DB::table('labels')->insert([
-            'label_name' => '情報系',
+            'labelName' => '情報系',
         ]);
 
         DB::table('labels')->insert([
-            'label_name' => '機械学習',
+            'labelName' => '機械学習',
         ]);
 
         DB::table('labels')->insert([
-            'label_name' => 'AI',
+            'labelName' => 'AI',
         ]);
 
         DB::table('labels')->insert([
-            'label_name' => '子供',
+            'labelName' => '子供',
         ]);
 
         DB::table('labels')->insert([
-            'label_name' => '教員',
+            'labelName' => '教員',
         ]);
 
 

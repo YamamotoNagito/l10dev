@@ -11,21 +11,21 @@ class LikesTableSeeder extends Seeder
     {
         // レビューに対する「いいね」データの挿入
         DB::table('likes')->insert([
-            'review_id' => 1,
-            'user_id' => 1,
-            'created_at' => now(),
+            'reviewId' => 1,
+            'userId' => 1,
+            'createdAt' => now(),
         ]);
 
         DB::table('likes')->insert([
-            'review_id' => 1,
-            'user_id' => 2,
-            'created_at' => now(),
+            'reviewId' => 1,
+            'userId' => 2,
+            'createdAt' => now(),
         ]);
 
         DB::table('likes')->insert([
-            'review_id' => 2,
-            'user_id' => 2,
-            'created_at' => now(),
+            'reviewId' => 2,
+            'userId' => 2,
+            'createdAt' => now(),
         ]);
 
         // 他にも必要なデータがあれば同様に挿入

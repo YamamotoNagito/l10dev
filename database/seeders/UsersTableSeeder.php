@@ -19,36 +19,36 @@ class UsersTableSeeder extends Seeder
     {
         // 初期データの挿入
         $user = DB::table('users')->insertGetId([
-            'user_name' => 'intmain1@com',
-            'user_email' => 'intmain1@com',
+            'userName' => 'intmain1@com',
+            'userEmail' => 'intmain1@com',
             'password' => Hash::make('intmain1@com'),
-            'university_name' => '広島大学',
+            'universityName' => '広島大学',
             'category' => '学部',
             'faculty' => '情報科学部',
             'department' => '情報科学科',
-            'admission_year' => 2023,
+            'admissionYear' => 2023,
         ]);
 
         $user2 = DB::table('users')->insertGetId([
-            'user_name' => 'intmain3@com',
-            'user_email' => 'intmain3@com',
+            'userName' => 'intmain3@com',
+            'userEmail' => 'intmain3@com',
             'password' => Hash::make('intmain3@com'),
-            'university_name' => '広島大学',
+            'universityName' => '広島大学',
             'category' => '学部',
             'faculty' => '工学部',
             'department' => '第三類',
-            'admission_year' => 2022,
+            'admissionYear' => 2022,
         ]);
 
         $user3 = DB::table('users')->insertGetId([
-            'user_name' => 'intmain6@com',
-            'user_email' => 'intmain6@com',
+            'userName' => 'intmain6@com',
+            'userEmail' => 'intmain6@com',
             'password' => Hash::make('intmain6@com'),
-            'university_name' => '広島大学',
+            'universityName' => '広島大学',
             'category' => '学部',
             'faculty' => '教育学部',
             'department' => '教育学科',
-            'admission_year' => 2021,
+            'admissionYear' => 2021,
         ]);
 
         if ($user) {

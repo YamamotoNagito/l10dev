@@ -14,8 +14,8 @@ class ContactSeeder extends Seeder
             'email' => 'tarou@com',
             'category' => '削除依頼',
             'message' => '私の授業の悪口を削除してほしい',
-            'created_at' => now(),
-            // 'updated_at' => now(),
+            'createdAt' => now(),
+            // 'updatedAt' => now(),
         ]);
         
         DB::table('contact')->insert([
@@ -23,8 +23,8 @@ class ContactSeeder extends Seeder
             'email' => 'jirou@com',
             'category' => '広告依頼',
             'message' => 'いいサイトだと思ったので広告を載せたい',
-            'created_at' => now(),
-            // 'updated_at' => now(),
+            'createdAt' => now(),
+            // 'updatedAt' => now(),
         ]);
 
     }
