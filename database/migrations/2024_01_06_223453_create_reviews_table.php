@@ -8,24 +8,25 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->id('review_id');
-            $table->unsignedBigInteger('lecture_id');
-            $table->foreign('lecture_id')->references('lecture_id')->on('lectures')->onDelete('cascade');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-            $table->integer('attendance_year');
-            $table->string('attendance_confirm');
-            $table->string('weekly_assignments');
-            $table->string('midterm_assignments');
-            $table->string('final_assignments');
-            $table->string('past_exam_possession');
+            $table->id('reviewId');
+            $table->unsignedBigInteger('lectureId');
+            $table->foreign('lectureId')->references('lectureId')->on('lectures')->onDelete('cascade');
+            $table->unsignedBigInteger('userId');
+            $table->foreign('userId')->references('userId')->on('users')->onDelete('cascade');
+            $table->integer('attendanceYear');
+            $table->string('attendanceConfirm');
+            $table->string('weeklyAssignments');
+            $table->string('midtermAssignments');
+            $table->string('finalAssignments');
+            $table->string('pastExamPossession');
             $table->string('grades');
-            $table->integer('credit_level');
-            $table->integer('interest_level');
-            $table->integer('skill_level');
+            $table->integer('creditLevel');
+            $table->integer('interestLevel');
+            $table->integer('skillLevel');
             $table->text('comments',2048)->nullable();
-            $table->boolean('is_visible')->default(true);
-            $table->timestamps(); // created_at と updated_at カラムの追加
+            $table->boolean('isVisible')->default(true);
+            $table->timestamp('createdAt')->default(now()); // createdAt(ユーザー作成日時)
+            $table->timestamp('updatedAt')->default(now()); // updatedAt(最終ログイン日時)
         });
     }
 

@@ -8,8 +8,8 @@ class CreateLabelsTable extends Migration
     public function up()
     {
         Schema::create('labels', function (Blueprint $table) {
-            $table->id('label_id');
-            $table->string('label_name')->unique();
+            $table->id('labelId');
+            $table->string('labelName')->unique();
         });
     }
 

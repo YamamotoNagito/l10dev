@@ -12,7 +12,7 @@ import { useStore } from 'vuex';
 const router = useRouter()
 const store = useStore()
 
-const user_email = ref('');
+const userEmail = ref('');
 const password = ref('');
 
 const clickLogoutButton = async() => {
@@ -40,7 +40,7 @@ const clickButton = async() => {
   // console.log(res);
   
   const data = {
-    user_email:user_email.value,
+    userEmail:userEmail.value,
     password:password.value
   }
   console.log(data)
@@ -72,7 +72,7 @@ const clickButton = async() => {
 };
 
 // return{
-//   user_email,
+//   userEmail,
 //   password
 // }
 
@@ -83,8 +83,8 @@ const clickButton = async() => {
     <!-- <form action="" method="post"> -->
       <!-- @csrf -->
       <!-- <div>
-        <label for="user_email">メールアドレス</label>
-        <v-input type="user_email" name="user_email" id="user_email"></v-input>
+        <label for="userEmail">メールアドレス</label>
+        <v-input type="userEmail" name="userEmail" id="userEmail"></v-input>
       </div>
       <label for="password">パスワード</label>
       <input type="password" name="password" id="password">
@@ -92,9 +92,9 @@ const clickButton = async() => {
       <v-btn type="submit">送信</v-btn> -->
       <v-form action="" method="post">
         <v-text-field
-          v-model="user_email"
+          v-model="userEmail"
           label="メールアドレス"
-          name="user_email"
+          name="userEmail"
           type="email"
         ></v-text-field>
         <v-text-field

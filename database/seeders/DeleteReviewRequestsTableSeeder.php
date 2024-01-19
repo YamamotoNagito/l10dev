@@ -10,22 +10,22 @@ class DeleteReviewRequestsTableSeeder extends Seeder
     public function run()
     {
         // レビュー削除リクエストデータの挿入
-        DB::table('delete_review_requests')->insert([
-            'review_id' => 1,
-            'user_id' => 1,
-            'created_at' => now(),
+        DB::table('deleteReviewRequests')->insert([
+            'reviewId' => 1,
+            'userId' => 1,
+            'createdAt' => now(),
         ]);
 
-        DB::table('delete_review_requests')->insert([
-            'review_id' => 2,
-            'user_id' => 1,
-            'created_at' => now(),
+        DB::table('deleteReviewRequests')->insert([
+            'reviewId' => 2,
+            'userId' => 1,
+            'createdAt' => now(),
         ]);
 
-        DB::table('delete_review_requests')->insert([
-            'review_id' => 2,
-            'user_id' => 2,
-            'created_at' => now(),
+        DB::table('deleteReviewRequests')->insert([
+            'reviewId' => 2,
+            'userId' => 2,
+            'createdAt' => now(),
         ]);
 
         // 他にも必要なデータがあれば同様に挿入

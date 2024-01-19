@@ -10,20 +10,20 @@ class LectureDetailTimesTableSeeder extends Seeder
     public function run()
     {
         // レクチャー詳細タイムデータの追加
-        DB::table('lecture_detail_times')->insert([
-            'lecture_detail_id' => 1, // この値は lecture_details テーブルに存在する該当するレクチャー詳細のIDに置き換えてください
+        DB::table('lectureDetailTimes')->insert([
+            'lectureDetailId' => 1, // この値は lectureDetails テーブルに存在する該当するレクチャー詳細のIDに置き換えてください
             'year' => 2023,
             'term' => '4ターム',
-            'day_of_week' => '月曜日',
-            'time_period' => '12限',
+            'dayOfWeek' => '月曜日',
+            'timePeriod' => '12限',
         ]);
 
-        DB::table('lecture_detail_times')->insert([
-            'lecture_detail_id' => 2, // 同様に置き換え
+        DB::table('lectureDetailTimes')->insert([
+            'lectureDetailId' => 2, // 同様に置き換え
             'year' => 2023,
             'term' => '3ターム',
-            'day_of_week' => '水曜日',
-            'time_period' => '34限',
+            'dayOfWeek' => '水曜日',
+            'timePeriod' => '34限',
         ]);
 
         // 他にも必要ならば追加

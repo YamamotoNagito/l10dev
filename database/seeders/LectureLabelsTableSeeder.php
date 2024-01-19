@@ -10,24 +10,24 @@ class LectureLabelsTableSeeder extends Seeder
     public function run()
     {
         // ラベルと講義の対応付けを挿入する例
-        DB::table('lecture_labels')->insert([
-            'lecture_id' => 1,
-            'label_id' => 1,
+        DB::table('lectureLabels')->insert([
+            'lectureId' => 1,
+            'labelId' => 1,
         ]);
         
-        DB::table('lecture_labels')->insert([
-            'lecture_id' => 1,
-            'label_id' => 2,
+        DB::table('lectureLabels')->insert([
+            'lectureId' => 1,
+            'labelId' => 2,
         ]);
 
-        DB::table('lecture_labels')->insert([
-            'lecture_id' => 2,
-            'label_id' => 2,
+        DB::table('lectureLabels')->insert([
+            'lectureId' => 2,
+            'labelId' => 2,
         ]);
 
-        DB::table('lecture_labels')->insert([
-            'lecture_id' => 2,
-            'label_id' => 3,
+        DB::table('lectureLabels')->insert([
+            'lectureId' => 2,
+            'labelId' => 3,
         ]);
 
         // 他にも必要なデータがあれば同様に挿入

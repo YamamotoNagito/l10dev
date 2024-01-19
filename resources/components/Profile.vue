@@ -7,12 +7,12 @@
         <v-container>
           <v-card-text justify>
             <p>{{ message }}</p>
-            <h1>{{ userProfile.user_name }}</h1>
-            <p>Email: {{ userProfile.user_email }}</p>
+            <h1>{{ userProfile.userName }}</h1>
+            <p>Email: {{ userProfile.userEmail }}</p>
             <p>Category: {{ userProfile.category }}</p>
             <p>Faculty: {{ userProfile.faculty }}</p>
             <p>Department: {{ userProfile.department }}</p>
-            <p>Admission Year: {{ userProfile.admission_year }}</p>
+            <p>Admission Year: {{ userProfile.admissionYear }}</p>
           </v-card-text>
         </v-container>
       </v-card>

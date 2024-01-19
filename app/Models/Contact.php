@@ -14,7 +14,7 @@ class Contact extends Model
     use HasFactory;
 
     protected $table = 'contact';
-    protected $primaryKey = 'contact_id';
+    protected $primaryKey = 'contactId';
 
     // public $timestamps = true;
     public $timestamps = false; // 自動更新を無効にする
@@ -24,7 +24,7 @@ class Contact extends Model
         'email',
         'category',
         'message',
-        'created_at',
+        'createdAt',
     ];
 
 }

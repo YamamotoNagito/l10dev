@@ -15,23 +15,23 @@ class LecturesTableSeeder extends Seeder
     {
         //講義データの追加
         DB::table('lectures')->insert([
-            'lecture_name' => 'プログラミング1',
-            'teacher_name' => '田中角栄',
+            'lectureName' => 'プログラミング1',
+            'teacherName' => '田中角栄',
         ]);
 
         DB::table('lectures')->insert([
-            'lecture_name' => 'プログラミング2',
-            'teacher_name' => '山本太郎',
+            'lectureName' => 'プログラミング2',
+            'teacherName' => '山本太郎',
         ]);
 
         DB::table('lectures')->insert([
-            'lecture_name' => '一攫千金特論',
-            'teacher_name' => '服部はん',
+            'lectureName' => '一攫千金特論',
+            'teacherName' => '服部はん',
         ]);
 
         DB::table('lectures')->insert([
-            'lecture_name' => '機械学習特論',
-            'teacher_name' => '岩本幸美',
+            'lectureName' => '機械学習特論',
+            'teacherName' => '岩本幸美',
         ]);
 
     }

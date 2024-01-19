@@ -10,10 +10,10 @@ class LectureDetailsSeeder extends Seeder
     public function run()
     {
         // 講義詳細データの追加
-        DB::table('lecture_details')->insert([
-            'lecture_id' => 1,  // 適切な lecture_id を指定
-            'lecture_code' => 'ABC123',
-            'syllabus_url' => 'https://example.com/syllabus',
+        DB::table('lectureDetails')->insert([
+            'lectureId' => 1,  // 適切な lectureId を指定
+            'lectureCode' => 'ABC123',
+            'syllabusUrl' => 'https://example.com/syllabus',
             'location' => '東広島',
             'faculty' => '情報科学部',
             'category' => 'プログラミング',
@@ -21,10 +21,10 @@ class LectureDetailsSeeder extends Seeder
         ]);
 
         // 別の講義詳細データの追加
-        DB::table('lecture_details')->insert([
-            'lecture_id' => 2,  // 適切な lecture_id を指定
-            'lecture_code' => 'XYZ456',
-            'syllabus_url' => 'https://example.com/syllabus2',
+        DB::table('lectureDetails')->insert([
+            'lectureId' => 2,  // 適切な lectureId を指定
+            'lectureCode' => 'XYZ456',
+            'syllabusUrl' => 'https://example.com/syllabus2',
             'location' => '霞キャンパス',
             'faculty' => '工学部',
             'category' => 'プログラミング',
