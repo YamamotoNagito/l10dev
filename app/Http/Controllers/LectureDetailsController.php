@@ -159,7 +159,48 @@ class LectureDetailsController extends Controller
                             ->select('skillLevel')
                             ->average('skillLevel');
 
-        // 
+        // 回数カウント系の処理
+        // 成績のカウント処理
+        $gradeCounts = Reviews::where('lectureId', $lectureId)
+                    ->select('grades')
+                    ->get()
+                    ->groupBy('grades')
+                    ->map->count();
+
+        // 出席のカウント処理
+        $attendanceConfirmCounts = Reviews::where('lectureId', $lectureId)
+                                 ->select('attendanceConfirm')
+                                 ->get()
+                                 ->groupBy('attendanceConfirm')
+                                 ->map->count();
+        
+        //  過去問のカウント処理
+        $pastExamPossessionCounts = Reviews::where('lectureId', $lectureId)
+                                 ->select('pastExamPossession')
+                                 ->get()
+                                 ->groupBy('pastExamPossession')
+                                 ->map->count();
+                                 
+        //  週ごとの課題のカウント処理
+        $weeklyAssignmentsCounts = Reviews::where('lectureId', $lectureId)
+                                 ->select('weeklyAssignments')
+                                 ->get()
+                                 ->groupBy('weeklyAssignments')
+                                 ->map->count();
+        
+        //  中間課題のカウント処理
+        $midtermAssignmentsCounts = Reviews::where('lectureId', $lectureId)
+                                  ->select('midtermAssignments')
+                                  ->get()
+                                  ->groupBy('midtermAssignments')
+                                  ->map->count();
+        
+        //  最終課題のカウント処理
+        $finalAssignmentsCounts = Reviews::where('lectureId', $lectureId)
+                                  ->select('finalAssignments')
+                                  ->get()
+                                  ->groupBy('finalAssignments')
+                                  ->map->count();
 
         $classDetailData = [
             'classInformationData' => [
@@ -179,40 +220,46 @@ class LectureDetailsController extends Controller
             // "info_b"=>"b",
             // "info_c"=>"c",
 
-                'classRadarChartData' => [
+            'classRadarChartData' => [
                 'creditLevel' => $averageCreditLevel,
                 'interestLevel' => $averageinterestLevel,
                 'skillLevel' => $averageskillLevel,
             ],
             'classBarGraphData' => [
-                'grades': {
-                    // S: 20,
-                    // A: 30,
-                    // B: 30,
-                    // C: 30,
-                    // D: 80,
-                },
-                'attendanceConfirm': {
-                //   everyday: 1,
-                //   sometimes: 20,
-                //   none: 200,
-                },
-                'pastExamPossesion': {
-                //   yes: 20,
-                //   no: 300,
-                },
-                'weeklyAssignments': {
-                //   yes: 20,
-                //   no: 300,
-                },
-                'midtermAssignments': {
-                //   yes: 300,
-                //   no: 1,
-                },
-                'finalAssignments': {
-                //   yes: 300,
-                //   no: 1,
-                },
+                'grades'=>$gradeCounts,
+                // {
+                //     // S: 20,
+                //     // A: 30,
+                //     // B: 30,
+                //     // C: 30,
+                //     // D: 80,
+                // },
+                'attendanceConfirm'=>$attendanceConfirmCounts,
+                // 'attendanceConfirm': {
+                // //   everyday: 1,
+                // //   sometimes: 20,
+                // //   none: 200,
+                // },
+                'pastExamPossesion'=>$pastExamPossessionCounts,
+                // 'pastExamPossesion': {
+                // //   yes: 20,
+                // //   no: 300,
+                // },
+                'weeklyAssignments'=>$weeklyAssignmentsCounts,
+                // 'weeklyAssignments': {
+                // //   yes: 20,
+                // //   no: 300,
+                // },
+                'midtermAssignments'=>$midtermAssignmentsCounts,
+                // 'midtermAssignments': {
+                // //   yes: 300,
+                // //   no: 1,
+                // },
+                'finalAssignments'=>$finalAssignmentsCounts,
+                // 'finalAssignments': {
+                // //   yes: 300,
+                // //   no: 1,
+                // },
             ],
             'reviewDataList' => $review_info->toArray(),
         ];
