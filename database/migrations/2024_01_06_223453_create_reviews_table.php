@@ -25,7 +25,8 @@ class CreateReviewsTable extends Migration
             $table->integer('skillLevel');
             $table->text('comments',2048)->nullable();
             $table->boolean('isVisible')->default(true);
-            $table->timestamps('createdAt', 'updatedAt'); // createdAt と updatedAt カラムの追加
+            $table->timestamp('createdAt')->default(now()); // createdAt(ユーザー作成日時)
+            $table->timestamp('updatedAt')->default(now()); // updatedAt(最終ログイン日時)
         });
     }
 
