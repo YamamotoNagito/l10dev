@@ -14,11 +14,11 @@ class Lectures extends Model
     use HasFactory;
 
     protected $table = 'lectures';
-    protected $primaryKey = 'lecture_id';
+    protected $primaryKey = 'lectureId';
     public $timestamps = true;
 
     protected $fillable = [
-        'lecture_name',
-        'teacher_name',
+        'lectureName',
+        'teacherName',
     ];
 }

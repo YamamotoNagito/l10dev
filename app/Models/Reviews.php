@@ -11,24 +11,24 @@ class Reviews extends Model
     use HasFactory;
 
     protected $table = 'reviews';
-    protected $primaryKey = 'review_id';
+    protected $primaryKey = 'reviewId';
     public $timestamps = true;
 
     protected $fillable = [
-        'lecture_id',
-        'user_id',
-        'attendance_year',
-        'attendance_confirm',
-        'weekly_assignments',
-        'midterm_assignments',
-        'final_assignments',
-        'past_exam_possession',
+        'lectureId',
+        'userId',
+        'attendanceYear',
+        'attendanceConfirm',
+        'weeklyAssignments',
+        'midtermAssignments',
+        'finalAssignments',
+        'pastExamPossession',
         'grades',
-        'credit_level',
-        'interest_level',
-        'skill_level',
+        'creditLevel',
+        'interestLevel',
+        'skillLevel',
         'comments',
-        'is_visible',
+        'isVisible',
     ];
 
     /**
@@ -36,7 +36,7 @@ class Reviews extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'userId');
     }
 
     /**
@@ -44,6 +44,6 @@ class Reviews extends Model
      */
     public function lecture()
     {
-        return $this->belongsTo(Lectures::class, 'lecture_id');
+        return $this->belongsTo(Lectures::class, 'lectureId');
     }
 }

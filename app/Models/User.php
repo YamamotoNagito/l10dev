@@ -15,13 +15,13 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use HasRoles; // 権限の更新に必要
 
-    // 主キーを 'user_id' に設定する例
-    protected $primaryKey = 'user_id';
+    // 主キーを 'userId' に設定する例
+    protected $primaryKey = 'userId';
 
     // ユーザーの最終ログイン日時を更新するメソッド
     public function updateLastLogin()
     {
-        $this->update(['last_login_at' => now()]);
+        $this->update(['lastLoginAt' => now()]);
     }
 
     /**
@@ -30,18 +30,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_name',
-        'user_email',
+        'userName',
+        'userEmail',
         'password',
-        'university_name',
+        'universityName',
         'category',
         'faculty',
         'department',
-        'admission_year',
-        'is_active',
-        'created_at',
-        'updated_at',
-        'last_login_at',
+        'admissionYear',
+        'isActive',
+        'createdAt',
+        'updatedAt',
+        'lastLoginAt',
     ];
 
     /**
