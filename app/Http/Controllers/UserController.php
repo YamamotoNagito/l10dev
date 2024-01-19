@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
-use App\Models\User;
+use App\Models\Users;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
 
