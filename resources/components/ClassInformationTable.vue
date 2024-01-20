@@ -29,7 +29,7 @@ const items = ref([
   },
   {
     categoryName: "講義コード",
-    information: props.classInformationData.teacherName,
+    information: props.classInformationData.lectureCode,
   },
   {
     categoryName: "開講場所",
@@ -37,11 +37,11 @@ const items = ref([
   },
   {
     categoryName: "開港時期",
-    information: props.classInformationData.term + ",  " + props.classInformationData.day + ",  " + props.classInformationData.period,
+    information: props.classInformationData.term + ",  " + props.classInformationData.dayOfWeek + ",  " + props.classInformationData.timePeriod,
   },
   {
     categoryName: "シラバス",
-    information: props.classInformationData.syllabus,
+    information: props.classInformationData.syllabusUrl,
   },
 ]);
 </script>

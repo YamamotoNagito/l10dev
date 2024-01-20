@@ -11,13 +11,11 @@ const props = defineProps(["reviewData"]);
 
 const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
 
-const radarChartData = ref([
-  props.reviewData.ease,
-  props.reviewData.interesting,
-  props.reviewData.qualityOfTeacher,
-  props.reviewData.support,
-  props.reviewData.skills,
-]);
+const radarChartData = {
+  creditLevel : props.reviewData.creditLevel,
+  interestLevel : props.reviewData.interestLevel,
+  skillLevel : props.reviewData.skillLevel,
+};
 
 const isLiked = ref(false);
 const isReported = ref(false);
@@ -42,7 +40,7 @@ const toggleReported = () => {
       <v-col cols="11">
         <v-row justify="center" align="center">
           <v-col cols="12" lg="6">
-            <v-container class="text-h5">{{ reviewData.name }}</v-container>
+            <v-container class="text-h5">{{ reviewData.userName }}</v-container>
           </v-col>
           <v-col cols="12" lg="6">
             <StarRading
@@ -57,16 +55,16 @@ const toggleReported = () => {
       <v-col>
         <v-container class="d-flex flex-row align-center pl-1">
           <v-card-subtitle
-            >受講年度：{{ reviewData.yearOfAttendance }}年</v-card-subtitle
+            >受講年度：{{ reviewData.attendanceYear }}年</v-card-subtitle
           >
-          <v-card-subtitle>投稿日：{{ reviewData.date }}</v-card-subtitle>
+          <v-card-subtitle>投稿日：{{ reviewData.createdAt }}</v-card-subtitle>
         </v-container>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
         <v-card-text class="ml-1">
-          {{ reviewData.comment }}
+          {{ reviewData.comments }}
         </v-card-text>
       </v-col>
     </v-row>
@@ -85,27 +83,27 @@ const toggleReported = () => {
                   <tbody>
                     <tr>
                       <td>評定</td>
-                      <td>{{ reviewData.evaluation }}</td>
+                      <td>{{ reviewData.totalEvaluation }}</td>
                     </tr>
                     <tr>
                       <td>出欠確認</td>
-                      <td>{{ reviewData.attendance }}</td>
+                      <td>{{ reviewData.attendanceConfirm }}</td>
                     </tr>
                     <tr>
                       <td>過去問の所持</td>
-                      <td>{{ reviewData.pastQuestion }}</td>
+                      <td>{{ reviewData.pastExamPossesion }}</td>
                     </tr>
                     <tr>
                       <td>日々の課題</td>
-                      <td>{{ reviewData.assignments }}</td>
+                      <td>{{ reviewData.weeklyAssignments }}</td>
                     </tr>
                     <tr>
                       <td>中間レポ・テスト</td>
-                      <td>{{ reviewData.midtermGrades }}</td>
+                      <td>{{ reviewData.midtermAssignments }}</td>
                     </tr>
                     <tr>
                       <td>期末レポ・テスト</td>
-                      <td>{{ reviewData.finalGrades }}</td>
+                      <td>{{ reviewData.finalAssignments }}</td>
                     </tr>
                   </tbody>
                 </v-table>

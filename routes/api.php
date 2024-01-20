@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\LectureDetailsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,8 @@ Route::post('/contact', [ContactController::class, 'store']);
 Route::get('/profile/{user_id}', [UserController::class, 'show']);
 
 
+// 講義コードの有無を検索
+Route::post('/hasLectureCode', [LectureDetailsController::class, 'hasLectureCode']);
+
+// 講義コードから詳細情報を検索
+Route::post('/search', [LectureDetailsController::class, 'search']);
