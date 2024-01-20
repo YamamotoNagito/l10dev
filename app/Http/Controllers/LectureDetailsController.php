@@ -9,9 +9,12 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use App\Models\LectureDetails;
+use App\Models\LectureDetailTimes;
 use App\Models\Lectures;
 use App\Models\Reviews;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
+
 
 class LectureDetailsController extends Controller
 {
@@ -75,76 +78,208 @@ class LectureDetailsController extends Controller
     public function hasLectureCode(Request $request)
     {
         // 講義コードの取得
-        $lecture_code = $request['lectureCode'];
+        $lectureCode = "ABC123";
+        // $lectureCode = $request['lectureCode'];
 
         // 講義idの取得
-        $lecture_id = LectureDetails::where('lecture_code', $lecture_code)
-                      ->value('lecture_id');
+        $lectureId = LectureDetails::where('lectureCode', $lectureCode)
+                      ->value('lectureId');
         
         // 講義idの有無を判別
-        if($lecture_id == null){
+        if($lectureId == null){
             return response()->json(['success' => false,'message' => '講義コードが存在しません']);
         }else{
-            return response()->json(['success' => true, 'lecture_id' => $lecture_id, 'message' => '講義コードが存在します']);
+            return response()->json(['success' => true, 'lectureId' => $lectureId, 'message' => '講義コードが存在します']);
         }
         
     }
 
     // 講義コードから授業情報の出力
-    public function search(Request $request)
+    public function searchByLectureCode(Request $request)
     {
         // 講義コードの取得
-        $lecture_code = "ABC123";
+        $lectureCode = "ABC123";
 
-        // 講義idの取得
-        $lecture_id = LectureDetails::where('lecture_code', $lecture_code)
-                      ->value('lecture_id');;
-                      
-        // Lecturesテーブルの講義idを基に授業名・担当教員名の取得
-        $lecture_info = Lectures::where('lecture_id', $lecture_id)
-                    // ->value('lecture_name');
-                    ->select('lecture_id', 'lecture_name', 'teacher_name')
-                    ->get();
+        // 講義コードに概要する情報を取得する
+        // LectureDetailsテーブルからすべての情報を取得
+        $lectureDetail = LectureDetails::where('lectureCode', $lectureCode)->first();
+        Log::Debug("lectureDetail");
+        Log::Debug($lectureDetail);
+
+        // $lectureDetail["time"] = ["おはよう","おやすみ"];
+        // Log::Debug("lectureDetail");
+        // Log::Debug($lectureDetail);
+
+        // 講義コードの取得
+        $lectureId = $lectureDetail->lecture->lectureId;
+        Log::Debug("lectureId");
+        Log::Debug($lectureId);
         
-        // 授業名・主担当教員名の出力
-        if ($lecture_info) {
-            $lecture_id = $lecture_info->lecture_id;
-            $lecture_name = $lecture_info->lecture_name;
-            $teacher_name = $lecture_info->teacher_name;            
-        }
+        // ⓵Lecutesモデルから講義IDが一致する授業名を取得する
+        $lecture = Lectures::where("lectureId",$lectureId)->first(["lectureName","teacherName"]);
+        Log::Debug("lecture");
+        Log::Debug($lecture);
+
+        // ⓶講義IDを検索条件として、LectureDetailsの一覧の取得
+        // 例：LecturesモデルからlectureIdが1のデータとそのLectureDetailTimesの一覧を取得する
+        // $lectureDetail = Lectures::with('lectureDetails')->find($lectureId);
+        // Log::Debug("lectureDetails");
+        // Log::Debug($lectureDetail);
+        // Log::Debug(json_encode($lecture, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+        // LectureDetailsテーブルからlectureIdに紐づく一覧を取得
+        $lectureDetail = LectureDetails::where('lectureId', $lectureId)->get(["lectureDetailId","lectureCode","syllabusUrl","location","faculty","category","grade"]);
+
+        // LectureDetailTimesテーブルからlectureIdに紐づく一覧を取得
+        // $lectureDetailTimes = LectureDetailTimes::whereIn('lectureDetailId', $lectureDetails->pluck('lectureDetailId'))->get();
+
+        // LectureDetailsのlectureDetailIdに基づいてLectureDetailTimesの一覧を取得
+        $lectureDetailTime = $lectureDetail->map(function ($lectureDetail) {
+            $times = LectureDetailTimes::where('lectureDetailId', $lectureDetail->lectureDetailId)->get(["year","term","dayOfWeek","timePeriod"]);
+            $lectureDetail["lectureDetailTimes"] = $times;
+            // return $lectureDetail;
+        });
 
         // Reviewsテーブルのlecture_idを基にレビュー一覧の取得
-        // 'midterm_assignments' => $request['midterm_assignments'],
-        // 'final_assignments' => $request['final_assignments'],
-        // 'past_exam_possession' => $request['past_exam_possession'],
-        // 'grades' => $request['grades'],
-        // 'credit_level' => $request['credit_level'],
-        // 'interest_level' => $request['interest_level'],
-        // 'skill_level' => $request['skill_level'],
-        // 'comments' => $request['comments'],
-        // 'is_visible' => $request['is_visible'],
-        $review_info = Reviews::where('lecture_id', $lecture_id)
-                    // ->value('lecture_name');
-                    ->select('attendance_year', 'attendance_confirm', 'weekly_assignments', 'midterm_assignments', 'final_assignments')
-                    // ->select('attendance_year', 'attendance_confirm', 'weekly_assignments', 'midterm_assignments', 'final_assignments', '', '', '', '')
+        $review_info = Reviews::where('lectureId', $lectureId)
+                    // ->select('attendance_year', 'attendance_confirm', 'weekly_assignments', 'midterm_assignments', 'final_assignments')
+                    ->select('attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments')
                     ->get();
 
-        Log::Debug($review_info);
-        Log::Debug(response()->json($review_info));
+        // 合計評価の計算処理
+        // 講義コードからレビュー一覧を取得
+        // その中で合計処理をはしらせる
+        $averageCreditLevel = Reviews::where('lectureId', $lectureId)
+                            ->select('creditLevel')
+                            ->average('creditLevel');
+        $averageinterestLevel = Reviews::where('lectureId', $lectureId)
+                            ->select('interestLevel')
+                            ->average('interestLevel');
+        $averageskillLevel = Reviews::where('lectureId', $lectureId)
+                            ->select('skillLevel')
+                            ->average('skillLevel');
 
-        // if ($review_info) {
-        //     $attendance_year = $review_info->attendance_year;
-        //     $attendance_confirm = $review_info->attendance_confirm;
-        //     $weekly_assignments = $review_info->weekly_assignments;
-            
-        //     // ここで取得した情報を使って何かしらの処理を行う
-        //     Log::Debug("レビュー情報");
-        //     Log::Debug($attendance_year);
-        //     Log::Debug($attendance_confirm);
-        //     Log::Debug($weekly_assignments);
-        // }
+        // 回数カウント系の処理
+        // 成績のカウント処理
+        $gradeCounts = Reviews::where('lectureId', $lectureId)
+                    ->select('grades')
+                    ->get()
+                    ->groupBy('grades')
+                    ->map->count();
 
-        // return response()->json(['success' => true, 'lecture_name' => $lecture_name, 'teacher_name' => $teacher_name]);
-        return response()->json($review_info);
+        // 出席のカウント処理
+        $attendanceConfirmCounts = Reviews::where('lectureId', $lectureId)
+                                 ->select('attendanceConfirm')
+                                 ->get()
+                                 ->groupBy('attendanceConfirm')
+                                 ->map->count();
+        
+        //  過去問のカウント処理
+        $pastExamPossessionCounts = Reviews::where('lectureId', $lectureId)
+                                 ->select('pastExamPossession')
+                                 ->get()
+                                 ->groupBy('pastExamPossession')
+                                 ->map->count();
+                                 
+        //  週ごとの課題のカウント処理
+        $weeklyAssignmentsCounts = Reviews::where('lectureId', $lectureId)
+                                 ->select('weeklyAssignments')
+                                 ->get()
+                                 ->groupBy('weeklyAssignments')
+                                 ->map->count();
+        
+        //  中間課題のカウント処理
+        $midtermAssignmentsCounts = Reviews::where('lectureId', $lectureId)
+                                  ->select('midtermAssignments')
+                                  ->get()
+                                  ->groupBy('midtermAssignments')
+                                  ->map->count();
+        
+        //  最終課題のカウント処理
+        $finalAssignmentsCounts = Reviews::where('lectureId', $lectureId)
+                                  ->select('finalAssignments')
+                                  ->get()
+                                  ->groupBy('finalAssignments')
+                                  ->map->count();
+
+        $classDetailData = [
+            'classInformationData' => [
+            // 'classInformationData' => [
+                'lectureName' => $lecture->lectureName,
+                'teacherName' => $lecture->teacherName,
+                // 'lectureDetails' => $lectureDetails,
+                'classInformationDataList' => [
+                    $lectureDetail,
+                    // $lectureDetail->toArray(),
+                    // "lectureDetailTimes" => [
+                    //     // $times,
+                    // ]
+                ],
+            ],
+            // "info_a"=>"a",
+            // "info_b"=>"b",
+            // "info_c"=>"c",
+
+            'classRadarChartData' => [
+                'creditLevel' => $averageCreditLevel,
+                'interestLevel' => $averageinterestLevel,
+                'skillLevel' => $averageskillLevel,
+            ],
+            'classBarGraphData' => [
+                'grades'=>$gradeCounts,
+                // {
+                //     // S: 20,
+                //     // A: 30,
+                //     // B: 30,
+                //     // C: 30,
+                //     // D: 80,
+                // },
+                'attendanceConfirm'=>$attendanceConfirmCounts,
+                // 'attendanceConfirm': {
+                // //   everyday: 1,
+                // //   sometimes: 20,
+                // //   none: 200,
+                // },
+                'pastExamPossesion'=>$pastExamPossessionCounts,
+                // 'pastExamPossesion': {
+                // //   yes: 20,
+                // //   no: 300,
+                // },
+                'weeklyAssignments'=>$weeklyAssignmentsCounts,
+                // 'weeklyAssignments': {
+                // //   yes: 20,
+                // //   no: 300,
+                // },
+                'midtermAssignments'=>$midtermAssignmentsCounts,
+                // 'midtermAssignments': {
+                // //   yes: 300,
+                // //   no: 1,
+                // },
+                'finalAssignments'=>$finalAssignmentsCounts,
+                // 'finalAssignments': {
+                // //   yes: 300,
+                // //   no: 1,
+                // },
+            ],
+            'reviewDataList' => $review_info->toArray(),
+        ];
+
+        // $classDetailData = collect($classDetailData)->mapWithKeys(function ($value, $key) {
+        //     if (is_array($value) && !empty($value) && $this->is_assoc($value)) {
+        //         // 配列が連想配列の場合、再帰的に処理
+        //         return [Str::camel($key) => $this->convertKeysToCamelCase($value)];
+        //     } else {
+        //         // それ以外の場合、単純に変換
+        //         return [Str::camel($key) => $value];
+        //     }
+        // })->all();
+
+        // 取得したデータをJSON形式でレスポンス
+        return response()->json(
+            $classDetailData
+            // $camelCaseData
+        );
+        return response()->json($classDetailData);
     }
+
 }

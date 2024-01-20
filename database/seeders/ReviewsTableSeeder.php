@@ -29,6 +29,25 @@ class ReviewsTableSeeder extends Seeder
             'updatedAt' => now(),
         ]);
 
+        DB::table('reviews')->insert([
+            'lectureId' => 1,
+            'userId' => 1,
+            'attendanceYear' => 2024,
+            'attendanceConfirm' => '出席なし',
+            'weeklyAssignments' => '良い',
+            'midtermAssignments' => '普通',
+            'finalAssignments' => '良い',
+            'pastExamPossession' => 'あり',
+            'grades' => 'A',
+            'creditLevel' => 4,
+            'interestLevel' => 5,
+            'skillLevel' => 1,
+            'comments' => 'この講義は非常に面白かったです。',
+            'isVisible' => true,
+            'createdAt' => now(),
+            'updatedAt' => now(),
+        ]);
+
         // 別のレビューデータを挿入する場合は、適宜追加
         DB::table('reviews')->insert([
             'lectureId' => 2,

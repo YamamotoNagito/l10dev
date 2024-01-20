@@ -48,10 +48,10 @@ const classDetailData = {
     lectureName: "一攫千金特論",
     teacherName: "服部淳生",
     lectureCode: "KA111111",
-    place: "この地球のどこか",
-    term: "2ターム",
-    dayOfWeek: "月曜日",
-    timePeriod: "2時限",
+    // place: "この地球のどこか",
+    // term: "2ターム",
+    // dayOfWeek: "月曜日",
+    // timePeriod: "2時限",
     syllabusUrl: "https://google.com",
   },
   //総合評価
@@ -63,7 +63,7 @@ const classDetailData = {
   //レビュワーからのデータの統計
   classBarGraphData: {
     grades: {
-      S: 20,
+      優: 20,
       A: 30,
       B: 30,
       C: 30,
@@ -83,7 +83,7 @@ const classDetailData = {
       no: 300,
     },
     midtermAssignments: {
-      yes: 300,
+      "あり": 300,
       no: 1,
     },
     finalAssignments: {
