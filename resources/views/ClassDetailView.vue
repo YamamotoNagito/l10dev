@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, getCurrentInstance } from "vue";
+import { ref, onMounted, getCurrentInstance, onBeforeMount } from "vue";
 import ClassDetail from "../components/ClassDetail.vue";
 import { mdiConsoleNetworkOutline } from "@mdi/js";
 import axios from "axios";
@@ -8,17 +8,14 @@ const lectureCode = ref(null);
 // 後でこのコメントアウトは外す！
 const classDetailData = ref(null);
 
-const getclassDetailData = async (lectureCode) => {
+const getclassDetailData = async(lectureCode) => {
   console.log("おはよう");
   try {
     const response = await axios.post("/api/searchByLectureCode", lectureCode);
     // const response = await axios.post("/api/hasLectureCode", data);
-    console.log(response.data);
+    // console.log(response.data);
 
     return response.data;
-
-    // await axios.post("/api/contact", lectureCode);
-    // router.push("/contact");
 
     // その他の処理
   } catch (error) {
@@ -32,33 +29,15 @@ const getclassDetailData = async (lectureCode) => {
   }
 };
 
-onMounted(() => {
+onBeforeMount(async() => {
   // contextから$routeを取得する
   const { $route } = getCurrentInstance().appContext.config.globalProperties;
   //lectureIdを$routeから取得
   lectureCode.value = $route.params.lectureCode;
   console.log(`lecture code  is ${lectureCode.value}`);
 
-  // classDetailData.value = getclassDetailData(lectureCode);
-  classDetailData.value = async () => {
-    console.log("おはよう");
-    try {
-      const response = await axios.post(
-        "/api/searchByLectureCode",
-        lectureCode
-      );
-      // const response = await axios.post("/api/hasLectureCode", data);
-      console.log(response.data)
-    } catch (error) {
-      if (error.response) {
-        // サーバーからのエラーレスポンスがある場合
-        console.error(error.response.data); // エラーレスポンスをコンソールに出力
-      } else {
-        // リクエストがサーバーに届かなかった場合など
-        console.error(error.message);
-      }
-    }
-  };
+  classDetailData.value = await getclassDetailData(lectureCode);
+  // classDetailData.value = getclassDetailData(lectureCode.value);
 
   // console.log(classDetailData2)
   console.log(classDetailData.value);
@@ -791,6 +770,6 @@ const classDetailData2 = {
 
 <template>
   aa
-  <!-- {{ classDetailData.value }} -->
-  <!-- <ClassDetail :classDetailData="classDetailData"></ClassDetail> -->
+  <!-- {{ classDetailData }} -->
+  <ClassDetail :classDetailData="classDetailData"></ClassDetail>
 </template>
