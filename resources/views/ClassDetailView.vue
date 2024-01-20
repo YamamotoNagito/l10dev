@@ -13,7 +13,7 @@ const getclassDetailData = async(lectureCode) => {
   try {
     const response = await axios.post("/api/searchByLectureCode", lectureCode);
     // const response = await axios.post("/api/hasLectureCode", data);
-    // console.log(response.data);
+    console.log(response.data);
 
     return response.data;
 

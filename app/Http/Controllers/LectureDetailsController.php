@@ -140,6 +140,8 @@ class LectureDetailsController extends Controller
             // return $lectureDetail;
         });
 
+        $lectureDetailTime->toArray();
+
         // Reviewsテーブルのlecture_idを基にレビュー一覧の取得
         $review_info = Reviews::where('lectureId', $lectureId)
                     // ->select('attendance_year', 'attendance_confirm', 'weekly_assignments', 'midterm_assignments', 'final_assignments')
@@ -208,13 +210,13 @@ class LectureDetailsController extends Controller
                 'lectureName' => $lecture->lectureName,
                 'teacherName' => $lecture->teacherName,
                 // 'lectureDetails' => $lectureDetails,
-                'classInformationDataList' => [
+                'classInformationDataList' => //[
                     $lectureDetail,
                     // $lectureDetail->toArray(),
                     // "lectureDetailTimes" => [
                     //     // $times,
                     // ]
-                ],
+                // ],
             ],
             // "info_a"=>"a",
             // "info_b"=>"b",
