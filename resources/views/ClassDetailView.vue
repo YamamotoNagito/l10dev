@@ -1,24 +1,25 @@
 <script setup>
 import { ref, onMounted, getCurrentInstance } from "vue";
 import ClassDetail from "../components/ClassDetail.vue";
+import { mdiConsoleNetworkOutline } from "@mdi/js";
+import axios from "axios";
 
-const lectureId = ref(null);
+const lectureCode = ref(null);
 // 後でこのコメントアウトは外す！
-// const classDetailData = ref(null);
+const classDetailData = ref(null);
 
-const getclassDetailData = async (lectureId) => {
+const getclassDetailData = async (lectureCode) => {
+  console.log("おはよう");
   try {
-    // lectureIdを引数としてsearchをバックに呼ぶ
-    const response = await axios.post("/api/search", lectureId);
-    console.log("response");
-    console.log(response);
-    if (response.data.success) {
-      // search関数の戻り値は，classDetailDataという名前のjson形式でお願いします．
-      // 詳しいデータ形式（フロントサイドからの要望）は，コードの下の方に直書きしているので参照してください！
-      return response.data.classDetailData;
-    } else {
-      console.log("クラス情報の取得に失敗しました");
-    }
+    const response = await axios.post("/api/searchByLectureCode", lectureCode);
+    // const response = await axios.post("/api/hasLectureCode", data);
+    console.log(response.data);
+
+    return response.data;
+
+    // await axios.post("/api/contact", lectureCode);
+    // router.push("/contact");
+
     // その他の処理
   } catch (error) {
     if (error.response) {
@@ -35,35 +36,98 @@ onMounted(() => {
   // contextから$routeを取得する
   const { $route } = getCurrentInstance().appContext.config.globalProperties;
   //lectureIdを$routeから取得
-  lectureId.value = $route.params.lectureId;
-  // console.log(`lecture id is ${lectureId.value}`)
+  lectureCode.value = $route.params.lectureCode;
+  console.log(`lecture code  is ${lectureCode.value}`);
 
-  // classDetailDataに，授業詳細情報に関するすべてのデータが格納される．
-  // 現在は応急的な処置として，下に直書きする
-  //   classDetailData = getclassDetailData(lectureId)
+  // classDetailData.value = getclassDetailData(lectureCode);
+  classDetailData.value = async () => {
+    console.log("おはよう");
+    try {
+      const response = await axios.post(
+        "/api/searchByLectureCode",
+        lectureCode
+      );
+      // const response = await axios.post("/api/hasLectureCode", data);
+      console.log(response.data)
+    } catch (error) {
+      if (error.response) {
+        // サーバーからのエラーレスポンスがある場合
+        console.error(error.response.data); // エラーレスポンスをコンソールに出力
+      } else {
+        // リクエストがサーバーに届かなかった場合など
+        console.error(error.message);
+      }
+    }
+  };
+
+  // console.log(classDetailData2)
+  console.log(classDetailData.value);
 });
 
-const classDetailData = {
+// サンプルデータ
+const classDetailData2 = {
   classInformationData: {
     lectureName: "一攫千金特論",
     teacherName: "服部淳生",
-    lectureCode: "KA111111",
-    // place: "この地球のどこか",
-    // term: "2ターム",
-    // dayOfWeek: "月曜日",
-    // timePeriod: "2時限",
-    syllabusUrl: "https://google.com",
+    classInformationDataList: [
+      {
+        category: "プログラミング",
+        faculty: "情報科学部",
+        grade: "1年生",
+        lectureCode: "ABC123",
+        lectureDetailId: 1,
+        location: "London",
+        syllabusUrl: "https://google.com",
+        lectureDetailTimes: [
+          {
+            year: 2024,
+            term: "2ターム",
+            dayOfWeek: "月曜日",
+            timePeriod: "12限",
+          },
+          {
+            year: 2023,
+            term: "4ターム",
+            dayOfWeek: "月曜日",
+            timePeriod: "13限",
+          },
+        ],
+      },
+      {
+        category: "プログラミング",
+        faculty: "情報科学部",
+        grade: "1年生",
+        lectureCode: "ABC345",
+        lectureDetailId: 1,
+        location: "Birmingham",
+        syllabusUrl: "https://google.com",
+        lectureDetailTimes: [
+          {
+            year: 2024,
+            term: "2ターム",
+            dayOfWeek: "月曜日",
+            timePeriod: "14限",
+          },
+          {
+            year: 2023,
+            term: "4ターム",
+            dayOfWeek: "月曜日",
+            timePeriod: "15限",
+          },
+        ],
+      },
+    ],
   },
   //総合評価
   classRadarChartData: {
-    creditLevel : 2,
-    interestLevel : 3,
-    skillLevel : 5
+    creditLevel: 2,
+    interestLevel: 3,
+    skillLevel: 5,
   },
   //レビュワーからのデータの統計
   classBarGraphData: {
     grades: {
-      優: 20,
+      S: 20,
       A: 30,
       B: 30,
       C: 30,
@@ -83,7 +147,7 @@ const classDetailData = {
       no: 300,
     },
     midtermAssignments: {
-      "あり": 300,
+      yes: 300,
       no: 1,
     },
     finalAssignments: {
@@ -726,6 +790,7 @@ const classDetailData = {
 </script>
 
 <template>
+  aa
+  <!-- {{ classDetailData.value }} -->
   <!-- <ClassDetail :classDetailData="classDetailData"></ClassDetail> -->
-  <ClassDetail :classDetailData="classDetailData"></ClassDetail>
 </template>
