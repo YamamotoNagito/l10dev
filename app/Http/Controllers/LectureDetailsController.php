@@ -146,11 +146,15 @@ class LectureDetailsController extends Controller
         // Reviewsテーブルのlecture_idを基にレビュー一覧の取得
         $reviews = Reviews::where('lectureId', $lectureId)
                     // ->select('attendance_year', 'attendance_confirm', 'weekly_assignments', 'midterm_assignments', 'final_assignments')
-                    ->select('attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments','createdAt')
+                    ->select('reviewId','attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments','createdAt')
                     ->get();
 
         $review_info = $reviews->map(function ($review) {
+            
+            $userName = Reviews::find($review->reviewId)->user->userName;
+
             return [
+                'userName' => $userName,
                 'attendanceYear' => $review->attendanceYear,
                 'attendanceConfirm' => $review->attendanceConfirm,
                 'weeklyAssignments' => $review->weeklyAssignments,

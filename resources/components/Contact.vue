@@ -24,10 +24,7 @@ const clickButton = async() => {
   }
 
 try {
-    const response = await axios.post("/api/searchByLectureCode", data);
-    // const response = await axios.post("/api/hasLectureCode", data);
-    console.log(response);
-
+  
     await axios.post("/api/contact", data);
     router.push('/contact');
 
