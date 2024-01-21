@@ -141,8 +141,8 @@ const searchByLectureCode = async () => {
     console.log(response);
     if (response.data.success) {
       nonExistenceMessage.value = "";
-      const lectureCode = response.data.lectureCode;
-      router.push({ path: `class/${lectureCode}/detail` }, { params: lectureCode });
+      const lectureId = response.data.lectureId;
+      router.push({ path: `class/${lectureId}/detail` }, { params: lectureId });
     } else {
       nonExistenceMessage.value = "存在しない講義コードです．";
     }
