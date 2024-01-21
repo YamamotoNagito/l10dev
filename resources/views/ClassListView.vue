@@ -1,6 +1,6 @@
 <script setup>
-import { useRoute } from "vue-router";
-import { ref, onBeforeMount } from "vue";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { ref, onBeforeMount, onBeforeUnmount } from "vue";
 import axios from "axios";
 import ClassList from "../components/ClassList.vue";
 
@@ -101,7 +101,6 @@ const fetchData = async () => {
   // console.log(detailedCondition.value)
 };
 
-// classDataListに授業情報を外部から取得してくる;
 // const classDataList2 = ref([
 //   {
 //     className: "一攫千金特論",
@@ -161,8 +160,8 @@ const fetchData = async () => {
 //   },
 // ]);
 
-// コンポーネントがmountedされたときにデータをフェッチ
 onBeforeMount(async () => {
+  // 別のpathから移動してきたとき，またはページをリロード，初回読み込みの時
   await fetchData();
   if (detailedCondition.value) {
     await searchClassByDetailedCondition();
@@ -170,10 +169,25 @@ onBeforeMount(async () => {
     console.log("detailed condition is null");
   }
 });
+// 同じpathからqueryを変更して移動してきたとき，queryから検索するデータを取得する
+onBeforeRouteUpdate(async () => {
+  await fetchData();
+  if (detailedCondition.value) {
+    console.log("Before Route Update: Data exists");
+    await searchClassByDetailedCondition();
+  } else {
+    console.log("Before Route Update: detailed condition is null");
+  }
+});
 
+const showClassDataList = () => {
+  console.log("Class data list is :");
+  console.log(classDataList.value);
+};
 </script>
 
 <template>
   <ClassList v-if="classDataList" :classDataList="classDataList"></ClassList>
+  <v-btn class="mx-auto" @click="showClassDataList">sample</v-btn>
 </template>
 

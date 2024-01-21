@@ -72,7 +72,7 @@ const updateEvaluationObject = (evaluationString) => {
       evaluationObj.max = null
       break;
   }
-  console.log(evaluationObj)
+  // console.log(evaluationObj)
   return evaluationObj
 };
 
