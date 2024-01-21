@@ -83,7 +83,7 @@ const toggleReported = () => {
                   <tbody>
                     <tr>
                       <td>評定</td>
-                      <td>{{ reviewData.totalEvaluation }}</td>
+                      <td>{{ reviewData.grades }}</td>
                     </tr>
                     <tr>
                       <td>出欠確認</td>
@@ -91,7 +91,7 @@ const toggleReported = () => {
                     </tr>
                     <tr>
                       <td>過去問の所持</td>
-                      <td>{{ reviewData.pastExamPossesion }}</td>
+                      <td>{{ reviewData.pastExamPossession }}</td>
                     </tr>
                     <tr>
                       <td>日々の課題</td>
