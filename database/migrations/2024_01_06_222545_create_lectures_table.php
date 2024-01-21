@@ -12,7 +12,7 @@ class CreateLecturesTable extends Migration
             $table->string('lectureName');
             $table->string('teacherName');
 
-            $table->unique(['lectureName','teacherName']);
+            // $table->unique(['lectureName','teacherName']);
         });
     }
 
@@ -22,7 +22,7 @@ class CreateLecturesTable extends Migration
             // 修正: reviews テーブルが存在し、外部キー制約が正しいことを確認
             $table->dropForeign(['lectureId']);
         });
-        
+
         Schema::dropIfExists('lectures');
     }
 };
