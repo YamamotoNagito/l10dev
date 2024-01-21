@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
+use App\Models\Lectures;
 
 class LecturesController extends Controller
 {
@@ -60,5 +66,12 @@ class LecturesController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getLectureInfo(){
+        $lectureInfo = Lectures::select("lectureName","teacherName")->get();
+        // Log::Debug($lectureInfo);
+
+        return $lectureInfo;
     }
 }
