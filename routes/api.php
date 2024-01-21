@@ -39,8 +39,8 @@ Route::get('/profile/{user_id}', [UserController::class, 'show']);
 // 講義コードを持つかどうかの検索画面
 Route::post('/hasLectureCode', [LectureDetailsController::class, 'hasLectureCode']);
 
-// 講義コードに対する講義情報を返却する
-Route::post('/searchByLectureCode', [LectureDetailsController::class, 'searchByLectureCode']);
+// 講義Idに対する講義情報を返却する
+Route::post('/searchByLectureId', [LectureDetailsController::class, 'searchByLectureCode']);
 
 
 // 講義コードの有無を検索

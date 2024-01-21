@@ -89,32 +89,33 @@ class LectureDetailsController extends Controller
         if($lectureId == null){
             return response()->json(['success' => false,'message' => '講義コードが存在しません']);
         }else{
-            return response()->json(['success' => true, 'lectureCode' => $lectureCode, 'message' => '講義コードが存在します']);
+            return response()->json(['success' => true, 'lectureId' => $lectureId, 'message' => '講義コードが存在します']);
         }
         
     }
 
     // 講義コードから授業情報の出力
-    public function searchByLectureCode(Request $request)
+    public function searchByLectureId(Request $request)
     {
         // 講義コードの取得
         // $lectureCode = "ABC123";
-        $lectureCode = $request['lectureCode'];
+        // $lectureCode = $request['lectureCode'];
 
-        // 講義コードに概要する情報を取得する
-        // LectureDetailsテーブルからすべての情報を取得
-        $lectureDetail = LectureDetails::where('lectureCode', $lectureCode)->first();
-        Log::Debug("lectureDetail");
-        Log::Debug($lectureDetail);
-
-        // $lectureDetail["time"] = ["おはよう","おやすみ"];
+        // // 講義コードに概要する情報を取得する
+        // // LectureDetailsテーブルからすべての情報を取得
+        // $lectureDetail = LectureDetails::where('lectureCode', $lectureCode)->first();
         // Log::Debug("lectureDetail");
         // Log::Debug($lectureDetail);
 
-        // 講義コードの取得
-        $lectureId = $lectureDetail->lecture->lectureId;
-        Log::Debug("lectureId");
-        Log::Debug($lectureId);
+        // // $lectureDetail["time"] = ["おはよう","おやすみ"];
+        // // Log::Debug("lectureDetail");
+        // // Log::Debug($lectureDetail);
+
+        // // 講義コードの取得
+        $lectureId = $request['lectureId'];
+        // $lectureId = $lectureDetail->lecture->lectureId;
+        // Log::Debug("lectureId");
+        // Log::Debug($lectureId);
         
         // ⓵Lecutesモデルから講義IDが一致する授業名を取得する
         $lecture = Lectures::where("lectureId",$lectureId)->first(["lectureName","teacherName"]);
