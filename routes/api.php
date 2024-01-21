@@ -40,7 +40,7 @@ Route::get('/profile/{user_id}', [UserController::class, 'show']);
 Route::post('/hasLectureCode', [LectureDetailsController::class, 'hasLectureCode']);
 
 // 講義Idに対する講義情報を返却する
-Route::post('/searchByLectureId', [LectureDetailsController::class, 'searchByLectureCode']);
+Route::post('/searchByLectureId', [LectureDetailsController::class, 'searchByLectureId']);
 
 
 // 講義コードの有無を検索
