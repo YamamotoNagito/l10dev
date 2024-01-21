@@ -83,6 +83,29 @@ class LecturesController extends Controller
 
         $selectedConditions = $request;
 
+        // Log::Debug($selectedConditions);
+
+        // $selectedConditions = array_filter($selectedConditions, function ($value) {
+        //     return $value !== NULL;
+        // });
+
+        // if (is_array($request)) {
+        //     // NULLの値を持つ要素を削除
+        //     $selectedConditions = array_filter($request, function ($value) {
+        //         return $value !== NULL;
+        //     });
+        
+        //     // 結果を表示または利用
+        //     print_r($filteredRequest);
+        // } else {
+        //     // エラー処理または適切な処理を行う
+        //     echo "Invalid request format";
+        // }
+        
+        // $selectedConditions = [
+        //     'lectureName' => "プログラミング",
+        // ];
+
         // $selectedConditions=[
 
         //     // Lectureテーブル(授業名・先生名)の情報
@@ -137,9 +160,9 @@ class LecturesController extends Controller
         // $skillLevelMin = "";
 
         $lectureIds = DB::table('lectureDetailTimes')
-                    ->join('lectureDetails', 'lectureDetailTimes.lectureDetailId', '=', 'lectureDetails.lectureDetailId')
-                    ->join('lectures', 'lectureDetails.lectureId', '=', 'lectures.lectureId')
-                    ->join('reviews', 'reviews.lectureId', '=', 'lectures.lectureId')
+                    ->leftJoin('lectureDetails', 'lectureDetailTimes.lectureDetailId', '=', 'lectureDetails.lectureDetailId')
+                    ->leftJoin('lectures', 'lectureDetails.lectureId', '=', 'lectures.lectureId')
+                    ->leftJoin('reviews', 'reviews.lectureId', '=', 'lectures.lectureId')
                     ->where(function ($query) use ($selectedConditions) {
                         foreach ($selectedConditions as $conditionKey => $conditionValue) {
                             switch ($conditionKey) {
@@ -237,10 +260,43 @@ class LecturesController extends Controller
                     })
                     ->distinct()
                     ->pluck('lectures.lectureId');
-                    
+
+        // $lectureIds からデータを取得する処理を実装
+        $classData = Lectures::whereIn('lectureId', $lectureIds)->get();
+        $classDataList = $classData->map(function ($item) {
+
+            $reviewData = DB::table('reviews')
+                        ->where('lectureId', $item->lectureId)
+                        ->select(
+                            DB::raw('SUM(skillLevel) as totalSkillLevel'),
+                            DB::raw('SUM(interestLevel) as totalInterestLevel'),
+                            DB::raw('SUM(creditLevel) as totalCreditLevel'),
+                            DB::raw('COUNT(*) as reviewCount')
+                        )
+                        ->first();
+
+            Log::Debug($reviewData->reviewCount);
+
+            if ($reviewData->reviewCount > 0){
+                // 平均を計算
+                $totalEvaluation = ($reviewData->totalSkillLevel + $reviewData->totalInterestLevel + $reviewData->totalCreditLevel) / $reviewData->reviewCount / 3;
+            }else{
+                $totalEvaluation = 0;
+            }
+            
+            return [
+                'lectureId' => $item->lectureId,
+                'lectureName' => $item->lectureName,
+                'lectureCode' => $item->lectureCode,
+                'teacherName' => $item->teacherName,
+                'totalEvaluation' => $totalEvaluation,
+                'numberOfReviews' => $reviewData->reviewCount,
+            ];
+        });
 
         Log::Debug($lectureIds);
+        Log::Debug($classDataList);
         
-        return $lectureIds;
+        return $classDataList;
     }
 }
