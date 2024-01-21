@@ -1,42 +1,63 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
 import vuetify from '../js/vuetify';
 import axios from 'axios';
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email } from '@vuelidate/validators';
+
 
 const router = useRouter();
 
 const name = ref('');
-const email = ref('');
+const emailInputed = ref('');
 const message = ref('');
+const category = ref(null);
 
 const category_items = ref(['退会したい', 'バグ報告', 'その他']);
-const category = ref(null);
+
+const rules = {
+  name: { required },
+  emailInputed: { required, email },
+  message: { required },
+  category: { required },
+};
+
+const v$ = useVuelidate(rules, { name, emailInputed, message, category });
 
 const clickButton = async() => {
   console.log("クリックされたで");
 
-  const data = {
-    name:name.value,
-    email:email.value,
-    category:category.value,
-    message:message.value,
-  }
- 
-try {
-    await axios.post("/api/contact", data);
-    router.push('/contact');
+  v$.value.$validate();
+  if (!v$.value.$invalid) {
+    // バリデーション成功時の処理
+    console.log('バリデーション成功！');
 
-  // その他の処理
-  } catch (error) {
-    if (error.response) {
-      // サーバーからのエラーレスポンスがある場合
-      console.error(error.response.data); // エラーレスポンスをコンソールに出力
-    } else {
-      // リクエストがサーバーに届かなかった場合など
-      console.error(error.message);
+    const data = {
+      name:name.value,
+      email:emailInputed.value,
+      category:category.value,
+      message:message.value,
     }
-  }  
+ 
+    try {
+      console.log('postするdata: ', data);
+      await axios.post("/api/contact", data);
+      router.push('/contact');
+
+    // その他の処理
+    } catch (error) {
+      if (error.response) {
+        // サーバーからのエラーレスポンスがある場合
+        console.error(error.response.data); // エラーレスポンスをコンソールに出力
+      } else {
+        // リクエストがサーバーに届かなかった場合など
+        console.error(error.message);
+      }
+    }
+  }
+  
+
 };
 </script>
 
@@ -49,27 +70,31 @@ try {
             <p class="text-h6 text-md-h5 text-lg-h4">ユーザ情報</p>
             <v-text-field
               v-model="name"
+              :error-messages="v$.name.$error ? ['お名前を入力してください. '] : []"
               label="氏名"
               placeholder="広島 かえで"
               hide-details="auto"
             ></v-text-field>
             <v-text-field
-              v-model="email"
+              v-model="emailInputed"
+              :error-messages="v$.emailInputed.$error ? ['有効なメールアドレスを入力してください. '] : []"
               label="メールアドレス"
               placeholder="Kaede@gmail.com"
               type="email"
             ></v-text-field>
             <p class="text-h6 text-md-h5 text-lg-h4">カテゴリ</p>
-            <v-combobox
+            <v-select
                 v-model="category"
+                :error-messages="v$.category.$error ? ['お問い合わせの種類を選択してください. 当てはまるものが無ければ「その他」を選択してください. '] : []"
                 :items="category_items"
                 label="お問い合わせ内容に最も合うものを選んでください. "
                 clearable
-            ></v-combobox>
+            ></v-select>
             <p class="text-h6 text-md-h5 text-lg-h4">お問い合わせ内容</p>
             <v-container fluid>
                 <v-textarea
                 v-model="message"
+                :error-messages="v$.message.$error ? ['お問い合わせ内容を入力してください. '] : []"
                 name="input-7-1"
                 filled
                 label="こちらにお問い合わせ内容を記述してください. "
