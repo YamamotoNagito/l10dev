@@ -46,5 +46,5 @@ Route::post('/searchByLectureId', [LectureDetailsController::class, 'searchByLec
 // 講義コードの有無を検索
 Route::post('/hasLectureCode', [LectureDetailsController::class, 'hasLectureCode']);
 
-// 講義コードから詳細情報を検索
-Route::post('/search', [LectureDetailsController::class, 'search']);
+// 検索画面の「条件から探す」から詳細情報を検索
+Route::post('/searchByConditions', [LectureDetailsController::class, 'searchByConditions']);
