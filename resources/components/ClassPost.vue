@@ -8,12 +8,16 @@
             placeholder="一攫千金特論"
             class="input-field"
             v-model="lectureName"
+            :error-messages="v$.lectureName.$error ? ['授業名を入力してください. '] : []"
+            clearable
           ></v-text-field>
           <p class="text-h6">担当教員名</p>
           <v-text-field
             placeholder="服部淳生"
             class="input-field"
             v-model="teacherName"
+            :error-messages="v$.teacherName.$error ? ['教員名を入力してください. '] : []"
+            clearable
           ></v-text-field>
         </v-col>
       </v-row>
@@ -303,6 +307,7 @@
           <v-textarea
             variant="outlined"
             v-model="comments"
+            :error-messages="v$.comments.$error ? ['入力内容は2000文字以内にしてください. '] : []"
             auto-grow
           ></v-textarea>
         </v-col>
@@ -334,6 +339,8 @@ import Button from "./Button.vue";
 import { computed } from 'vue';
 import { useDisplay } from 'vuetify';
 import { useStore } from 'vuex';
+import { useVuelidate } from '@vuelidate/core';
+import { required, maxLength } from '@vuelidate/validators';
 
 const store = useStore();
 const router = useRouter();
@@ -448,51 +455,72 @@ const btnSize = computed(() => {
   return 'default';
 })
 
+// バリデーションルール
+const rules = {
+  lectureName: { required },
+  teacherName: { required },
+  comments: { maxLength: maxLength(2000) },
+};
+const v$ = useVuelidate(rules, { lectureName, teacherName, comments });
+
+// 送信後、フォームのカテゴリとメッセージをリセットする
+const resetForm = () => {
+  lectureName.value = '';
+  teacherName.value = '';
+  comments.value = '';
+  v$.value.$reset();  // バリデーション状態のリセット
+};
+
 const clickButton = async() => {
   console.log("クリックされたで");
-
   console.log(store.getters.userInfo.id);
 
-  const data = {
-    // lecture_id: 1,
-    userId: store.getters.userInfo.id,
-    lectureName: lectureName.value,
-    teacherName: teacherName.value,
-    attendanceYear: attendanceYear.value,
-    attendanceConfirm:attendanceConfirm.value,
-    weeklyAssignments:weeklyAssignments.value,
-    midtermAssignments:midtermAssignments.value,
-    finalAssignments:finalAssignments.value,
-    pastExamPossession:pastExamPossession.value,
-    grades:grades.value,
-    creditLevel: creditLevel.value,
-    interestLevel: interestLevel.value,
-    skillLevel: skillLevel.value,
-    comments: comments.value,
-    isVisible: true,
-  }
-
-try {
-    const response = await axios.post("/api/reviews", data);
-    console.log("response");
-    
-    if(response.data.success){
-      router.push('/reviews');
-    }else{
-      console.log(response.data.message);
-      message.value = response.data.message;
+  // バリデーションチェック
+  v$.value.$validate();
+  if (!v$.value.$invalid) { //バリデーション通過したら実行
+    const data = {
+      // lecture_id: 1,
+      userId: store.getters.userInfo.id,
+      lectureName: lectureName.value,
+      teacherName: teacherName.value,
+      attendanceYear: attendanceYear.value,
+      attendanceConfirm:attendanceConfirm.value,
+      weeklyAssignments:weeklyAssignments.value,
+      midtermAssignments:midtermAssignments.value,
+      finalAssignments:finalAssignments.value,
+      pastExamPossession:pastExamPossession.value,
+      grades:grades.value,
+      creditLevel: creditLevel.value,
+      interestLevel: interestLevel.value,
+      skillLevel: skillLevel.value,
+      comments: comments.value,
+      isVisible: true,
     }
 
+    // フォームのリセット
+    resetForm();
 
-  // その他の処理
-  } catch (error) {
-    if (error.response) {
-      // サーバーからのエラーレスポンスがある場合
-      console.error(error.response.data); // エラーレスポンスをコンソールに出力
-    } else {
-      // リクエストがサーバーに届かなかった場合など
-      console.error(error.message);
-    }
+    try {
+        const response = await axios.post("/api/reviews", data);
+        console.log("response");
+        
+        if(response.data.success){
+          // router.push('/reviews');
+        }else{
+          console.log(response.data.message);
+          message.value = response.data.message;
+        }
+
+      // その他の処理
+      } catch (error) {
+        if (error.response) {
+          // サーバーからのエラーレスポンスがある場合
+          console.error(error.response.data); // エラーレスポンスをコンソールに出力
+        } else {
+          // リクエストがサーバーに届かなかった場合など
+          console.error(error.message);
+        }
+      }
   }
 };
 
