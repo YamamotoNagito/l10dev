@@ -2,30 +2,61 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class LectureDetailTimesTableSeeder extends Seeder
 {
-    public function run()
-    {
-        // レクチャー詳細タイムデータの追加
-        DB::table('lectureDetailTimes')->insert([
-            'lectureDetailId' => 1, // この値は lectureDetails テーブルに存在する該当するレクチャー詳細のIDに置き換えてください
-            'year' => 2023,
-            'term' => '4ターム',
-            'dayOfWeek' => '月曜日',
-            'timePeriod' => '12限',
-        ]);
+  public function run()
+  {
+      $csvFile = database_path('csv/lectureDetailTimes.csv');
+      $handle = fopen($csvFile, 'r');
 
-        DB::table('lectureDetailTimes')->insert([
-            'lectureDetailId' => 2, // 同様に置き換え
-            'year' => 2023,
-            'term' => '3ターム',
-            'dayOfWeek' => '水曜日',
-            'timePeriod' => '34限',
-        ]);
+      if ($handle !== FALSE) {
+          fgetcsv($handle); // CSVヘッダーを読み飛ばす
 
-        // 他にも必要ならば追加
-    }
+          while (($data = fgetcsv($handle)) !== FALSE) {
+              $validator = Validator::make([
+                  'lectureDetailTimeId' => $data[0],
+                  'lectureDetailId' => $data[1],
+                  'year' => $data[2],
+                  'term' => $data[3],
+                  'dayOfWeek' => $data[4],
+                  'timePeriod' => $data[5],
+              ], [
+                  'lectureDetailTimeId' => 'required|integer',
+                  'lectureDetailId' => 'required|integer',
+                  'year' => 'required|integer',
+                  'term' => 'required|string|max:255',
+                  'dayOfWeek' => 'required|string|max:255',
+                  'timePeriod' => 'required|string|max:255',
+              ]);
+
+              if ($validator->fails()) {
+                  Log::error('バリデーションエラー', [
+                      'errors' => $validator->errors()
+                  ]);
+                  continue;
+              }
+
+              DB::table('lectureDetailTimes')->insert([
+                  'lectureDetailTimeId' => $data[0],
+                  'lectureDetailId' => $data[1],
+                  'year' => $data[2],
+                  'term' => $data[3],
+                  'dayOfWeek' => $data[4],
+                  'timePeriod' => $data[5],
+              ]);
+          }
+
+          fclose($handle);
+      } else {
+          Log::error('CSVファイルを開けませんでした。', [
+              'path' => $csvFile
+          ]);
+      }
+  }
 }

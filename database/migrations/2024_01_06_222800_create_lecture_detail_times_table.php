@@ -8,7 +8,7 @@ class CreateLectureDetailTimesTable extends Migration
     public function up()
     {
         Schema::create('lectureDetailTimes', function (Blueprint $table) {
-            $table->id('lectureTimeId'); // 自動増分の主キー
+            $table->id('lectureDetailTimeId'); // 自動増分の主キー
             $table->unsignedBigInteger('lectureDetailId');
             $table->foreign('lectureDetailId')->references('lectureDetailId')->on('lectureDetails')->onDelete('cascade');
             $table->integer('year');
@@ -16,7 +16,7 @@ class CreateLectureDetailTimesTable extends Migration
             $table->string('dayOfWeek');
             $table->string('timePeriod');
 
-            $table->unique(['term', 'dayOfWeek', 'timePeriod']);
+            // $table->unique(['term', 'dayOfWeek', 'timePeriod']);
         });
     }
 

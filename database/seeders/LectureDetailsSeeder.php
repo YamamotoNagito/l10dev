@@ -2,33 +2,67 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class LectureDetailsSeeder extends Seeder
 {
-    public function run()
-    {
-        // 講義詳細データの追加
-        DB::table('lectureDetails')->insert([
-            'lectureId' => 1,  // 適切な lectureId を指定
-            'lectureCode' => 'ABC123',
-            'syllabusUrl' => 'https://example.com/syllabus',
-            'location' => '東広島',
-            'faculty' => '情報科学部',
-            'category' => 'プログラミング',
-            'grade' => '1年生',
-        ]);
+  public function run()
+  {
+      $csvFile = database_path('csv/lectureDetails.csv');
+      $handle = fopen($csvFile, 'r');
 
-        // 別の講義詳細データの追加
-        DB::table('lectureDetails')->insert([
-            'lectureId' => 2,  // 適切な lectureId を指定
-            'lectureCode' => 'XYZ456',
-            'syllabusUrl' => 'https://example.com/syllabus2',
-            'location' => '霞キャンパス',
-            'faculty' => '工学部',
-            'category' => 'プログラミング',
-            'grade' => '2年生',
-        ]);
-    }
+      if ($handle !== FALSE) {
+          fgetcsv($handle); // CSVヘッダーを読み飛ばす
+
+          while (($data = fgetcsv($handle)) !== FALSE) {
+              $validator = Validator::make([
+                  'lectureDetailId' => $data[0],
+                  'lectureId' => $data[1],
+                  'lectureCode' => $data[2],
+                  'syllabusUrl' => $data[3],
+                  'location' => $data[4],
+                  'faculty' => $data[5],
+                  'category' => $data[6],
+                  'grade' => $data[7],
+              ], [
+                  'lectureDetailId' => 'required|integer',
+                  'lectureId' => 'required|integer',
+                  'lectureCode' => 'required|string|max:255',
+                  'syllabusUrl' => 'required|url',
+                  'location' => 'required|string',
+                  'faculty' => 'required|string',
+                  'category' => 'required|string',
+                  'grade' => 'required|string',
+              ]);
+
+              if ($validator->fails()) {
+                  Log::error('バリデーションエラー', [
+                      'errors' => $validator->errors()
+                  ]);
+                  continue;
+              }
+
+              DB::table('lectureDetails')->insert([
+                  'lectureDetailId' => $data[0],
+                  'lectureId' => $data[1],
+                  'lectureCode' => $data[2],
+                  'syllabusUrl' => $data[3],
+                  'location' => $data[4],
+                  'faculty' => $data[5],
+                  'category' => $data[6],
+                  'grade' => $data[7],
+              ]);
+          }
+
+          fclose($handle);
+      } else {
+          Log::error('CSVファイルを開けませんでした。', [
+              'path' => $csvFile
+          ]);
+      }
+  }
 }
