@@ -139,7 +139,7 @@ class LecturesController extends Controller
         $lectureIds = DB::table('lectureDetailTimes')
                     ->join('lectureDetails', 'lectureDetailTimes.lectureDetailId', '=', 'lectureDetails.lectureDetailId')
                     ->join('lectures', 'lectureDetails.lectureId', '=', 'lectures.lectureId')
-                    ->join('reviews', 'reviews.reviewId', '=', 'lectures.reviewId')
+                    ->join('reviews', 'reviews.lectureId', '=', 'lectures.lectureId')
                     ->where(function ($query) use ($selectedConditions) {
                         foreach ($selectedConditions as $conditionKey => $conditionValue) {
                             switch ($conditionKey) {
@@ -194,7 +194,7 @@ class LecturesController extends Controller
                                     $query->where('lectureDetailTimes.timePeriod', $conditionValue);
                                     break;
 
-                                    
+
                                 case 'totalEvaluationMin':
                                     $query->groupBy('lectures.lectureId')  
                                           ->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '>=', $conditionValue);
