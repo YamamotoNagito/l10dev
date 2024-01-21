@@ -78,8 +78,8 @@ class LectureDetailsController extends Controller
     public function hasLectureCode(Request $request)
     {
         // 講義コードの取得
-        $lectureCode = "ABC123";
-        // $lectureCode = $request['lectureCode'];
+        // $lectureCode = "ABC123";
+        $lectureCode = $request['lectureCode'];
 
         // 講義idの取得
         $lectureId = LectureDetails::where('lectureCode', $lectureCode)
