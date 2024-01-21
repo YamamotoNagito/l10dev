@@ -57,7 +57,7 @@ const classDataList = ref([
     numberOfReviews: "70000",
   },
   {
-    lectureId: 1,
+    lectureId: 2,
     lectureName: "一攫二千金特論",
     lectureCode: "KA10001",
     teacherName: "服部淳生",
@@ -65,7 +65,7 @@ const classDataList = ref([
     numberOfReviews: "70000",
   },
   {
-    lectureId: 1,
+    lectureId: 3,
     lectureName: "一攫三千金特論",
     lectureCode: "KA10003",
     teacherName: "服部淳生",
@@ -73,7 +73,7 @@ const classDataList = ref([
     numberOfReviews: "70000",
   },
   {
-    lectureId: 1,
+    lectureId: 4,
     lectureName: "エヴァンゲリオン特論",
     lectureCode: "KA10004",
     teacherName: "田中恒成",
@@ -81,7 +81,7 @@ const classDataList = ref([
     numberOfReviews: "70000",
   },
   {
-    lectureId: 1,
+    lectureId: 4,
     lectureName: "おいしいコーヒーの入れ方",
     lectureCode: "KA10005",
     teacherName: "田中恒成",
@@ -89,7 +89,7 @@ const classDataList = ref([
     numberOfReviews: "70000",
   },
   {
-    lectureId: 1,
+    lectureId: 4,
     lectureName: "君主論",
     lectureCode: "KA10006",
     teacherName: "Niccolò Machiavelli",
@@ -97,7 +97,7 @@ const classDataList = ref([
     numberOfReviews: "70000",
   },
   {
-    lectureId: 1,
+    lectureId: 4,
     lectureName: "罪と罰",
     lectureCode: "KA10007",
     teacherName: "Фёдор Mихáйлович Достоéвский",
@@ -105,7 +105,7 @@ const classDataList = ref([
     numberOfReviews: "70000",
   },
   {
-    lectureId: 1,
+    lectureId: 4,
     lectureName: "マルクス経済学",
     lectureCode: "KA10008",
     teacherName: "Karl Marx",
