@@ -4,18 +4,18 @@ import ClassDetail from "../components/ClassDetail.vue";
 import { mdiConsoleNetworkOutline } from "@mdi/js";
 import axios from "axios";
 
-const lectureCode = ref(null);
+const lectureId = ref(null);
 // 後でこのコメントアウトは外す！
 const classDetailData = ref(null);
 
-const getclassDetailData = async(lectureCode) => {
+const getclassDetailData = async(lectureId) => {
 
   const data = {
-    lectureCode:lectureCode.value
+    lectureId:lectureId.value
   }
 
   try {
-    const response = await axios.post("/api/searchByLectureCode", data);
+    const response = await axios.post("/api/searchByLectureId", data);
     // const response = await axios.post("/api/hasLectureCode", data);
     console.log(response.data);
 
@@ -37,10 +37,10 @@ onBeforeMount(async() => {
   // contextから$routeを取得する
   const { $route } = getCurrentInstance().appContext.config.globalProperties;
   //lectureIdを$routeから取得
-  lectureCode.value = $route.params.lectureCode;
-  console.log(`lecture code  is ${lectureCode.value}`);
+  lectureId.value = $route.params.lectureId;
+  console.log(`lecture id  is ${lectureId.value}`);
 
-  classDetailData.value = await getclassDetailData(lectureCode);
+  classDetailData.value = await getclassDetailData(lectureId);
   // classDetailData.value = getclassDetailData(lectureCode.value);
 
   // console.log(classDetailData2)
