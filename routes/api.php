@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LectureDetailsController;
+use App\Http\Controllers\LecturesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,4 @@ Route::post('/searchByLectureId', [LectureDetailsController::class, 'searchByLec
 Route::post('/hasLectureCode', [LectureDetailsController::class, 'hasLectureCode']);
 
 // 検索画面の「条件から探す」から詳細情報を検索
-Route::post('/searchByConditions', [LectureDetailsController::class, 'searchByConditions']);
+Route::post('/searchByConditions', [LecturesController::class, 'searchByConditions']);
