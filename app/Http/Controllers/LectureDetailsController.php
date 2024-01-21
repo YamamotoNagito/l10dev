@@ -89,7 +89,7 @@ class LectureDetailsController extends Controller
         if($lectureId == null){
             return response()->json(['success' => false,'message' => '講義コードが存在しません']);
         }else{
-            return response()->json(['success' => true, 'lectureId' => $lectureId, 'message' => '講義コードが存在します']);
+            return response()->json(['success' => true, 'lectureCode' => $lectureCode, 'message' => '講義コードが存在します']);
         }
         
     }
