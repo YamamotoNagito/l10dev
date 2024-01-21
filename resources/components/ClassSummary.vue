@@ -8,6 +8,8 @@ import StarRading from "./StarRating.vue";
 
 const props = defineProps(["classData"]);
 
+const router = useRouter()
+
 
 // Twitterで共有するための関数
 const twitterShare = () => {
@@ -49,12 +51,9 @@ onMounted(() => {
         <v-row>
           <v-col cols="12" sm="8">
             <v-container class="ma-auto pa-1">
-              <a
-                href="#"
-                class="text-decoration-underline text-blue text-h8 text-sm-h6"
-              >
-                {{ classData.className }}</a
-              >
+              <v-btn flat class="text-decoration-underline text-blue text-h8 text-sm-h6 cursor-pointer" @click="router.push('/class/' + classData.lectureId + '/detail')">
+                  {{ classData.lectureName }}
+              </v-btn>
             </v-container>
           </v-col>
           <v-col cols="12" sm="4">
