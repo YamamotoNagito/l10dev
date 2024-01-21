@@ -98,7 +98,8 @@ class LectureDetailsController extends Controller
     public function searchByLectureCode(Request $request)
     {
         // 講義コードの取得
-        $lectureCode = "ABC123";
+        // $lectureCode = "ABC123";
+        $lectureCode = $request['lectureCode'];
 
         // 講義コードに概要する情報を取得する
         // LectureDetailsテーブルからすべての情報を取得
@@ -143,10 +144,28 @@ class LectureDetailsController extends Controller
         $lectureDetailTime->toArray();
 
         // Reviewsテーブルのlecture_idを基にレビュー一覧の取得
-        $review_info = Reviews::where('lectureId', $lectureId)
+        $reviews = Reviews::where('lectureId', $lectureId)
                     // ->select('attendance_year', 'attendance_confirm', 'weekly_assignments', 'midterm_assignments', 'final_assignments')
-                    ->select('attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments')
+                    ->select('attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments','createdAt')
                     ->get();
+
+        $review_info = $reviews->map(function ($review) {
+            return [
+                'attendanceYear' => $review->attendanceYear,
+                'attendanceConfirm' => $review->attendanceConfirm,
+                'weeklyAssignments' => $review->weeklyAssignments,
+                'midtermAssignments' => $review->midtermAssignments,
+                'finalAssignments' => $review->finalAssignments,
+                'pastExamPossession' => $review->pastExamPossession,
+                'grades' => $review->grades,
+                'comments' => $review->comments,
+                'createdAt' => $review->createdAt,
+                'skillLevel' => $review->skillLevel,
+                'interestLevel' => $review->interestLevel,
+                'creditLevel' => $review->creditLevel,
+                'totalEvaluation' => ($review->skillLevel + $review->interestLevel + $review->creditLevel) / 3,
+            ];
+        });
 
         // 合計評価の計算処理
         // 講義コードからレビュー一覧を取得

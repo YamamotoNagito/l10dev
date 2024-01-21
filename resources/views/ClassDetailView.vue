@@ -9,9 +9,13 @@ const lectureCode = ref(null);
 const classDetailData = ref(null);
 
 const getclassDetailData = async(lectureCode) => {
-  console.log("おはよう");
+
+  const data = {
+    lectureCode:lectureCode.value
+  }
+
   try {
-    const response = await axios.post("/api/searchByLectureCode", lectureCode);
+    const response = await axios.post("/api/searchByLectureCode", data);
     // const response = await axios.post("/api/hasLectureCode", data);
     console.log(response.data);
 
