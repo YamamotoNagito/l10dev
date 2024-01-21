@@ -15,6 +15,7 @@ import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
 import TermsView from '../views/TermsView.vue'
 import ContactView from '../views/ContactView.vue'
 import AboutUsView from '../views/AboutUsView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 import axios from 'axios';
 // import store from '../store'; // Vuex ストアのインポート
 
@@ -53,6 +54,7 @@ const router = createRouter({
     { path: '/terms', name: 'terms', component: TermsView },
     { path: '/contact', name: 'contact', component: ContactView },
     { path: '/about-us', name: 'about-us', component: AboutUsView },
+    { path: '/:catchAll(.*)', name: 'not-found', component: NotFoundView}
     // 設定画面を追加する.
 
   ]
