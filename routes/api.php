@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LectureDetailsController;
+use App\Http\Controllers\LecturesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +49,6 @@ Route::post('/hasLectureCode', [LectureDetailsController::class, 'hasLectureCode
 
 // 講義コードから詳細情報を検索
 Route::post('/search', [LectureDetailsController::class, 'search']);
+
+// 授業一覧を返却する
+Route::get('/getLectureInfo', [LecturesController::class, 'getLectureInfo']);
