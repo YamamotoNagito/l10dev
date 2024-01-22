@@ -24,6 +24,8 @@ const department = ref('');
 const admissionYear = ref('');
 const passwordCheck = ref('');
 
+const termsAccepted = ref(false);
+
 // 新規登録に関するapiを呼び出してくる 
 // 書き方は,Login.vueを参照すること
 
@@ -148,7 +150,7 @@ watch(category, () => {
 
 // バリデーションのルール
 const rules = {
-  userName: { required },
+  userName: { required, maxLength: maxLength(32) },
   userEmail: { required, email },
   password: { required, minLength: minLength(8), maxLength: maxLength(32)},
   passwordCheck: { required, sameAs: sameAs(password)},
@@ -207,13 +209,12 @@ const clickButton = async() => {
 
 <template>
     <v-app>
-        <!-- <v-main> -->
             <v-container>
                 <h1 style="font-size: 2rem;">新規ユーザ登録</h1>
                 <v-form action="" method="post">
                     <v-text-field
                       v-model="userName"
-                      :error-messages="v$.userName.$error ? ['名前を入力してください. '] : []"
+                      :error-messages="v$.userName.$error ? ['1字以上32字以下の, 名前を入力してください. '] : []"
                       label="名前"
                       name="userName"
                       type="name"
@@ -229,7 +230,7 @@ const clickButton = async() => {
                     ></v-text-field>
                     <v-text-field
                       v-model="password"
-                      :error-messages="v$.password.$error ? ['パスワードは8文字以上32文字以下の, 有効なパスワードを入力してください. '] : []"
+                      :error-messages="v$.password.$error ? ['8字以上32字以下の, 有効なパスワードを入力してください. '] : []"
                       label="パスワード"
                       name="password"
                       type="password"
@@ -253,7 +254,7 @@ const clickButton = async() => {
                     ></v-select>
                     <v-select
                       v-model="faculty"
-                      :error-messages="v$.faculty.$error ? ['学部・研究科を選択してください. '] : []"
+                      :error-messages="v$.faculty.$error ? ['学部・研究科等を選択してください. '] : []"
                       :items="facultyItems"
                       label="学部・研究科"
                       name="faculty"
@@ -261,7 +262,7 @@ const clickButton = async() => {
                     ></v-select>
                     <v-select
                       v-model="department"
-                      :error-messages="v$.department.$error ? ['所属を選択してください. '] : []"
+                      :error-messages="v$.department.$error ? ['学科・類・専攻等を選択してください. '] : []"
                       :items="departmentItems"
                       label="学科・学類・専攻など"
                       name="department"
@@ -275,9 +276,18 @@ const clickButton = async() => {
                       name="admissionYear"
                       type="text"
                     ></v-select>
-                    <v-btn @click="clickButton">送信</v-btn>
+                    <v-checkbox 
+                    v-model="termsAccepted"
+                      label="当サイトの利用規約およびプライバシーポリシーに同意する. (利用規約・プライバシーポリシーはページ下部のフッターからご確認いただけます. )"
+                      ></v-checkbox>
+                    <v-btn 
+                      :disabled="!termsAccepted"
+                      color = "indigo"
+                      @click="clickButton"
+                    >
+                      登録する
+                    </v-btn>
                 </v-form>
             </v-container>
-        <!-- </v-main> -->
     </v-app>
 </template>

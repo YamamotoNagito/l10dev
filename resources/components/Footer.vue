@@ -8,7 +8,7 @@
               @click="router.push({ name: 'about-us'})"
               variant="text"
               rounded="xl" >
-              Developed by SOS団
+              Developed by かえで製作委員会
             </v-btn>
           </v-col>
           <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center" >
