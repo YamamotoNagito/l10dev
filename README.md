@@ -70,8 +70,39 @@ npm run dev
 ※vueの導入に関するサイトは以下
 https://qiita.com/yuto_dev/items/d1cc909897ac8277baea
 
-※Dockerの再起動コマンド
+---
+### 細かい操作コマンド
+
+##### DBの再起動コマンド
+```
+php artisan migrate:fresh --seed
+```
+
+##### Dockerの再起動コマンド
 ```
 docker-compose down
 docker-compose build; docker-compose up -d
+```
+##### Dockerのmysqlコマンド
+
+1. ログインコマンド
+```
+mysql -h l10dev-mysql -u root -p
+```
+この後に求められるパスワードは`root`
+
+
+2. データベース選択
+```
+use l10dev
+```
+
+3.  全体のテーブルを確認する
+```
+show tabels;
+```
+
+3. (例)格納された授業データを確認する
+```
+select * from lectures;
 ```
