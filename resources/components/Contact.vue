@@ -4,7 +4,7 @@ import vuetify from '../js/vuetify';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
-import { required, email } from '@vuelidate/validators';
+import { required, email, maxLength } from '@vuelidate/validators';
 
 
 const router = useRouter();
@@ -14,12 +14,12 @@ const emailInputed = ref('');
 const message = ref('');
 const category = ref(null);
 
-const category_items = ref(['投稿報酬の請求', '退会したい', 'バグ報告', 'その他']);
+const category_items = ref(['投稿報酬の請求', '利用規約・プライバシーポリシーに関する問い合わせ', '操作方法に関する問い合わせ', '退会したい', 'バグ報告', 'その他']);
 
 const rules = {
-  name: { required },
+  name: { required, maxLength: maxLength(32) },
   emailInputed: { required, email },
-  message: { required },
+  message: { required, maxLength: maxLength(2000) },
   category: { required },
 };
 
@@ -51,6 +51,7 @@ const clickButton = async() => {
       console.log('postするdata: ', data);
       await axios.post("/api/contact", data);
 
+      alert('お問い合わせ内容を送信しました. ');
       // フォームをリセットする
       resetForm();
 
@@ -78,7 +79,7 @@ const clickButton = async() => {
             <p class="text-h6 text-md-h5 text-lg-h4">ユーザ情報</p>
             <v-text-field
               v-model="name"
-              :error-messages="v$.name.$error ? ['お名前を入力してください. '] : []"
+              :error-messages="v$.name.$error ? ['1字以上32字以下の, 氏名を入力してください. '] : []"
               label="氏名"
               placeholder="広島 かえで"
               hide-details="auto"
@@ -103,10 +104,10 @@ const clickButton = async() => {
             <p class="text-h6 text-md-h5 text-lg-h4">お問い合わせ内容</p>
             <v-textarea
               v-model="message"
-              :error-messages="v$.message.$error ? ['お問い合わせ内容を入力してください. '] : []"
+              :error-messages="v$.message.$error ? ['2000文字以内で, お問い合わせ内容を入力してください. '] : []"
               name="input-7-1"
               filled
-              label="こちらにお問い合わせ内容を記述してください. "
+              label="お問い合わせ内容を記述してください. "
               auto-grow
               clearable
             ></v-textarea>
