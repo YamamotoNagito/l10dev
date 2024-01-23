@@ -15,6 +15,8 @@ const store = useStore()
 const userEmail = ref('');
 const password = ref('');
 
+const errorMessage = ref(''); // エラーメッセージ用の変数
+
 const clickLogoutButton = async() => {
   await axios.post("/api/logout")
   .then((response) => {
@@ -60,7 +62,8 @@ const clickButton = async() => {
       store.dispatch('login', data);
       router.push('/profile')
     }else{
-
+      //ログインに失敗したときのエラーメッセージ
+      errorMessage.value = 'ログインできませんでした。メールアドレスまたはパスワードを確認してください。';
     }
     // console.log("OK");
     // axios.get("/profile")
@@ -96,14 +99,17 @@ const clickButton = async() => {
           label="メールアドレス"
           name="userEmail"
           type="email"
+          clearable
         ></v-text-field>
         <v-text-field
           v-model="password"
           label="パスワード"
           name="password"
           type="password"
+          clearable
         ></v-text-field>
         <!-- <v-btn @click="clickButton">送信</v-btn> -->
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         <Button @click="clickButton" title="送信"></Button>
       </v-form>
 
@@ -114,3 +120,10 @@ const clickButton = async() => {
       <!-- 新規登録画面への遷移 -->
       <Button @click="router.push({ name: 'register'})" title="アカウントを持っていない方はこちら"></Button>
 </template>
+
+<style scoped>
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+</style>

@@ -312,6 +312,16 @@
           ></v-textarea>
         </v-col>
       </v-row>
+      <v-row v-if="errorMessage">
+        <v-col>
+          <p class="error-message">{{ errorMessage }}</p>
+        </v-col>
+      </v-row>
+      <v-row v-if="message">
+        <v-col>
+          <p class="error-message">{{ message }}</p>
+        </v-col>
+      </v-row>
       <v-row >
         <v-col class="text-center custom-text-style">
           <v-btn
@@ -320,11 +330,6 @@
             color="indigo"
           ></v-btn>
         </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <p v-show="message != ''" class="text-h6">{{ message }}</p>
-        </v-col>  
       </v-row>
     </v-col>
   </v-row>
@@ -349,6 +354,7 @@ const lectureName = ref("プログラミング2");
 const teacherName = ref("山本太郎");
 
 const message = ref("")
+const errorMessage = ref(''); // エラーメッセージ用の変数
 
 const attendanceYear = ref(2024);
 const attendanceYearOptions = ref([
@@ -497,15 +503,14 @@ const clickButton = async() => {
       isVisible: true,
     }
 
-    // フォームのリセット
-    resetForm();
-
     try {
         const response = await axios.post("/api/reviews", data);
         console.log("response");
         
         if(response.data.success){
           // router.push('/reviews');
+          // フォームのリセット
+          resetForm();
         }else{
           console.log(response.data.message);
           message.value = response.data.message;
@@ -513,6 +518,7 @@ const clickButton = async() => {
 
       // その他の処理
       } catch (error) {
+        errorMessage.value = '何らかの原因により登録できませんでした. ';
         if (error.response) {
           // サーバーからのエラーレスポンスがある場合
           console.error(error.response.data); // エラーレスポンスをコンソールに出力
@@ -535,7 +541,9 @@ const clickButton = async() => {
   }
   .custom-text-style {
   @apply text-md-h5 text-sm-h6;
-}
-
+  }
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
 </style>
-
