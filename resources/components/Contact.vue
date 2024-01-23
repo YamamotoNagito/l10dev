@@ -14,6 +14,8 @@ const emailInputed = ref('');
 const message = ref('');
 const category = ref(null);
 
+// const errorMessage = ref(''); // エラーメッセージ用の変数
+
 const category_items = ref(['投稿報酬の請求', '利用規約・プライバシーポリシーに関する問い合わせ', '操作方法に関する問い合わせ', '退会したい', 'バグ報告', 'その他']);
 
 const rules = {
@@ -49,7 +51,7 @@ const clickButton = async() => {
  
     try {
       console.log('postするdata: ', data);
-      await axios.post("/api/contact", ata);
+      await axios.post("/api/contact", data);
 
       alert('お問い合わせ内容を送信しました. ');
       // フォームをリセットする
@@ -64,6 +66,7 @@ const clickButton = async() => {
       } else {
         // リクエストがサーバーに届かなかった場合など
         console.error('エラーメッセージ：', error.message);
+        // errorMessage.value = 'エラー：何らかの原因によりお問い合わせ内容を送信できませんでした. 復旧までの間, お問い合わせをする場合は tarouhirodai@gmail.com までご連絡ください. ';
         alert('エラー：何らかの原因によりお問い合わせ内容を送信できませんでした. 復旧までの間, お問い合わせをする場合は tarouhirodai@gmail.com までご連絡ください. ');
       }
     }
@@ -113,10 +116,16 @@ const clickButton = async() => {
               auto-grow
               clearable
             ></v-textarea>
+            <!-- <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> -->
             <v-btn @click="clickButton" color="indigo">送信する</v-btn>
-
-
         </v-container>
       </v-main>
   </v-app>
 </template>
+
+<style scoped>
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+</style>
