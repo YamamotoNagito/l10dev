@@ -168,8 +168,8 @@ const searchByLectureCode = async () => {
 };
 
 // ここから検索候補を表示する機能に関するコード
-const candidateConditionsList = ref([])
-// 
+const candidateConditionsList = ref([]);
+//
 const fetchData = async () => {
   try {
     const response = await axios.post("/api/getCandidateConditionsList");
@@ -189,9 +189,9 @@ const fetchData = async () => {
   }
 };
 
-onMounted (() => {
-  fetchData()
-})
+onMounted(() => {
+  fetchData();
+});
 
 // 元の検索候補
 candidateConditionsList.value = [
@@ -280,7 +280,15 @@ watch(
     () => detailedCondition.value.teacherName,
   ],
   () => {
-    filterCandidateConditions();
+    if (
+      detailedCondition.value.lectureName === null ||
+      detailedCondition.value.lectureName === null
+    ) {
+      candidateLectureNameList.value = [];
+      candidateTeacherNameList.value = [];
+    } else {
+      filterCandidateConditions();
+    }
   }
 );
 
