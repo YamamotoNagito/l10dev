@@ -48,19 +48,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed, defineProps } from 'vue';
 import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import { useDisplay } from 'vuetify'
 import { useStore } from 'vuex';
+import { mdiAxisXRotateCounterclockwise } from '@mdi/js';
+import ClassSummary from "./ClassSummary.vue";
+import ClassList from "../components/ClassList.vue";
 
 const store = useStore();
 const router = useRouter();
 const message = ref('Hello World!')
-
+const props = defineProps(["classDataList"])
 
 const userProfile = ref(null);
+const reviewInfo = ref(null);
 
 // const user = store.getters.userInfo;
 // console.log(user);
@@ -71,7 +75,10 @@ const fetchUserProfile = async () => {
     console.log(userId);
     const response = await axios.get(`/api/profile/${userId}`);
     console.log('API Response:', response.data);
-    userProfile.value = response.data;
+    console.log('API reviewInfo Response:', response.data.reviewInfo);
+    userProfile.value = response.data.userData;
+    reviewInfo.value = response.data.reviewInfo;
+    // console.log(reviewInfo.value);
   } catch (error) {
     console.error(error);
   }
