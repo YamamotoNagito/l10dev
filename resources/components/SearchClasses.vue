@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
@@ -68,12 +68,12 @@ const updateEvaluationObject = (evaluationString) => {
 
     default:
       // デフォルトの処理はnullになる
-      evaluationObj.min = null
-      evaluationObj.max = null
+      evaluationObj.min = null;
+      evaluationObj.max = null;
       break;
   }
-  console.log(evaluationObj)
-  return evaluationObj
+  console.log(evaluationObj);
+  return evaluationObj;
 };
 
 // TODO
@@ -100,10 +100,18 @@ const nonExistenceMessage = ref("");
 //welcome内の検索機能と一覧内の検索機能を同じにしようとしたら，検索条件を/classに送信して，/class内で検索
 const sendQueryToClassListView = async () => {
   // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
-  detailedCondition.value.totalEvaluation = updateEvaluationObject(totalEvaluationString.value)
-  detailedCondition.value.creditLevel = updateEvaluationObject(creditLevelString.value)
-  detailedCondition.value.interestLevel = updateEvaluationObject(interestLevelString.value)  
-  detailedCondition.value.skillLevel = updateEvaluationObject(skillLevelString.value)
+  detailedCondition.value.totalEvaluation = updateEvaluationObject(
+    totalEvaluationString.value
+  );
+  detailedCondition.value.creditLevel = updateEvaluationObject(
+    creditLevelString.value
+  );
+  detailedCondition.value.interestLevel = updateEvaluationObject(
+    interestLevelString.value
+  );
+  detailedCondition.value.skillLevel = updateEvaluationObject(
+    skillLevelString.value
+  );
 
   console.log(detailedCondition.value);
   router.push({
@@ -158,6 +166,156 @@ const searchByLectureCode = async () => {
     }
   }
 };
+
+// ここから検索候補を表示する機能に関するコード
+const candidateConditionsList = ref([])
+// 
+const fetchData = async () => {
+  try {
+    const response = await axios.post("/api/getCandidateConditionsList");
+    console.log("response");
+    console.log(response);
+    // 検索候補をバックエンドから取得して格納
+    candidateConditionsList.value = response.data.candidateConditionsList; // 仮に response.data が候補条件のリストであると仮定
+    makeDefaultCandidateLectureNameList();
+  } catch (error) {
+    if (error.response) {
+      // サーバーからのエラーレスポンスがある場合
+      console.error(error.response.data); // エラーレスポンスをコンソールに出力
+    } else {
+      // リクエストがサーバーに届かなかった場合など
+      console.error(error.message);
+    }
+  }
+};
+
+onMounted (() => {
+  fetchData()
+})
+
+// 元の検索候補
+candidateConditionsList.value = [
+  {
+    lectureId: 1,
+    lectureName: "Arsenal",
+    teacherName: "Arteta",
+  },
+  {
+    lectureId: 2,
+    lectureName: "Arsenal",
+    teacherName: "Arteta",
+  },
+  {
+    lectureId: 3,
+    lectureName: "Arsenal",
+    teacherName: "Arteta",
+  },
+  {
+    lectureId: 4,
+    lectureName: "Arsenal",
+    teacherName: "Arsen Wenger",
+  },
+  {
+    lectureId: 5,
+    lectureName: "Arsenal",
+    teacherName: "Yuki Takahara",
+  },
+  {
+    lectureId: 6,
+    lectureName: "Tottenham",
+    teacherName: "Postecoglou",
+  },
+  {
+    lectureId: 7,
+    lectureName: "Juventus",
+    teacherName: "Allegri",
+  },
+  { lectureId: 8, lectureName: "Barcelona", teacherName: "Xabi" },
+  {
+    lectureId: 9,
+    lectureName: "The era under the rule of Stalin",
+    teacherName: "Tanaka",
+  },
+  {
+    lectureId: 10,
+    lectureName: "The theory of Einstein",
+    teacherName: "Tanaka",
+  },
+  {
+    lectureId: 11,
+    lectureName: "The theory of Lenin",
+    teacherName: "Tanaka",
+  },
+];
+
+const filteredCandidateConditionsList = ref([]);
+const candidateLectureNameList = ref([]);
+const candidateTeacherNameList = ref([]);
+
+const filterCandidateConditions = () => {
+  const detailedLectureName = detailedCondition.value.lectureName
+    ? detailedCondition.value.lectureName.toLowerCase()
+    : "";
+  const detailedTeacherName = detailedCondition.value.teacherName
+    ? detailedCondition.value.teacherName.toLowerCase()
+    : "";
+
+  filteredCandidateConditionsList.value = candidateConditionsList.value.filter(
+    (item) => {
+      const lowerCaseLectureName = item.lectureName.toLowerCase();
+      const lowerCaseTeacherName = item.teacherName.toLowerCase();
+
+      return (
+        lowerCaseLectureName.includes(detailedLectureName) &&
+        lowerCaseTeacherName.includes(detailedTeacherName)
+      );
+    }
+  );
+};
+
+// detailedCondition.value.lectureNameまたはdetailedCondition.value.teacherNameが変化したら実行
+watch(
+  [
+    () => detailedCondition.value.lectureName,
+    () => detailedCondition.value.teacherName,
+  ],
+  () => {
+    filterCandidateConditions();
+  }
+);
+
+// filteredCandidateConditionsListが更新されたら実行
+watch(
+  () => filteredCandidateConditionsList.value,
+  () => {
+    // 値をクリア
+    candidateLectureNameList.value = [];
+    candidateTeacherNameList.value = [];
+
+    // 更新されたリストを走査して値を抽出
+    filteredCandidateConditionsList.value.forEach((item) => {
+      candidateLectureNameList.value.push(item.lectureName);
+      candidateTeacherNameList.value.push(item.teacherName);
+    });
+
+    // 重複を取り除く
+    candidateLectureNameList.value = [
+      ...new Set(candidateLectureNameList.value),
+    ];
+    candidateTeacherNameList.value = [
+      ...new Set(candidateTeacherNameList.value),
+    ];
+  }
+);
+
+const makeDefaultCandidateLectureNameList = () => {
+  candidateLectureNameList.value = Array.from(
+    new Set(candidateConditionsList.value.map((item) => item.lectureName))
+  );
+  candidateTeacherNameList.value = Array.from(
+    new Set(candidateConditionsList.value.map((item) => item.teacherName))
+  );
+};
 </script>
 
 <template>
@@ -183,19 +341,21 @@ const searchByLectureCode = async () => {
             <v-window-item value="one">
               <v-container class="category-name-and-content-container">
                 <p class="category-name">授業名</p>
-                <v-text-field
+                <v-combobox
+                  clearable
                   placeholder="一攫千金特論"
-                  class="input-field"
                   v-model="detailedCondition.lectureName"
-                ></v-text-field>
+                  :items="candidateLectureNameList"
+                ></v-combobox>
               </v-container>
               <v-container class="category-name-and-content-container">
                 <p class="category-name">担当教員名</p>
-                <v-text-field
+                <v-combobox
+                  clearable
                   placeholder="服部淳生"
-                  class="input-field"
                   v-model="detailedCondition.teacherName"
-                ></v-text-field>
+                  :items="candidateTeacherNameList"
+                ></v-combobox>
               </v-container>
               <!-- 他の条件についても同様にコードを追加 -->
 
