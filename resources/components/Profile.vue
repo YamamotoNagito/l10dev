@@ -33,6 +33,13 @@
           <v-tab :value="1">投稿した</v-tab>
           <v-tab :value="2">Likes</v-tab>
         </v-tabs>
+        <v-tab-item :value="1">
+            <v-card>
+              <!-- ここにTab 1の内容を追加 -->
+              <!-- <ClassList :classDataList="classDataList"></ClassList> -->
+            </v-card>
+          </v-tab-item>
+
         <v-window v-model="tab">
           <v-window-item
             v-for="n in 2"
@@ -56,7 +63,7 @@ import { useDisplay } from 'vuetify'
 import { useStore } from 'vuex';
 import { mdiAxisXRotateCounterclockwise } from '@mdi/js';
 import ClassSummary from "./ClassSummary.vue";
-import ClassList from "../components/ClassList.vue";
+import ClassList from "./ClassList.vue";
 
 const store = useStore();
 const router = useRouter();
@@ -77,6 +84,8 @@ const fetchUserProfile = async () => {
     console.log('API Response:', response.data);
     console.log('API reviewInfo Response:', response.data.reviewInfo);
     userProfile.value = response.data.userData;
+
+    // userに対するレビュ一覧を返す変数
     reviewInfo.value = response.data.reviewInfo;
     // console.log(reviewInfo.value);
   } catch (error) {
@@ -90,4 +99,71 @@ onMounted(() => {
 
 
 const tab = ref(null)
+
+const classDataList = ref([
+  {
+    lectureId: 1,
+    lectureName: "一攫千金特論",
+    lectureCode: "KA10000",
+    teacherName: "服部淳生",
+    totalEvaluation: "5", 
+    numberOfReviews: "70000",
+  },
+  {
+    lectureId: 2,
+    lectureName: "一攫二千金特論",
+    lectureCode: "KA10001",
+    teacherName: "服部淳生",
+    totalEvaluation: "5",
+    numberOfReviews: "70000",
+  },
+  {
+    lectureId: 3,
+    lectureName: "一攫三千金特論",
+    lectureCode: "KA10003",
+    teacherName: "服部淳生",
+    totalEvaluation: "5",
+    numberOfReviews: "70000",
+  },
+  {
+    lectureId: 4,
+    lectureName: "エヴァンゲリオン特論",
+    lectureCode: "KA10004",
+    teacherName: "田中恒成",
+    totalEvaluation: "5",
+    numberOfReviews: "70000",
+  },
+  {
+    lectureId: 4,
+    lectureName: "おいしいコーヒーの入れ方",
+    lectureCode: "KA10005",
+    teacherName: "田中恒成",
+    totalEvaluation: "5",
+    numberOfReviews: "70000",
+  },
+  {
+    lectureId: 4,
+    lectureName: "君主論",
+    lectureCode: "KA10006",
+    teacherName: "Niccolò Machiavelli",
+    totalEvaluation: "5",
+    numberOfReviews: "70000",
+  },
+  {
+    lectureId: 4,
+    lectureName: "罪と罰",
+    lectureCode: "KA10007",
+    teacherName: "Фёдор Mихáйлович Достоéвский",
+    totalEvaluation: "5",
+    numberOfReviews: "70000",
+  },
+  {
+    lectureId: 4,
+    lectureName: "マルクス経済学",
+    lectureCode: "KA10008",
+    teacherName: "Karl Marx",
+    totalEvaluation: "5",
+    numberOfReviews: "70000",
+  },
+]);
 </script>
