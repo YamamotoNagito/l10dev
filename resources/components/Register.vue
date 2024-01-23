@@ -7,6 +7,8 @@ import axios from 'axios';
 import { jsx } from 'vue/jsx-runtime';
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email, maxLength, minLength, sameAs } from '@vuelidate/validators';
 
 const router = useRouter();
 const store = useStore();
@@ -21,6 +23,8 @@ const faculty = ref('');
 const department = ref('');
 const admissionYear = ref('');
 const passwordCheck = ref('');
+
+const termsAccepted = ref(false);
 
 // 新規登録に関するapiを呼び出してくる 
 // 書き方は,Login.vueを参照すること
@@ -54,9 +58,8 @@ const updateFacultyItems = () => {
     facultyItems.value = ['人間社会科学研究科', '先進理工系科学研究科', '統合生命科学研究科', '医系科学研究科', 'スマートソサエティ実践科学研究院', 'その他'];
   } else {
     facultyItems.value = [''];
-    console.log("facultyは何も選択できません");
   }
-    faculty.value = null; // 子コンボボックスの選択をリセット
+  faculty.value = null; // 子コンボボックスの選択をリセット
 };
 
 const updateAdmissionYearItems = () => {
@@ -64,17 +67,16 @@ const updateAdmissionYearItems = () => {
   if(category.value === '高校生' || category.value === '大学教職員' || category.value === 'OB' || category.value === 'その他') {
     admissionYearItems.value = ['その他'];
   } else if (category.value === '大学生' || category.value === '大学院生') {
-    admissionYearItems.value = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
+    admissionYearItems.value = ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'];
   } else {
     admissionYearItems.value = [''];
-    console.log("AdmissionYearは何も選択できません");
   }
-    faculty.value = null; // 子コンボボックスの選択をリセット
+  admissionYear.value = null; // 子コンボボックスの選択をリセット
 };
 
 const updateDepartmentItems = () => {
   //選択された faculty に合わせて departmentItems の選択肢を変化させる
-  console.log("departmentがアップデートされたで");
+  // console.log("departmentがアップデートされたで");
   if(faculty.value === '総合科学部') {
     departmentItems.value = ['総合科学科', '国際共創学科', 'その他'];
     // console.log( departmentItems.value);
@@ -131,9 +133,8 @@ const updateDepartmentItems = () => {
     // console.log( departmentItems.value);
   } else {
     departmentItems.value = [''];
-    console.log("departmentは何も選択できません");
   }
-    department.value = null; // 子コンボボックスの選択をリセット
+  department.value = null; // 子コンボボックスの選択をリセット
 };
 
 // facultyで選択された値が変更されたときに発火する関数
@@ -147,99 +148,51 @@ watch(category, () => {
   updateAdmissionYearItems();
 });
 
-//e-mailのバリデーションチェック
-const emailRule = value => {
-  const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  return pattern.test(value) || '有効なメールアドレスを入力してください。';
+// バリデーションのルール
+const rules = {
+  userName: { required, maxLength: maxLength(32) },
+  userEmail: { required, email },
+  password: { required, minLength: minLength(8), maxLength: maxLength(32)},
+  passwordCheck: { required, sameAs: sameAs(password)},
+  faculty: { required },
+  department: { required },
+  admissionYear: { required },
+  category: { required },
 };
 
-// 入力のルールをチェックする関数
-const checkValidation = () => {
-  if (userName.value.length == 0) {
-    alert('名前を入力してください');
-    return '名前未入力';
-  }
-  else if (userEmail.value.length == 0) {
-    alert('メールアドレスを入力してください');
-    return 'e-mail未入力';
-  }
-  else if (password.value.length == 0) {
-    alert('パスワードを入力してください');
-    return 'pass未入力';
-  }
-  else if (password.value != passwordCheck.value) {
-    console.log(password.value, passwordCheck.value);
-    alert('パスワードが確認用の入力内容と一致しません');
-    return '確認用pass不一致';
-  }
-  else if (password.value.length >= 32 || password.value.length <= 8) {
-    alert('パスワードは8文字以上32文字以下にしてください');
-    return 'pass不満要件';
-  }
-  else if (universityName.value.length == 0) {
-    alert('大学名を入力してください');
-    return '大学名未入力';
-  }
-  else if (category.value.length == 0) {
-    alert('所属を入力してください');
-    return '所属未入力';
-  }
-  else if (faculty.value.length == 0) {
-    alert('学部・研究科を入力してください');
-    return '学部未入力';
-  }
-  else if (department.value.length == 0) {
-    alert('学科・専攻を入力してください');
-    return '学科未入力';
-  }
-  else if (admissionYear.value.length == 0) {
-    alert('入学年度を入力してください');
-    return '入学年度未入力';
-  }
-  else console.log(admissionYear.value, 'validation を満たしています');
-};
+const v$ = useVuelidate(rules, { userName, userEmail, password, passwordCheck, faculty, department, admissionYear, category });
 
 const clickButton = async() => {
-  // console.log("クリックされたで");
 
-  checkValidation(); 
-  // console.log('実行！！！');
+  // バリデーションチェック
+  v$.value.$validate();
+  if (!v$.value.$invalid) {
+    // バリデーション成功時の処理
+    // console.log('バリデーション成功！');
 
-  const data = {
-    userName:userName.value,
-    userEmail:userEmail.value,
-    password:password.value,
-    universityName:"広島大学",
-    category:category.value,
-    faculty:faculty.value,
-    department:department.value,
-    admissionYear:admissionYear.value,
-  }
+    const data = {
+      userName:userName.value,
+      userEmail:userEmail.value,
+      password:password.value,
+      universityName:"広島大学",
+      category:category.value,
+      faculty:faculty.value,
+      department:department.value,
+      admissionYear:admissionYear.value,
+    }
 
-  //   await axios.post("/api/register", data)
-  //   .then((response) => {
-  //     // ちゃんと送信できたか確認用
-  //     // console.log(response.data.success);
-  //     // if(response.data.success){
-  //       // } 
-      //   store.dispatch('login', data);
-  //       router.push('/profile');
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });  
-  try {
-      const response = await axios.post("/api/register", data);
-      console.log("response");
-      // console.log(response);
-      // console.log(response.data.id);
-      data['id'] = response.data.id;
-      data['role'] = response.data.role;
-      // console.log(data['role']);
-      store.dispatch('login', data);
-      router.push('/profile');
+    try {
+        const response = await axios.post("/api/register", data);
+        console.log("response");
+        // console.log(response);
+        // console.log(response.data.id);
+        data['id'] = response.data.id;
+        data['role'] = response.data.role;
+        // console.log(data['role']);
+        store.dispatch('login', data);
+        router.push('/profile');
 
-    // その他の処理
+      // その他の処理
     } catch (error) {
       if (error.response) {
         // サーバーからのエラーレスポンスがある場合
@@ -248,47 +201,52 @@ const clickButton = async() => {
         // リクエストがサーバーに届かなかった場合など
         console.error(error.message);
       }
-    }  
+    } 
+  }
 };
 
 </script>
 
 <template>
     <v-app>
-        <!-- <v-main> -->
             <v-container>
                 <h1 style="font-size: 2rem;">新規ユーザ登録</h1>
                 <v-form action="" method="post">
                     <v-text-field
-                    v-model="userName"
-                    label="名前"
-                    name="userName"
-                    type="name"
+                      v-model="userName"
+                      :error-messages="v$.userName.$error ? ['1字以上32字以下の, 名前を入力してください. '] : []"
+                      label="名前"
+                      name="userName"
+                      type="name"
+                      clearable
                     ></v-text-field>
                     <v-text-field
-                    v-model="userEmail"
-                    label="メールアドレス"
-                    name="userEmail"
-                    type="email"
+                      v-model="userEmail"
+                      :error-messages="v$.userEmail.$error ? ['有効なメールアドレスを入力してください. '] : []"
+                      label="メールアドレス"
+                      name="userEmail"
+                      type="email"
+                      clearable
                     ></v-text-field>
                     <v-text-field
                       v-model="password"
+                      :error-messages="v$.password.$error ? ['8字以上32字以下の, 有効なパスワードを入力してください. '] : []"
                       label="パスワード"
                       name="password"
                       type="password"
                       clearable
-                      required
                     ></v-text-field>
                     <v-text-field
                       v-model="passwordCheck"
+                      :error-messages="v$.passwordCheck.$error ? ['入力されたパスワードが確認用パスワードと一致しません. '] : []"
                       label="パスワード確認"
                       name="passwordCheck"
                       type="password"
                       clearable
-                      required
                     ></v-text-field>
                     <v-select
                       v-model="category"
+                      :error-messages="v$.category.$error ? ['所属を選択してください. '] : []"
                       :items="categoryItems"
                       label="所属"
                       name="category"
@@ -296,6 +254,7 @@ const clickButton = async() => {
                     ></v-select>
                     <v-select
                       v-model="faculty"
+                      :error-messages="v$.faculty.$error ? ['学部・研究科等を選択してください. '] : []"
                       :items="facultyItems"
                       label="学部・研究科"
                       name="faculty"
@@ -303,6 +262,7 @@ const clickButton = async() => {
                     ></v-select>
                     <v-select
                       v-model="department"
+                      :error-messages="v$.department.$error ? ['学科・類・専攻等を選択してください. '] : []"
                       :items="departmentItems"
                       label="学科・学類・専攻など"
                       name="department"
@@ -310,14 +270,24 @@ const clickButton = async() => {
                     ></v-select>
                     <v-select
                       v-model="admissionYear"
+                      :error-messages="v$.admissionYear.$error ? ['入学年度を選択してください. '] : []"
                       :items="admissionYearItems"
                       label="入学年度"
                       name="admissionYear"
-                      type="number"
+                      type="text"
                     ></v-select>
-                    <v-btn @click="clickButton">送信</v-btn>
+                    <v-checkbox 
+                    v-model="termsAccepted"
+                      label="当サイトの利用規約およびプライバシーポリシーに同意する. (利用規約・プライバシーポリシーはページ下部のフッターからご確認いただけます. )"
+                      ></v-checkbox>
+                    <v-btn 
+                      :disabled="!termsAccepted"
+                      color = "indigo"
+                      @click="clickButton"
+                    >
+                      登録する
+                    </v-btn>
                 </v-form>
             </v-container>
-        <!-- </v-main> -->
     </v-app>
 </template>

@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
     {
         // 初期データの挿入
         $user = DB::table('users')->insertGetId([
-            'userName' => 'intmain1@com',
+            'userName' => 'intmain1',
             'userEmail' => 'intmain1@com',
             'password' => Hash::make('intmain1@com'),
             'universityName' => '広島大学',
@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $user2 = DB::table('users')->insertGetId([
-            'userName' => 'intmain3@com',
+            'userName' => 'intmain3',
             'userEmail' => 'intmain3@com',
             'password' => Hash::make('intmain3@com'),
             'universityName' => '広島大学',
@@ -41,7 +41,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $user3 = DB::table('users')->insertGetId([
-            'userName' => 'intmain6@com',
+            'userName' => 'intmain6',
             'userEmail' => 'intmain6@com',
             'password' => Hash::make('intmain6@com'),
             'universityName' => '広島大学',

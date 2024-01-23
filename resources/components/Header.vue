@@ -42,7 +42,7 @@ const clickLogoutButton = async() => {
     // if(response.data.success){
       // }
       store.dispatch('logout');
-      router.push('/profile')
+      router.push('/welcome');
   })
   .catch((err) => {
     console.log(err);

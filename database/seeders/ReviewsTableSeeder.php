@@ -29,6 +29,25 @@ class ReviewsTableSeeder extends Seeder
             'updatedAt' => now(),
         ]);
 
+        DB::table('reviews')->insert([
+            'lectureId' => 1,
+            'userId' => 2,
+            'attendanceYear' => 2024,
+            'attendanceConfirm' => '出席なし',
+            'weeklyAssignments' => '良い',
+            'midtermAssignments' => '普通',
+            'finalAssignments' => '良い',
+            'pastExamPossession' => 'あり',
+            'grades' => '優',
+            'creditLevel' => 4,
+            'interestLevel' => 5,
+            'skillLevel' => 1,
+            'comments' => 'この講義は非常に面白かったです。',
+            'isVisible' => true,
+            'createdAt' => now(),
+            'updatedAt' => now(),
+        ]);
+
         // 別のレビューデータを挿入する場合は、適宜追加
         DB::table('reviews')->insert([
             'lectureId' => 2,
@@ -39,7 +58,27 @@ class ReviewsTableSeeder extends Seeder
             'midtermAssignments' => '悪い',
             'finalAssignments' => '普通',
             'pastExamPossession' => 'なし',
-            'grades' => 'B',
+            'grades' => '秀',
+            'creditLevel' => 2,
+            'interestLevel' => 3,
+            'skillLevel' => 4,
+            'comments' => '特に印象に残る講義ではありませんでした。',
+            'isVisible' => true,
+            'createdAt' => now(),
+            'updatedAt' => now(),
+        ]);
+
+        // 別のレビューデータを挿入する場合は、適宜追加
+        DB::table('reviews')->insert([
+            'lectureId' => 1,
+            'userId' => 3,
+            'attendanceYear' => 2023,
+            'attendanceConfirm' => '出席なし',
+            'weeklyAssignments' => '普通',
+            'midtermAssignments' => '悪い',
+            'finalAssignments' => '普通',
+            'pastExamPossession' => 'なし',
+            'grades' => '秀',
             'creditLevel' => 2,
             'interestLevel' => 3,
             'skillLevel' => 4,

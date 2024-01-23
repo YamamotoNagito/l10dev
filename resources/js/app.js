@@ -15,6 +15,7 @@ import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
 import TermsView from '../views/TermsView.vue'
 import ContactView from '../views/ContactView.vue'
 import AboutUsView from '../views/AboutUsView.vue'
+import NotFoundView from '../views/NotFoundView.vue'
 import axios from 'axios';
 // import store from '../store'; // Vuex ストアのインポート
 
@@ -47,12 +48,13 @@ const router = createRouter({
     { path: '/profile/',  name: 'profile', component: ProfileView},
     { path: '/profile/edit', name: 'profile/edit', component:  ProfileEditView, meta: { requiresAuth: true }, },
     { path: '/class', name: 'class', component: ClassListView },
-    { path: '/class/detail', name: 'class/detail', component: ClassDetailView },
+    { path: '/class/:lectureId/detail', name: 'class/:lectureId/detail', component: ClassDetailView, props: true },
     { path: '/class/post', name: 'class/post', component: ClassPostView},
     { path: '/privacy-policy', name: 'privacy-policy', component: PrivacyPolicyView },
     { path: '/terms', name: 'terms', component: TermsView },
     { path: '/contact', name: 'contact', component: ContactView },
     { path: '/about-us', name: 'about-us', component: AboutUsView },
+    { path: '/:catchAll(.*)', name: 'not-found', component: NotFoundView}
     // 設定画面を追加する.
 
   ]
