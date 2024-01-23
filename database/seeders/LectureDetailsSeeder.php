@@ -40,5 +40,38 @@ class LectureDetailsSeeder extends Seeder
             'category' => 'プログラミング',
             'grade' => '2年生',
         ]);
+        
+        // 別の講義詳細データの追加
+        DB::table('lectureDetails')->insert([
+            'lectureId' => 3,  // 適切な lectureId を指定
+            'lectureCode' => 'XYZ789',
+            'syllabusUrl' => 'https://example.com/syllabus2',
+            'location' => '霞キャンパス',
+            'faculty' => '工学部',
+            'category' => 'プログラミング',
+            'grade' => '2年生',
+        ]);
+
+        // 別の講義詳細データの追加
+        DB::table('lectureDetails')->insert([
+            'lectureId' => 3,  // 適切な lectureId を指定
+            'lectureCode' => '123456',
+            'syllabusUrl' => 'https://example.com/syllabus2',
+            'location' => '霞キャンパス',
+            'faculty' => '工学部',
+            'category' => 'プログラミング',
+            'grade' => '2年生',
+        ]);
+
+        // 別の講義詳細データの追加
+        DB::table('lectureDetails')->insert([
+            'lectureId' => 4,  // 適切な lectureId を指定
+            'lectureCode' => '456789',
+            'syllabusUrl' => 'https://example.com/syllabus2',
+            'location' => '霞キャンパス',
+            'faculty' => '工学部',
+            'category' => 'プログラミング',
+            'grade' => '2年生',
+        ]);
     }
 }

@@ -16,7 +16,7 @@ class CreateLectureDetailTimesTable extends Migration
             $table->string('dayOfWeek');
             $table->string('timePeriod');
 
-            $table->unique(['term', 'dayOfWeek', 'timePeriod']);
+            // $table->unique(['term', 'dayOfWeek', 'timePeriod']);
         });
     }
 

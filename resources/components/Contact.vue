@@ -28,6 +28,9 @@ const v$ = useVuelidate(rules, { name, emailInputed, message, category });
 const clickButton = async() => {
   console.log("クリックされたで");
 
+  const response = await axios.post("/api/searchByConditions");
+  console.log(response);
+
   v$.value.$validate();
   if (!v$.value.$invalid) {
     // バリデーション成功時の処理
@@ -41,6 +44,7 @@ const clickButton = async() => {
     }
  
     try {
+
       console.log('postするdata: ', data);
       await axios.post("/api/contact", data);
       router.push('/contact');
