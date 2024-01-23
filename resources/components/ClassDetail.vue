@@ -8,8 +8,8 @@ import GraphTabs from './GraphTabs.vue';
 import ClassInformationTable from "./ClassInformationTable.vue";
 import RadarChart from "./RadarChart.vue";
 
-
-const props = defineProps(["classDetailData"])
+const props = defineProps(["classDetailData"]);
+const router = useRouter();
 
 const classInformationData = props.classDetailData.classInformationData
 const classRadarChartData = props.classDetailData.classRadarChartData
@@ -28,7 +28,7 @@ const reviewDataList = props.classDetailData.reviewDataList
               class="d-flex flex-row ml-5"
               color="orange"
               ><v-icon>mdi-comment-plus</v-icon>
-              <p>レビューを作成</p>
+              <p @click="router.push({ name: 'class/post'})">レビューを作成</p>
             </v-btn>
         </v-container>
         <v-expansion-panels class="ma-auto w-75">
