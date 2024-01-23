@@ -97,7 +97,7 @@ const searchClassByLectureCode = ref({
 const nonExistenceMessage = ref("");
 
 // 条件で検索するボタンが押されたときに発火する関数
-//welcome内の検索機能と一覧内の検索機能を同じにしようとしたら，検索条件を/classに送信して，/class内で検索
+//検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
 const sendQueryToClassListView = async () => {
   // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
   detailedCondition.value.totalEvaluation = updateEvaluationObject(totalEvaluationString.value)
