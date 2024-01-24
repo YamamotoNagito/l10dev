@@ -193,61 +193,6 @@ onMounted(() => {
   fetchData();
 });
 
-// 元の検索候補
-// candidateConditionsList.value = [
-//   {
-//     lectureId: 1,
-//     lectureName: "Arsenal",
-//     teacherName: "Arteta",
-//   },
-//   {
-//     lectureId: 2,
-//     lectureName: "Arsenal",
-//     teacherName: "Arteta",
-//   },
-//   {
-//     lectureId: 3,
-//     lectureName: "Arsenal",
-//     teacherName: "Arteta",
-//   },
-//   {
-//     lectureId: 4,
-//     lectureName: "Arsenal",
-//     teacherName: "Arsen Wenger",
-//   },
-//   {
-//     lectureId: 5,
-//     lectureName: "Arsenal",
-//     teacherName: "Yuki Takahara",
-//   },
-//   {
-//     lectureId: 6,
-//     lectureName: "Tottenham",
-//     teacherName: "Postecoglou",
-//   },
-//   {
-//     lectureId: 7,
-//     lectureName: "Juventus",
-//     teacherName: "Allegri",
-//   },
-//   { lectureId: 8, lectureName: "Barcelona", teacherName: "Xabi" },
-//   {
-//     lectureId: 9,
-//     lectureName: "The era under the rule of Stalin",
-//     teacherName: "Tanaka",
-//   },
-//   {
-//     lectureId: 10,
-//     lectureName: "The theory of Einstein",
-//     teacherName: "Tanaka",
-//   },
-//   {
-//     lectureId: 11,
-//     lectureName: "The theory of Lenin",
-//     teacherName: "Tanaka",
-//   },
-// ];
-
 const filteredCandidateConditionsList = ref([]);
 const candidateLectureNameList = ref([]);
 const candidateTeacherNameList = ref([]);
