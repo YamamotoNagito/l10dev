@@ -99,7 +99,7 @@ use l10dev
 
 3.  全体のテーブルを確認する
 ```
-show tabels;
+show tables;
 ```
 
 3. (例)格納された授業データを確認する
