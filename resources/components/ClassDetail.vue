@@ -28,7 +28,7 @@ const reviewDataList = props.classDetailData.reviewDataList
               class="d-flex flex-row ml-5"
               color="orange"
               ><v-icon>mdi-comment-plus</v-icon>
-              <p @click="router.push({ name: 'class/post'})">レビューを作成</p>
+              <p @click="router.push({ name: 'class/post'})">レビュー投稿</p>
             </v-btn>
         </v-container>
         <v-expansion-panels class="ma-auto w-75">
