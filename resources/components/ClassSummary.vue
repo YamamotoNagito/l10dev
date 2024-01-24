@@ -72,7 +72,7 @@ onMounted(() => {
             class="d-flex flex-row align-center justify-end ma-1 pa-1"
             ><v-btn color="blue" @click="moveToReview"
               ><v-icon>mdi-comment-plus-outline</v-icon>
-              <p class="text-h9">レビュー</p></v-btn
+              <p @click="router.push({ name: 'class/post'})" class="text-h9">レビュー投稿</p></v-btn
             ></v-container
           >
               <!-- Twitter共有ボタンの配置-->
