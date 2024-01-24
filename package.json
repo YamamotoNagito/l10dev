@@ -7,12 +7,12 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue": "^4.6.2",
     "axios": "^1.1.2",
     "jest": "^29.6.2",
     "laravel-vite-plugin": "^0.7.5",
     "vite": "^4.0.0",
-    "vue": "^3.3.13",
+    "vue": "^3.4.15",
     "vuetify": "^3.3.12"
   },
   "dependencies": {

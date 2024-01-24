@@ -1,35 +1,35 @@
 <script setup>
-import { ref, defineProps, computed } from "vue";
-import vuetify from "../js/vuetify";
+import { ref, defineProps, computed, toRefs } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import ReviewSummary from "./ReviewSummary.vue";
 
 const props = defineProps(["reviewDataList"]);
-const reviewDataList2 = ref(props.reviewDataList)
+
+const { reviewDataList } = toRefs(props);
+
+console.log("review data list is : ");
+console.log(reviewDataList);
 
 const itemsPerPage = 10;
 const currentPage = ref(1);
 
 const totalPages = computed(() =>
-  Math.ceil(reviewDataList2.value.length / itemsPerPage)
+  Math.ceil(reviewDataList.value.length / itemsPerPage)
 );
 const displayedItems = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return reviewDataList2.value.slice(start, end);
+  return reviewDataList.value.slice(start, end);
 });
 </script>
 
 <template>
-  <v-container class="d-flex flex-column align-center ga-5">
-    <!-- <v-container v-for="n in reviewDataList.length" :key="n">
-      <ReviewSummary class="ma-auto" :reviewData="reviewDataList[n - 1]"></ReviewSummary>
-    </v-container> -->
-    <v-container v-for="n in displayedItems.length" :key="n">
+  <v-container class="d-flex flex-column align-center ga-5" v-if="reviewDataList">
+    <v-container v-for="n in reviewDataList.length" :key="n">
       <ReviewSummary
         class="ma-auto"
-        :reviewData="displayedItems[n - 1]"
+        :reviewData="reviewDataList[n - 1]"
       ></ReviewSummary>
     </v-container>
 
