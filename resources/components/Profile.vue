@@ -50,9 +50,6 @@ import { ref, defineProps, toRefs } from "vue";
 
 const props = defineProps(["userProfile", "reviewDataList"]);
 
-// Convert props to refs for reactivity
-const { userProfile, reviewDataList } = toRefs(props);
-
 // 「投稿した」「LIKES」のうちどちらのタブを開くのか
 const tab = ref(null);
 </script>
