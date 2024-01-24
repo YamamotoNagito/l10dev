@@ -49,7 +49,7 @@ import vuetify from '../js/vuetify';
 import { useRouter } from 'vue-router';
 
 const navigateToExternalUrl = () => {
-  window.location.href = "https://www.hiroshima-u.ac.jp/iagcc/news/80635";
+  window.open("https://www.hiroshima-u.ac.jp/iagcc/news/80635");
 };
 
 const router = useRouter();
