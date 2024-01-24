@@ -226,8 +226,8 @@ watch(
   ],
   () => {
     if (
-      detailedCondition.value.lectureName === null ||
-      detailedCondition.value.lectureName === null
+      detailedCondition.value.lectureName === null &&
+      detailedCondition.value.teacherName === null
     ) {
       candidateLectureNameList.value = [];
       candidateTeacherNameList.value = [];
@@ -261,13 +261,11 @@ watch(
   }
 );
 
+// 検索候補の初期設定
+// 今は元からから空の配列になっているが，今後デフォルトの検索候補を出す可能性を考えて関数にした
 const makeDefaultCandidateLectureNameList = () => {
-  candidateLectureNameList.value = Array.from(
-    new Set(candidateConditionsList.value.map((item) => item.lectureName))
-  );
-  candidateTeacherNameList.value = Array.from(
-    new Set(candidateConditionsList.value.map((item) => item.teacherName))
-  );
+  candidateLectureNameList.value = [];
+  candidateTeacherNameList.value = [];
 };
 </script>
 
