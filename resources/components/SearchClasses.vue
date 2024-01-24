@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 
@@ -68,12 +68,12 @@ const updateEvaluationObject = (evaluationString) => {
 
     default:
       // デフォルトの処理はnullになる
-      evaluationObj.min = null
-      evaluationObj.max = null
+      evaluationObj.min = null;
+      evaluationObj.max = null;
       break;
   }
-  console.log(evaluationObj)
-  return evaluationObj
+  console.log(evaluationObj);
+  return evaluationObj;
 };
 
 // TODO
@@ -100,10 +100,18 @@ const nonExistenceMessage = ref("");
 //welcome内の検索機能と一覧内の検索機能を同じにしようとしたら，検索条件を/classに送信して，/class内で検索
 const sendQueryToClassListView = async () => {
   // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
-  detailedCondition.value.totalEvaluation = updateEvaluationObject(totalEvaluationString.value)
-  detailedCondition.value.creditLevel = updateEvaluationObject(creditLevelString.value)
-  detailedCondition.value.interestLevel = updateEvaluationObject(interestLevelString.value)  
-  detailedCondition.value.skillLevel = updateEvaluationObject(skillLevelString.value)
+  detailedCondition.value.totalEvaluation = updateEvaluationObject(
+    totalEvaluationString.value
+  );
+  detailedCondition.value.creditLevel = updateEvaluationObject(
+    creditLevelString.value
+  );
+  detailedCondition.value.interestLevel = updateEvaluationObject(
+    interestLevelString.value
+  );
+  detailedCondition.value.skillLevel = updateEvaluationObject(
+    skillLevelString.value
+  );
 
   console.log(detailedCondition.value);
   router.push({
@@ -158,6 +166,107 @@ const searchByLectureCode = async () => {
     }
   }
 };
+
+// ここから検索候補を表示する機能に関するコード
+const candidateConditionsList = ref([]);
+//
+const fetchData = async () => {
+  try {
+    const response = await axios.get("/api/getLectureInfo");
+    console.log("response");
+    console.log(response);
+    // 検索候補をバックエンドから取得して格納
+    candidateConditionsList.value = response.data; // 仮に response.data が候補条件のリストであると仮定
+    makeDefaultCandidateLectureNameList();
+  } catch (error) {
+    if (error.response) {
+      // サーバーからのエラーレスポンスがある場合
+      console.error(error.response.data); // エラーレスポンスをコンソールに出力
+    } else {
+      // リクエストがサーバーに届かなかった場合など
+      console.error(error.message);
+    }
+  }
+};
+
+onMounted(() => {
+  fetchData();
+});
+
+const filteredCandidateConditionsList = ref([]);
+const candidateLectureNameList = ref([]);
+const candidateTeacherNameList = ref([]);
+
+const filterCandidateConditions = () => {
+  const detailedLectureName = detailedCondition.value.lectureName
+    ? detailedCondition.value.lectureName.toLowerCase()
+    : "";
+  const detailedTeacherName = detailedCondition.value.teacherName
+    ? detailedCondition.value.teacherName.toLowerCase()
+    : "";
+
+  filteredCandidateConditionsList.value = candidateConditionsList.value.filter(
+    (item) => {
+      const lowerCaseLectureName = item.lectureName.toLowerCase();
+      const lowerCaseTeacherName = item.teacherName.toLowerCase();
+
+      return (
+        lowerCaseLectureName.includes(detailedLectureName) &&
+        lowerCaseTeacherName.includes(detailedTeacherName)
+      );
+    }
+  );
+};
+
+// detailedCondition.value.lectureNameまたはdetailedCondition.value.teacherNameが変化したら実行
+watch(
+  [
+    () => detailedCondition.value.lectureName,
+    () => detailedCondition.value.teacherName,
+  ],
+  () => {
+    if (
+      detailedCondition.value.lectureName === null &&
+      detailedCondition.value.teacherName === null
+    ) {
+      candidateLectureNameList.value = [];
+      candidateTeacherNameList.value = [];
+    } else {
+      filterCandidateConditions();
+    }
+  }
+);
+
+// filteredCandidateConditionsListが更新されたら実行
+watch(
+  () => filteredCandidateConditionsList.value,
+  () => {
+    // 値をクリア
+    candidateLectureNameList.value = [];
+    candidateTeacherNameList.value = [];
+
+    // 更新されたリストを走査して値を抽出
+    filteredCandidateConditionsList.value.forEach((item) => {
+      candidateLectureNameList.value.push(item.lectureName);
+      candidateTeacherNameList.value.push(item.teacherName);
+    });
+
+    // 重複を取り除く
+    candidateLectureNameList.value = [
+      ...new Set(candidateLectureNameList.value),
+    ];
+    candidateTeacherNameList.value = [
+      ...new Set(candidateTeacherNameList.value),
+    ];
+  }
+);
+
+// 検索候補の初期設定
+// 今は元からから空の配列になっているが，今後デフォルトの検索候補を出す可能性を考えて関数にした
+const makeDefaultCandidateLectureNameList = () => {
+  candidateLectureNameList.value = [];
+  candidateTeacherNameList.value = [];
+};
 </script>
 
 <template>
@@ -183,19 +292,21 @@ const searchByLectureCode = async () => {
             <v-window-item value="one">
               <v-container class="category-name-and-content-container">
                 <p class="category-name">授業名</p>
-                <v-text-field
+                <v-combobox
+                  clearable
                   placeholder="一攫千金特論"
-                  class="input-field"
                   v-model="detailedCondition.lectureName"
-                ></v-text-field>
+                  :items="candidateLectureNameList"
+                ></v-combobox>
               </v-container>
               <v-container class="category-name-and-content-container">
                 <p class="category-name">担当教員名</p>
-                <v-text-field
+                <v-combobox
+                  clearable
                   placeholder="服部淳生"
-                  class="input-field"
                   v-model="detailedCondition.teacherName"
-                ></v-text-field>
+                  :items="candidateTeacherNameList"
+                ></v-combobox>
               </v-container>
               <!-- 他の条件についても同様にコードを追加 -->
 
