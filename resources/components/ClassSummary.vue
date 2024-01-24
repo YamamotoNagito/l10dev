@@ -53,7 +53,7 @@ onMounted(() => {
                 href="#"
                 class="text-decoration-underline text-blue text-h8 text-sm-h6"
               >
-                {{ classData.className }}</a
+                {{ classData.lectureName }}</a
               >
             </v-container>
           </v-col>

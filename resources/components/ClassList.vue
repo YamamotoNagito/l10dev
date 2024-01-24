@@ -7,25 +7,23 @@ import ClassSummary from "./ClassSummary.vue";
 import SearchClasses from "./SearchClasses.vue";
 
 // classListView.vueから授業情報のリストを受け取る
-const props = defineProps(["classDataList"])
-
-// propsが扱いにくいため，別の変数に格納する
-const classDataList2 = ref(props.classDataList)
+const props = defineProps(["classDataList"]);
 
 // paginationで1ページに表示する授業数
 const itemsPerPage = 5;
+
 // paginationで現在何ページ目か
 const currentPage = ref(1);
 
 const totalPages = computed(() =>
-  Math.ceil(classDataList2.value.length / itemsPerPage)
+  Math.ceil(props.classDataList.length / itemsPerPage)
 );
 
 // 1つのpagination内に表示する授業情報のリストを，displayedItemsに格納する
 const displayedItems = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return classDataList2.value.slice(start, end);
+  return props.classDataList.slice(start, end);
 });
 </script>
 
@@ -38,13 +36,16 @@ const displayedItems = computed(() => {
   <!-- ここから検索で出てきた授業のリスト -->
   <v-container class="d-flex flex-column align-center ga-5">
     <v-container v-for="n in displayedItems.length" :key="n">
-      <ClassSummary class="mx-auto" :classData="displayedItems[n - 1]"></ClassSummary>
+      <ClassSummary
+        class="mx-auto"
+        :classData="displayedItems[n - 1]"
+      ></ClassSummary>
     </v-container>
   </v-container>
 
   <v-pagination
-      v-model="currentPage"
-      :length="totalPages"
-      :totalVisible="5"
-    ></v-pagination>
+    v-model="currentPage"
+    :length="totalPages"
+    :totalVisible="5"
+  ></v-pagination>
 </template>

@@ -25,7 +25,9 @@ const searchClassByDetailedCondition = async () => {
     );
     console.log("response");
     console.log(response);
-    classDataList.value = response.data.classDataList;
+    classDataList.value = response.data;
+    console.log("class list data :")
+    console.log(classDataList.value); 
     // その他の処理
   } catch (error) {
     if (error.response) {
@@ -36,68 +38,6 @@ const searchClassByDetailedCondition = async () => {
       console.error(error.message);
     }
   }
-
-  // classDataListにはこのようなリストがバックから送られてくるはず（後で消す）
-  // classDataList.value = [
-  //   {
-  //     className: "一攫千金特論",
-  //     classCode: "KA10000",
-  //     teacherName: "服部淳生",
-  //     totalEvaluation: "5",
-  //     numberOfReviews: "70000",
-  //   },
-  //   {
-  //     className: "一攫二千金特論",
-  //     classCode: "KA10001",
-  //     teacherName: "服部淳生",
-  //     totalEvaluation: "5",
-  //     numberOfReviews: "70000",
-  //   },
-  //   {
-  //     className: "一攫三千金特論",
-  //     classCode: "KA10003",
-  //     teacherName: "服部淳生",
-  //     totalEvaluation: "5",
-  //     numberOfReviews: "70000",
-  //   },
-  //   {
-  //     className: "エヴァンゲリオン特論",
-  //     classCode: "KA10004",
-  //     teacherName: "田中恒成",
-  //     totalEvaluation: "5",
-  //     numberOfReviews: "70000",
-  //   },
-  //   {
-  //     className: "おいしいコーヒーの入れ方",
-  //     classCode: "KA10005",
-  //     teacherName: "田中恒成",
-  //     totalEvaluation: "5",
-  //     numberOfReviews: "70000",
-  //   },
-  //   {
-  //     className: "君主論",
-  //     classCode: "KA10006",
-  //     teacherName: "Niccolò Machiavelli",
-  //     totalEvaluation: "5",
-  //     numberOfReviews: "70000",
-  //   },
-  //   {
-  //     className: "罪と罰",
-  //     classCode: "KA10007",
-  //     teacherName: "Фёдор Mихáйлович Достоéвский",
-  //     totalEvaluation: "5",
-  //     numberOfReviews: "70000",
-  //   },
-  //   {
-  //     className: "マルクス経済学",
-  //     classCode: "KA10008",
-  //     teacherName: "Karl Marx",
-  //     totalEvaluation: "5",
-  //     numberOfReviews: "70000",
-  //   },
-  // ];
-
-  console.log(classDataList.value);  //バックからとってきた授業情報リストがclassDataListに格納されたはずだが，なぜかundefinedになっている
 };
 
 // queryパラメータからデータをフェッチ
@@ -132,14 +72,17 @@ onBeforeRouteUpdate(async () => {
 // この関数は開発用！！！後で消す！！v-btnを押したら発火する
 //　授業情報のリストをバックからとってきて，正しくclassDataList内に格納されたか確認するための関数
 const showClassDataList = () => {
-  console.log("Class data list is :");
+  console.log("butto is clicked! Class data list is :");
   console.log(classDataList.value);
 };
 </script>
 
 <template>
-  <ClassList v-if="classDataList" :classDataList="classDataList"></ClassList>
-  <!-- このv-btnは開発用！！後で消す -->
-  <v-btn class="mx-auto" @click="showClassDataList">sample</v-btn>
+  <v-container v-if="classDataList">
+    <ClassList :classDataList="classDataList"></ClassList>
+  </v-container>
+  <v-container v-else>
+    Loading ...
+  </v-container>
 </template>
 
