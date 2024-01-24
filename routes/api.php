@@ -52,3 +52,5 @@ Route::post('/search', [LectureDetailsController::class, 'search']);
 
 // 授業一覧を返却する
 Route::get('/getLectureInfo', [LecturesController::class, 'getLectureInfo']);
+
+// Route::post('/profile/getMyReviews/{userId}',[UserController::class, 'getMyReviews']);

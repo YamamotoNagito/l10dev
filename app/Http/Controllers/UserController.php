@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use App\Models\User;
+use App\Models\Reviews;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
 
@@ -103,8 +104,43 @@ class UserController extends Controller
             'lastLoginAt' => $user->lastLoginAt,
         ];
 
+         // Reviewsテーブルのlecture_idを基にレビュー一覧の取得
+         $reviews = Reviews::where('userId', $userId)
+         // ->select('attendance_year', 'attendance_confirm', 'weekly_assignments', 'midterm_assignments', 'final_assignments')
+         ->select('reviewId','attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments','createdAt')
+         ->get();
+
+        $reviewInfo = $reviews->map(function ($review) {        
+
+            $userName = Reviews::find($review->reviewId)->user->userName;
+            $userId = Reviews::find($review->reviewId)->user->userId;
+            
+            return [
+                'userId' => $userId,
+                'userName' => $userName,
+                'attendanceYear' => $review->attendanceYear,
+                'attendanceConfirm' => $review->attendanceConfirm,
+                'weeklyAssignments' => $review->weeklyAssignments,
+                'midtermAssignments' => $review->midtermAssignments,
+                'finalAssignments' => $review->finalAssignments,
+                'pastExamPossession' => $review->pastExamPossession,
+                'grades' => $review->grades,
+                'comments' => $review->comments,
+                'createdAt' => $review->createdAt,
+                'skillLevel' => $review->skillLevel,
+                'interestLevel' => $review->interestLevel,
+                'creditLevel' => $review->creditLevel,
+                'totalEvaluation' => ($review->skillLevel + $review->interestLevel + $review->creditLevel) / 3,
+            ];
+        });
+
+        $data = [
+            'userData'=>$userData,
+            'reviewInfo'=>$reviewInfo,
+        ];
+
         // JSON形式でデータを返す
-        return response()->json($userData);
+        return response()->json($data);
     }
 
     /**
