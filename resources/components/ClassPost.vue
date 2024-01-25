@@ -331,7 +331,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted} from "vue";
 import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
@@ -343,10 +343,26 @@ import { useVuelidate } from '@vuelidate/core';
 import { required, maxLength } from '@vuelidate/validators';
 
 const store = useStore();
-const router = useRouter();
 
-const lectureName = ref("プログラミング2");
-const teacherName = ref("山本太郎");
+// 授業名と担当教員名を宣言・デフォルト値はnullにしておく
+const lectureName = ref(null);
+const teacherName = ref(null);
+
+// queryの中にある授業名と担当教員名を取得する関数．
+// onMounted時に発火する
+const receiveQueryParameters = () => {
+  // router.currentRoute.value.queryに授業名と担当教員名が入っているはず
+  const router = useRouter();
+
+  // $route.query から lectureName と teacherName を取得
+  lectureName.value = router.currentRoute.value.query.lectureName || null;
+  teacherName.value = router.currentRoute.value.query.teacherName || null;
+
+  // 何かしらの処理（例: ログ出力）
+  console.log("Received query parameters - Lecture Name:", lectureName.value, "Teacher Name:", teacherName.value);
+
+  // ここで lectureName と teacherName を使用して必要な処理を実行できます
+};
 
 const message = ref("")
 
@@ -524,6 +540,10 @@ const clickButton = async() => {
   }
 };
 
+// ページが読み込まれたときに，デフォルトで表示するlectureNameとteacherNameを取得する関数
+onMounted(() => {
+  receiveQueryParameters();
+})
 </script>
 
 <style scoped>
