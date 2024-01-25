@@ -4,21 +4,27 @@
       <v-row>
         <v-col>
           <p class="text-h6">授業名</p>
-          <v-text-field
+          <v-autocomplete
             placeholder="一攫千金特論"
             class="input-field"
             v-model="lectureName"
-            :error-messages="v$.lectureName.$error ? ['授業名を入力してください. '] : []"
+            :items="candidateLectureNameList"
+            :error-messages="
+              v$.lectureName.$error ? ['授業名を入力してください. '] : []
+            "
             clearable
-          ></v-text-field>
+          ></v-autocomplete>
           <p class="text-h6">担当教員名</p>
-          <v-text-field
+          <v-autocomplete
             placeholder="服部淳生"
             class="input-field"
             v-model="teacherName"
-            :error-messages="v$.teacherName.$error ? ['教員名を入力してください. '] : []"
+            :items="candidateTeacherNameList"
+            :error-messages="
+              v$.teacherName.$error ? ['教員名を入力してください. '] : []
+            "
             clearable
-          ></v-text-field>
+          ></v-autocomplete>
         </v-col>
       </v-row>
       <!-- 受講年度 -->
@@ -28,16 +34,20 @@
           <p class="custom-text-style">受講年度</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="attendanceYear" variant="outlined" class="full-height">
+      <v-btn-toggle
+        v-model="attendanceYear"
+        variant="outlined"
+        class="full-height"
+      >
         <v-row no-gutters class="my-2">
           <v-col
             v-for="option in attendanceYearOptions"
             :key="option.value"
             cols="4"
-              sm="2"
-              md="2"
-              lg=""
-              xl=""
+            sm="2"
+            md="2"
+            lg=""
+            xl=""
           >
             <v-btn
               :value="option.value"
@@ -57,8 +67,12 @@
           <p class="custom-text-style">出席の有無</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="attendanceConfirm" variant="outlined" class="full-height">
-        <v-row no-gutters  class="my-2">
+      <v-btn-toggle
+        v-model="attendanceConfirm"
+        variant="outlined"
+        class="full-height"
+      >
+        <v-row no-gutters class="my-2">
           <v-col
             cols="4"
             sm=""
@@ -86,7 +100,11 @@
           <p class="custom-text-style">毎回のレポート・テスト</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="weeklyAssignments" variant="outlined" class="full-height">
+      <v-btn-toggle
+        v-model="weeklyAssignments"
+        variant="outlined"
+        class="full-height"
+      >
         <v-row no-gutters class="my-2">
           <v-col
             cols=""
@@ -113,7 +131,11 @@
           <p class="custom-text-style">中間のレポート・テスト</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="midtermAssignments" variant="outlined" class="full-height">
+      <v-btn-toggle
+        v-model="midtermAssignments"
+        variant="outlined"
+        class="full-height"
+      >
         <v-row no-gutters class="my-2">
           <v-col
             cols=""
@@ -140,7 +162,11 @@
           <p class="custom-text-style">期末のレポート・テスト</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="finalAssignments" variant="outlined" class="full-height">
+      <v-btn-toggle
+        v-model="finalAssignments"
+        variant="outlined"
+        class="full-height"
+      >
         <v-row no-gutters class="my-2">
           <v-col
             cols=""
@@ -167,7 +193,11 @@
           <p class="custom-text-style">過去問・レポートの有無</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="pastExamPossession" variant="outlined" class="full-height">
+      <v-btn-toggle
+        v-model="pastExamPossession"
+        variant="outlined"
+        class="full-height"
+      >
         <v-row no-gutters class="my-2">
           <v-col
             cols=""
@@ -221,7 +251,11 @@
           <p class="custom-text-style">単位取得のしやすさ</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="creditLevel" variant="outlined" class="full-height">
+      <v-btn-toggle
+        v-model="creditLevel"
+        variant="outlined"
+        class="full-height"
+      >
         <v-row no-gutters class="my-2">
           <v-col
             cols=""
@@ -248,7 +282,11 @@
           <p class="custom-text-style">面白さ</p>
         </v-col>
       </v-row>
-      <v-btn-toggle v-model="interestLevel" variant="outlined" class="full-height">
+      <v-btn-toggle
+        v-model="interestLevel"
+        variant="outlined"
+        class="full-height"
+      >
         <v-row no-gutters class="my-2">
           <v-col
             cols=""
@@ -307,40 +345,40 @@
           <v-textarea
             variant="outlined"
             v-model="comments"
-            :error-messages="v$.comments.$error ? ['入力内容は2000文字以内にしてください. '] : []"
+            :error-messages="
+              v$.comments.$error
+                ? ['入力内容は2000文字以内にしてください. ']
+                : []
+            "
             auto-grow
           ></v-textarea>
         </v-col>
       </v-row>
-      <v-row >
+      <v-row>
         <v-col class="text-center custom-text-style">
-          <v-btn
-            @click="clickButton"
-            text="投稿する"
-            color="indigo"
-          ></v-btn>
+          <v-btn @click="clickButton" text="投稿する" color="indigo"></v-btn>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <p v-show="message != ''" class="text-h6">{{ message }}</p>
-        </v-col>  
+        </v-col>
       </v-row>
     </v-col>
   </v-row>
 </template>
 
 <script setup>
-import { ref, onMounted} from "vue";
+import { ref, onMounted, watch } from "vue";
 import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import Button from "./Button.vue";
-import { computed } from 'vue';
-import { useDisplay } from 'vuetify';
-import { useStore } from 'vuex';
-import { useVuelidate } from '@vuelidate/core';
-import { required, maxLength } from '@vuelidate/validators';
+import { computed } from "vue";
+import { useDisplay } from "vuetify";
+import { useStore } from "vuex";
+import { useVuelidate } from "@vuelidate/core";
+import { required, maxLength } from "@vuelidate/validators";
 
 const store = useStore();
 
@@ -348,23 +386,7 @@ const store = useStore();
 const lectureName = ref(null);
 const teacherName = ref(null);
 
-// queryの中にある授業名と担当教員名を取得する関数．
-// onMounted時に発火する
-const receiveQueryParameters = () => {
-  // router.currentRoute.value.queryに授業名と担当教員名が入っているはず
-  const router = useRouter();
-
-  // $route.query から lectureName と teacherName を取得
-  lectureName.value = router.currentRoute.value.query.lectureName || null;
-  teacherName.value = router.currentRoute.value.query.teacherName || null;
-
-  // 何かしらの処理（例: ログ出力）
-  console.log("Received query parameters - Lecture Name:", lectureName.value, "Teacher Name:", teacherName.value);
-
-  // ここで lectureName と teacherName を使用して必要な処理を実行できます
-};
-
-const message = ref("")
+const message = ref("");
 
 const attendanceYear = ref(2024);
 const attendanceYearOptions = ref([
@@ -455,21 +477,27 @@ const skillLevelOptions = ref([
   { label: "とても役立つ", value: "5" },
 ]);
 
-const comments = ref('');
+const comments = ref("");
 
 // 画面サイズに合わせてボタンのサイズを返す
-const { name } = useDisplay()
+const { name } = useDisplay();
 const btnSize = computed(() => {
   switch (name.value) {
-    case 'xs': return 'small';
-    case 'sm': return 'small';
-    case 'md': return 'default';
-    case 'lg': return 'default';
-    case 'xl': return 'default';
-    case 'xxl': return 'default';
+    case "xs":
+      return "small";
+    case "sm":
+      return "small";
+    case "md":
+      return "default";
+    case "lg":
+      return "default";
+    case "xl":
+      return "default";
+    case "xxl":
+      return "default";
   }
-  return 'default';
-})
+  return "default";
+});
 
 // バリデーションルール
 const rules = {
@@ -481,81 +509,184 @@ const v$ = useVuelidate(rules, { lectureName, teacherName, comments });
 
 // 送信後、フォームのカテゴリとメッセージをリセットする
 const resetForm = () => {
-  lectureName.value = '';
-  teacherName.value = '';
-  comments.value = '';
-  v$.value.$reset();  // バリデーション状態のリセット
+  lectureName.value = "";
+  teacherName.value = "";
+  comments.value = "";
+  v$.value.$reset(); // バリデーション状態のリセット
 };
 
-const clickButton = async() => {
+const clickButton = async () => {
   console.log("クリックされたで");
   console.log(store.getters.userInfo.id);
 
   // バリデーションチェック
   v$.value.$validate();
-  if (!v$.value.$invalid) { //バリデーション通過したら実行
+  if (!v$.value.$invalid) {
+    //バリデーション通過したら実行
     const data = {
       // lecture_id: 1,
       userId: store.getters.userInfo.id,
       lectureName: lectureName.value,
       teacherName: teacherName.value,
       attendanceYear: attendanceYear.value,
-      attendanceConfirm:attendanceConfirm.value,
-      weeklyAssignments:weeklyAssignments.value,
-      midtermAssignments:midtermAssignments.value,
-      finalAssignments:finalAssignments.value,
-      pastExamPossession:pastExamPossession.value,
-      grades:grades.value,
+      attendanceConfirm: attendanceConfirm.value,
+      weeklyAssignments: weeklyAssignments.value,
+      midtermAssignments: midtermAssignments.value,
+      finalAssignments: finalAssignments.value,
+      pastExamPossession: pastExamPossession.value,
+      grades: grades.value,
       creditLevel: creditLevel.value,
       interestLevel: interestLevel.value,
       skillLevel: skillLevel.value,
       comments: comments.value,
       isVisible: true,
-    }
+    };
 
     // フォームのリセット
     resetForm();
 
     try {
-        const response = await axios.post("/api/reviews", data);
-        console.log("response");
-        
-        if(response.data.success){
-          // router.push('/reviews');
-        }else{
-          console.log(response.data.message);
-          message.value = response.data.message;
-        }
+      const response = await axios.post("/api/reviews", data);
+      console.log("response");
+
+      if (response.data.success) {
+        // router.push('/reviews');
+      } else {
+        console.log(response.data.message);
+        message.value = response.data.message;
+      }
 
       // その他の処理
-      } catch (error) {
-        if (error.response) {
-          // サーバーからのエラーレスポンスがある場合
-          console.error(error.response.data); // エラーレスポンスをコンソールに出力
-        } else {
-          // リクエストがサーバーに届かなかった場合など
-          console.error(error.message);
-        }
+    } catch (error) {
+      if (error.response) {
+        // サーバーからのエラーレスポンスがある場合
+        console.error(error.response.data); // エラーレスポンスをコンソールに出力
+      } else {
+        // リクエストがサーバーに届かなかった場合など
+        console.error(error.message);
       }
+    }
   }
 };
 
-// ページが読み込まれたときに，デフォルトで表示するlectureNameとteacherNameを取得する関数
+// ページが読み込まれたときに，デフォルトで表示するlectureNameとteacherNameを取得
+// 検索候補を取得
 onMounted(() => {
   receiveQueryParameters();
-})
+  fetchCandidateConditionsList();
+});
+
+// queryの中にある授業名と担当教員名を取得する関数．
+// onMounted時に発火する
+const receiveQueryParameters = () => {
+  // router.currentRoute.value.queryに授業名と担当教員名が入っているはず
+  const router = useRouter();
+
+  // $route.query から lectureName と teacherName を取得
+  lectureName.value = router.currentRoute.value.query.lectureName || null;
+  teacherName.value = router.currentRoute.value.query.teacherName || null;
+
+  // 何かしらの処理（例: ログ出力）
+  console.log(
+    "Received query parameters - Lecture Name:",
+    lectureName.value,
+    "Teacher Name:",
+    teacherName.value
+  );
+};
+
+// ここから検索候補を表示する機能に関するコード
+const candidateConditionsList = ref([]);
+//
+const fetchCandidateConditionsList = async () => {
+  try {
+    const response = await axios.get("/api/getLectureInfo");
+    console.log("response");
+    console.log(response);
+    // 検索候補をバックエンドから取得して格納
+    candidateConditionsList.value = response.data; // 仮に response.data が候補条件のリストであると仮定
+    makeDefaultCandidateLectureNameList();
+  } catch (error) {
+    if (error.response) {
+      // サーバーからのエラーレスポンスがある場合
+      console.error(error.response.data); // エラーレスポンスをコンソールに出力
+    } else {
+      // リクエストがサーバーに届かなかった場合など
+      console.error(error.message);
+    }
+  }
+};
+
+const filteredCandidateConditionsList = ref([]);
+const candidateLectureNameList = ref([]);
+const candidateTeacherNameList = ref([]);
+
+const filterCandidateConditions = () => {
+  const detailedLectureName = lectureName.value
+    ? lectureName.value.toLowerCase()
+    : "";
+  const detailedTeacherName = teacherName.value
+    ? teacherName.value.toLowerCase()
+    : "";
+
+  filteredCandidateConditionsList.value = candidateConditionsList.value.filter(
+    (item) => {
+      const lowerCaseLectureName = item.lectureName.toLowerCase();
+      const lowerCaseTeacherName = item.teacherName.toLowerCase();
+
+      return (
+        lowerCaseLectureName.includes(detailedLectureName) &&
+        lowerCaseTeacherName.includes(detailedTeacherName)
+      );
+    }
+  );
+};
+
+// detailedCondition.value.lectureNameまたはdetailedCondition.value.teacherNameが変化したら実行
+watch([() => lectureName.value, () => teacherName.value], () => {
+  filterCandidateConditions();
+});
+
+// filteredCandidateConditionsListが更新されたら実行
+watch(
+  () => filteredCandidateConditionsList.value,
+  () => {
+    // 値をクリア
+    candidateLectureNameList.value = [];
+    candidateTeacherNameList.value = [];
+
+    // 更新されたリストを走査して値を抽出
+    filteredCandidateConditionsList.value.forEach((item) => {
+      candidateLectureNameList.value.push(item.lectureName);
+      candidateTeacherNameList.value.push(item.teacherName);
+    });
+
+    // 重複を取り除く
+    candidateLectureNameList.value = [
+      ...new Set(candidateLectureNameList.value),
+    ];
+    candidateTeacherNameList.value = [
+      ...new Set(candidateTeacherNameList.value),
+    ];
+  }
+);
+
+// 検索候補の初期設定
+// 今は元からから空の配列になっているが，今後デフォルトの検索候補を出す可能性を考えて関数にした
+const makeDefaultCandidateLectureNameList = () => {
+  filterCandidateConditions();
+};
 </script>
 
 <style scoped>
-  .v-btn {
-    margin: 0 10px;
-  }
-  .full-height {
-    height: auto !important;
-  }
-  .custom-text-style {
+.v-btn {
+  margin: 0 10px;
+}
+.full-height {
+  height: auto !important;
+}
+.custom-text-style {
   @apply text-md-h5 text-sm-h6;
 }
-
 </style>
 
