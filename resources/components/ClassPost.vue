@@ -386,6 +386,9 @@ const store = useStore();
 const lectureName = ref(null);
 const teacherName = ref(null);
 
+// router.currentRoute.value.queryに授業名と担当教員名が入っているはず
+const router = useRouter();
+
 const message = ref("");
 
 const attendanceYear = ref(2024);
@@ -571,20 +574,27 @@ const clickButton = async () => {
 
 // ページが読み込まれたときに，デフォルトで表示するlectureNameとteacherNameを取得
 // 検索候補を取得
-onMounted(() => {
-  receiveQueryParameters();
-  fetchCandidateConditionsList();
+onMounted(async () => {
+  await fetchCandidateConditionsList(); // 非同期処理のため `await` を追加
+  receiveQueryParameters(); // fetchCandidateConditionsList関数の後に実行
 });
 
 // queryの中にある授業名と担当教員名を取得する関数．
 // onMounted時に発火する
 const receiveQueryParameters = () => {
-  // router.currentRoute.value.queryに授業名と担当教員名が入っているはず
-  const router = useRouter();
 
   // $route.query から lectureName と teacherName を取得
-  lectureName.value = router.currentRoute.value.query.lectureName || null;
-  teacherName.value = router.currentRoute.value.query.teacherName || null;
+  const queryLectureName = router.currentRoute.value.query.lectureName;
+  const queryTeacherName = router.currentRoute.value.query.teacherName;
+
+  // candidateConditionsList内にペアがあるか確認
+  const hasPair = candidateConditionsList.value.some(
+    pair => pair.lectureName === queryLectureName && pair.teacherName === queryTeacherName
+  );
+
+  // ペアがあれば設定、なければnull
+  lectureName.value = hasPair ? queryLectureName : null;
+  teacherName.value = hasPair ? queryTeacherName : null;
 
   // 何かしらの処理（例: ログ出力）
   console.log(
@@ -605,7 +615,7 @@ const fetchCandidateConditionsList = async () => {
     console.log(response);
     // 検索候補をバックエンドから取得して格納
     candidateConditionsList.value = response.data; // 仮に response.data が候補条件のリストであると仮定
-    makeDefaultCandidateLectureNameList();
+    // makeDefaultCandidateLectureNameList();
   } catch (error) {
     if (error.response) {
       // サーバーからのエラーレスポンスがある場合
