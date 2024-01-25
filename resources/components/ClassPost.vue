@@ -615,7 +615,7 @@ const fetchCandidateConditionsList = async () => {
     console.log(response);
     // 検索候補をバックエンドから取得して格納
     candidateConditionsList.value = response.data; // 仮に response.data が候補条件のリストであると仮定
-    // makeDefaultCandidateLectureNameList();
+    makeDefaultCandidateLectureNameList();
   } catch (error) {
     if (error.response) {
       // サーバーからのエラーレスポンスがある場合
@@ -680,6 +680,12 @@ watch(
     ];
   }
 );
+
+// 検索候補の初期設定
+// 今は元からから空の配列になっているが，今後デフォルトの検索候補を出す可能性を考えて関数にした
+const makeDefaultCandidateLectureNameList = () => {
+  filterCandidateConditions();
+};
 </script>
 
 <style scoped>
