@@ -680,12 +680,6 @@ watch(
     ];
   }
 );
-
-// 検索候補の初期設定
-// 今は元からから空の配列になっているが，今後デフォルトの検索候補を出す可能性を考えて関数にした
-const makeDefaultCandidateLectureNameList = () => {
-  filterCandidateConditions();
-};
 </script>
 
 <style scoped>
