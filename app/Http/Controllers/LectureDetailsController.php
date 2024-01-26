@@ -153,9 +153,11 @@ class LectureDetailsController extends Controller
         $review_info = $reviews->map(function ($review) {
             
             $userName = Reviews::find($review->reviewId)->user->userName;
+            $userId = Reviews::find($review->reviewId)->user->userId;
 
             return [
                 'userName' => $userName,
+                'userId' => $userId,
                 'attendanceYear' => $review->attendanceYear,
                 'attendanceConfirm' => $review->attendanceConfirm,
                 'weeklyAssignments' => $review->weeklyAssignments,
