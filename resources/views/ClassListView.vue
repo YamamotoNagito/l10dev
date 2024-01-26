@@ -16,7 +16,7 @@ const route = useRoute();
 
 const searchClassByDetailedCondition = async () => {
   // path内のqueryから取得した値がdetailedConditionに格納されているはずなので，それが出力されるはず
-  console.log("detailed condition is:")
+  console.log("detailed condition is:");
   console.log(detailedCondition.value);
   try {
     const response = await axios.post(
@@ -26,8 +26,8 @@ const searchClassByDetailedCondition = async () => {
     console.log("response");
     console.log(response);
     classDataList.value = response.data;
-    console.log("class list data :")
-    console.log(classDataList.value); 
+    console.log("class list data :");
+    console.log(classDataList.value);
     // その他の処理
   } catch (error) {
     if (error.response) {
@@ -40,49 +40,60 @@ const searchClassByDetailedCondition = async () => {
   }
 };
 
-// queryパラメータからデータをフェッチ
-const fetchData = async () => {
+// 別のpathから移動してきたとき，またはページをリロード，初回読み込みの時にqueryパラメータからデータをフェッチ
+// onBeforeMount関数内で発火
+const fetchDataOnBeforeMount = async () => {
   detailedCondition.value = route.query;
-  // console.log(detailedCondition.value)
+  console.log("fetched data are");
+  console.log(detailedCondition.value);
 };
-
 onBeforeMount(async () => {
   // 別のpathから移動してきたとき，またはページをリロード，初回読み込みの時に発火
   // onBeforeRouteUpdateか，この関数かどちらかが発火する
-  await fetchData(); //path内のqueryを取得し，detailedConditionに格納
-  if (detailedCondition.value) {
-    await searchClassByDetailedCondition(); //detailedConditionをバックに投げて，classDataListに格納
+  console.log("before mount");
+  await fetchDataOnBeforeMount(); //path内のqueryを取得し，detailedConditionに格納
+  if (
+    detailedCondition.value &&
+    Object.keys(detailedCondition.value).length > 0
+  ) {
+    console.log("Before Mount: Data exists");
+    searchClassByDetailedCondition();
   } else {
-    console.log("detailed condition is null");
+    console.log("Before Mount: detailed condition is null or empty");
   }
 });
 
-// 同じpathからqueryを変更して移動してきたとき，queryから検索するデータを取得する
-// OnBeforeMountか，この関数かどちらかが発火する
-onBeforeRouteUpdate(async () => {
-  await fetchData();//path内のqueryを取得し，detailedConditionに格納
-  if (detailedCondition.value) {
-    console.log("Before Route Update: Data exists");
-    await searchClassByDetailedCondition();//detailedConditionをバックに投げて，classDataListに格納
-  } else {
-    console.log("Before Route Update: detailed condition is null");
-  }
-});
-
-// この関数は開発用！！！後で消す！！v-btnを押したら発火する
-//　授業情報のリストをバックからとってきて，正しくclassDataList内に格納されたか確認するための関数
-const showClassDataList = () => {
-  console.log("butto is clicked! Class data list is :");
-  console.log(classDataList.value);
+// 同じpathでqueryが異なるときにqueryを取得する関数
+// onBeforeRouteUpdateHandler関数内で発火
+const fetchDataOnBeforeRouteUpdate = async (query) => {
+  detailedCondition.value = query;
+  console.log("fetched data are");
+  console.log(detailedCondition.value);
 };
+// 同じpathでqueryが異なるときに発火
+const onBeforeRouteUpdateHandler = (to, from, next) => {
+  console.log("before route update");
+  fetchDataOnBeforeRouteUpdate(to.query); // Pass the updated query parameters to fetchData
+  if (
+    detailedCondition.value &&
+    Object.keys(detailedCondition.value).length > 0
+  ) {
+    console.log("Before Route Update: Data exists");
+    searchClassByDetailedCondition();
+  } else {
+    console.log("Before Route Update: detailed condition is null or empty");
+  }
+
+  next();
+};
+
+onBeforeRouteUpdate(onBeforeRouteUpdateHandler);
 </script>
 
 <template>
   <v-container v-if="classDataList">
     <ClassList :classDataList="classDataList"></ClassList>
   </v-container>
-  <v-container v-else>
-    Loading ...
-  </v-container>
+  <v-container v-else> Loading ... </v-container>
 </template>
 

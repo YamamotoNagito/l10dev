@@ -72,8 +72,6 @@ const updateEvaluationObject = (evaluationString) => {
       evaluationObj.max = null;
       break;
   }
-  console.log(evaluationObj);
-  // console.log(evaluationObj)
   return evaluationObj;
 };
 
@@ -94,8 +92,8 @@ const searchClassByLectureCode = ref({
   lectureCode: null,
 });
 
-// 講義コードで検索する際に，一致する講義コードがなかった時に表示するメッセージ
-const nonExistenceMessage = ref("");
+// 講義コードで検索するタブのメッセージ
+const messageInLectureCodeTab = ref("");
 
 // オブジェクトからvalueがNULLのkeyとvalueのペアを削除する関数
 function removeNullValues(obj) {
@@ -167,11 +165,11 @@ const searchByLectureCode = async () => {
     console.log("response");
     console.log(response);
     if (response.data.success) {
-      nonExistenceMessage.value = "";
+      messageInLectureCodeTab.value = "";
       const lectureId = response.data.lectureId;
       router.push({ path: `class/${lectureId}/detail` }, { params: lectureId });
     } else {
-      nonExistenceMessage.value = "存在しない講義コードです．";
+      messageInLectureCodeTab.value = "存在しない講義コードです．";
     }
 
     // その他の処理
@@ -192,7 +190,7 @@ const candidateConditionsList = ref([]);
 const fetchData = async () => {
   try {
     const response = await axios.get("/api/getLectureInfo");
-    console.log("response");
+    console.log("response from get lecture info : 検索候補のデータ");
     console.log(response);
     // 検索候補をバックエンドから取得して格納
     candidateConditionsList.value = response.data; // 仮に response.data が候補条件のリストであると仮定
@@ -460,7 +458,7 @@ const makeDefaultCandidateLectureNameList = () => {
                 <v-btn @click="searchByLectureCode" color="orange">
                   <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
                 </v-btn>
-                <p class="text-red text-center">{{ nonExistenceMessage }}</p>
+                <p class="text-red text-center">{{ messageInLectureCodeTab }}</p>
               </v-container>
             </v-window-item>
           </v-window>
