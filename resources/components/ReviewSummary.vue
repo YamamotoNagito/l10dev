@@ -42,7 +42,11 @@ const toggleReported = () => {
           <v-col cols="12" lg="6">
             <v-container class="text-h5">{{ reviewData.userName }}</v-container>
           </v-col>
-          <v-col cols="12" lg="6">
+          <!-- 授業名をreviewDataから取得して表示する -->
+          <v-col cols="12" lg="3">
+            <v-container class="text-h5">{{ reviewData.lectureName }}</v-container>
+          </v-col>
+          <v-col cols="12" lg="3">
             <StarRading
               :totalEvaluation="reviewData.totalEvaluation"
             ></StarRading>

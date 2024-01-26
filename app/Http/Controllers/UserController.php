@@ -114,10 +114,12 @@ class UserController extends Controller
 
             $userName = Reviews::find($review->reviewId)->user->userName;
             $userId = Reviews::find($review->reviewId)->user->userId;
+            $lectureName = Reviews::find($review->reviewId)->lecture->lectureName;
             
             return [
                 'userId' => $userId,
                 'userName' => $userName,
+                'lectureName' => $lectureName,
                 'attendanceYear' => $review->attendanceYear,
                 'attendanceConfirm' => $review->attendanceConfirm,
                 'weeklyAssignments' => $review->weeklyAssignments,
