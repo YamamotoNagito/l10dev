@@ -57,6 +57,7 @@ const items = ref([
           </v-col>
         </v-row>
       </v-col>
+      <!-- 加えた -->
       <v-col cols="1">
         <v-btn
           icon="mdi-dots-horizontal"
