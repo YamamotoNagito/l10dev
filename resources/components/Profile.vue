@@ -23,9 +23,9 @@
         </v-container>
       </v-card>
       <!-- レビューリスト -->
-      <v-card>
+      <v-card v-if="reviewDataList">
         <v-tabs v-model="tab" color="deep-purple-accent-4" align-tabs="left">
-          <v-tab value="one">投稿した</v-tab>
+          <v-tab value="one">投稿した {{ reviewDataList.length }} 件</v-tab>
           <!-- <v-tab value="two">Likes</v-tab> -->
         </v-tabs>
 
