@@ -3,13 +3,17 @@ import { ref } from "vue";
 import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { useStore } from 'vuex';
 
 import RadarChart from "./RadarChart.vue";
 import StarRading from "./StarRating.vue";
 
+const store = useStore();
 const props = defineProps(["reviewData"]);
+const reviewUserId = ref(props.reviewData.userId);
+const requestUserId = String(store.getters.userInfo.id);
 
-const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
+// const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
 
 const radarChartData = {
   creditLevel : props.reviewData.creditLevel,
@@ -17,21 +21,25 @@ const radarChartData = {
   skillLevel : props.reviewData.skillLevel,
 };
 
-const isLiked = ref(false);
-const isReported = ref(false);
+const items = ref([
+  { title: 'レビューを編集する' },
+  { title: 'レビューを削除する' },
+]);
+// const isLiked = ref(false);
+// const isReported = ref(false);
 
-const toggleLiked = () => {
-  if (isLiked.value) {
-    likeOnReviewInButton.value--;
-  } else {
-    likeOnReviewInButton.value++;
-  }
-  isLiked.value = !isLiked.value;
-};
+// const toggleLiked = () => {
+//   if (isLiked.value) {
+//     likeOnReviewInButton.value--;
+//   } else {
+//     likeOnReviewInButton.value++;
+//   }
+//   isLiked.value = !isLiked.value;
+// };
 
-const toggleReported = () => {
-  isReported.value = !isReported.value;
-};
+// const toggleReported = () => {
+//   isReported.value = !isReported.value;
+// };
 </script>
 
 <template>
@@ -49,7 +57,25 @@ const toggleReported = () => {
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="1"> ... </v-col>
+      <v-col cols="1">
+        <v-btn
+          icon="mdi-dots-horizontal"
+          variant="text"
+        >
+        </v-btn>
+
+        <v-menu activator="parent"  location="start">
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in items"
+              :key="index"
+              :value="index"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-col>
     </v-row>
     <v-row>
       <v-col>
