@@ -18,7 +18,7 @@ class CreateLectureDetailTimesTable extends Migration
       $table->string('timePeriod');
 
       // 短い一意性制約名を使用
-      $table->unique(['lectureDetailId', 'term', 'dayOfWeek', 'timePeriod'], 'lecture_detail_times_unique');
+      // $table->unique(['lectureDetailId', 'term', 'dayOfWeek', 'timePeriod'], 'lecture_detail_times_unique');
     });
   }
 

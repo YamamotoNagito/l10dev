@@ -1,27 +1,33 @@
-<template>
-  <ClassList :classDataList="classDataList"></ClassList>
-</template>
-
 <script setup>
-import { useRoute } from "vue-router";
-import { ref, onMounted } from "vue";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { ref, onBeforeMount, onBeforeUnmount } from "vue";
 import axios from "axios";
 import ClassList from "../components/ClassList.vue";
 
-// router.pushされる前のSearchClasses.vueから条件で検索する場合の条件をjson形式で送ってもらう
-const detailedCondition = ref({});
+// searchClasses.vueで「検索」ボタンを押すととquery付きのpathでこのファイルのViewがrouter.pushで読み込まれる
+// path内のそのqueryをpathから取得し，格納する．
+// この情報を検索条件としてバックに投げる．
+const detailedCondition = ref(null);
+
+// 授業一覧内のリストに格納する授業情報リスト．バックから受けとった授業情報のリストをこの変数に格納し，classList.vueに送る
+const classDataList = ref([]);
 
 const route = useRoute();
 
 const searchClassByDetailedCondition = async () => {
+  // path内のqueryから取得した値がdetailedConditionに格納されているはずなので，それが出力されるはず
+  console.log("detailed condition is:")
+  console.log(detailedCondition.value);
   try {
     const response = await axios.post(
-      "/api/hasLectureCode",
+      "/api/searchByConditions",
       detailedCondition.value
     );
     console.log("response");
     console.log(response);
-    // classDatList = response.data.classDataList
+    classDataList.value = response.data;
+    console.log("class list data :")
+    console.log(classDataList.value); 
     // その他の処理
   } catch (error) {
     if (error.response) {
@@ -37,80 +43,46 @@ const searchClassByDetailedCondition = async () => {
 // queryパラメータからデータをフェッチ
 const fetchData = async () => {
   detailedCondition.value = route.query;
+  // console.log(detailedCondition.value)
 };
 
-// コンポーネントがmountedされたときにデータをフェッチ
-onMounted(() => {
-  fetchData();
-  searchClassByDetailedCondition();
+onBeforeMount(async () => {
+  // 別のpathから移動してきたとき，またはページをリロード，初回読み込みの時に発火
+  // onBeforeRouteUpdateか，この関数かどちらかが発火する
+  await fetchData(); //path内のqueryを取得し，detailedConditionに格納
+  if (detailedCondition.value) {
+    await searchClassByDetailedCondition(); //detailedConditionをバックに投げて，classDataListに格納
+  } else {
+    console.log("detailed condition is null");
+  }
 });
 
-// classDataListに授業情報を外部から取得してくる
-// Lecture_idの追加が必要
-const classDataList = ref([
-  {
-    lectureId: 1,
-    lectureName: "一攫千金特論",
-    lectureCode: "KA10000",
-    teacherName: "服部淳生",
-    totalEvaluation: "5", 
-    numberOfReviews: "70000",
-  },
-  {
-    lectureId: 2,
-    lectureName: "一攫二千金特論",
-    lectureCode: "KA10001",
-    teacherName: "服部淳生",
-    totalEvaluation: "5",
-    numberOfReviews: "70000",
-  },
-  {
-    lectureId: 3,
-    lectureName: "一攫三千金特論",
-    lectureCode: "KA10003",
-    teacherName: "服部淳生",
-    totalEvaluation: "5",
-    numberOfReviews: "70000",
-  },
-  {
-    lectureId: 4,
-    lectureName: "エヴァンゲリオン特論",
-    lectureCode: "KA10004",
-    teacherName: "田中恒成",
-    totalEvaluation: "5",
-    numberOfReviews: "70000",
-  },
-  {
-    lectureId: 4,
-    lectureName: "おいしいコーヒーの入れ方",
-    lectureCode: "KA10005",
-    teacherName: "田中恒成",
-    totalEvaluation: "5",
-    numberOfReviews: "70000",
-  },
-  {
-    lectureId: 4,
-    lectureName: "君主論",
-    lectureCode: "KA10006",
-    teacherName: "Niccolò Machiavelli",
-    totalEvaluation: "5",
-    numberOfReviews: "70000",
-  },
-  {
-    lectureId: 4,
-    lectureName: "罪と罰",
-    lectureCode: "KA10007",
-    teacherName: "Фёдор Mихáйлович Достоéвский",
-    totalEvaluation: "5",
-    numberOfReviews: "70000",
-  },
-  {
-    lectureId: 4,
-    lectureName: "マルクス経済学",
-    lectureCode: "KA10008",
-    teacherName: "Karl Marx",
-    totalEvaluation: "5",
-    numberOfReviews: "70000",
-  },
-]);
+// 同じpathからqueryを変更して移動してきたとき，queryから検索するデータを取得する
+// OnBeforeMountか，この関数かどちらかが発火する
+onBeforeRouteUpdate(async () => {
+  await fetchData();//path内のqueryを取得し，detailedConditionに格納
+  if (detailedCondition.value) {
+    console.log("Before Route Update: Data exists");
+    await searchClassByDetailedCondition();//detailedConditionをバックに投げて，classDataListに格納
+  } else {
+    console.log("Before Route Update: detailed condition is null");
+  }
+});
+
+// この関数は開発用！！！後で消す！！v-btnを押したら発火する
+//　授業情報のリストをバックからとってきて，正しくclassDataList内に格納されたか確認するための関数
+const showClassDataList = () => {
+  console.log("butto is clicked! Class data list is :");
+  console.log(classDataList.value);
+};
 </script>
+
+<template>
+  <v-container v-if="classDataList">
+    <ClassList :classDataList="classDataList"></ClassList>
+  </v-container>
+  <v-container v-else>
+    Loading ...
+  </v-container>
+</template>
+

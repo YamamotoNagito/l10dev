@@ -73,6 +73,7 @@ const updateEvaluationObject = (evaluationString) => {
       break;
   }
   console.log(evaluationObj);
+  // console.log(evaluationObj)
   return evaluationObj;
 };
 
@@ -96,8 +97,23 @@ const searchClassByLectureCode = ref({
 // 講義コードで検索する際に，一致する講義コードがなかった時に表示するメッセージ
 const nonExistenceMessage = ref("");
 
+// オブジェクトからvalueがNULLのkeyとvalueのペアを削除する関数
+function removeNullValues(obj) {
+  const result = {};
+
+  for (const key in obj) {
+    const value = obj[key];
+
+    if (value !== null) {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}
+
 // 条件で検索するボタンが押されたときに発火する関数
-//welcome内の検索機能と一覧内の検索機能を同じにしようとしたら，検索条件を/classに送信して，/class内で検索
+//検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
 const sendQueryToClassListView = async () => {
   // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
   detailedCondition.value.totalEvaluation = updateEvaluationObject(
@@ -113,28 +129,31 @@ const sendQueryToClassListView = async () => {
     skillLevelString.value
   );
 
-  console.log(detailedCondition.value);
+  const query = {
+    lectureName: detailedCondition.value.lectureName,
+    teacherName: detailedCondition.value.teacherName,
+    location: detailedCondition.value.location,
+    faculty: detailedCondition.value.faculty,
+    category: detailedCondition.value.category,
+    term: detailedCondition.value.term,
+    dayOfWeek: detailedCondition.value.term,
+    timePeriod: detailedCondition.value.timePeriod,
+    grade: detailedCondition.value.grade,
+    totalEvaluationMin: detailedCondition.value.totalEvaluation.min,
+    totalEvaluationMax: detailedCondition.value.totalEvaluation.max,
+    creditLevelMin: detailedCondition.value.creditLevel.min,
+    creditLevelMax: detailedCondition.value.creditLevel.max,
+    interestLevelMin: detailedCondition.value.interestLevel.min,
+    interestLevelMax: detailedCondition.value.interestLevel.max,
+    skillLevelMin: detailedCondition.value.skillLevel.min,
+    skillLevelMax: detailedCondition.value.skillLevel.max,
+  };
+  // クエリからNULLをなくす
+  const filteredQuery = removeNullValues(query)
+
   router.push({
     path: "/class",
-    query: {
-      lectureName: detailedCondition.value.lectureName,
-      teacherName: detailedCondition.value.teacherName,
-      location: detailedCondition.value.location,
-      faculty: detailedCondition.value.faculty,
-      category: detailedCondition.value.category,
-      term: detailedCondition.value.term,
-      dayOfWeek: detailedCondition.value.term,
-      timePeriod: detailedCondition.value.timePeriod,
-      grade: detailedCondition.value.grade,
-      totalEvaluationMin: detailedCondition.value.totalEvaluation.min,
-      totalEvaluationMax: detailedCondition.value.totalEvaluation.max,
-      creditLevelMin: detailedCondition.value.creditLevel.min,
-      creditLevelMax: detailedCondition.value.creditLevel.max,
-      interestLevelMin: detailedCondition.value.interestLevel.min,
-      interestLevelMax: detailedCondition.value.interestLevel.max,
-      skillLevelMin: detailedCondition.value.skillLevel.min,
-      skillLevelMax: detailedCondition.value.skillLevel.max,
-    },
+    query: filteredQuery
   });
 };
 
