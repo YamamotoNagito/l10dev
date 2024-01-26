@@ -86,7 +86,7 @@ onMounted(() => {
           <v-container
             class="d-flex flex-row align-center justify-end ma-1 pa-1"
           >
-            <v-btn color="blue" @click="moveToReview">
+            <v-btn color="blue">
               <v-icon>mdi-comment-plus-outline</v-icon>
               <p
                 @click="
