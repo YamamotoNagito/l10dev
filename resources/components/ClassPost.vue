@@ -542,7 +542,6 @@ const clickButton = async () => {
       interestLevel: interestLevel.value,
       skillLevel: skillLevel.value,
       comments: comments.value,
-      isVisible: true,
     };
 
     // フォームのリセット

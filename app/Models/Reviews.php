@@ -28,7 +28,6 @@ class Reviews extends Model
         'interestLevel',
         'skillLevel',
         'comments',
-        'isVisible',
         'createdAt',
         'updatedAt',
     ];

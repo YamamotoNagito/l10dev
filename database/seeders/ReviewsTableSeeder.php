@@ -24,7 +24,6 @@ class ReviewsTableSeeder extends Seeder
             'interestLevel' => 4,
             'skillLevel' => 5,
             'comments' => 'この講義は非常に面白かったです。',
-            'isVisible' => true,
             'createdAt' => now(),
             'updatedAt' => now(),
         ]);
@@ -43,7 +42,6 @@ class ReviewsTableSeeder extends Seeder
             'interestLevel' => 5,
             'skillLevel' => 1,
             'comments' => 'この講義は非常に面白かったです。',
-            'isVisible' => true,
             'createdAt' => now(),
             'updatedAt' => now(),
         ]);
@@ -63,7 +61,6 @@ class ReviewsTableSeeder extends Seeder
             'interestLevel' => 3,
             'skillLevel' => 4,
             'comments' => '特に印象に残る講義ではありませんでした。',
-            'isVisible' => true,
             'createdAt' => now(),
             'updatedAt' => now(),
         ]);
@@ -83,7 +80,6 @@ class ReviewsTableSeeder extends Seeder
             'interestLevel' => 3,
             'skillLevel' => 4,
             'comments' => '特に印象に残る講義ではありませんでした。',
-            'isVisible' => true,
             'createdAt' => now(),
             'updatedAt' => now(),
         ]);

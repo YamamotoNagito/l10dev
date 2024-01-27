@@ -79,7 +79,6 @@ class ReviewsController extends Controller
       'interestLevel' => $request['interestLevel'],
       'skillLevel' => $request['skillLevel'],
       'comments' => $request['comments'],
-      'isVisible' => $request['isVisible'],
       'createdAt' => now(),
       'updatedAt' => now(),
   ]);
