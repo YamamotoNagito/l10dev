@@ -3,13 +3,26 @@ import { ref } from "vue";
 import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { useStore } from 'vuex';
 
 import RadarChart from "./RadarChart.vue";
 import StarRading from "./StarRating.vue";
 
+const store = useStore();
 const props = defineProps(["reviewData"]);
 
-const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
+const reviewUserId = ref(props.reviewData.userId);
+const requestUserId = ref(store.getters.userInfo.id);
+
+console.log("reviewUserId:", reviewUserId.value);
+console.log("requestUserId:", requestUserId.value);
+
+console.log("reviewUserId:", reviewUserId.value, "Type:", typeof reviewUserId.value);
+console.log("requestUserId:", requestUserId.value, "Type:", typeof requestUserId.value);
+
+console.log("reviewUserId === requestUserId:", reviewUserId.value === requestUserId.value);
+
+// const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
 
 const radarChartData = {
   creditLevel : props.reviewData.creditLevel,
@@ -17,21 +30,44 @@ const radarChartData = {
   skillLevel : props.reviewData.skillLevel,
 };
 
-const isLiked = ref(false);
-const isReported = ref(false);
+const items = ref([
+  { title: 'レビューを編集する', action: 'edit' },
+  { title: 'レビューを削除する', action: 'delete' },
+]);
 
-const toggleLiked = () => {
-  if (isLiked.value) {
-    likeOnReviewInButton.value--;
-  } else {
-    likeOnReviewInButton.value++;
+// ここを変更
+const handleMenuItemClick = async (item) => {
+  console.log("Menu item clicked:", item.title);
+  try {
+    if (item.action === 'edit') {
+      // 編集のAPIを呼び出す
+      const response = await axios.post('/api/edit-review', { /* パラメータ */ });
+      console.log(response.data);
+    } else if (item.action === 'delete') {
+      // 削除のAPIを呼び出す
+      const response = await axios.delete('/api/delete-review', { /* パラメータ */ });
+      console.log(response.data);
+    }
+  } catch (error) {
+    console.error("API call failed:", error);
   }
-  isLiked.value = !isLiked.value;
 };
 
-const toggleReported = () => {
-  isReported.value = !isReported.value;
-};
+// const isLiked = ref(false);
+// const isReported = ref(false);
+
+// const toggleLiked = () => {
+//   if (isLiked.value) {
+//     likeOnReviewInButton.value--;
+//   } else {
+//     likeOnReviewInButton.value++;
+//   }
+//   isLiked.value = !isLiked.value;
+// };
+
+// const toggleReported = () => {
+//   isReported.value = !isReported.value;
+// };
 </script>
 
 <template>
@@ -53,7 +89,27 @@ const toggleReported = () => {
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="1"> ... </v-col>
+      <v-col cols="1">
+        <v-btn
+          v-if="reviewUserId === requestUserId"
+          icon="mdi-dots-horizontal"
+          variant="text"
+        >
+        </v-btn>
+
+        <v-menu activator="parent" location="start" v-if="reviewUserId === requestUserId">
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in items"
+              :key="index"
+              :value="index"
+              @click="handleMenuItemClick(item)"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-col>
     </v-row>
     <v-row>
       <v-col>
