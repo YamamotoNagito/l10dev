@@ -160,6 +160,7 @@ class LectureDetailsController extends Controller
                 'userName' => $userName,
                 'userId' => $userId,
                 'lectureName' => $lectureName,
+                'reviewId' => $review->reviewId,
                 'attendanceYear' => $review->attendanceYear,
                 'attendanceConfirm' => $review->attendanceConfirm,
                 'weeklyAssignments' => $review->weeklyAssignments,

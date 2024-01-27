@@ -157,6 +157,22 @@ class ReviewsController extends Controller
    */
   public function destroy(string $id)
   {
-    //
+    // reviewIdが取得できているかどうかの確認をする
+    Log::Debug("id");
+    Log::Debug($id);
+
+    // レビューが存在するかどうかの確認
+    $review = Reviews::find($id);
+
+    // レビューの削除を行う
+    if ($review) {
+        $review->delete();
+        Log::Debug("削除成功");
+        return response()->json(['success' => true,'message' => '削除に成功しました']);
+      } else {
+        Log::Debug("削除失敗");
+        return response()->json(['success' => false,'message' => '削除に失敗しました']);
+    }
+
   }
 }

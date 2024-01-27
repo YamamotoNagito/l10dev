@@ -120,6 +120,7 @@ class UserController extends Controller
                 'userId' => $userId,
                 'userName' => $userName,
                 'lectureName' => $lectureName,
+                'reviewId' => $review->reviewId,
                 'attendanceYear' => $review->attendanceYear,
                 'attendanceConfirm' => $review->attendanceConfirm,
                 'weeklyAssignments' => $review->weeklyAssignments,
