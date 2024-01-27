@@ -22,6 +22,8 @@ console.log("requestUserId:", requestUserId.value, "Type:", typeof requestUserId
 
 console.log("reviewUserId === requestUserId:", reviewUserId.value === requestUserId.value);
 
+console.log
+
 // const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
 
 const radarChartData = {
@@ -31,25 +33,37 @@ const radarChartData = {
 };
 
 const items = ref([
-  { title: 'レビューを編集する', action: 'edit' },
-  { title: 'レビューを削除する', action: 'delete' },
+  { title: '編集する', action: 'edit' },
+  { title: '削除する', action: 'delete' },
 ]);
 
-// ここを変更
+const showDialog = ref(false); // ダイアログの表示状態
+
+// ケバブボタンのクリックイベント
 const handleMenuItemClick = async (item) => {
   console.log("Menu item clicked:", item.title);
   try {
     if (item.action === 'edit') {
-      // 編集のAPIを呼び出す
-      const response = await axios.post('/api/edit-review', { /* パラメータ */ });
+      // .jsにurlを定義していないが編集ページ遷移かつreviewDataを渡す
+      // router.push({ name: 'EditPage', params: { reviewId: props.reviewData.id } });
       console.log(response.data);
     } else if (item.action === 'delete') {
-      // 削除のAPIを呼び出す
-      const response = await axios.delete('/api/delete-review', { /* パラメータ */ });
-      console.log(response.data);
+      showDialog.value = true;
     }
   } catch (error) {
     console.error("API call failed:", error);
+  }
+};
+
+// ダイアログの削除ボタンのクリックイベント
+const deleteReview = async () => {
+  try {
+    // 削除のAPIを呼び出す
+    console.log(response.data);
+    showDialog.value = false; // ダイアログを閉じる
+  } catch (error) {
+    console.error("API call failed:", error);
+    showDialog.value = false; // エラー発生時もダイアログを閉じる
   }
 };
 
@@ -105,10 +119,23 @@ const handleMenuItemClick = async (item) => {
               :value="index"
               @click="handleMenuItemClick(item)"
             >
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
+              <v-list-item-title :style="item.title === '削除する' ? 'color: red' : ''">{{ item.title }}</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
+
+        <v-dialog v-model="showDialog" persistent max-width="300px">
+          <v-card>
+            <v-card-title class="text-h5">確認</v-card-title>
+            <v-card-text>このレビューを削除してもよろしいですか？</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="grey" text @click="showDialog = false">キャンセル</v-btn>
+              <v-btn color="red" text @click="deleteReview">削除</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
       </v-col>
     </v-row>
     <v-row>
