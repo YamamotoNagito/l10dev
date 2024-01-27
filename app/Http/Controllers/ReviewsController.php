@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use App\Models\Reviews;
+use App\Models\ReviewLogs;
 use App\Models\Lectures;
 use Illuminate\Http\Request;
 
@@ -81,7 +82,25 @@ class ReviewsController extends Controller
       'comments' => $request['comments'],
       'createdAt' => now(),
       'updatedAt' => now(),
-  ]);
+    ]);
+
+    ReviewLogs::query()->create([
+      'lectureId' => $lectureId,
+      'userId' => $request['userId'],
+      'attendanceYear' => $request['attendanceYear'],
+      'attendanceConfirm' => $request['attendanceConfirm'],
+      'weeklyAssignments' => $request['weeklyAssignments'],
+      'midtermAssignments' => $request['midtermAssignments'],
+      'finalAssignments' => $request['finalAssignments'],
+      'pastExamPossession' => $request['pastExamPossession'],
+      'grades' => $request['grades'],
+      'creditLevel' => $request['creditLevel'],
+      'interestLevel' => $request['interestLevel'],
+      'skillLevel' => $request['skillLevel'],
+      'comments' => $request['comments'],
+      'status' => 'create',
+      'createdAt' => now(),
+    ]);
 
   //   $validated = $request->validate([
   //     'lectureId' => 'required|exists:lectures,lectureId',
