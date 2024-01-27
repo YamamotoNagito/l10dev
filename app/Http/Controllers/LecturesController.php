@@ -317,7 +317,12 @@ class LecturesController extends Controller
         });
 
         Log::Debug($lectureIds);
-        // Log::Debug($classDataList);
+
+        // 最大100個
+        $classDataList = $classDataList
+                       ->sortByDesc('numberOfReviews')
+                       ->take(100)
+                       ->values();
         
         return $classDataList;
     }
