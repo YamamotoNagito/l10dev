@@ -31,9 +31,28 @@ const radarChartData = {
 };
 
 const items = ref([
-  { title: 'レビューを編集する' },
-  { title: 'レビューを削除する' },
+  { title: '編集する' },
+  { title: '削除する' },
 ]);
+
+// ここを変更
+const handleMenuItemClick = async (item) => {
+  console.log("Menu item clicked:", item.title);
+  try {
+    if (item.action === 'edit') {
+      // 編集のAPIを呼び出す
+      const response = await axios.post('/api/edit-review', { /* パラメータ */ });
+      console.log(response.data);
+    } else if (item.action === 'delete') {
+      // 削除のAPIを呼び出す
+      const response = await axios.delete('/api/delete-review', { /* パラメータ */ });
+      console.log(response.data);
+    }
+  } catch (error) {
+    console.error("API call failed:", error);
+  }
+};
+
 // const isLiked = ref(false);
 // const isReported = ref(false);
 
@@ -80,6 +99,7 @@ const items = ref([
               v-for="(item, index) in items"
               :key="index"
               :value="index"
+              @click="handleMenuItemClick(item)"
             >
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item>
