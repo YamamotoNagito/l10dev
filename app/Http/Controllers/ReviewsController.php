@@ -164,6 +164,24 @@ class ReviewsController extends Controller
     // レビューが存在するかどうかの確認
     $review = Reviews::find($id);
 
+    ReviewLogs::query()->create([
+      'lectureId' => $review->lectureId,
+      'userId' => $review->userId,
+      'attendanceYear' => $review->attendanceYear,
+      'attendanceConfirm' => $review->attendanceConfirm,
+      'weeklyAssignments' => $review->weeklyAssignments,
+      'midtermAssignments' => $review->midtermAssignments,
+      'finalAssignments' => $review->finalAssignments,
+      'pastExamPossession' => $review->pastExamPossession,
+      'grades' => $review->grades,
+      'creditLevel' => $review->creditLevel,
+      'interestLevel' => $review->interestLevel,
+      'skillLevel' => $review->skillLevel,
+      'comments' => $review->comments,
+      'status' => 'delete',
+      'createdAt' => now(),
+    ]);
+
     // レビューの削除を行う
     if ($review) {
         $review->delete();
