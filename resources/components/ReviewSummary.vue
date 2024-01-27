@@ -10,8 +10,17 @@ import StarRading from "./StarRating.vue";
 
 const store = useStore();
 const props = defineProps(["reviewData"]);
+
 const reviewUserId = ref(props.reviewData.userId);
-const requestUserId = String(store.getters.userInfo.id);
+const requestUserId = ref(store.getters.userInfo.id);
+
+console.log("reviewUserId:", reviewUserId.value);
+console.log("requestUserId:", requestUserId.value);
+
+console.log("reviewUserId:", reviewUserId.value, "Type:", typeof reviewUserId.value);
+console.log("requestUserId:", requestUserId.value, "Type:", typeof requestUserId.value);
+
+console.log("reviewUserId === requestUserId:", reviewUserId.value === requestUserId.value);
 
 // const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
 
@@ -57,15 +66,15 @@ const items = ref([
           </v-col>
         </v-row>
       </v-col>
-      <!-- 加えた -->
       <v-col cols="1">
         <v-btn
+          v-if="reviewUserId === requestUserId"
           icon="mdi-dots-horizontal"
           variant="text"
         >
         </v-btn>
 
-        <v-menu activator="parent"  location="start">
+        <v-menu activator="parent" location="start" v-if="reviewUserId === requestUserId">
           <v-list>
             <v-list-item
               v-for="(item, index) in items"
