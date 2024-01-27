@@ -31,8 +31,8 @@ const radarChartData = {
 };
 
 const items = ref([
-  { title: '編集する' },
-  { title: '削除する' },
+  { title: 'レビューを編集する', action: 'edit' },
+  { title: 'レビューを削除する', action: 'delete' },
 ]);
 
 // ここを変更
