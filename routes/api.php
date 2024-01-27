@@ -56,3 +56,6 @@ Route::get('/getLectureInfo', [LecturesController::class, 'getLectureInfo']);
 // Route::post('/profile/getMyReviews/{userId}',[UserController::class, 'getMyReviews']);
 // 検索画面の「条件から探す」から詳細情報を検索
 Route::post('/searchByConditions', [LecturesController::class, 'searchByConditions']);
+
+// レビュー削除
+Route::delete('/deleteReview/{id}',[ReviewsController::class, 'destroy']);

@@ -13,6 +13,7 @@ const props = defineProps(["reviewData"]);
 
 const reviewUserId = ref(props.reviewData.userId);
 const requestUserId = ref(store.getters.userInfo.id);
+const requestReviewId = ref(props.reviewData.reviewId);
 
 console.log("reviewUserId:", reviewUserId.value);
 console.log("requestUserId:", requestUserId.value);
@@ -44,8 +45,11 @@ const handleMenuItemClick = async (item) => {
       const response = await axios.post('/api/edit-review', { /* パラメータ */ });
       console.log(response.data);
     } else if (item.action === 'delete') {
+      // レビューidの取得
+      console.log(requestReviewId.value);
+      
       // 削除のAPIを呼び出す
-      const response = await axios.delete('/api/delete-review', { /* パラメータ */ });
+      const response = await axios.delete(`/api/deleteReview/${requestReviewId.value}`);
       console.log(response.data);
     }
   } catch (error) {
