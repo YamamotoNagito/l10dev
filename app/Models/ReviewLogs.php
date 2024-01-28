@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
-class Reviews extends Model
+class ReviewLogs extends Model
 {
     use HasFactory;
 
-    protected $table = 'reviews';
-    protected $primaryKey = 'reviewId';
+    protected $table = 'reviewLogs';
+    protected $primaryKey = 'reviewLogId';
     public $timestamps = false;
 
     protected $fillable = [
@@ -28,8 +28,8 @@ class Reviews extends Model
         'interestLevel',
         'skillLevel',
         'comments',
+        'status',
         'createdAt',
-        'updatedAt',
     ];
 
     /**

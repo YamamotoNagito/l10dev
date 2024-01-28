@@ -3,13 +3,29 @@ import { ref } from "vue";
 import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
+import { useStore } from 'vuex';
 
 import RadarChart from "./RadarChart.vue";
 import StarRading from "./StarRating.vue";
 
+const store = useStore();
 const props = defineProps(["reviewData"]);
 
-const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
+const reviewUserId = ref(props.reviewData.userId);
+const requestUserId = ref(store.getters.userInfo.id);
+const requestReviewId = ref(props.reviewData.reviewId);
+
+console.log("reviewUserId:", reviewUserId.value);
+console.log("requestUserId:", requestUserId.value);
+
+console.log("reviewUserId:", reviewUserId.value, "Type:", typeof reviewUserId.value);
+console.log("requestUserId:", requestUserId.value, "Type:", typeof requestUserId.value);
+
+console.log("reviewUserId === requestUserId:", reviewUserId.value === requestUserId.value);
+
+console.log
+
+// const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
 
 const radarChartData = {
   creditLevel : props.reviewData.creditLevel,
@@ -17,21 +33,57 @@ const radarChartData = {
   skillLevel : props.reviewData.skillLevel,
 };
 
-const isLiked = ref(false);
-const isReported = ref(false);
+const items = ref([
+  { title: '編集する', action: 'edit' },
+  { title: '削除する', action: 'delete' },
+]);
 
-const toggleLiked = () => {
-  if (isLiked.value) {
-    likeOnReviewInButton.value--;
-  } else {
-    likeOnReviewInButton.value++;
+const showDialog = ref(false); // ダイアログの表示状態
+
+// ケバブボタンのクリックイベント
+const handleMenuItemClick = async (item) => {
+  console.log("Menu item clicked:", item.title);
+  try {
+    if (item.action === 'edit') {
+      // .jsにurlを定義していないが編集ページ遷移かつreviewDataを渡す
+      // router.push({ name: 'EditPage', params: { reviewId: props.reviewData.id } });
+      console.log(response.data);
+    } else if (item.action === 'delete') {
+      showDialog.value = true;
+      // console.log(requestReviewId.value);
+    }
+  } catch (error) {
+    console.error("API call failed:", error);
   }
-  isLiked.value = !isLiked.value;
 };
 
-const toggleReported = () => {
-  isReported.value = !isReported.value;
+// ダイアログの削除ボタンのクリックイベント
+const deleteReview = async () => {
+  try {
+    const response = await axios.delete(`/api/deleteReview/${requestReviewId.value}`);
+    console.log(response.data);
+    showDialog.value = false; // ダイアログを閉じる
+  } catch (error) {
+    console.error("API call failed:", error);
+    showDialog.value = false; // エラー発生時もダイアログを閉じる
+  }
 };
+
+// const isLiked = ref(false);
+// const isReported = ref(false);
+
+// const toggleLiked = () => {
+//   if (isLiked.value) {
+//     likeOnReviewInButton.value--;
+//   } else {
+//     likeOnReviewInButton.value++;
+//   }
+//   isLiked.value = !isLiked.value;
+// };
+
+// const toggleReported = () => {
+//   isReported.value = !isReported.value;
+// };
 </script>
 
 <template>
@@ -42,14 +94,51 @@ const toggleReported = () => {
           <v-col cols="12" lg="6">
             <v-container class="text-h5">{{ reviewData.userName }}</v-container>
           </v-col>
-          <v-col cols="12" lg="6">
+          <!-- 授業名をreviewDataから取得して表示する -->
+          <v-col cols="12" lg="3">
+            <v-container class="text-h5">{{ reviewData.lectureName }}</v-container>
+          </v-col>
+          <v-col cols="12" lg="3">
             <StarRading
               :totalEvaluation="reviewData.totalEvaluation"
             ></StarRading>
           </v-col>
         </v-row>
       </v-col>
-      <v-col cols="1"> ... </v-col>
+      <v-col cols="1">
+        <v-btn
+          v-if="reviewUserId === requestUserId"
+          icon="mdi-dots-horizontal"
+          variant="text"
+        >
+        </v-btn>
+
+        <v-menu activator="parent" location="start" v-if="reviewUserId === requestUserId">
+          <v-list>
+            <v-list-item
+              v-for="(item, index) in items"
+              :key="index"
+              :value="index"
+              @click="handleMenuItemClick(item)"
+            >
+              <v-list-item-title :style="item.title === '削除する' ? 'color: red' : ''">{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <v-dialog v-model="showDialog" persistent max-width="300px">
+          <v-card>
+            <v-card-title class="text-h5">確認</v-card-title>
+            <v-card-text>このレビューを削除してもよろしいですか？</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="grey" text @click="showDialog = false">キャンセル</v-btn>
+              <v-btn color="red" text @click="deleteReview">削除</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+      </v-col>
     </v-row>
     <v-row>
       <v-col>

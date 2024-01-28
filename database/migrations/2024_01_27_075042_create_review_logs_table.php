@@ -1,16 +1,17 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReviewsTable extends Migration
+class CreateReviewLogsTable extends Migration
 {
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
-            $table->id('reviewId');
+        Schema::create('reviewLogs', function (Blueprint $table) {
+            $table->id('reviewLogId');
             $table->unsignedBigInteger('lectureId');
-            $table->foreign('lectureId')->references('lectureId')->on('lectures')->onDelete('cascade');
+            $table->foreign('lectureId')->references('lectureId')->on('lectures'); //->onDelete('cascade');
             $table->unsignedBigInteger('userId');
             $table->foreign('userId')->references('userId')->on('users')->onDelete('cascade');
             $table->integer('attendanceYear');
@@ -24,13 +25,13 @@ class CreateReviewsTable extends Migration
             $table->integer('interestLevel');
             $table->integer('skillLevel');
             $table->text('comments',2048)->nullable();
-            $table->timestamp('createdAt')->default(now()); // createdAt(ユーザー作成日時)
-            $table->timestamp('updatedAt')->default(now()); // updatedAt(最終ログイン日時)
+            $table->string('status');
+            $table->timestamp('createdAt')->default(now()); // createdAt(作成日時)
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('reviewLogs');
     }
 };

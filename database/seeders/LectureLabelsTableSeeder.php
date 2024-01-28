@@ -2,34 +2,49 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class LectureLabelsTableSeeder extends Seeder
 {
-    public function run()
-    {
-        // ラベルと講義の対応付けを挿入する例
-        DB::table('lectureLabels')->insert([
-            'lectureId' => 1,
-            'labelId' => 1,
-        ]);
-        
-        DB::table('lectureLabels')->insert([
-            'lectureId' => 1,
-            'labelId' => 2,
+  public function run()
+  {
+    $csvFile = database_path('csv/lectureLabels.csv');
+    $handle = fopen($csvFile, 'r');
+
+    if ($handle !== FALSE) {
+      fgetcsv($handle); // CSVヘッダーを読み飛ばす
+
+      while (($data = fgetcsv($handle)) !== FALSE) {
+        $validator = Validator::make([
+          'lectureId' => $data[0],
+          'labelId' => $data[1],
+        ], [
+          'lectureId' => 'required|integer',
+          'labelId' => 'required|integer',
         ]);
 
-        DB::table('lectureLabels')->insert([
-            'lectureId' => 2,
-            'labelId' => 2,
-        ]);
+        if ($validator->fails()) {
+          Log::error('バリデーションエラー', [
+            'errors' => $validator->errors()
+          ]);
+          continue;
+        }
 
         DB::table('lectureLabels')->insert([
-            'lectureId' => 2,
-            'labelId' => 3,
+          'lectureId' => $data[0],
+          'labelId' => $data[1],
         ]);
+      }
 
-        // 他にも必要なデータがあれば同様に挿入
+      fclose($handle);
+    } else {
+      Log::error('CSVファイルを開けませんでした。', [
+        'path' => $csvFile
+      ]);
     }
+  }
 }

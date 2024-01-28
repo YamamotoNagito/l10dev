@@ -73,6 +73,18 @@ https://qiita.com/yuto_dev/items/d1cc909897ac8277baea
 ---
 ### 細かい操作コマンド
 
+#### DBへの初期データ格納
+teamsから以下のcsvファイルを取ってくる
+```
+lectures.csv
+lectureDetailTimes.csv
+lectureLables.csv
+labels.csv
+lectureDetails.csv
+```
+
+`database`配下に`csv`というフォルダ名でフォルダを作成し，上記のcsvファイルを格納
+
 ##### DBの再起動コマンド
 ```
 php artisan migrate:fresh --seed
@@ -99,7 +111,7 @@ use l10dev
 
 3.  全体のテーブルを確認する
 ```
-show tabels;
+show tables;
 ```
 
 3. (例)格納された授業データを確認する
