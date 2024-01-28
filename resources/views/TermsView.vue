@@ -8,7 +8,7 @@
 
 <template>
   <!-- <Header></Header> -->
-  <pageTitle title="知用規約"/>
+  <pageTitle title="利用規約"/>
   <Terms></Terms>
   <!-- <Footer></Footer> -->
 </template>

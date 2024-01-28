@@ -258,7 +258,7 @@ const clickButton = async() => {
 <template>
     <v-app>
             <v-container>
-                <h1 style="font-size: 2rem;">新規ユーザ登録</h1>
+                <!-- <h1 style="font-size: 2rem;">新規ユーザ登録</h1> -->
                 <v-form action="" method="post">
                     <v-text-field
                       v-model="userName"

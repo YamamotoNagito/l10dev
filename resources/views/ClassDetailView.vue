@@ -3,7 +3,7 @@ import { ref, onMounted, getCurrentInstance, onBeforeMount } from "vue";
 import ClassDetail from "../components/ClassDetail.vue";
 import { mdiConsoleNetworkOutline } from "@mdi/js";
 import axios from "axios";
-import pageTitle from '../components/pageTitle.vue';
+// import pageTitle from '../components/pageTitle.vue';
 
 const lectureId = ref(null);
 // 後でこのコメントアウトは外す！
@@ -50,7 +50,7 @@ onBeforeMount(async() => {
 </script>
 
 <template>
-  <pageTitle title = "授業詳細"/>
+  <!-- <pageTitle title = "授業詳細"/> -->
   <!-- {{ classDetailData }} -->
   <ClassDetail :classDetailData="classDetailData"></ClassDetail>
 </template>
