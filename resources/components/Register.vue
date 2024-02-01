@@ -26,6 +26,7 @@ const passwordCheck = ref('');
 
 const termsAccepted = ref(false);
 
+const errorMessage = ref(''); // エラーメッセージ用の変数
 let isStudent = ref(false);
 
 // 新規登録に関するapiを呼び出してくる 
@@ -242,6 +243,7 @@ const clickButton = async() => {
 
       // その他の処理
     } catch (error) {
+      errorMessage.value = '登録できませんでした. サーバーのエラー, または既に使用されているメールアドレスである可能性があります. ';
       if (error.response) {
         // サーバーからのエラーレスポンスがある場合
         console.error(error.response.data); // エラーレスポンスをコンソールに出力
@@ -328,9 +330,10 @@ const clickButton = async() => {
                       type="text"
                     ></v-select>
                     <v-checkbox 
-                    v-model="termsAccepted"
+                      v-model="termsAccepted"
                       label="当サイトの利用規約およびプライバシーポリシーに同意する. (利用規約・プライバシーポリシーはページ下部のフッターからご確認いただけます. )"
                       ></v-checkbox>
+                      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
                     <v-btn 
                       :disabled="!termsAccepted"
                       color = "indigo"
@@ -342,3 +345,10 @@ const clickButton = async() => {
             </v-container>
     </v-app>
 </template>
+
+<style scoped>
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+</style>

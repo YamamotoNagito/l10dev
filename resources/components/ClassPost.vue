@@ -188,11 +188,11 @@
         </v-row>
       </v-btn-toggle>
       <!-- 過去問・レポートの有無 -->
-      <v-row class="mt-5">
+      <!-- <v-row class="mt-5">
         <v-col>
           <p class="custom-text-style">過去問・レポートの有無</p>
         </v-col>
-      </v-row>
+      </v-row> -->
       <v-btn-toggle
         v-model="pastExamPossession"
         variant="outlined"
@@ -354,14 +354,20 @@
           ></v-textarea>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col class="text-center custom-text-style">
-          <v-btn @click="clickButton" text="投稿する" color="indigo"></v-btn>
+
+      <v-row v-if="errorMessage">
+        <v-col>
+          <p class="error-message">{{ errorMessage }}</p>
+        </v-col>
+      </v-row>
+      <v-row v-if="message">
+        <v-col>
+          <p class="error-message">{{ message }}</p>
         </v-col>
       </v-row>
       <v-row>
-        <v-col>
-          <p v-show="message != ''" class="text-h6">{{ message }}</p>
+        <v-col class="text-center custom-text-style">
+          <v-btn @click="clickButton" text="投稿する" color="indigo"></v-btn>
         </v-col>
       </v-row>
     </v-col>
@@ -390,6 +396,7 @@ const teacherName = ref(null);
 const router = useRouter();
 
 const message = ref("");
+const errorMessage = ref(""); // エラーメッセージ用の変数
 
 const attendanceYear = ref(2024);
 const attendanceYearOptions = ref([
@@ -544,15 +551,14 @@ const clickButton = async () => {
       comments: comments.value,
     };
 
-    // フォームのリセット
-    resetForm();
-
     try {
       const response = await axios.post("/api/reviews", data);
       console.log("response");
 
       if (response.data.success) {
         // router.push('/reviews');
+        // フォームのリセット
+        resetForm();
       } else {
         console.log(response.data.message);
         message.value = response.data.message;
@@ -560,6 +566,7 @@ const clickButton = async () => {
 
       // その他の処理
     } catch (error) {
+      errorMessage.value = "何らかの原因により登録できませんでした. ";
       if (error.response) {
         // サーバーからのエラーレスポンスがある場合
         console.error(error.response.data); // エラーレスポンスをコンソールに出力
@@ -581,14 +588,15 @@ onMounted(async () => {
 // queryの中にある授業名と担当教員名を取得する関数．
 // onMounted時に発火する
 const receiveQueryParameters = () => {
-
   // $route.query から lectureName と teacherName を取得
   const queryLectureName = router.currentRoute.value.query.lectureName;
   const queryTeacherName = router.currentRoute.value.query.teacherName;
 
   // candidateConditionsList内にペアがあるか確認
   const hasPair = candidateConditionsList.value.some(
-    pair => pair.lectureName === queryLectureName && pair.teacherName === queryTeacherName
+    (pair) =>
+      pair.lectureName === queryLectureName &&
+      pair.teacherName === queryTeacherName
   );
 
   // ペアがあれば設定、なければnull
@@ -697,5 +705,8 @@ const makeDefaultCandidateLectureNameList = () => {
 .custom-text-style {
   @apply text-md-h5 text-sm-h6;
 }
+.error-message {
+  color: red;
+  font-weight: bold;
+}
 </style>
-

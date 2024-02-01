@@ -59,10 +59,13 @@ const clickButton = async() => {
     } catch (error) {
       if (error.response) {
         // サーバーからのエラーレスポンスがある場合
-        console.error(error.response.data); // エラーレスポンスをコンソールに出力
+        console.error('エラーレスポンス：', error.response.data); // エラーレスポンスをコンソールに出力
+        
       } else {
         // リクエストがサーバーに届かなかった場合など
-        console.error(error.message);
+        console.error('エラーメッセージ：', error.message);
+        // errorMessage.value = 'エラー：何らかの原因によりお問い合わせ内容を送信できませんでした. 復旧までの間, お問い合わせをする場合は tarouhirodai@gmail.com までご連絡ください. ';
+        alert('エラー：何らかの原因によりお問い合わせ内容を送信できませんでした. 復旧までの間, お問い合わせをする場合は tarouhirodai@gmail.com までご連絡ください. ');
       }
     }
   }
@@ -111,10 +114,16 @@ const clickButton = async() => {
               auto-grow
               clearable
             ></v-textarea>
+            <!-- <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> -->
             <v-btn @click="clickButton" color="indigo">送信する</v-btn>
-
-
         </v-container>
       </v-main>
   </v-app>
 </template>
+
+<style scoped>
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+</style>
