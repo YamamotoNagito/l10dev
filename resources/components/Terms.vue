@@ -10,7 +10,7 @@ import { useRouter } from 'vue-router'
     <v-app>
         <v-main>
             <v-container>
-                <p class="text-h6 text-md-h4 text-lg-h3">利用規約</p>
+                <!-- <p class="text-h6 text-md-h4 text-lg-h3">利用規約</p> -->
                 <p>　この利用規約（以下，「本規約」といいます。）は，かえで製作委員会（以下，「当団体」といいます。）がこのウェブサイト上で提供するサービス（以下，「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下，「ユーザー」といいます。）には，本規約に従って，本サービスをご利用いただきます。</p>
                 <br/>
                 <p class="text-h6 text-md-h5 text-lg-h4">第1条（適用）</p>
