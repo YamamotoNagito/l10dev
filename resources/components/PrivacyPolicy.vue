@@ -10,7 +10,7 @@ import { useRouter } from 'vue-router'
     <v-app>
         <v-main>
             <v-container>
-                <p class="text-h6 text-md-h4 text-lg-h3">プライバシーポリシー</p>
+                <!-- <p class="text-h6 text-md-h4 text-lg-h3">プライバシーポリシー</p> -->
                 <p>かえで製作委員会（以下，「当団体」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。</p>
                 <br/>
 

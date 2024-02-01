@@ -14,9 +14,7 @@ const emailInputed = ref('');
 const message = ref('');
 const category = ref(null);
 
-// const errorMessage = ref(''); // エラーメッセージ用の変数
-
-const category_items = ref(['投稿報酬の請求', '利用規約・プライバシーポリシーに関する問い合わせ', '操作方法に関する問い合わせ', '退会したい', 'バグ報告', 'その他']);
+const category_items = ref(['投稿報酬の請求', '利用規約・プライバシーポリシーに関する問い合わせ', '操作方法に関する問い合わせ', '退会したい', 'バグ報告', '欲しい機能・情報など', 'その他']);
 
 const rules = {
   name: { required, maxLength: maxLength(32) },
@@ -79,7 +77,7 @@ const clickButton = async() => {
   <v-app>
       <v-main>
         <v-container>
-            <p class="text-h6 text-md-h4 text-lg-h3">お問い合わせ</p>
+            <!-- <p class="text-h6 text-md-h4 text-lg-h3">お問い合わせ</p> -->
             <br/>
             <p class="text-h6 text-md-h5 text-lg-h4">ユーザ情報</p>
             <v-text-field

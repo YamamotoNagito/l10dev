@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-col cols="8">
       <!-- タイトル -->
-      <h1 style="font-size: 2rem">プロフィール画面</h1>
+      <!-- <h1 style="font-size: 2rem">プロフィール画面</h1> -->
       <v-card class="my-8" v-if="userProfile">
         <v-container>
           <v-card-text justify>

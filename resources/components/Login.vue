@@ -82,7 +82,7 @@ const clickButton = async() => {
 </script>
 
 <template>
-  <h1>ログイン画面</h1>
+  <!-- <h1>ログイン画面</h1> -->
     <!-- <form action="" method="post"> -->
       <!-- @csrf -->
       <!-- <div>
