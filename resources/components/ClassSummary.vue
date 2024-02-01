@@ -4,7 +4,7 @@ import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-import StarRading from "./StarRating.vue";
+import StarRating from "./StarRating.vue";
 
 const props = defineProps(["classData"]);
 
@@ -48,77 +48,60 @@ onMounted(() => {
 
 <template>
   <v-card class="border" max-width="800">
+    <!-- 授業名 -->
     <v-row justify="space-evenly" align="center">
-      <v-col cols="7">
-        <v-row>
-          <v-col cols="12" sm="8">
-            <v-container class="ma-auto pa-1">
-              <v-btn
-                flat
-                class="text-decoration-underline text-blue text-h8 text-sm-h6 cursor-pointer"
-                @click="
-                  router.push('/class/' + classData.lectureId + '/detail')
-                "
-              >
-                {{ classData.lectureName }}
-              </v-btn>
-            </v-container>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-container class="ma-auto pa-1"
-              >{{ classData.teacherName }} 先生</v-container
-            >
-          </v-col>
-        </v-row>
+      <v-col cols="12">
+        <v-btn
+          flat
+          class="text-decoration-underline text-blue text-h8 text-sm-h6 cursor-pointer"
+          @click="router.push('/class/' + classData.lectureId + '/detail')"
+        >
+          {{ classData.lectureName }}
+        </v-btn>
       </v-col>
-      <v-col cols="5">
-        <v-container class="ma-0 pa-1">
-          <v-row align="center" justify="end">
-            <v-col cols="12" sm="6" class="d-flex justify-end"
-              ><StarRading
-                :totalEvaluation="classData.totalEvaluation"
-              ></StarRading
-            ></v-col>
-            <v-col cols="12" sm="5" class="text-end"
-              >({{ classData.numberOfReviews }})</v-col
-            ></v-row
+    </v-row>
+    <!-- 担当教員名 -->
+    <v-row justify="space-evenly" align="center">
+      <v-col cols="12">
+        <p class="ma-auto pl-5">{{ classData.teacherName }} 先生</p>
+      </v-col>
+    </v-row>
+    <v-row justify="start" align="center">
+      <!-- 星の評価 -->
+      <v-col cols="8" sm="3"
+        ><StarRating :totalEvaluation="classData.totalEvaluation"></StarRating
+      ></v-col>
+      <!-- 評価数の合計 -->
+      <v-col cols="3" sm="2">({{ classData.numberOfReviews }})</v-col>
+      <!-- レビューを投稿するボタン -->
+      <v-col cols="12" sm="3">
+        <v-btn color="blue">
+          <v-icon>mdi-comment-plus-outline</v-icon>
+          <p
+            @click="
+              router.push({
+                name: 'class/post',
+                query: {
+                  lectureName: classData.lectureName,
+                  teacherName: classData.teacherName,
+                },
+              })
+            "
+            class="text-h9"
           >
-          <v-container
-            class="d-flex flex-row align-center justify-end ma-1 pa-1"
-          >
-            <v-btn color="blue">
-              <v-icon>mdi-comment-plus-outline</v-icon>
-              <p
-                @click="
-                  router.push({
-                    name: 'class/post',
-                    query: {
-                      lectureName: classData.lectureName,
-                      teacherName: classData.teacherName,
-                    },
-                  })
-                "
-                class="text-h9"
-              >
-                レビュー投稿
-              </p>
-            </v-btn>
-          </v-container>
-          <!-- Twitter共有ボタンの配置-->
-          <v-container
-            class="d-flex flex-row align-center justify-end ma-0 pa-0"
-            ><v-btn color="blue" @click="twitterShare"
-              ><p>Twitterで共有する</p></v-btn
-            ></v-container
-          >
-          <!-- Line共有ボタンの配置-->
-          <v-container
-            class="d-flex flex-row align-center justify-end ma-0 pa-0"
-            ><v-btn color="blue" @click="LineShare"
-              ><p>Lineで共有する</p></v-btn
-            ></v-container
-          >
-        </v-container>
+            レビュー投稿
+          </p>
+        </v-btn>
+      </v-col>
+      <!-- Twitterで共有するボタン -->
+      <v-col cols="6" sm="3">
+        <v-btn color="blue" @click="twitterShare"
+          ><p>Twitterで共有</p></v-btn
+        >
+      </v-col>
+      <!-- LINEで共有するボタン -->
+      <v-col cols="6" sm="3">
+        <v-btn color="blue" @click="LineShare"><p>Lineで共有</p></v-btn>
       </v-col>
     </v-row>
   </v-card>
