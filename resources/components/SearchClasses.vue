@@ -13,7 +13,7 @@ const detailedCondition = ref({
   teacherName: null,
   location: null,
   faculty: null,
-  categoty: null,
+  category: null,
   term: null,
   dayOfWeek: null,
   timePeriod: null,
@@ -94,6 +94,8 @@ const searchClassByLectureCode = ref({
 
 // 講義コードで検索するタブのメッセージ
 const messageInLectureCodeTab = ref("");
+// 条件で検索するタブのメッセージ
+const messageInConditionalTab = ref("");
 
 // オブジェクトからvalueがNULLのkeyとvalueのペアを削除する関数
 function removeNullValues(obj) {
@@ -113,46 +115,101 @@ function removeNullValues(obj) {
 // 条件で検索するボタンが押されたときに発火する関数
 //検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
 const sendQueryToClassListView = async () => {
-  // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
-  detailedCondition.value.totalEvaluation = updateEvaluationObject(
-    totalEvaluationString.value
-  );
-  detailedCondition.value.creditLevel = updateEvaluationObject(
-    creditLevelString.value
-  );
-  detailedCondition.value.interestLevel = updateEvaluationObject(
-    interestLevelString.value
-  );
-  detailedCondition.value.skillLevel = updateEvaluationObject(
-    skillLevelString.value
-  );
+  // メッセージを更新して空に
+  messageInConditionalTab.value = '';
+  if (  //バリデーションチェック(どれか1つでも入力していたら(nullでなければ)通過)
+      detailedCondition.value.lectureName == null
+      && detailedCondition.value.teacherName == null
+      && detailedCondition.value.location == null
+      && detailedCondition.value.faculty == null
+      && detailedCondition.value.category == null
+      && detailedCondition.value.term == null
+      && detailedCondition.value.dayOfWeek == null
+      && detailedCondition.value.timePeriod == null
+      && detailedCondition.value.grade == null
+      && totalEvaluationString.value == null
+      && creditLevelString.value == null
+      && interestLevelString.value == null
+      && skillLevelString.value == null
+    ) {
+      //バリデーションが通らなかったときに実行
+      messageInConditionalTab.value = '検索する条件を入力してください';
+      // console.log(
+      //   'バリデーション通過ならず',
+      //   "lectureName: ",detailedCondition.value.lectureName,  '\n',
+      //   "teacherName: ",detailedCondition.value.teacherName, '\n',
+      //   "location: ",detailedCondition.value.location, '\n',
+      //   "faculty: ",detailedCondition.value.faculty, '\n',
+      //   "category: ",detailedCondition.value.category, '\n',
+      //   "term: ",detailedCondition.value.term, '\n',
+      //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
+      //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
+      //   "grade: ",detailedCondition.value.grade, '\n',
+      //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
+      //   "creditLevelString: ",creditLevelString.value, '\n',
+      //   "interestLevelString: ",interestLevelString.value, '\n',
+      //   "skillLevelString: ",skillLevelString.value, 
+      // );
+  } else {
+    //バリデーション通過時に実行
 
-  const query = {
-    lectureName: detailedCondition.value.lectureName,
-    teacherName: detailedCondition.value.teacherName,
-    location: detailedCondition.value.location,
-    faculty: detailedCondition.value.faculty,
-    category: detailedCondition.value.category,
-    term: detailedCondition.value.term,
-    dayOfWeek: detailedCondition.value.term,
-    timePeriod: detailedCondition.value.timePeriod,
-    grade: detailedCondition.value.grade,
-    totalEvaluationMin: detailedCondition.value.totalEvaluation.min,
-    totalEvaluationMax: detailedCondition.value.totalEvaluation.max,
-    creditLevelMin: detailedCondition.value.creditLevel.min,
-    creditLevelMax: detailedCondition.value.creditLevel.max,
-    interestLevelMin: detailedCondition.value.interestLevel.min,
-    interestLevelMax: detailedCondition.value.interestLevel.max,
-    skillLevelMin: detailedCondition.value.skillLevel.min,
-    skillLevelMax: detailedCondition.value.skillLevel.max,
-  };
-  // クエリからNULLをなくす
-  const filteredQuery = removeNullValues(query)
+    // console.log(
+    //   "バリデーション通過！！", 
+    //   "lectureName: ",detailedCondition.value.lectureName, '\n',
+    //   "teacherName: ",detailedCondition.value.teacherName, '\n',
+    //   "location: ",detailedCondition.value.location, '\n',
+    //   "faculty: ",detailedCondition.value.faculty, '\n',
+    //   "category: ",detailedCondition.value.category, '\n',
+    //   "term: ",detailedCondition.value.term, '\n',
+    //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
+    //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
+    //   "grade: ",detailedCondition.value.grade, '\n',
+    //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
+    //   "creditLevelString: ",creditLevelString.value, '\n',
+    //   "interestLevelString: ",interestLevelString.value, '\n',
+    //   "skillLevelString: ",skillLevelString.value, 
+    // );
+    // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
+    detailedCondition.value.totalEvaluation = updateEvaluationObject(
+      totalEvaluationString.value
+    );
+    detailedCondition.value.creditLevel = updateEvaluationObject(
+      creditLevelString.value
+    );
+    detailedCondition.value.interestLevel = updateEvaluationObject(
+      interestLevelString.value
+    );
+    detailedCondition.value.skillLevel = updateEvaluationObject(
+      skillLevelString.value
+    );
 
-  router.push({
-    path: "/class",
-    query: filteredQuery
-  });
+    const query = {
+      lectureName: detailedCondition.value.lectureName,
+      teacherName: detailedCondition.value.teacherName,
+      location: detailedCondition.value.location,
+      faculty: detailedCondition.value.faculty,
+      category: detailedCondition.value.category,
+      term: detailedCondition.value.term,
+      dayOfWeek: detailedCondition.value.dayOfWeek,
+      timePeriod: detailedCondition.value.timePeriod,
+      grade: detailedCondition.value.grade,
+      totalEvaluationMin: detailedCondition.value.totalEvaluation.min,
+      totalEvaluationMax: detailedCondition.value.totalEvaluation.max,
+      creditLevelMin: detailedCondition.value.creditLevel.min,
+      creditLevelMax: detailedCondition.value.creditLevel.max,
+      interestLevelMin: detailedCondition.value.interestLevel.min,
+      interestLevelMax: detailedCondition.value.interestLevel.max,
+      skillLevelMin: detailedCondition.value.skillLevel.min,
+      skillLevelMax: detailedCondition.value.skillLevel.max,
+    };
+    // クエリからNULLをなくす
+    const filteredQuery = removeNullValues(query)
+
+    router.push({
+      path: "/class",
+      query: filteredQuery
+    });
+  }
 };
 
 // 講義コードで検索する際に発火する関数
@@ -343,6 +400,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="locationList"
                           v-model="detailedCondition.location"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -352,6 +410,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="facultyList"
                           v-model="detailedCondition.faculty"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -361,6 +420,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="categoryList"
                           v-model="detailedCondition.category"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -368,8 +428,9 @@ const makeDefaultCandidateLectureNameList = () => {
                         <p class="category-name">ターム</p>
                         <v-select
                           :items="termList"
-                          v-model="detailedCondition.termList"
+                          v-model="detailedCondition.term"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -379,6 +440,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="dayOfWeekList"
                           v-model="detailedCondition.dayOfWeek"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -388,6 +450,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="timePeriodList"
                           v-model="detailedCondition.timePeriod"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -397,6 +460,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="gradeList"
                           v-model="detailedCondition.grade"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -406,6 +470,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="totalEvaluationList"
                           v-model="totalEvaluationString"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -415,6 +480,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="totalEvaluationList"
                           v-model="creditLevelString"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -424,6 +490,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="totalEvaluationList"
                           v-model="interestLevelString"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
 
@@ -433,6 +500,7 @@ const makeDefaultCandidateLectureNameList = () => {
                           :items="totalEvaluationList"
                           v-model="skillLevelString"
                           class="pulldown-list"
+                          clearable
                         ></v-select>
                       </v-container>
                       <!-- 他の条件の追加ここまで -->
@@ -441,6 +509,7 @@ const makeDefaultCandidateLectureNameList = () => {
                 </v-expansion-panel>
               </v-expansion-panels>
 
+              <p class="text-red text-center">{{ messageInConditionalTab }}</p>
               <v-btn @click="sendQueryToClassListView" color="orange">
                 <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
               </v-btn>
@@ -452,6 +521,7 @@ const makeDefaultCandidateLectureNameList = () => {
                 <v-text-field
                   placeholder="KA*******"
                   v-model="searchClassByLectureCode.lectureCode"
+                  clearable
                 ></v-text-field>
               </v-container>
               <v-container class="d-flex">
