@@ -80,7 +80,7 @@ onMounted(() => {
       <v-col cols="12" sm="9">
         <v-row justify="end">
           <!-- レビューを投稿するボタン -->
-          <v-col cols="4" sm="4">
+          <v-col cols="4" sm="4" md="3">
             <v-btn color="blue">
               <v-icon>mdi-comment-plus-outline</v-icon>
               <p
@@ -100,7 +100,7 @@ onMounted(() => {
             </v-btn>
           </v-col>
           <!-- TwitterとLineで共有するボタン -->
-          <v-col cols="3" sm="3" class="d-flex justify-end">
+          <v-col cols="3" sm="3" md="2" class="d-flex justify-end">
             <img
             class="mr-2"
               :src="twitterLogo"
