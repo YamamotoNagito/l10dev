@@ -6,7 +6,7 @@ const props = defineProps(["totalEvaluation"])
 </script>
 
 <template>
-  <v-row class="ml-1">
+  <v-row>
     <v-col>
       <v-rating
         readonly

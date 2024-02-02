@@ -6,6 +6,10 @@ import { useRouter } from "vue-router";
 
 import StarRating from "./StarRating.vue";
 
+// LineとTwitterアイコンの読み込み
+import lineLogo from "../assets/img/line.png";
+import twitterLogo from "../assets/img/twitter.png";
+
 const props = defineProps(["classData"]);
 
 const router = useRouter();
@@ -47,13 +51,13 @@ onMounted(() => {
 
 
 <template>
-  <v-card class="border" max-width="800">
+  <v-card class="border pa-5" max-width="800">
     <!-- 授業名 -->
     <v-row justify="space-evenly" align="center">
       <v-col cols="12">
         <v-btn
           flat
-          class="text-decoration-underline text-blue text-h8 text-sm-h6 cursor-pointer"
+          class="text-decoration-underline text-blue text-h7 text-sm-h6 cursor-pointer"
           @click="router.push('/class/' + classData.lectureId + '/detail')"
         >
           {{ classData.lectureName }}
@@ -63,45 +67,59 @@ onMounted(() => {
     <!-- 担当教員名 -->
     <v-row justify="space-evenly" align="center">
       <v-col cols="12">
-        <p class="ma-auto pl-5">{{ classData.teacherName }} 先生</p>
+        <p class="ma-auto pl-5 text-h7 text-sm-h7">
+          {{ classData.teacherName }} 先生
+        </p>
       </v-col>
     </v-row>
-    <v-row justify="start" align="center">
-      <!-- 星の評価 -->
-      <v-col cols="8" sm="3"
+    <v-row justify="space-between" align="center">
+      <!-- 星の評価と評価数の合計 -->
+      <v-col cols="8" sm="3" class="d-flex align-center"
         ><StarRating :totalEvaluation="classData.totalEvaluation"></StarRating
-      ></v-col>
-      <!-- 評価数の合計 -->
-      <v-col cols="3" sm="2">({{ classData.numberOfReviews }})</v-col>
-      <!-- レビューを投稿するボタン -->
-      <v-col cols="12" sm="3">
-        <v-btn color="blue">
-          <v-icon>mdi-comment-plus-outline</v-icon>
-          <p
-            @click="
-              router.push({
-                name: 'class/post',
-                query: {
-                  lectureName: classData.lectureName,
-                  teacherName: classData.teacherName,
-                },
-              })
-            "
-            class="text-h9"
-          >
-            レビュー投稿
-          </p>
-        </v-btn>
-      </v-col>
-      <!-- Twitterで共有するボタン -->
-      <v-col cols="6" sm="3">
-        <v-btn color="blue" @click="twitterShare"
-          ><p>Twitterで共有</p></v-btn
-        >
-      </v-col>
-      <!-- LINEで共有するボタン -->
-      <v-col cols="6" sm="3">
-        <v-btn color="blue" @click="LineShare"><p>Lineで共有</p></v-btn>
+      ><p>({{ classData.numberOfReviews }})</p></v-col>
+      <v-col cols="12" sm="9">
+        <v-row justify="end">
+          <!-- レビューを投稿するボタン -->
+          <v-col cols="4" sm="4">
+            <v-btn color="blue">
+              <v-icon>mdi-comment-plus-outline</v-icon>
+              <p
+                @click="
+                  router.push({
+                    name: 'class/post',
+                    query: {
+                      lectureName: classData.lectureName,
+                      teacherName: classData.teacherName,
+                    },
+                  })
+                "
+                class="text-h8"
+              >
+                レビュー
+              </p>
+            </v-btn>
+          </v-col>
+          <!-- TwitterとLineで共有するボタン -->
+          <v-col cols="3" sm="3" class="d-flex justify-end">
+            <img
+            class="mr-2"
+              :src="twitterLogo"
+              alt=""
+              width="30px"
+              height="30px"
+              style="cursor: pointer"
+              @click="twitterShare"
+            />
+            <img
+              :src="lineLogo"
+              alt=""
+              width="30px"
+              height="30px"
+              style="cursor: pointer"
+              @click="LineShare"
+            />
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-card>
