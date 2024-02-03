@@ -79,13 +79,40 @@ const updateEvaluationObject = (evaluationString) => {
 // 検索項目はフロントでもつ
 // 評価を3つに絞る
 // minとmaxを持たせる
-const locationList = ["A", "B", "C", "D"];
-const facultyList = ["A", "B", "C", "D"];
-const categoryList = ["A", "B", "C", "D"];
-const termList = ["A", "B", "C", "D"];
-const dayOfWeekList = ["A", "B", "C", "D"];
-const timePeriodList = ["A", "B", "C", "D"];
-const gradeList = ["A", "B", "C", "D"];
+const locationList = ["東広島", "霞", "東千田", "双方向"];
+const facultyList = [
+  "教養教育", 
+  "総合科学部", 
+  "文学部", 
+  "教育学部", 
+  "法学部", 
+  "経済学部", 
+  "理学部", 
+  "医学部", 
+  "歯学部", 
+  "薬学部", 
+  "工学部", 
+  "生物生産学部", 
+  "情報科学部", 
+  "大学院共通教育", 
+  "人間社会科学研究科",  
+  "先進理工系科学研究科", 
+  "統合生命科学研究科", 
+  "医系科学研究科", 
+  "スマートソサエティ実践科学研究科", 
+  "特別支援教育特別専攻科", 
+  "教育学研究科", 
+  "理学研究科",
+  "医歯薬保健学研究科",
+  "外国語教育センター", 
+  "総合博物館", 
+  "ライティングセンター"
+];
+const categoryList = ["大学教育入門", "展開ゼミ", "平和科目", "外国語科目", "情報・データサイエンス科目", "領域科目", "基盤科目", "社会連携科目", "健康スポーツ科目", "専門教育科目", "大学院共通科目", "専門的教育科目", "他学部・他研究科科目"];
+const termList = ["1ターム", "2ターム", "3ターム", "4ターム", "集中", "前期", "後期", "通年"];
+const dayOfWeekList = ["月", "火", "水", "木", "金", "土", "日", "集中"];
+const timePeriodList = ["1コマ", "2コマ", "3コマ", "4コマ", "5コマ", "6コマ", "7コマ"];
+const gradeList = ["B1", "B2", "B3", "B4", "B5"];
 const totalEvaluationList = ["1未満", "1以上", "2以上", "3以上", "4以上"];
 //講義コードで検索する際はこのデータをバックに送る
 const searchClassByLectureCode = ref({
