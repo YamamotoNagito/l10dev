@@ -4,7 +4,7 @@ import vuetify from "../js/vuetify";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import axios from "axios";
-import kaedeDefalut from "../assets/img/kaedeDefalut.png";
+import kaedeMainImg from "../assets/img/kaedeKey.png";
 // import { mdiAccount, mdiLogout } from '@mdi/js';
 
 // ドロワーの開閉状態を管理する変数
@@ -59,7 +59,7 @@ const clickLogoutButton = async () => {
       @click.stop="drawer = !drawer"
     />
     <v-btn icon @click="navigateToWelcome">
-      <img :src="kaedeDefalut" alt="kaedeDefalut" width="40" height="40" />
+      <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
     </v-btn>
 
     <v-toolbar-title
