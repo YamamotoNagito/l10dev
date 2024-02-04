@@ -4,7 +4,11 @@ import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-import StarRading from "./StarRating.vue";
+import StarRating from "./StarRating.vue";
+
+// LineとTwitterアイコンの読み込み
+import lineLogo from "../assets/img/line.png";
+import twitterLogo from "../assets/img/twitter.png";
 
 const props = defineProps(["classData"]);
 
@@ -47,45 +51,36 @@ onMounted(() => {
 
 
 <template>
-  <v-card class="border" max-width="800">
+  <v-card class="border pa-5" max-width="800">
+    <!-- 授業名 -->
     <v-row justify="space-evenly" align="center">
-      <v-col cols="7">
-        <v-row>
-          <v-col cols="12" sm="8">
-            <v-container class="ma-auto pa-1">
-              <v-btn
-                flat
-                class="text-decoration-underline text-blue text-h8 text-sm-h6 cursor-pointer"
-                @click="
-                  router.push('/class/' + classData.lectureId + '/detail')
-                "
-              >
-                {{ classData.lectureName }}
-              </v-btn>
-            </v-container>
-          </v-col>
-          <v-col cols="12" sm="4">
-            <v-container class="ma-auto pa-1"
-              >{{ classData.teacherName }} 先生</v-container
-            >
-          </v-col>
-        </v-row>
+      <v-col cols="12">
+        <v-btn
+          flat
+          class="text-decoration-underline text-blue text-h7 text-sm-h6 cursor-pointer"
+          @click="router.push('/class/' + classData.lectureId + '/detail')"
+        >
+          {{ classData.lectureName }}
+        </v-btn>
       </v-col>
-      <v-col cols="5">
-        <v-container class="ma-0 pa-1">
-          <v-row align="center" justify="end">
-            <v-col cols="12" sm="6" class="d-flex justify-end"
-              ><StarRading
-                :totalEvaluation="classData.totalEvaluation"
-              ></StarRading
-            ></v-col>
-            <v-col cols="12" sm="5" class="text-end"
-              >({{ classData.numberOfReviews }})</v-col
-            ></v-row
-          >
-          <v-container
-            class="d-flex flex-row align-center justify-end ma-1 pa-1"
-          >
+    </v-row>
+    <!-- 担当教員名 -->
+    <v-row justify="space-evenly" align="center">
+      <v-col cols="12">
+        <p class="ma-auto pl-5 text-h7 text-sm-h7">
+          {{ classData.teacherName }} 先生
+        </p>
+      </v-col>
+    </v-row>
+    <v-row justify="space-between" align="center">
+      <!-- 星の評価と評価数の合計 -->
+      <v-col cols="8" sm="3" class="d-flex align-center"
+        ><StarRating :totalEvaluation="classData.totalEvaluation"></StarRating
+      ><p>({{ classData.numberOfReviews }})</p></v-col>
+      <v-col cols="12" sm="9">
+        <v-row justify="end">
+          <!-- レビューを投稿するボタン -->
+          <v-col cols="4" sm="4" md="3">
             <v-btn color="blue">
               <v-icon>mdi-comment-plus-outline</v-icon>
               <p
@@ -98,27 +93,33 @@ onMounted(() => {
                     },
                   })
                 "
-                class="text-h9"
+                class="text-h8"
               >
-                レビュー投稿
+                レビュー
               </p>
             </v-btn>
-          </v-container>
-          <!-- Twitter共有ボタンの配置-->
-          <v-container
-            class="d-flex flex-row align-center justify-end ma-0 pa-0"
-            ><v-btn color="blue" @click="twitterShare"
-              ><p>Twitterで共有する</p></v-btn
-            ></v-container
-          >
-          <!-- Line共有ボタンの配置-->
-          <v-container
-            class="d-flex flex-row align-center justify-end ma-0 pa-0"
-            ><v-btn color="blue" @click="LineShare"
-              ><p>Lineで共有する</p></v-btn
-            ></v-container
-          >
-        </v-container>
+          </v-col>
+          <!-- TwitterとLineで共有するボタン -->
+          <v-col cols="3" sm="3" md="2" class="d-flex justify-end">
+            <img
+            class="mr-2"
+              :src="twitterLogo"
+              alt=""
+              width="30px"
+              height="30px"
+              style="cursor: pointer"
+              @click="twitterShare"
+            />
+            <img
+              :src="lineLogo"
+              alt=""
+              width="30px"
+              height="30px"
+              style="cursor: pointer"
+              @click="LineShare"
+            />
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-card>
