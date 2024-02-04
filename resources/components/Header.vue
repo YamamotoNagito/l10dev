@@ -13,6 +13,10 @@ const drawer = ref(false);
 const router = useRouter();
 const store = useStore();
 
+const navigateToWelcome = () => {
+  router.push({ name: "welcome" });
+};
+
 const clickProfileButton = async () => {
   // console.log("クリックされたで");
   // console.log(store.getters.userInfo.id);
@@ -49,12 +53,15 @@ const clickLogoutButton = async () => {
 };
 </script>
 <template>
-  <v-app-bar color="orange" scroll-behavior="hide">
+  <v-app-bar color="orange" scroll-behavior="hide" elevation="3">
     <v-app-bar-nav-icon
       v-if="store.getters.isLoggedIn"
       @click.stop="drawer = !drawer"
     />
-    <img :src="kaedeDefalut" alt="kaedeDefalut" width="40" height="40" />
+    <v-btn icon @click="navigateToWelcome">
+      <img :src="kaedeDefalut" alt="kaedeDefalut" width="40" height="40" />
+    </v-btn>
+
     <v-toolbar-title
       class="hidden-md-and-down"
       @click="router.push({ name: 'welcome' })"
