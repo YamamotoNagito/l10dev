@@ -58,9 +58,9 @@ const clickLogoutButton = async () => {
       v-if="store.getters.isLoggedIn"
       @click.stop="drawer = !drawer"
     />
-    <v-btn icon @click="navigateToWelcome">
+    <!-- <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
       <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
-    </v-btn>
+    </v-btn> -->
 
     <v-toolbar-title
       class="hidden-md-and-down"
@@ -115,4 +115,8 @@ const clickLogoutButton = async () => {
   </v-navigation-drawer>
 </template>
 
-<style></style>
+<style>
+  /* #kaede-icon-btn {
+    background-color: rgb(117, 105, 85);
+  } */
+</style>

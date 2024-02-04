@@ -7,5 +7,5 @@ const message = ref('Hello World!')
 
 <template>
   <!-- <h1>ようこそ</h1> -->
-  <p>このサイトは広大生の学びを支えるサイト かえで</p>
+  <!-- <p>このサイトは広大生の学びを支えるサイト かえで</p> -->
 </template>
