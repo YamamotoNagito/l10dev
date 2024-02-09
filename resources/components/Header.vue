@@ -12,8 +12,10 @@ const drawer = ref(false);
 const router = useRouter();
 const store = useStore();
 
-const email = ref("");
-const password = ref("");
+
+const navigateToWelcome = () => {
+  router.push({ name: "welcome" });
+};
 
 const clickProfileButton = async () => {
   // console.log("クリックされたで");
@@ -44,6 +46,7 @@ const clickLogoutButton = async () => {
       // }
       store.dispatch("logout");
       router.push({ name: "welcome" });
+
     })
     .catch((err) => {
       console.log(err);
@@ -51,13 +54,16 @@ const clickLogoutButton = async () => {
 };
 </script>
 <template>
-  <!-- v-app-bar での grid system の使い方が不明 -->
 
-  <v-app-bar color="orange" scroll-behavior="hide">
+  <v-app-bar color="orange" scroll-behavior="hide" elevation="3">
     <v-app-bar-nav-icon
       v-if="store.getters.isLoggedIn"
       @click.stop="drawer = !drawer"
     />
+    <!-- <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
+      <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
+    </v-btn> -->
+
     <v-toolbar-title
       class="hidden-md-and-down"
       @click="router.push({ name: 'welcome' })"
@@ -96,11 +102,11 @@ const clickLogoutButton = async () => {
         </v-btn>
       </v-list-item>
       <!-- <v-list-item>
-                  <v-btn block variant="text" @click="router.push({ name: ''})">
-                    <v-icon>mdi-cog</v-icon>
-                      設定
-                    </v-btn>
-                  </v-list-item> -->
+        <v-btn block variant="text" @click="router.push({ name: ''})">
+          <v-icon>mdi-cog</v-icon>
+            設定
+          </v-btn>
+        </v-list-item> -->
       <v-list-item>
         <v-btn block variant="text" color="red" @click="clickLogoutButton">
           <v-icon>mdi-logout</v-icon>
@@ -111,4 +117,9 @@ const clickLogoutButton = async () => {
   </v-navigation-drawer>
 </template>
 
-<style></style>
+
+<style>
+  /* #kaede-icon-btn {
+    background-color: rgb(117, 105, 85);
+  } */
+</style>
