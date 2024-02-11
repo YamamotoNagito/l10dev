@@ -69,7 +69,11 @@ const clickLogoutButton = async () => {
       かえで ~広大生の学びを支える情報サイト~
     </v-toolbar-title>
     <v-spacer />
-
+    <v-btn @click="router.push({ name: 'welcome' })">
+      <v-icon>mdi-magnify</v-icon>
+      授業検索
+    </v-btn>
+    
     <v-btn
       v-if="!store.getters.isLoggedIn"
       @click="router.push({ name: 'login' })"
@@ -77,10 +81,7 @@ const clickLogoutButton = async () => {
       <v-icon>mdi-login</v-icon>
       ログイン
     </v-btn>
-    <v-btn @click="router.push({ name: 'welcome' })">
-      <v-icon>mdi-magnify</v-icon>
-      授業検索
-    </v-btn>
+
     <v-btn
       v-if="store.getters.isLoggedIn"
       @click="router.push({ name: 'class/post' })"
