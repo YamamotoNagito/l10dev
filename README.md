@@ -11,8 +11,7 @@
 1: .envファイルの作成
 .env .exampleをコピーして、.envファイルを作成する
 
-.envファイルはnotionを参照
-DB設計(.env)
+.envファイルは太郎広大のgoogle driveを参照
 
 2:Docker Desktopのインストール
 以下の記事を参考にDockerをインストールすること
@@ -74,7 +73,7 @@ https://qiita.com/yuto_dev/items/d1cc909897ac8277baea
 ### 細かい操作コマンド
 
 #### DBへの初期データ格納
-teamsから以下のcsvファイルを取ってくる
+太郎広大のgoogle driveから以下のcsvファイルを取ってくる
 ```
 lectures.csv
 lectureDetailTimes.csv
