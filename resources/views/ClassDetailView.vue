@@ -17,6 +17,7 @@ const getclassDetailData = async (lectureId) => {
   };
 
   try {
+    // TODO: ここはPOSTよりもGETの方が適切。余力があれば修正したいですね
     const response = await axios.post("/api/searchByLectureId", data);
     // const response = await axios.post("/api/hasLectureCode", data);
     console.log(response.data);
