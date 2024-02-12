@@ -10,7 +10,7 @@
 ## やるべきこと
 
 1: .env ファイルの作成
-.env .example をコピーして、.env ファイルを作成する
+.env ファイルは太郎広大の google drive を参照
 
 .env ファイルは notion を参照
 DB 設計(.env)
@@ -77,7 +77,7 @@ https://qiita.com/yuto_dev/items/d1cc909897ac8277baea
 
 #### DB への初期データ格納
 
-teams から以下の csv ファイルを取ってくる
+太郎広大の google drive から以下の csv ファイルを取ってくる
 
 ```
 lectures.csv
