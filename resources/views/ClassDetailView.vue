@@ -1,19 +1,16 @@
 <script setup>
-import { ref, onMounted, getCurrentInstance, onBeforeMount } from "vue";
+import { ref, getCurrentInstance, onBeforeMount } from "vue";
 import ClassDetail from "../components/ClassDetail.vue";
-import { mdiConsoleNetworkOutline } from "@mdi/js";
 import axios from "axios";
-// import pageTitle from '../components/pageTitle.vue';
 
 const lectureId = ref(null);
 // 後でこのコメントアウトは外す！
 const classDetailData = ref(null);
 
-const getclassDetailData = async(lectureId) => {
-
+const getclassDetailData = async (lectureId) => {
   const data = {
-    lectureId:lectureId.value
-  }
+    lectureId: lectureId.value,
+  };
 
   try {
     const response = await axios.post("/api/searchByLectureId", data);
@@ -34,7 +31,7 @@ const getclassDetailData = async(lectureId) => {
   }
 };
 
-onBeforeMount(async() => {
+onBeforeMount(async () => {
   // contextから$routeを取得する
   const { $route } = getCurrentInstance().appContext.config.globalProperties;
   //lectureIdを$routeから取得
@@ -50,7 +47,5 @@ onBeforeMount(async() => {
 </script>
 
 <template>
-  <!-- <pageTitle title = "授業詳細"/> -->
-  <!-- {{ classDetailData }} -->
-  <ClassDetail :classDetailData="classDetailData"></ClassDetail>
+  <ClassDetail :classDetailData="classDetailData" />
 </template>

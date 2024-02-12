@@ -1,10 +1,14 @@
 <script setup>
-import ClassPost from '../components/ClassPost.vue';
-import pageTitle from '../components/pageTitle.vue';
-
+import ClassPost from "../components/ClassPost.vue";
+import pageTitle from "../components/pageTitle.vue";
+import BaseUI from "../components/shared/BaseUI.vue";
 </script>
 
 <template>
-  <pageTitle title="レビューを投稿する"/>
-  <ClassPost></ClassPost>
+  <BaseUI>
+    <template v-slot:header>
+      <pageTitle title="レビューを投稿する" />
+    </template>
+    <ClassPost></ClassPost>
+  </BaseUI>
 </template>

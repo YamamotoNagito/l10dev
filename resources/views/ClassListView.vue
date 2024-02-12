@@ -1,9 +1,10 @@
 <script setup>
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
-import { ref, onBeforeMount, onBeforeUnmount } from "vue";
+import { ref, onBeforeMount } from "vue";
 import axios from "axios";
 import ClassList from "../components/ClassList.vue";
-import pageTitle from '../components/pageTitle.vue';
+import pageTitle from "../components/pageTitle.vue";
+import BaseUI from "../components/shared/BaseUI.vue";
 
 // searchClasses.vueで「検索」ボタンを押すととquery付きのpathでこのファイルのViewがrouter.pushで読み込まれる
 // path内のそのqueryをpathから取得し，格納する．
@@ -92,10 +93,15 @@ onBeforeRouteUpdate(onBeforeRouteUpdateHandler);
 </script>
 
 <template>
-  <pageTitle title="検索結果"/>
-  <v-container v-if="classDataList">
-    <ClassList :classDataList="classDataList"></ClassList>
-  </v-container>
-  <v-container v-else> Loading ... </v-container>
-</template>
+  <BaseUI>
+    <template v-slot:header>
+      <pageTitle title="検索結果" />
+    </template>
 
+    <v-container v-if="classDataList">
+      <ClassList :classDataList="classDataList"></ClassList>
+    </v-container>
+
+    <v-container v-else> Loading ... </v-container>
+  </BaseUI>
+</template>

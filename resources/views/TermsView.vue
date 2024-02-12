@@ -1,14 +1,14 @@
 <script setup>
-  import { ref } from 'vue'
-  import vuetify from '../js/vuetify';
-  import Terms from '../components/Terms.vue'
-  import axios from 'axios';
-  import pageTitle from '../components/pageTitle.vue';
+import Terms from "../components/Terms.vue";
+import pageTitle from "../components/pageTitle.vue";
+import BaseUI from "../components/shared/BaseUI.vue";
 </script>
 
 <template>
-  <!-- <Header></Header> -->
-  <pageTitle title="利用規約"/>
-  <Terms></Terms>
-  <!-- <Footer></Footer> -->
+  <BaseUI>
+    <template v-slot:header>
+      <pageTitle title="利用規約" />
+    </template>
+    <Terms></Terms>
+  </BaseUI>
 </template>

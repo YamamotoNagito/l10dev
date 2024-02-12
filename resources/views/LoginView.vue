@@ -1,14 +1,13 @@
 <script setup>
-import { ref } from 'vue'
-import vuetify from '../js/vuetify';
-import Login from '../components/Login.vue';
-import pageTitle from '../components/pageTitle.vue';
-import axios from 'axios';
+import Login from "../components/Login.vue";
+import pageTitle from "../components/pageTitle.vue";
 </script>
 
 <template>
-  <!-- <Header></Header> -->
-  <pageTitle title="ログインする"/>
-  <Login></Login>
-  <!-- <Footer></Footer> -->
+  <BaseUI>
+    <template v-slot:header>
+      <pageTitle title="ログインする" />
+    </template>
+    <Login></Login>
+  </BaseUI>
 </template>
