@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted, getCurrentInstance, onBeforeMount } from "vue";
+import { ref, getCurrentInstance, onBeforeMount } from "vue";
 import ClassDetail from "../components/ClassDetail.vue";
+import { useRouter } from "vue-router";
 import { mdiConsoleNetworkOutline } from "@mdi/js";
 import axios from "axios";
 // import pageTitle from '../components/pageTitle.vue';
@@ -8,12 +9,12 @@ import axios from "axios";
 const lectureId = ref(null);
 // 後でこのコメントアウトは外す！
 const classDetailData = ref(null);
+const router = useRouter();
 
-const getclassDetailData = async(lectureId) => {
-
+const getclassDetailData = async (lectureId) => {
   const data = {
-    lectureId:lectureId.value
-  }
+    lectureId: lectureId.value,
+  };
 
   try {
     const response = await axios.post("/api/searchByLectureId", data);
@@ -26,6 +27,9 @@ const getclassDetailData = async(lectureId) => {
   } catch (error) {
     if (error.response) {
       // サーバーからのエラーレスポンスがある場合
+      if (error.response.status === 404) {
+        router.push("/not-found");
+      }
       console.error(error.response.data); // エラーレスポンスをコンソールに出力
     } else {
       // リクエストがサーバーに届かなかった場合など
@@ -34,7 +38,7 @@ const getclassDetailData = async(lectureId) => {
   }
 };
 
-onBeforeMount(async() => {
+onBeforeMount(async () => {
   // contextから$routeを取得する
   const { $route } = getCurrentInstance().appContext.config.globalProperties;
   //lectureIdを$routeから取得
