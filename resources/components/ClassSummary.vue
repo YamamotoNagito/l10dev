@@ -1,6 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 import StarRating from "./StarRating.vue";

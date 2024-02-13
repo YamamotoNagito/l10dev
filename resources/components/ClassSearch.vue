@@ -8,5 +8,3 @@
     <span>角(rounded)の指定は有効</span><br />
   </v-sheet>
 </template>
-
-<style></style>

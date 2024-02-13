@@ -1,10 +1,3 @@
-<script setup>
-import { ref } from "vue";
-
-import axios from "axios";
-import { useRouter } from "vue-router";
-</script>
-
 <template>
   <v-container>
     <!-- <p class="text-h6 text-md-h4 text-lg-h3">プライバシーポリシー</p> -->

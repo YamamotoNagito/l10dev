@@ -1,6 +1,5 @@
 <script setup>
-import { ref, defineProps } from "vue";
-import axios from "axios";
+import { defineProps } from "vue";
 import { defineProps } from "vue";
 import { useRouter } from "vue-router";
 import ReviewListVue from "./ReviewList.vue";

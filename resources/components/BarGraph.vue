@@ -5,7 +5,7 @@ import { ref, onMounted } from "vue";
 // const barGraphData = [20, 30, 40, 50, 60]
 const props = defineProps(["barGraphData", "chartTitle"]);
 
-const extractKeyAndValue = (jsonData)=> {
+const extractKeyAndValue = (jsonData) => {
   const keysArray = [];
   const valuesArray = [];
 
@@ -20,11 +20,11 @@ const extractKeyAndValue = (jsonData)=> {
     keys: keysArray,
     values: valuesArray,
   };
-}
+};
 
-const keysAndValues = extractKeyAndValue(props.barGraphData)
-const labels = keysAndValues.keys
-const data = keysAndValues.values
+const keysAndValues = extractKeyAndValue(props.barGraphData);
+const labels = keysAndValues.keys;
+const data = keysAndValues.values;
 
 // Chart.js
 const loadChartJS = () => {
@@ -78,7 +78,7 @@ onMounted(async () => {
         y: {
           beginAtZero: true,
           min: 0,
-        //   max: 100, // Adjust the max value as needed
+          //   max: 100, // Adjust the max value as needed
           stepSize: 10, // Adjust the step size as needed
         },
       },

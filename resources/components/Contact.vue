@@ -2,11 +2,8 @@
 import { ref } from "vue";
 
 import axios from "axios";
-import { useRouter } from "vue-router";
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, maxLength } from "@vuelidate/validators";
-
-const router = useRouter();
 
 const name = ref("");
 const emailInputed = ref("");

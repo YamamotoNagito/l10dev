@@ -1,8 +1,6 @@
 <script setup>
 import { ref, defineProps } from "vue";
 import { VDataTable } from "vuetify/labs/VDataTable";
-import axios from "axios";
-import { useRouter } from "vue-router";
 
 const props = defineProps(["classInformationData"]);
 

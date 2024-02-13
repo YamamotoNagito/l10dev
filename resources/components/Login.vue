@@ -1,10 +1,6 @@
 <script setup>
 import { ref } from "vue";
-
-import Header from "./Header.vue";
-import Footer from "./Footer.vue";
 import axios from "axios";
-import { jsx } from "vue/jsx-runtime";
 import { useRouter } from "vue-router";
 import Button from "./Button.vue";
 import { useStore } from "vuex";

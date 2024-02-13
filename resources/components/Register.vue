@@ -1,10 +1,6 @@
 <script setup>
 import { ref, watch } from "vue";
-
-import Header from "./Header.vue";
-import Footer from "./Footer.vue";
 import axios from "axios";
-import { jsx } from "vue/jsx-runtime";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { useVuelidate } from "@vuelidate/core";
