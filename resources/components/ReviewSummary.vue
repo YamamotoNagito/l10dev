@@ -1,9 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { useStore } from 'vuex';
+import { useStore } from "vuex";
 
 import RadarChart from "./RadarChart.vue";
 import StarRading from "./StarRating.vue";
@@ -18,24 +17,37 @@ const requestReviewId = ref(props.reviewData.reviewId);
 console.log("reviewUserId:", reviewUserId.value);
 console.log("requestUserId:", requestUserId.value);
 
-console.log("reviewUserId:", reviewUserId.value, "Type:", typeof reviewUserId.value);
-console.log("requestUserId:", requestUserId.value, "Type:", typeof requestUserId.value);
+console.log(
+  "reviewUserId:",
+  reviewUserId.value,
+  "Type:",
+  typeof reviewUserId.value
+);
+console.log(
+  "requestUserId:",
+  requestUserId.value,
+  "Type:",
+  typeof requestUserId.value
+);
 
-console.log("reviewUserId === requestUserId:", reviewUserId.value === requestUserId.value);
+console.log(
+  "reviewUserId === requestUserId:",
+  reviewUserId.value === requestUserId.value
+);
 
-console.log
+console.log;
 
 // const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
 
 const radarChartData = {
-  creditLevel : props.reviewData.creditLevel,
-  interestLevel : props.reviewData.interestLevel,
-  skillLevel : props.reviewData.skillLevel,
+  creditLevel: props.reviewData.creditLevel,
+  interestLevel: props.reviewData.interestLevel,
+  skillLevel: props.reviewData.skillLevel,
 };
 
 const items = ref([
-  { title: '編集する', action: 'edit' },
-  { title: '削除する', action: 'delete' },
+  { title: "編集する", action: "edit" },
+  { title: "削除する", action: "delete" },
 ]);
 
 const showDialog = ref(false); // ダイアログの表示状態
@@ -44,11 +56,11 @@ const showDialog = ref(false); // ダイアログの表示状態
 const handleMenuItemClick = async (item) => {
   console.log("Menu item clicked:", item.title);
   try {
-    if (item.action === 'edit') {
+    if (item.action === "edit") {
       // .jsにurlを定義していないが編集ページ遷移かつreviewDataを渡す
       // router.push({ name: 'EditPage', params: { reviewId: props.reviewData.id } });
       console.log(response.data);
-    } else if (item.action === 'delete') {
+    } else if (item.action === "delete") {
       showDialog.value = true;
       // console.log(requestReviewId.value);
     }
@@ -60,7 +72,9 @@ const handleMenuItemClick = async (item) => {
 // ダイアログの削除ボタンのクリックイベント
 const deleteReview = async () => {
   try {
-    const response = await axios.delete(`/api/deleteReview/${requestReviewId.value}`);
+    const response = await axios.delete(
+      `/api/deleteReview/${requestReviewId.value}`
+    );
     console.log(response.data);
     showDialog.value = false; // ダイアログを閉じる
   } catch (error) {
@@ -96,7 +110,9 @@ const deleteReview = async () => {
           </v-col>
           <!-- 授業名をreviewDataから取得して表示する -->
           <v-col cols="12" lg="3">
-            <v-container class="text-h5">{{ reviewData.lectureName }}</v-container>
+            <v-container class="text-h5">{{
+              reviewData.lectureName
+            }}</v-container>
           </v-col>
           <v-col cols="12" lg="3">
             <StarRading
@@ -113,7 +129,11 @@ const deleteReview = async () => {
         >
         </v-btn>
 
-        <v-menu activator="parent" location="start" v-if="reviewUserId === requestUserId">
+        <v-menu
+          activator="parent"
+          location="start"
+          v-if="reviewUserId === requestUserId"
+        >
           <v-list>
             <v-list-item
               v-for="(item, index) in items"
@@ -121,7 +141,10 @@ const deleteReview = async () => {
               :value="index"
               @click="handleMenuItemClick(item)"
             >
-              <v-list-item-title :style="item.title === '削除する' ? 'color: red' : ''">{{ item.title }}</v-list-item-title>
+              <v-list-item-title
+                :style="item.title === '削除する' ? 'color: red' : ''"
+                >{{ item.title }}</v-list-item-title
+              >
             </v-list-item>
           </v-list>
         </v-menu>
@@ -132,12 +155,13 @@ const deleteReview = async () => {
             <v-card-text>このレビューを削除してもよろしいですか？</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="grey" text @click="showDialog = false">キャンセル</v-btn>
+              <v-btn color="grey" text @click="showDialog = false"
+                >キャンセル</v-btn
+              >
               <v-btn color="red" text @click="deleteReview">削除</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
-
       </v-col>
     </v-row>
     <v-row>

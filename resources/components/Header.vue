@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import vuetify from "../js/vuetify";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import axios from "axios";
@@ -53,7 +52,7 @@ const clickLogoutButton = async () => {
 };
 </script>
 <template>
-  <v-app-bar color="orange" scroll-behavior="hide" elevation="3">
+  <v-app-bar color="orange-darken-1" scroll-behavior="hide" elevation="3">
     <v-app-bar-nav-icon
       v-if="store.getters.isLoggedIn"
       @click.stop="drawer = !drawer"
@@ -73,7 +72,7 @@ const clickLogoutButton = async () => {
       <v-icon>mdi-magnify</v-icon>
       授業検索
     </v-btn>
-    
+
     <v-btn
       v-if="!store.getters.isLoggedIn"
       @click="router.push({ name: 'login' })"
@@ -117,7 +116,7 @@ const clickLogoutButton = async () => {
 </template>
 
 <style>
-  /* #kaede-icon-btn {
+/* #kaede-icon-btn {
     background-color: rgb(117, 105, 85);
   } */
 </style>

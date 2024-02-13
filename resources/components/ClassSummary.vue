@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
@@ -49,7 +48,6 @@ onMounted(() => {
 });
 </script>
 
-
 <template>
   <v-card class="border pa-5" max-width="800">
     <!-- 授業名 -->
@@ -75,8 +73,9 @@ onMounted(() => {
     <v-row justify="space-between" align="center">
       <!-- 星の評価と評価数の合計 -->
       <v-col cols="8" sm="3" class="d-flex align-center"
-        ><StarRating :totalEvaluation="classData.totalEvaluation"></StarRating
-      ><p>({{ classData.numberOfReviews }})</p></v-col>
+        ><StarRating :totalEvaluation="classData.totalEvaluation"></StarRating>
+        <p>({{ classData.numberOfReviews }})</p></v-col
+      >
       <v-col cols="12" sm="9">
         <v-row justify="end">
           <!-- レビューを投稿するボタン -->
@@ -102,7 +101,7 @@ onMounted(() => {
           <!-- TwitterとLineで共有するボタン -->
           <v-col cols="3" sm="3" md="2" class="d-flex justify-end">
             <img
-            class="mr-2"
+              class="mr-2"
               :src="twitterLogo"
               alt=""
               width="30px"
