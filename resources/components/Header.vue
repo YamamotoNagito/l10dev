@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import axios from "axios";
-import kaedeMainImg from "../assets/img/kaedeKey.png";
 // import { mdiAccount, mdiLogout } from '@mdi/js';
 
 // ドロワーの開閉状態を管理する変数
@@ -44,7 +43,7 @@ const clickLogoutButton = async () => {
       // if(response.data.success){
       // }
       store.dispatch("logout");
-      router.push("/welcome");
+      router.push({ name: "welcome" });
     })
     .catch((err) => {
       console.log(err);
