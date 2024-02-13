@@ -4,7 +4,6 @@ import vuetify from "../js/vuetify";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import axios from "axios";
-import kaedeMainImg from "../assets/img/kaedeKey.png";
 // import { mdiAccount, mdiLogout } from '@mdi/js';
 
 // ドロワーの開閉状態を管理する変数
@@ -12,6 +11,7 @@ const drawer = ref(false);
 
 const router = useRouter();
 const store = useStore();
+
 
 const navigateToWelcome = () => {
   router.push({ name: "welcome" });
@@ -45,7 +45,8 @@ const clickLogoutButton = async () => {
       // if(response.data.success){
       // }
       store.dispatch("logout");
-      router.push("/welcome");
+      router.push({ name: "welcome" });
+
     })
     .catch((err) => {
       console.log(err);
@@ -53,6 +54,7 @@ const clickLogoutButton = async () => {
 };
 </script>
 <template>
+
   <v-app-bar color="orange" scroll-behavior="hide" elevation="3">
     <v-app-bar-nav-icon
       v-if="store.getters.isLoggedIn"
@@ -115,6 +117,7 @@ const clickLogoutButton = async () => {
     </v-list>
   </v-navigation-drawer>
 </template>
+
 
 <style>
   /* #kaede-icon-btn {
