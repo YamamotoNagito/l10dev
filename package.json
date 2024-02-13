@@ -5,7 +5,9 @@
     "dev": "vite --host",
     "build": "vite build",
     "test": "jest",
-    "lint": "eslint --fix ./resources/**/*.vue"
+    "format": "prettier -w ./resources//**/*.vue",
+    "lint": "eslint --fix ./resources/**/*.vue",
+    "fix": "npm run lint && npm run format"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.0.1",
