@@ -6,8 +6,6 @@ import ProfileView from "../views/ProfileView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import RessetPasswordView from "../views/RessetPasswordView.vue";
 import ClassListView from "../views/ClassListView.vue";
-import ReviewListView from "../views/ReviewListView.vue";
-import ReviewFormView from "../views/ReviewFormView.vue";
 import ProfileEditView from "../views/ProfileEditView.vue";
 import ClassDetailView from "../views/ClassDetailView.vue";
 import ClassPostView from "../views/ClassPostView.vue";
@@ -16,7 +14,6 @@ import TermsView from "../views/TermsView.vue";
 import ContactView from "../views/ContactView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
 import { createRouter, createWebHistory } from "vue-router";
-// import store from '../store'; // Vuex ストアのインポート
 
 // Vuetify
 import "vuetify/styles";
@@ -26,10 +23,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
-import { useStore } from "vuex";
 import store from "../store/index.js";
-
-// const store = useStore()
 
 // TODO: plugins/vuetify.jsに移動する
 const vuetify = createVuetify({
@@ -120,10 +114,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-// createApp({
-//     components: {
-//           App,
-//           LoginView,
-//   },
-// })
 createApp(App).use(vuetify).use(router).use(store).mount("#app");
