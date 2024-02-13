@@ -17,47 +17,14 @@ import { createRouter, createWebHistory } from "vue-router";
 
 // Vuetify
 import "vuetify/styles";
-import { createVuetify } from "vuetify";
 import "@mdi/font/css/materialdesignicons.css";
-import { createRouter, createWebHistory } from "vue-router";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
+import vuetify from "./plugins/vuetify";
 
 import store from "../store/index.js";
-
-// TODO: plugins/vuetify.jsに移動する
-const vuetify = createVuetify({
-  components,
-  directives,
-  theme: {
-    options: {
-      customProperties: true,
-    },
-    defaultTheme: "light",
-    themes: {
-      light: {
-        dark: false,
-        colors: {
-          background: "#ECEFF1",
-          surface: "#FFFFFF",
-          primary: "#6200EE",
-          "primary-darken-1": "#3700B3",
-          secondary: "#03DAC6",
-          "secondary-darken-1": "#018786",
-          error: "#B00020",
-          info: "#2196F3",
-          success: "#4CAF50",
-          warning: "#FB8C00",
-        },
-      },
-    },
-  },
-});
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/welcome", name: "welcome", component: WelcomeView },
     { path: "/", name: "welcome", component: WelcomeView },
     { path: "/register", name: "register", component: RegisterView },
     { path: "/login", name: "login", component: LoginView },
