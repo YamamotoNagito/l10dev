@@ -1,7 +1,7 @@
 <script setup>
-import ReviewList from '../components/ReviewList.vue'
+import ReviewList from "../components/ReviewList.vue";
 </script>
 
 <template>
-    <ReviewList></ReviewList>
+  <ReviewList></ReviewList>
 </template>
