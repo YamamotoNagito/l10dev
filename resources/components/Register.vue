@@ -431,7 +431,7 @@ const clickButton = async () => {
         label="当サイトの利用規約およびプライバシーポリシーに同意する. (利用規約・プライバシーポリシーはページ下部のフッターからご確認いただけます. )"
       ></v-checkbox>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-      <v-btn :disabled="!termsAccepted" color="primary" @click="clickButton">
+      <v-btn :disabled="!termsAccepted" color="indigo" @click="clickButton">
         登録する
       </v-btn>
     </v-form>
