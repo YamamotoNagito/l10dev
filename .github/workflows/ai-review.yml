@@ -1,46 +1,41 @@
-name: ai-pr-reviewer
+name: OpenAI Reviewer
 
 permissions:
   contents: read
   pull-requests: write
 
 on:
-  push:
-    branches-ignore:
-      - master
-      - main
-  pull_request:
-    branches-ignore:
-      - master
-      - main
+  pull_request_target:
+    types: [opened, synchronize, reopened]
   pull_request_review_comment:
     types: [created]
-  issue_comment:
-    types: [created]
 
-# concurrency:
-#   group: ${{ github.repository }}-${{ github.event.number || github.head_ref || github.sha }}-${{ github.workflow }}-${{ github.event_name == 'pull_request_review_comment' && 'pr_comment' || 'pr' }}
-#   cancel-in-progress: ${{ github.event_name != 'pull_request_review_comment' }}
+concurrency:
+  group: ${{ github.repository }}-${{ github.event.number || github.head_ref ||
+    github.sha }}-${{ github.workflow }}-${{ github.event_name ==
+    'pull_request_review_comment' && 'pr_comment' || 'pr' }}
+  cancel-in-progress: ${{ github.event_name != 'pull_request_review_comment' }}
 
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
     steps:
-      - uses: coderabbitai/openai-pr-reviewer@latest
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+          ref: ${{github.event.pull_request.head.ref}}
+          submodules: false
+      - uses: ./
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         with:
           debug: true
-          review_simple_changes: true
           review_comment_lgtm: true
-          openai_light_model: gpt-3.5-turbo
-          openai_heavy_model: gpt-3.5-turbo
-          openai_timeout_ms: 9000
-          language: ja-JP
+          review_simple_changes: true
+          openai_heavy_model: gpt-4
           path_filters: |
-            !db/**
+            !dist/**
             !**/*.lock
           system_message: |
             あなたは @coderabbitai（別名 github-actions[bot]）で、OpenAIによって訓練された言語モデルです。
@@ -57,15 +52,12 @@ jobs:
               - 複雑性
               - 最適化
               - ベストプラクティス: DRY, SOLID, KISS
-
             些細なコードスタイルの問題や、コメント・ドキュメントの欠落についてはコメントしないでください。
             重要な問題を特定し、解決して全体的なコード品質を向上させることを目指してくださいが、細かい問題は意図的に無視してください。
           summarize: |
             次の内容でmarkdownフォーマットを使用して、最終的な回答を提供してください。
-
               - *ウォークスルー*: 特定のファイルではなく、全体の変更に関する高レベルの要約を80語以内で。
               - *変更点*: ファイルとその要約のテーブル。スペースを節約するために、同様の変更を持つファイルを1行にまとめることができます。
-
             GitHubのプルリクエストにコメントとして追加されるこの要約には、追加のコメントを避けてください。
           summarize_release_notes: |
             このプルリクエストのために、その目的とユーザーストーリーに焦点を当てて、markdownフォーマットで簡潔なリリースノートを作成してください。
