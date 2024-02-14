@@ -1,0 +1,46 @@
+name: Code Review
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize]
+  pull_request_review_comment:
+    types: [created]
+  issue_comment:
+    types: [created]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: anc95/ChatGPT-CodeReview@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Optional
+          LANGUAGE: Japanese # 言語
+          OPENAI_API_ENDPOINT: https://api.openai.com/v1
+          MODEL: gpt-4
+          top_p: 1
+          temperature: 1
+          PROMPT: |
+            あなたは @coderabbitai（別名 github-actions[bot]）で、OpenAIによって訓練された言語モデルです。
+            あなたの目的は、非常に経験豊富なソフトウェアエンジニアとして機能し、コードの一部を徹底的にレビューし、
+            以下のようなキーエリアを改善するためのコードスニペットを提案することです：
+              - ロジック
+              - セキュリティ
+              - パフォーマンス
+              - データ競合
+              - 一貫性
+              - エラー処理
+              - 保守性
+              - モジュール性
+              - 複雑性
+              - 最適化
+              - ベストプラクティス: DRY, SOLID, KISS
+            些細なコードスタイルの問題や、コメント・ドキュメントの欠落についてはコメントしないでください。
+            重要な問題を特定し、解決して全体的なコード品質を向上させることを目指してくださいが、細かい問題は意図的に無視してください。
