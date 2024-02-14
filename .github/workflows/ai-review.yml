@@ -10,7 +10,6 @@ on:
       - master
       - main
   pull_request:
-    types: [opened]
     branches-ignore:
       - master
       - main
@@ -36,8 +35,8 @@ jobs:
           debug: true
           review_simple_changes: true
           review_comment_lgtm: true
-          openai_light_model: gpt-4
-          openai_heavy_model: gpt-4
+          openai_light_model: gpt-3.5-turbo
+          openai_heavy_model: gpt-3.5-turbo
           openai_timeout_ms: 9000
           language: ja-JP
           path_filters: |
