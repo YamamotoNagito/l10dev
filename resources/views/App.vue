@@ -1,10 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-import vuetify from '../js/vuetify';
-import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
-
-const message = ref('Hello World!')
+import Header from "../components/Header.vue";
+import Footer from "../components/Footer.vue";
 </script>
 
 <template>
@@ -16,5 +12,4 @@ const message = ref('Hello World!')
     </v-main>
     <Footer></Footer>
   </v-app>
-
 </template>

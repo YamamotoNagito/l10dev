@@ -1,11 +1,13 @@
 <script setup>
 import { ref, getCurrentInstance, onBeforeMount } from "vue";
 import ClassDetail from "../components/ClassDetail.vue";
+import Loading from "../components/Loading.vue";
 import axios from "axios";
 
 const lectureId = ref(null);
 // 後でこのコメントアウトは外す！
 const classDetailData = ref(null);
+const isLoading = ref(true);
 
 const getclassDetailData = async (lectureId) => {
   const data = {
@@ -13,6 +15,7 @@ const getclassDetailData = async (lectureId) => {
   };
 
   try {
+    // TODO: ここはPOSTよりもGETの方が適切。余力があれば修正したいですね
     const response = await axios.post("/api/searchByLectureId", data);
     // const response = await axios.post("/api/hasLectureCode", data);
     console.log(response.data);
@@ -28,6 +31,8 @@ const getclassDetailData = async (lectureId) => {
       // リクエストがサーバーに届かなかった場合など
       console.error(error.message);
     }
+    // しっかりとBEでエラーメッセージを返しているならば、messageを代入しても良い
+    error.value = "エラーが発生しました。時間をおいて再度お試しください。";
   }
 };
 
@@ -41,11 +46,24 @@ onBeforeMount(async () => {
   classDetailData.value = await getclassDetailData(lectureId);
   // classDetailData.value = getclassDetailData(lectureCode.value);
 
+  isLoading.value = false;
+
   // console.log(classDetailData2)
   console.log(classDetailData.value);
 });
 </script>
 
 <template>
-  <ClassDetail :classDetailData="classDetailData" />
+  <v-container v-if="isLoading">
+    <Loading />
+  </v-container>
+
+  <!-- とりあえずエラーメッセージをそのまま表示する -->
+  <v-container v-else-if="error">
+    <v-alert type="error">{{ error }}</v-alert>
+  </v-container>
+
+  <v-container v-else>
+    <ClassDetail :classDetailData="classDetailData"></ClassDetail>
+  </v-container>
 </template>

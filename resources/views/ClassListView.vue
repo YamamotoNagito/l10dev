@@ -23,7 +23,7 @@ const searchClassByDetailedCondition = async () => {
   try {
     const response = await axios.post(
       "/api/searchByConditions",
-      detailedCondition.value
+      detailedCondition.value,
     );
     console.log("response");
     console.log(response);

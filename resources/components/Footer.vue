@@ -43,7 +43,6 @@
 </template>
 
 <script setup>
-import vuetify from "../js/vuetify";
 import { useRouter } from "vue-router";
 
 const navigateToExternalUrl = () => {

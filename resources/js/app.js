@@ -13,30 +13,19 @@ import PrivacyPolicyView from "../views/PrivacyPolicyView.vue";
 import TermsView from "../views/TermsView.vue";
 import ContactView from "../views/ContactView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
-import axios from "axios";
-// import store from '../store'; // Vuex ストアのインポート
+import { createRouter, createWebHistory } from "vue-router";
 
 // Vuetify
 import "vuetify/styles";
-import { createVuetify } from "vuetify";
-import { createRouter, createWebHistory } from "vue-router";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
+import "@mdi/font/css/materialdesignicons.css";
+import vuetify from "./plugins/vuetify";
 
-import { useStore } from "vuex";
 import store from "../store/index.js";
-
-// const store = useStore()
-
-const vuetify = createVuetify({
-  components,
-  directives,
-});
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/welcome", name: "welcome", component: WelcomeView },
+    { path: "/", name: "welcome", component: WelcomeView },
     { path: "/register", name: "register", component: RegisterView },
     { path: "/login", name: "login", component: LoginView },
     {
@@ -59,12 +48,14 @@ const router = createRouter({
       name: "class/:lectureId/detail",
       component: ClassDetailView,
       props: true,
+      meta: { requiresAuth: true },
     },
     { path: "/class/post", name: "class/post", component: ClassPostView },
     {
       path: "/privacy-policy",
       name: "privacy-policy",
       component: PrivacyPolicyView,
+      meta: { requiresAuth: true },
     },
     { path: "/terms", name: "terms", component: TermsView },
     { path: "/contact", name: "contact", component: ContactView },
