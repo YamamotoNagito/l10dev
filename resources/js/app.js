@@ -21,8 +21,6 @@ import "vuetify/styles";
 import "@mdi/font/css/materialdesignicons.css";
 import vuetify from "./plugins/vuetify";
 
-import store from "../store/index.js";
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
