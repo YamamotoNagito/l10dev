@@ -33,12 +33,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         with:
-          debug: false
-          review_simple_changes: false
-          review_comment_lgtm: false
+          debug: true
+          review_simple_changes: true
+          review_comment_lgtm: true
           openai_light_model: gpt-4
           openai_heavy_model: gpt-4
-          openai_timeout_ms: 90000
+          openai_timeout_ms: 9000
           language: ja-JP
           path_filters: |
             !db/**
