@@ -10,7 +10,6 @@ on:
       - master
       - main
   pull_request:
-    types: [opened]
     branches-ignore:
       - master
       - main
