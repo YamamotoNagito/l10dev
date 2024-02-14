@@ -81,51 +81,59 @@ const updateEvaluationObject = (evaluationString) => {
 // minとmaxを持たせる
 const locationList = ["東広島", "霞", "東千田", "双方向"];
 const facultyList = [
-  "教養教育", 
-  "総合科学部", 
-  "文学部", 
-  "教育学部", 
-  "法学部", 
-  "経済学部", 
-  "理学部", 
-  "医学部", 
-  "歯学部", 
-  "薬学部", 
-  "工学部", 
-  "生物生産学部", 
-  "情報科学部", 
-  "大学院共通教育", 
-  "人間社会科学研究科",  
-  "先進理工系科学研究科", 
-  "統合生命科学研究科", 
-  "医系科学研究科", 
-  "スマートソサエティ実践科学研究科", 
-  "特別支援教育特別専攻科", 
-  "教育学研究科", 
+  "教養教育",
+  "総合科学部",
+  "文学部",
+  "教育学部",
+  "法学部",
+  "経済学部",
+  "理学部",
+  "医学部",
+  "歯学部",
+  "薬学部",
+  "工学部",
+  "生物生産学部",
+  "情報科学部",
+  "大学院共通教育",
+  "人間社会科学研究科",
+  "先進理工系科学研究科",
+  "統合生命科学研究科",
+  "医系科学研究科",
+  "スマートソサエティ実践科学研究科",
+  "特別支援教育特別専攻科",
+  "教育学研究科",
   "理学研究科",
   "医歯薬保健学研究科",
-  "外国語教育センター", 
-  "総合博物館", 
-  "ライティングセンター"
+  "外国語教育センター",
+  "総合博物館",
+  "ライティングセンター",
 ];
 const categoryList = [
-  "大学教育入門", 
-  "展開ゼミ", 
-  "平和科目", 
-  "外国語科目", 
-  "情報・データサイエンス科目", 
-  "領域科目", 
-  "基盤科目", 
-  "社会連携科目", 
-  "健康スポーツ科目", 
-  "専門教育科目", 
-  "大学院共通科目", 
-  "専門的教育科目", 
-  "他学部・他研究科科目"
+  "大学教育入門",
+  "展開ゼミ",
+  "平和科目",
+  "外国語科目",
+  "情報・データサイエンス科目",
+  "領域科目",
+  "基盤科目",
+  "社会連携科目",
+  "健康スポーツ科目",
+  "専門教育科目",
+  "大学院共通科目",
+  "専門的教育科目",
+  "他学部・他研究科科目",
 ];
 const termList = ["1T", "2T", "3T", "4T", "集中", "前期", "後期", "通年"];
 const dayOfWeekList = ["月", "火", "水", "木", "金"];
-const timePeriodList = ["1コマ", "2コマ", "3コマ", "4コマ", "5コマ", "6コマ", "7コマ"];
+const timePeriodList = [
+  "1コマ",
+  "2コマ",
+  "3コマ",
+  "4コマ",
+  "5コマ",
+  "6コマ",
+  "7コマ",
+];
 const gradeList = ["B1", "B2", "B3", "B4", "B5"];
 const totalEvaluationList = ["1未満", "1以上", "2以上", "3以上", "4以上"];
 //講義コードで検索する際はこのデータをバックに送る
@@ -157,45 +165,46 @@ function removeNullValues(obj) {
 //検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
 const sendQueryToClassListView = async () => {
   // メッセージを更新して空に
-  messageInConditionalTab.value = '';
-  if (  //バリデーションチェック(どれか1つでも入力していたら(nullでなければ)通過)
-      detailedCondition.value.lectureName == null
-      && detailedCondition.value.teacherName == null
-      && detailedCondition.value.location == null
-      && detailedCondition.value.faculty == null
-      && detailedCondition.value.category == null
-      && detailedCondition.value.term == null
-      && detailedCondition.value.dayOfWeek == null
-      && detailedCondition.value.timePeriod == null
-      && detailedCondition.value.grade == null
-      && totalEvaluationString.value == null
-      && creditLevelString.value == null
-      && interestLevelString.value == null
-      && skillLevelString.value == null
-    ) {
-      //バリデーションが通らなかったときに実行
-      messageInConditionalTab.value = '検索する条件を入力してください';
-      // console.log(
-      //   'バリデーション通過ならず',
-      //   "lectureName: ",detailedCondition.value.lectureName,  '\n',
-      //   "teacherName: ",detailedCondition.value.teacherName, '\n',
-      //   "location: ",detailedCondition.value.location, '\n',
-      //   "faculty: ",detailedCondition.value.faculty, '\n',
-      //   "category: ",detailedCondition.value.category, '\n',
-      //   "term: ",detailedCondition.value.term, '\n',
-      //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
-      //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
-      //   "grade: ",detailedCondition.value.grade, '\n',
-      //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
-      //   "creditLevelString: ",creditLevelString.value, '\n',
-      //   "interestLevelString: ",interestLevelString.value, '\n',
-      //   "skillLevelString: ",skillLevelString.value, 
-      // );
+  messageInConditionalTab.value = "";
+  if (
+    //バリデーションチェック(どれか1つでも入力していたら(nullでなければ)通過)
+    detailedCondition.value.lectureName == null &&
+    detailedCondition.value.teacherName == null &&
+    detailedCondition.value.location == null &&
+    detailedCondition.value.faculty == null &&
+    detailedCondition.value.category == null &&
+    detailedCondition.value.term == null &&
+    detailedCondition.value.dayOfWeek == null &&
+    detailedCondition.value.timePeriod == null &&
+    detailedCondition.value.grade == null &&
+    totalEvaluationString.value == null &&
+    creditLevelString.value == null &&
+    interestLevelString.value == null &&
+    skillLevelString.value == null
+  ) {
+    //バリデーションが通らなかったときに実行
+    messageInConditionalTab.value = "検索する条件を入力してください";
+    // console.log(
+    //   'バリデーション通過ならず',
+    //   "lectureName: ",detailedCondition.value.lectureName,  '\n',
+    //   "teacherName: ",detailedCondition.value.teacherName, '\n',
+    //   "location: ",detailedCondition.value.location, '\n',
+    //   "faculty: ",detailedCondition.value.faculty, '\n',
+    //   "category: ",detailedCondition.value.category, '\n',
+    //   "term: ",detailedCondition.value.term, '\n',
+    //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
+    //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
+    //   "grade: ",detailedCondition.value.grade, '\n',
+    //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
+    //   "creditLevelString: ",creditLevelString.value, '\n',
+    //   "interestLevelString: ",interestLevelString.value, '\n',
+    //   "skillLevelString: ",skillLevelString.value,
+    // );
   } else {
     //バリデーション通過時に実行
 
     // console.log(
-    //   "バリデーション通過！！", 
+    //   "バリデーション通過！！",
     //   "lectureName: ",detailedCondition.value.lectureName, '\n',
     //   "teacherName: ",detailedCondition.value.teacherName, '\n',
     //   "location: ",detailedCondition.value.location, '\n',
@@ -208,7 +217,7 @@ const sendQueryToClassListView = async () => {
     //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
     //   "creditLevelString: ",creditLevelString.value, '\n',
     //   "interestLevelString: ",interestLevelString.value, '\n',
-    //   "skillLevelString: ",skillLevelString.value, 
+    //   "skillLevelString: ",skillLevelString.value,
     // );
     // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
     detailedCondition.value.totalEvaluation = updateEvaluationObject(
@@ -244,11 +253,11 @@ const sendQueryToClassListView = async () => {
       skillLevelMax: detailedCondition.value.skillLevel.max,
     };
     // クエリからNULLをなくす
-    const filteredQuery = removeNullValues(query)
+    const filteredQuery = removeNullValues(query);
 
     router.push({
       path: "/class",
-      query: filteredQuery
+      query: filteredQuery,
     });
   }
 };
@@ -391,15 +400,11 @@ const makeDefaultCandidateLectureNameList = () => {
         <v-tabs
           v-model="tab"
           align-tabs="center"
-          bg-color="orange"
+          bg-color="orange-darken-1"
           height="60px"
         >
-          <v-tab value="one"
-            ><v-content class="tab-name">条件で探す</v-content></v-tab
-          >
-          <v-tab value="two"
-            ><v-content class="tab-name">講義コードで探す</v-content></v-tab
-          >
+          <v-tab value="one" class="tab-name">条件で探す</v-tab>
+          <v-tab value="two" class="tab-name">講義コードで探す</v-tab>
         </v-tabs>
 
         <v-card-text>
@@ -551,7 +556,7 @@ const makeDefaultCandidateLectureNameList = () => {
               </v-expansion-panels>
 
               <p class="text-red text-center">{{ messageInConditionalTab }}</p>
-              <v-btn @click="sendQueryToClassListView" color="orange">
+              <v-btn @click="sendQueryToClassListView" color="orange-darken-1">
                 <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
               </v-btn>
             </v-window-item>
@@ -566,10 +571,12 @@ const makeDefaultCandidateLectureNameList = () => {
                 ></v-text-field>
               </v-container>
               <v-container class="d-flex">
-                <v-btn @click="searchByLectureCode" color="orange">
+                <v-btn @click="searchByLectureCode" color="orange-darken-1">
                   <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
                 </v-btn>
-                <p class="text-red text-center">{{ messageInLectureCodeTab }}</p>
+                <p class="text-red text-center">
+                  {{ messageInLectureCodeTab }}
+                </p>
               </v-container>
             </v-window-item>
           </v-window>
