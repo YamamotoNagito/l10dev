@@ -4,12 +4,11 @@ import ClassDetail from "../components/ClassDetail.vue";
 import { useRouter } from "vue-router";
 import Loading from "../components/Loading.vue";
 import axios from "axios";
-// import pageTitle from '../components/pageTitle.vue';
 
 const lectureId = ref(null);
 // 後でこのコメントアウトは外す！
 const classDetailData = ref(null);
-s;
+
 const router = useRouter();
 const isLoading = ref(true);
 const error = ref(null);
@@ -71,7 +70,7 @@ onBeforeMount(async () => {
     <v-alert type="error">{{ error }}</v-alert>
   </v-container>
 
-  <v-container v-else>
+  <v-container v-else-if="classDetailData">
     <ClassDetail :classDetailData="classDetailData"></ClassDetail>
   </v-container>
 </template>

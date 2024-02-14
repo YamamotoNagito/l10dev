@@ -58,8 +58,7 @@ const router = createRouter({
     },
     { path: "/terms", name: "terms", component: TermsView },
     { path: "/contact", name: "contact", component: ContactView },
-    { path: "/not-found", name: "not-found", component: NotFoundView },
-    { path: "/:catchAll(.*)", name: "not-found", component: NotFoundView },
+    { path: "/:catchAll(.*)", name: "notFound", component: NotFoundView },
     // 設定画面を追加する.
   ],
 });
