@@ -5,10 +5,12 @@ permissions:
   pull-requests: write
 
 on:
+  push:
+    branches-ignore:
+      - main
   pull_request:
     types: [opened]
     branches-ignore:
-      - master
       - main
   pull_request_review_comment:
     types: [created]
