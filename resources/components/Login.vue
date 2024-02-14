@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import Button from "./Button.vue";
 import { useStore } from "vuex";
+import BaseUI from "./shared/BaseUI.vue";
 
 const router = useRouter();
 const store = useStore();
@@ -12,6 +13,7 @@ const userEmail = ref("");
 const password = ref("");
 
 const errorMessage = ref(""); // エラーメッセージ用の変数
+const visible = ref(false);
 
 const clickLogoutButton = async () => {
   await axios
@@ -89,35 +91,32 @@ const clickButton = async () => {
       <input type="password" name="password" id="password">
       <v-text-field type="password" name="password" id="password" label="パスワードを入力してください"></v-text-field>
       <v-btn type="submit">送信</v-btn> -->
-  <v-form action="" method="post">
-    <v-text-field
-      v-model="userEmail"
-      label="メールアドレス"
-      name="userEmail"
-      type="email"
-      clearable
-    ></v-text-field>
-    <v-text-field
-      v-model="password"
-      label="パスワード"
-      name="password"
-      type="password"
-      clearable
-    ></v-text-field>
-    <!-- <v-btn @click="clickButton">送信</v-btn> -->
-    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <Button @click="clickButton" title="送信"></Button>
-  </v-form>
-
-  <!-- <Button @click="clickLogoutButton" title="ログアウト"></Button> -->
-  <!-- </form> -->
-  <!-- <v-btn @click="clickButton">送信</v-btn> -->
-
-  <!-- 新規登録画面への遷移 -->
-  <Button
-    @click="router.push({ name: 'register' })"
-    title="アカウントを持っていない方はこちら"
-  ></Button>
+  <BaseUI>
+    <v-form action="" method="post">
+      <v-text-field
+        v-model="userEmail"
+        label="メールアドレス"
+        name="userEmail"
+        type="email"
+        clearable
+      ></v-text-field>
+      <v-text-field
+        :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+        :type="visible ? 'text' : 'password'"
+        v-model="password"
+        label="パスワード"
+        name="password"
+        @click:append-inner="visible = !visible"
+        clearable
+      ></v-text-field>
+      <!-- <v-btn @click="clickButton">送信</v-btn> -->
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <v-btn @click="clickButton" class="mr-2">ログアウト</v-btn>
+      <v-btn @click="router.push({ name: 'register' })" variant="plain"
+        >アカウントを持っていない方はこちら</v-btn
+      >
+    </v-form>
+  </BaseUI>
 </template>
 
 <style scoped>
