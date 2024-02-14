@@ -1,6 +1,6 @@
 <script setup>
-import Contact from "../components/Contact.vue";
-import pageTitle from "../components/pageTitle.vue";
+  import Contact from "../components/Contact.vue";
+  import pageTitle from "../components/pageTitle.vue";
 </script>
 
 <template>

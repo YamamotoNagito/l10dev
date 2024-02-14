@@ -3,36 +3,18 @@
     <v-row no-gutters>
       <v-col cols="0" sm="0" md="2" lg="2" xl="2"></v-col>
       <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center">
-        <v-btn @click="navigateToExternalUrl" variant="text" rounded="xl">
-          かえで製作委員会
-        </v-btn>
+        <v-btn variant="text" rounded="xl" @click="navigateToExternalUrl"> かえで製作委員会 </v-btn>
       </v-col>
       <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center">
-        <v-btn
-          @click="router.push({ name: 'terms' })"
-          variant="text"
-          rounded="xl"
-        >
-          利用規約
-        </v-btn>
+        <v-btn variant="text" rounded="xl" @click="router.push({ name: 'terms' })"> 利用規約 </v-btn>
       </v-col>
       <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center">
-        <v-btn
-          @click="router.push({ name: 'privacy-policy' })"
-          variant="text"
-          rounded="xl"
-        >
+        <v-btn variant="text" rounded="xl" @click="router.push({ name: 'privacy-policy' })">
           プライバシーポリシー
         </v-btn>
       </v-col>
       <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center">
-        <v-btn
-          @click="router.push({ name: 'contact' })"
-          variant="text"
-          rounded="xl"
-        >
-          お問い合わせ
-        </v-btn>
+        <v-btn variant="text" rounded="xl" @click="router.push({ name: 'contact' })"> お問い合わせ </v-btn>
       </v-col>
       <!-- <v-col cols="0" sm="0" md="2" lg="2" xl="2"></v-col>
             <v-col class="text-center mt-4" cols="12">
@@ -43,13 +25,13 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+  import { useRouter } from "vue-router";
 
-const navigateToExternalUrl = () => {
-  window.open("https://www.hiroshima-u.ac.jp/iagcc/news/80635");
-};
+  const navigateToExternalUrl = () => {
+    window.open("https://www.hiroshima-u.ac.jp/iagcc/news/80635");
+  };
 
-const router = useRouter();
+  const router = useRouter();
 </script>
 
 <style></style>

@@ -1,15 +1,15 @@
 <script setup>
-import { defineProps } from "vue";
-import { useRouter } from "vue-router";
-import ReviewListVue from "./ReviewList.vue";
-import GraphTabs from "./GraphTabs.vue";
-import ClassInformationTable from "./ClassInformationTable.vue";
-import RadarChart from "./RadarChart.vue";
+  import { defineProps } from "vue";
+  import { useRouter } from "vue-router";
+  import ReviewListVue from "./ReviewList.vue";
+  import GraphTabs from "./GraphTabs.vue";
+  import ClassInformationTable from "./ClassInformationTable.vue";
+  import RadarChart from "./RadarChart.vue";
 
-const props = defineProps(["classDetailData"]);
-const router = useRouter();
+  const props = defineProps(["classDetailData"]);
+  const router = useRouter();
 
-const classDetailData = props.classDetailData;
+  const classDetailData = props.classDetailData;
 </script>
 
 <template>
@@ -21,16 +21,16 @@ const classDetailData = props.classDetailData;
       <v-btn class="d-flex flex-row ml-5" color="orange"
         ><v-icon>mdi-comment-plus</v-icon>
         <p
+          class="text-h9"
           @click="
             router.push({
               name: 'class/post',
               query: {
                 lectureName: classDetailData?.classInformationData?.lectureName,
-                teacherName: classDetailData?.classInformationData?.teacherName,
-              },
+                teacherName: classDetailData?.classInformationData?.teacherName
+              }
             })
           "
-          class="text-h9"
         >
           レビュー投稿
         </p>
@@ -41,19 +41,13 @@ const classDetailData = props.classDetailData;
         <v-expansion-panel-title> 基本情報 </v-expansion-panel-title>
         <v-expansion-panel-text>
           <ClassInformationTable
-            :classInformationData="classDetailData?.classInformationData"
+            :class-information-data="classDetailData?.classInformationData"
           ></ClassInformationTable>
-          <RadarChart
-            :radarChartData="classDetailData?.classRadarChartData"
-          ></RadarChart>
+          <RadarChart :radar-chart-data="classDetailData?.classRadarChartData"></RadarChart>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
-    <GraphTabs
-      :classBarGraphData="classDetailData?.classBarGraphData"
-    ></GraphTabs>
-    <ReviewListVue
-      :reviewDataList="classDetailData?.reviewDataList"
-    ></ReviewListVue>
+    <GraphTabs :class-bar-graph-data="classDetailData?.classBarGraphData"></GraphTabs>
+    <ReviewListVue :review-data-list="classDetailData?.reviewDataList"></ReviewListVue>
   </v-container>
 </template>

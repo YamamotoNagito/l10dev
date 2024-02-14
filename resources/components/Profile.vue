@@ -3,7 +3,7 @@
     <v-col cols="8">
       <!-- タイトル -->
       <!-- <h1 style="font-size: 2rem">プロフィール画面</h1> -->
-      <v-card class="my-8" v-if="userProfile">
+      <v-card v-if="userProfile" class="my-8">
         <v-container>
           <v-card-text justify>
             <h1>{{ userProfile.userName }}</h1>
@@ -32,7 +32,7 @@
         <v-card-text>
           <v-window v-model="tab">
             <v-window-item value="one">
-              <ReviewList :reviewDataList="reviewDataList"></ReviewList>
+              <ReviewList :review-data-list="reviewDataList"></ReviewList>
             </v-window-item>
             <!-- <v-window-item value="two">
               <p>Comming Soon</p>
@@ -45,11 +45,11 @@
 </template>
 
 <script setup>
-import ReviewList from "./ReviewList.vue";
-import { ref, defineProps, toRefs } from "vue";
+  import ReviewList from "./ReviewList.vue";
+  import { ref, defineProps, toRefs } from "vue";
 
-const props = defineProps(["userProfile", "reviewDataList"]);
+  const props = defineProps(["userProfile", "reviewDataList"]);
 
-// 「投稿した」「LIKES」のうちどちらのタブを開くのか
-const tab = ref(null);
+  // 「投稿した」「LIKES」のうちどちらのタブを開くのか
+  const tab = ref(null);
 </script>
