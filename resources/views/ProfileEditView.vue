@@ -1,14 +1,9 @@
 <script setup>
-  import { ref } from 'vue'
-  import vuetify from '../js/vuetify';
-  import ProfileEdit from '../components/ProfileEdit.vue'
-  import axios from 'axios';
-  import pageTitle from '../components/pageTitle.vue';
+import ProfileEdit from "../components/ProfileEdit.vue";
+import pageTitle from "../components/pageTitle.vue";
 </script>
 
 <template>
-  <pageTitle title="プロフィールを編集する"/>
-  <!-- <Header></Header> -->
+  <pageTitle title="プロフィールを編集する" />
   <ProfileEdit></ProfileEdit>
-  <!-- <Footer></Footer> -->
 </template>

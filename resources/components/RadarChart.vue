@@ -3,7 +3,6 @@ import { ref, onMounted } from "vue";
 
 const props = defineProps(["radarChartData"]);
 
-
 // Chart.js
 const loadChartJS = () => {
   return new Promise((resolve, reject) => {
@@ -21,16 +20,14 @@ const loadChartJS = () => {
 const radarChart = ref(null);
 
 const chartData = {
-  labels: [
-    "単位取得のしやすさ",
-    "面白さ",
-    "スキルが身につく",
-  ],
+  labels: ["単位取得のしやすさ", "面白さ", "スキルが身につく"],
   datasets: [
     {
       label: "カテゴリ別5段階評価",
       data: [
-        props.radarChartData.creditLevel, props.radarChartData.interestLevel, props.radarChartData.skillLevel
+        props.radarChartData.creditLevel,
+        props.radarChartData.interestLevel,
+        props.radarChartData.skillLevel,
       ],
       backgroundColor: "rgba(75, 192, 192, 0.2)",
       borderColor: "rgba(75, 192, 192, 1)",

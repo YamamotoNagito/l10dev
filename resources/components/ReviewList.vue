@@ -1,7 +1,5 @@
 <script setup>
 import { ref, defineProps, computed, toRefs } from "vue";
-import axios from "axios";
-import { useRouter } from "vue-router";
 import ReviewSummary from "./ReviewSummary.vue";
 
 const props = defineProps(["reviewDataList"]);
@@ -25,7 +23,10 @@ const displayedItems = computed(() => {
 </script>
 
 <template>
-  <v-container class="d-flex flex-column align-center ga-5" v-if="reviewDataList">
+  <v-container
+    class="d-flex flex-column align-center ga-5"
+    v-if="reviewDataList"
+  >
     <v-container v-for="n in reviewDataList.length" :key="n">
       <ReviewSummary
         class="ma-auto"

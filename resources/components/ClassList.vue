@@ -1,6 +1,5 @@
 <script setup>
 import { ref, defineProps, computed } from "vue";
-import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import ClassSummary from "./ClassSummary.vue";

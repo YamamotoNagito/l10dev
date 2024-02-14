@@ -376,7 +376,6 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import vuetify from "../js/vuetify";
 import axios from "axios";
 import { useRouter } from "vue-router";
 import Button from "./Button.vue";

@@ -1,8 +1,7 @@
 <script setup>
-import { ref, defineProps } from "vue";
-import vuetify from "../js/vuetify";
+import { defineProps } from "vue";
 
-const props = defineProps(["totalEvaluation"])
+const props = defineProps(["totalEvaluation"]);
 </script>
 
 <template>
@@ -16,5 +15,5 @@ const props = defineProps(["totalEvaluation"])
         active-color="blue"
       ></v-rating>
     </v-col>
-    </v-row>
+  </v-row>
 </template>

@@ -1,10 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import vuetify from "../js/vuetify";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import axios from "axios";
-import kaedeMainImg from "../assets/img/kaedeKey.png";
 // import { mdiAccount, mdiLogout } from '@mdi/js';
 
 // ドロワーの開閉状態を管理する変数
@@ -45,7 +43,7 @@ const clickLogoutButton = async () => {
       // if(response.data.success){
       // }
       store.dispatch("logout");
-      router.push("/welcome");
+      router.push({ name: "welcome" });
     })
     .catch((err) => {
       console.log(err);
@@ -53,7 +51,7 @@ const clickLogoutButton = async () => {
 };
 </script>
 <template>
-  <v-app-bar color="orange" scroll-behavior="hide" elevation="3">
+  <v-app-bar color="orange-darken-1" scroll-behavior="hide" elevation="3">
     <v-app-bar-nav-icon
       v-if="store.getters.isLoggedIn"
       @click.stop="drawer = !drawer"
@@ -69,6 +67,10 @@ const clickLogoutButton = async () => {
       かえで ~広大生の学びを支える情報サイト~
     </v-toolbar-title>
     <v-spacer />
+    <v-btn @click="router.push({ name: 'welcome' })">
+      <v-icon>mdi-magnify</v-icon>
+      授業検索
+    </v-btn>
 
     <v-btn
       v-if="!store.getters.isLoggedIn"
@@ -77,10 +79,7 @@ const clickLogoutButton = async () => {
       <v-icon>mdi-login</v-icon>
       ログイン
     </v-btn>
-    <v-btn @click="router.push({ name: 'welcome' })">
-      <v-icon>mdi-magnify</v-icon>
-      授業検索
-    </v-btn>
+
     <v-btn
       v-if="store.getters.isLoggedIn"
       @click="router.push({ name: 'class/post' })"
@@ -116,7 +115,7 @@ const clickLogoutButton = async () => {
 </template>
 
 <style>
-  /* #kaede-icon-btn {
+/* #kaede-icon-btn {
     background-color: rgb(117, 105, 85);
   } */
 </style>
