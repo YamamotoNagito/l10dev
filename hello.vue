@@ -1,4 +1,4 @@
 <template>
   <h1>クソでかこんにちは！😀</h1>
-  ＜p＞ああああ
+  ＜p＞ああああ console.log('こんにちは！')
 </template>
