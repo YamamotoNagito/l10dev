@@ -1,6 +1,6 @@
 <!-- BaseUI.vue -->
 <template>
-  <!-- 上下左右にmarginをつける -->
+  <!-- 上下左右に padding をつける -->
   <div class="pb-12 px-12">
     <!-- header スロット -->
     <div class="py-6">
@@ -10,9 +10,3 @@
     <slot></slot>
   </div>
 </template>
-
-<script>
-export default {
-  name: "BaseUI",
-};
-</script>
