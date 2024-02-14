@@ -5,8 +5,13 @@ permissions:
   pull-requests: write
 
 on:
+  push:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [opened, synchronize]
+  pull_request_review_comment:
+    types: [created]
+  issue_comment:
+    types: [created]
 
 jobs:
   test:
@@ -19,7 +24,7 @@ jobs:
           # Optional
           LANGUAGE: Japanese # 言語
           OPENAI_API_ENDPOINT: https://api.openai.com/v1
-          MODEL: gpt-4 # 使用するモデル
+          MODEL: gpt-4
           top_p: 1
           temperature: 1
           PROMPT: |
