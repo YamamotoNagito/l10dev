@@ -108,8 +108,11 @@ const clickButton = async () => {
     ></v-text-field>
     <!-- <v-btn @click="clickButton">送信</v-btn> -->
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <v-btn @click="clickButton" class="mr-2">ログアウト</v-btn>
-    <v-btn @click="router.push({ name: 'register' })" variant="plain"
+    <v-btn color="primary" @click="clickButton" class="mr-2">ログアウト</v-btn>
+    <v-btn
+      color="primary"
+      @click="router.push({ name: 'register' })"
+      variant="plain"
       >アカウントを持っていない方はこちら</v-btn
     >
   </v-form>
