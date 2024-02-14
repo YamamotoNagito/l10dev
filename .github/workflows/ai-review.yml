@@ -1,0 +1,86 @@
+name: Code Review by AI
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+      - reopened
+    branches-ignore:
+      - main
+  pull_request_review_comment:
+    types: [created]
+  issue_comment:
+    types: [created]
+
+concurrency:
+  # 同時実行されるジョブがプルリクごとで1つになるよう制御している
+  group: ${{ github.repository }}-${{ github.event.number || github.head_ref || github.sha }}-${{ github.workflow }}
+  # 新しいジョブを開始するために現在実行中のジョブは中止する
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: lovegraph/ai-pr-reviewer-pub@v1-dev
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_API_INSTANCE_NAME: ${{ secrets.AZURE_OPENAI_API_KEY }}
+          AZURE_OPENAI_API_DEPLOYMENT_NAME: ${{ secrets.AZURE_OPENAI_API_DEPLOYMENT_NAME }}
+          AZURE_OPENAI_API_VERSION: 2023-12-01-preview
+        with: # Ref: https://github.com/coderabbitai/ai-pr-reviewer?tab=readme-ov-file#reviewer-features
+          debug: true
+          review_simple_changes: false
+          review_comment_lgtm: false
+          openai_light_model: gpt-4
+          openai_heavy_model: gpt-4
+          openai_timeout_ms: 900000 # 15分
+          language: ja-JP
+          path_filters: |
+            !**/*.lock
+          # 以降、 https://zenn.dev/minedia/articles/7928ef7545b393 をもとに改良
+          system_message: |
+            あなたは Ruby on Rails や JavaScript に精通したプログラマーです。
+            渡されたコードについて改善点を見つけ、変更する理由を説明した上で、変更後のコード例を示してください。
+            改善点がない場合には絶対にコメントをしないでください。
+
+            特に以下の点を指摘してください:
+              - 誤解を招いたり、実態を正確に表していない命名があるか
+              - 適度に変数を定義し自己ドキュメントされているか
+              - 冗長な書き方のコードがないか
+              - ファイル内で @var のようなインスタンス変数しか定義していないのに var のような変数名を使っていないか、またはその逆
+              - N+1問題（N+1 query problem）を引き起こす箇所
+              - 読んで理解が難しい箇所にコメントが適切にされているか
+              - コメントの内容は日本語として読んでわかりやすく、簡潔に説明できているか
+              - 理解の難しい複雑な条件式が作られていないか
+              - 新しいメソッドを定義したときにテストコードを書いているか
+              - テスト内の説明文は、テストの内容をわかりやすく適切に表しているか
+              - 明らかなセキュリティの問題があるか
+
+            誰にとっても読みやすいコードになるよう、改善点を見つけたら積極的にレビューしてください。
+            あなたに渡されるコードは一部分であるため、未定義のメソッドやクラスなどの指摘については消極的にしてください。
+          summarize: |
+            次の内容で Markdown フォーマットを使用して、最終的な回答を提供してください。
+
+              - *レビューのしやすさ*: 変更ファイル数などをもとに、レビュアーにとってのレビューのしやすさを 0.0-10.0 点で評価してください。どうすればレビューがしやすくなるかを教えてください。
+              - *概要*: 特定のファイルではなく、全体の変更に関する高レベルの要約を80語以内で。
+              - *ファイルごとの変更点*: ファイルとその要約のテーブル。スペースを節約するために、同様の変更を持つファイルを1行にまとめることができます。
+
+            GitHubのプルリクエストにコメントとして追加されるこの要約には、追加のコメントを避けてください。
+          summarize_release_notes: |
+            このプルリクエストのために、その目的とユーザーストーリーに焦点を当てて、Markdown の形式で簡潔なリリースノートを作成してください。
+            変更は次のように分類し箇条書きにすること:
+              "新機能", "バグ修正", "リファクタリング", "デザイン", "テスト", "ドキュメント", "その他"
+
+            例:
+              - 新機能: 管理画面のユーザー一覧画面に、検索機能が追加されました
+              - バグ修正: 変数の定義が漏れている問題が修正されました
+
+            回答は50-100語以内にしてください。不要な空行を見つけたら削除しておいてください。
