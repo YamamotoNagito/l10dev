@@ -1,6 +1,6 @@
 <script setup>
-import PrivacyPolicy from "../components/PrivacyPolicy.vue";
-import pageTitle from "../components/pageTitle.vue";
+  import PrivacyPolicy from "../components/PrivacyPolicy.vue";
+  import pageTitle from "../components/pageTitle.vue";
 </script>
 
 <template>

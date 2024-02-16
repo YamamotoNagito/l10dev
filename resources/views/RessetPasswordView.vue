@@ -1,6 +1,6 @@
 <script setup>
-import RessetPassword from "../components/RessetPassword.vue";
-import pageTitle from "../components/pageTitle.vue";
+  import RessetPassword from "../components/RessetPassword.vue";
+  import pageTitle from "../components/pageTitle.vue";
 </script>
 
 <template>
