@@ -110,7 +110,7 @@ const visible = ref(false);
     ></v-text-field>
     <!-- <v-btn @click="clickButton">送信</v-btn> -->
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <v-btn color="primary" @click="clickButton" class="mr-2">ログアウト</v-btn>
+    <v-btn color="primary" @click="clickButton" class="mr-2">ログイン</v-btn>
     <v-btn
       color="primary"
       @click="router.push({ name: 'register' })"
