@@ -401,35 +401,46 @@
                     <v-container class="detailed-totalEvaluationList-list-container">
                       <!-- 以下、他の条件の追加 -->
 
-                      <v-container class="category-name-and-content-container">
-                        <p class="category-name">開講場所</p>
-                        <v-select
-                          v-model="detailedCondition.location"
-                          :items="locationList"
-                          class="pulldown-list"
-                          clearable
-                        ></v-select>
-                      </v-container>
+                      <!-- 大学に関する区分（開講部局，開講区分，開講場所） -->
+                      <v-row>
+                        <v-col cols="12" sm="12" md="4" lg="4">
+                          <v-container class="category-name-and-content-container">
+                            <p class="category-name">開講場所</p>
+                            <v-select
+                              v-model="detailedCondition.location"
+                              :items="locationList"
+                              class="pulldown-list"
+                              clearable
+                            ></v-select>
+                          </v-container>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="4" lg="4">
+                          <v-container class="category-name-and-content-container">
+                            <p class="category-name">開講部局</p>
+                            <v-select
+                              v-model="detailedCondition.faculty"
+                              :items="facultyList"
+                              class="pulldown-list"
+                              clearable
+                            ></v-select>
+                          </v-container>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="4" lg="4">
+                          <v-container class="category-name-and-content-container">
+                            <p class="category-name">開講区分</p>
+                            <v-select
+                              v-model="detailedCondition.category"
+                              :items="categoryList"
+                              class="pulldown-list"
+                              clearable
+                            ></v-select>
+                          </v-container>
+                        </v-col>
+                      </v-row>
 
-                      <v-container class="category-name-and-content-container">
-                        <p class="category-name">開講部局</p>
-                        <v-select
-                          v-model="detailedCondition.faculty"
-                          :items="facultyList"
-                          class="pulldown-list"
-                          clearable
-                        ></v-select>
-                      </v-container>
-
-                      <v-container class="category-name-and-content-container">
-                        <p class="category-name">開講区分</p>
-                        <v-select
-                          v-model="detailedCondition.category"
-                          :items="categoryList"
-                          class="pulldown-list"
-                          clearable
-                        ></v-select>
-                      </v-container>
+                      <!-- 時間に関する区分（ターム，曜日，時間） -->
+                      <v-row>
+                      </v-row>
 
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">ターム</p>
