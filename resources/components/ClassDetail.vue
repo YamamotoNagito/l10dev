@@ -44,10 +44,10 @@
             :class-information-data="classDetailData?.classInformationData"
           ></ClassInformationTable>
           <RadarChart :radar-chart-data="classDetailData?.classRadarChartData"></RadarChart>
+          <GraphTabs :class-bar-graph-data="classDetailData?.classBarGraphData"></GraphTabs>
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
-    <GraphTabs :class-bar-graph-data="classDetailData?.classBarGraphData"></GraphTabs>
     <ReviewListVue :review-data-list="classDetailData?.reviewDataList"></ReviewListVue>
   </v-container>
 </template>

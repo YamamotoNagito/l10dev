@@ -144,7 +144,7 @@
     </v-row>
 
     <v-expansion-panels>
-      <v-expansion-panel>
+      <v-expansion-panel elevation="0">
         <v-expansion-panel-title> 詳細情報 </v-expansion-panel-title>
         <v-expansion-panel-text>
           <v-row justify="center">
