@@ -1,9 +1,14 @@
 <script setup>
   import RessetPassword from "../components/RessetPassword.vue";
   import pageTitle from "../components/pageTitle.vue";
+  import BaseUI from "../components/shared/BaseUI.vue";
 </script>
 
 <template>
-  <pageTitle title="パスワードをリセットする" />
-  <RessetPassword></RessetPassword>
+  <BaseUI>
+    <template #header>
+      <pageTitle title="パスワードをリセットする" />
+    </template>
+    <RessetPassword />
+  </BaseUI>
 </template>

@@ -100,21 +100,21 @@ const visible = ref(false);
       clearable
     ></v-text-field>
     <v-text-field
+      v-model="password"
       :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
       :type="visible ? 'text' : 'password'"
-      v-model="password"
       label="パスワード"
       name="password"
-      @click:append-inner="visible = !visible"
       clearable
+      @click:append-inner="visible = !visible"
     ></v-text-field>
     <!-- <v-btn @click="clickButton">送信</v-btn> -->
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <v-btn color="primary" @click="clickButton" class="mr-2">ログイン</v-btn>
+    <v-btn color="primary" class="mr-2" @click="clickButton">ログイン</v-btn>
     <v-btn
       color="primary"
-      @click="router.push({ name: 'register' })"
       variant="plain"
+      @click="router.push({ name: 'register' })"
       >アカウントを持っていない方はこちら</v-btn
     >
   </v-form>

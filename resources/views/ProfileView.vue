@@ -4,6 +4,7 @@
   import axios from "axios";
   import { useStore } from "vuex";
   import pageTitle from "../components/pageTitle.vue";
+  import BaseUI from "../components/shared/BaseUI.vue";
 
   const store = useStore();
 
@@ -37,6 +38,10 @@
 </script>
 
 <template>
-  <pageTitle title="プロフィール" />
-  <Profile :user-profile="userProfile" :review-data-list="reviewDataList"></Profile>
+  <BaseUI>
+    <template #header>
+      <pageTitle title="プロフィール" />
+    </template>
+    <Profile :user-profile="userProfile" :review-data-list="reviewDataList"></Profile>
+  </BaseUI>
 </template>

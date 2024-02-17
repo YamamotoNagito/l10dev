@@ -1,9 +1,14 @@
 <script setup>
   import ProfileEdit from "../components/ProfileEdit.vue";
   import pageTitle from "../components/pageTitle.vue";
+  import BaseUI from "../components/shared/BaseUI.vue";
 </script>
 
 <template>
-  <pageTitle title="プロフィールを編集する" />
-  <ProfileEdit></ProfileEdit>
+  <BaseUI>
+    <template #header>
+      <pageTitle title="プロフィールを編集する" />
+    </template>
+    <ProfileEdit></ProfileEdit>
+  </BaseUI>
 </template>
