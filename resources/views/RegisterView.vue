@@ -1,6 +1,6 @@
 <script setup>
-import Register from "../components/Register.vue";
-import pageTitle from "../components/pageTitle.vue";
+  import Register from "../components/Register.vue";
+  import pageTitle from "../components/pageTitle.vue";
 </script>
 
 <template>
