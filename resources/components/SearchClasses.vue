@@ -88,7 +88,6 @@
   const dayOfWeekList = ["月", "火", "水", "木", "金"];
   const timePeriodList = ["1コマ", "2コマ", "3コマ", "4コマ", "5コマ", "6コマ", "7コマ"];
   const gradeList = ["B1", "B2", "B3", "B4", "B5"];
-  const totalEvaluationList = ["1未満", "1以上", "2以上", "3以上", "4以上"];
 
   const evaluationRateList = ["1", "2", "3", "4", "5"];
 
@@ -135,6 +134,33 @@
     return true;
   };
 
+  // 数字の大小で検索するとき，大小関係が自然であることを判定する関数
+  const isCorrectMinMax = (objectName) =>{
+    const min = detailedCondition.value[objectName].min
+    const max = detailedCondition.value[objectName].max
+    if(min === null || max === null){
+      return true
+    }else if(min <= max){
+      return true
+    }else{
+      return false
+    }
+  }
+
+  // 全ての大小関係がそろっているか確認する関数
+  const allCorrectMinMax = () => {
+    if(
+      isCorrectMinMax("totalEvaluation") &&
+      isCorrectMinMax("creditLevel") && 
+      isCorrectMinMax("interestLevel") &&
+      isCorrectMinMax("skillLevel")
+    ){
+      return true
+    }else{
+      return false
+    }
+  }
+
   // 条件で検索するボタンが押されたときに発火する関数
   //検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
   const sendQueryToClassListView = async () => {
@@ -162,7 +188,10 @@
       //   "interestLevelString: ",interestLevelString.value, '\n',
       //   "skillLevelString: ",skillLevelString.value,
       // );
-    } else {
+    } else if(!allCorrectMinMax()){
+      messageInConditionalTab.value = "評価値の大小関係を修正してください"
+    }
+    else{
       //バリデーション通過時に実行
 
       // console.log(
@@ -520,7 +549,7 @@
                             </v-col>
                             <v-col cols="6">
                               <v-select
-                                label="以上"
+                                label="以下"
                                 v-model="detailedCondition.skillLevel.max"
                                 :items="evaluationRateList"
                                 class="pulldown-list"
