@@ -27,13 +27,13 @@
       <v-row>
         <v-col>
           <!-- sm(600px)未満の場合でも文字サイズが小さくなる？ -->
-          <p class="custom-text-style">受講年度</p>
+          <p class="custom-text-style">履修年度</p>
         </v-col>
       </v-row>
       <v-btn-toggle v-model="attendanceYear" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in attendanceYearOptions" :key="option.value" cols="4" sm="2" md="2" lg="" xl="">
-            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -42,13 +42,13 @@
       <!-- 出席の有無 -->
       <v-row class="mt-5">
         <v-col>
-          <p class="custom-text-style">出席の有無</p>
+          <p class="custom-text-style">出席確認の有無</p>
         </v-col>
       </v-row>
       <v-btn-toggle v-model="attendanceConfirm" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in attendanceConfirmOptions" :key="option.value" cols="4" sm="" md="" lg="" xl="">
-            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -63,7 +63,7 @@
       <v-btn-toggle v-model="weeklyAssignments" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in weeklyAssignmentsOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -78,7 +78,7 @@
       <v-btn-toggle v-model="midtermAssignments" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in midtermAssignmentsOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -93,22 +93,22 @@
       <v-btn-toggle v-model="finalAssignments" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in finalAssignmentsOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
         </v-row>
       </v-btn-toggle>
       <!-- 過去問・レポートの有無 -->
-      <!-- <v-row class="mt-5">
+       <v-row class="mt-5">
         <v-col>
-          <p class="custom-text-style">過去問・レポートの有無</p>
+          <p class="custom-text-style">過去問・レポートの所持</p>
         </v-col>
-      </v-row> -->
+      </v-row>
       <v-btn-toggle v-model="pastExamPossession" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in pastExamPossessionOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -123,7 +123,7 @@
       <v-btn-toggle v-model="grades" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in gradesOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -138,7 +138,7 @@
       <v-btn-toggle v-model="creditLevel" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in creditLevelOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -153,7 +153,7 @@
       <v-btn-toggle v-model="interestLevel" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in interestLevelOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -168,7 +168,7 @@
       <v-btn-toggle v-model="skillLevel" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
           <v-col v-for="option in skillLevelOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="indigo">
+            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -203,7 +203,7 @@
       </v-row>
       <v-row>
         <v-col class="text-center custom-text-style">
-          <v-btn text="投稿する" color="indigo" @click="clickButton"></v-btn>
+          <v-btn text="投稿する" color="primary" @click="clickButton"></v-btn>
         </v-col>
       </v-row>
     </v-col>
@@ -242,7 +242,8 @@
     { label: 2020, value: 2020 },
     { label: 2019, value: 2019 },
     { label: 2018, value: 2018 },
-    { label: 2017, value: 2017 }
+    { label: 2017, value: 2017 },
+    { label: "その他", value: "その他" }
   ]);
 
   const attendanceConfirm = ref("なし");
