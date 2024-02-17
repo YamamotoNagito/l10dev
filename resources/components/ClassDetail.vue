@@ -19,7 +19,7 @@
         {{ classInformationData?.lectureName }}
       </h2>
       <v-btn class="d-flex flex-row ml-5" color="orange"
-        ><v-icon>mdi-comment-plus</v-icon>
+        ><v-icon>mdi-pencil</v-icon>
         <p
           class="text-h9"
           @click="
