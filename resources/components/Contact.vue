@@ -121,7 +121,7 @@
       clearable
     ></v-textarea>
     <!-- <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> -->
-    <v-btn color="indigo" @click="clickButton">送信する</v-btn>
+    <v-btn color="primary" @click="clickButton">送信する</v-btn>
   </v-container>
 </template>
 
