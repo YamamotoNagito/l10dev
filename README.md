@@ -129,3 +129,15 @@ show tables;
 ```
 select * from lectures;
 ```
+
+#### docker 関連のコマンド
+
+Makefile に記載されているコマンドを実行することで，docker の操作を行うことができます。
+Makefile が入っていない場合は DL してください。
+
+```bash
+# l10dev-app のログを確認する
+$ make app.logs
+# l10dev-app のコンテナに入る
+$ make app.shell
+```

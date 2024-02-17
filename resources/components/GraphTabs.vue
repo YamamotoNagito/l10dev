@@ -1,19 +1,19 @@
 <script setup>
-import { ref, defineProps } from "vue";
-import BarGraph from "./BarGraph.vue";
+  import { ref, defineProps } from "vue";
+  import BarGraph from "./BarGraph.vue";
 
-const tab = ref(null);
+  const tab = ref(null);
 
-const props = defineProps(["classBarGraphData"]);
+  const props = defineProps(["classBarGraphData"]);
 
-const graphTitleList = ref({
-  grades: "みんなの成績",
-  attendanceConfirm: "出欠確認",
-  pastExamPossesion: "過去問の普及率",
-  weeklyAssignments: "日課の課題・レポート",
-  midtermAssignments: "中間レポート・課題",
-  finalAssignments: "期末レポート・課題",
-});
+  const graphTitleList = ref({
+    grades: "みんなの成績",
+    attendanceConfirm: "出欠確認",
+    pastExamPossesion: "過去問の普及率",
+    weeklyAssignments: "日課の課題・レポート",
+    midtermAssignments: "中間レポート・課題",
+    finalAssignments: "期末レポート・課題"
+  });
 </script>
 
 <template>
@@ -33,49 +33,46 @@ const graphTitleList = ref({
         <v-window v-model="tab">
           <v-window-item value="one">
             <v-container
-              ><BarGraph
-                :barGraphData="classBarGraphData.grades"
-                :chartTitle="graphTitleList.grades"
-              ></BarGraph
+              ><BarGraph :bar-graph-data="classBarGraphData.grades" :chart-title="graphTitleList.grades"></BarGraph
             ></v-container>
           </v-window-item>
           <v-window-item value="two">
             <v-container
               ><BarGraph
-                :barGraphData="classBarGraphData.attendanceConfirm"
-                :chartTitle="graphTitleList.attendanceConfirm"
+                :bar-graph-data="classBarGraphData.attendanceConfirm"
+                :chart-title="graphTitleList.attendanceConfirm"
               ></BarGraph
             ></v-container>
           </v-window-item>
           <v-window-item value="three">
             <v-container
               ><BarGraph
-                :barGraphData="classBarGraphData.pastExamPossesion"
-                :chartTitle="graphTitleList.pastExamPossesion"
+                :bar-graph-data="classBarGraphData.pastExamPossesion"
+                :chart-title="graphTitleList.pastExamPossesion"
               ></BarGraph
             ></v-container>
           </v-window-item>
           <v-window-item value="four">
             <v-container
               ><BarGraph
-                :barGraphData="classBarGraphData.weeklyAssignments"
-                :chartTitle="graphTitleList.weeklyAssignments"
+                :bar-graph-data="classBarGraphData.weeklyAssignments"
+                :chart-title="graphTitleList.weeklyAssignments"
               ></BarGraph
             ></v-container>
           </v-window-item>
           <v-window-item value="five">
             <v-container
               ><BarGraph
-                :barGraphData="classBarGraphData.midtermAssignments"
-                :chartTitle="graphTitleList.midtermAssignments"
+                :bar-graph-data="classBarGraphData.midtermAssignments"
+                :chart-title="graphTitleList.midtermAssignments"
               ></BarGraph
             ></v-container>
           </v-window-item>
           <v-window-item value="six">
             <v-container
               ><BarGraph
-                :barGraphData="classBarGraphData.finalAssignments"
-                :chartTitle="graphTitleList.finalAssignments"
+                :bar-graph-data="classBarGraphData.finalAssignments"
+                :chart-title="graphTitleList.finalAssignments"
               ></BarGraph
             ></v-container>
           </v-window-item>
