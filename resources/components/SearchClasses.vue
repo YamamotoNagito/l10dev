@@ -35,45 +35,6 @@
       max: null
     }
   });
-  // プルダウン内の文字列（1未満，など）これはupdateEvaluationObject関数で適切なオブジェクトに変換される
-  const totalEvaluationString = ref(null);
-  const creditLevelString = ref(null);
-  const interestLevelString = ref(null);
-  const skillLevelString = ref(null);
-
-  // プルダウン内の文字列から，minとmaxをキーにもつオブジェクトを生成し，そのオブジェクトを返す関数
-  const updateEvaluationObject = (evaluationString) => {
-    const evaluationObj = {};
-    switch (evaluationString) {
-      case "1未満":
-        evaluationObj.min = 0;
-        evaluationObj.max = 1;
-        break;
-      case "1以上":
-        evaluationObj.min = 1;
-        evaluationObj.max = 2;
-        break;
-      case "2以上":
-        evaluationObj.min = 2;
-        evaluationObj.max = 3;
-        break;
-      case "3以上":
-        evaluationObj.min = 3;
-        evaluationObj.max = 4;
-        break;
-      case "4以上":
-        evaluationObj.min = 4;
-        evaluationObj.max = 5;
-        break;
-
-      default:
-        // デフォルトの処理はnullになる
-        evaluationObj.min = null;
-        evaluationObj.max = null;
-        break;
-    }
-    return evaluationObj;
-  };
 
   // TODO
   // 検索項目はフロントでもつ
@@ -128,6 +89,9 @@
   const timePeriodList = ["1コマ", "2コマ", "3コマ", "4コマ", "5コマ", "6コマ", "7コマ"];
   const gradeList = ["B1", "B2", "B3", "B4", "B5"];
   const totalEvaluationList = ["1未満", "1以上", "2以上", "3以上", "4以上"];
+
+  const evaluationRateList = ["1", "2", "3", "4", "5"];
+
   //講義コードで検索する際はこのデータをバックに送る
   const searchClassByLectureCode = ref({
     lectureCode: null
@@ -153,6 +117,24 @@
     return result;
   }
 
+  // オブジェクトのkeyに対応するすべてのvalueがnullであるか確かめる関数
+  // 全てnullであればtrue, 1つでもnull以外のものがあればfalseを返す．
+  // オブジェクトが入れ子構造になっていても実行可能
+  const isAllNull = (obj) => {
+    for (const key in obj) {
+      if (typeof obj[key] === 'object') {
+        if (!isAllNull(obj[key])) {
+          return false;
+        }
+      } else {
+        if (obj[key] !== null) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
   // 条件で検索するボタンが押されたときに発火する関数
   //検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
   const sendQueryToClassListView = async () => {
@@ -160,19 +142,7 @@
     messageInConditionalTab.value = "";
     if (
       //バリデーションチェック(どれか1つでも入力していたら(nullでなければ)通過)
-      detailedCondition.value.lectureName == null &&
-      detailedCondition.value.teacherName == null &&
-      detailedCondition.value.location == null &&
-      detailedCondition.value.faculty == null &&
-      detailedCondition.value.category == null &&
-      detailedCondition.value.term == null &&
-      detailedCondition.value.dayOfWeek == null &&
-      detailedCondition.value.timePeriod == null &&
-      detailedCondition.value.grade == null &&
-      totalEvaluationString.value == null &&
-      creditLevelString.value == null &&
-      interestLevelString.value == null &&
-      skillLevelString.value == null
+      isAllNull(detailedCondition.value) 
     ) {
       //バリデーションが通らなかったときに実行
       messageInConditionalTab.value = "検索する条件を入力してください";
@@ -212,10 +182,10 @@
       //   "skillLevelString: ",skillLevelString.value,
       // );
       // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
-      detailedCondition.value.totalEvaluation = updateEvaluationObject(totalEvaluationString.value);
-      detailedCondition.value.creditLevel = updateEvaluationObject(creditLevelString.value);
-      detailedCondition.value.interestLevel = updateEvaluationObject(interestLevelString.value);
-      detailedCondition.value.skillLevel = updateEvaluationObject(skillLevelString.value);
+      // detailedCondition.value.totalEvaluation = updateEvaluationObject(totalEvaluationString.value);
+      // detailedCondition.value.creditLevel = updateEvaluationObject(creditLevelString.value);
+      // detailedCondition.value.interestLevel = updateEvaluationObject(interestLevelString.value);
+      // detailedCondition.value.skillLevel = updateEvaluationObject(skillLevelString.value);
 
       const query = {
         lectureName: detailedCondition.value.lectureName,
@@ -466,42 +436,98 @@
 
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">総合評価</p>
-                        <v-select
-                          v-model="totalEvaluationString"
-                          :items="totalEvaluationList"
-                          class="pulldown-list"
-                          clearable
-                        ></v-select>
+                        <v-row justify="space-between">
+                          <v-col cols="6">
+                            <v-select
+                              label="以上"
+                              v-model="detailedCondition.totalEvaluation.min"
+                              :items="evaluationRateList"
+                              class="pulldown-list"
+                              clearable
+                            ></v-select>
+                          </v-col>
+                          <v-col cols="6">
+                            <v-select
+                              label="以下"
+                              v-model="detailedCondition.totalEvaluation.max"
+                              :items="evaluationRateList"
+                              class="pulldown-list"
+                              clearable
+                            ></v-select>
+                          </v-col>
+                        </v-row>
                       </v-container>
 
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">単位取得のしやすさ</p>
-                        <v-select
-                          v-model="creditLevelString"
-                          :items="totalEvaluationList"
-                          class="pulldown-list"
-                          clearable
-                        ></v-select>
+                        <v-row justify="space-between">
+                            <v-col cols="6">
+                              <v-select
+                                label="以上"
+                                v-model="detailedCondition.creditLevel.min"
+                                :items="evaluationRateList"
+                                class="pulldown-list"
+                                clearable
+                              ></v-select>
+                            </v-col>
+                            <v-col cols="6">
+                              <v-select
+                                label="以下"
+                                v-model="detailedCondition.creditLevel.max"
+                                :items="evaluationRateList"
+                                class="pulldown-list"
+                                clearable
+                              ></v-select>
+                            </v-col>
+                          </v-row>
                       </v-container>
 
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">面白さ</p>
-                        <v-select
-                          v-model="interestLevelString"
-                          :items="totalEvaluationList"
-                          class="pulldown-list"
-                          clearable
-                        ></v-select>
+                        <v-row justify="space-between">
+                            <v-col cols="6">
+                              <v-select
+                              label="以上"
+                                v-model="detailedCondition.interestLevel.min"
+                                :items="evaluationRateList"
+                                class="pulldown-list"
+                                clearable
+                              ></v-select>
+                            </v-col>
+                            <v-col cols="6">
+                              <v-select
+                              label="以下"
+                                v-model="detailedCondition.interestLevel.max"
+                                :items="evaluationRateList"
+                                class="pulldown-list"
+                                clearable
+                              ></v-select>
+                            </v-col>
+                          </v-row>
                       </v-container>
 
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">スキルが身につくか</p>
-                        <v-select
-                          v-model="skillLevelString"
-                          :items="totalEvaluationList"
-                          class="pulldown-list"
-                          clearable
-                        ></v-select>
+                        <v-row justify="space-between">
+                            <v-col cols="6">
+                              <v-select
+                                label="以上"
+                                v-model="detailedCondition.skillLevel.min"
+                                :items="evaluationRateList"
+                                class="pulldown-list"
+                                clearable
+                              ></v-select>
+                            </v-col>
+                            <v-col cols="6">
+                              <v-select
+                                label="以上"
+                                v-model="detailedCondition.skillLevel.max"
+                                :items="evaluationRateList"
+                                class="pulldown-list"
+                                clearable
+                              ></v-select>
+                            </v-col>
+                          </v-row>
                       </v-container>
                       <!-- 他の条件の追加ここまで -->
                     </v-container>
@@ -546,5 +572,8 @@
   }
   .tab-name {
     font-size: 1.3rem;
+  }
+  .pulldown-list{
+    margin: 20px;
   }
 </style>
