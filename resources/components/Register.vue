@@ -22,8 +22,9 @@
 
   const termsAccepted = ref(false);
 
-  const errorMessage = ref(""); // エラーメッセージ用の変数
-  let isStudent = ref(false);
+const errorMessage = ref(""); // エラーメッセージ用の変数
+let isStudent = ref(false);
+const visible = ref(false);
 
   // 新規登録に関するapiを呼び出してくる
   // 書き方は,Login.vueを参照すること
@@ -316,18 +317,31 @@
       ></v-text-field>
       <v-text-field
         v-model="password"
-        :error-messages="v$.password.$error ? ['8字以上32字以下の, 有効なパスワードを入力してください. '] : []"
+        :error-messages="
+          v$.password.$error
+            ? ['8字以上32字以下の, 有効なパスワードを入力してください. ']
+            : []
+        "
+        :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+        :type="visible ? 'text' : 'password'"
+        @click:append-inner="visible = !visible"
+
         label="パスワード(8~32文字)"
         name="password"
-        type="password"
         clearable
       ></v-text-field>
       <v-text-field
         v-model="passwordCheck"
-        :error-messages="v$.passwordCheck.$error ? ['入力されたパスワードが確認用パスワードと一致しません. '] : []"
+        :error-messages="
+          v$.passwordCheck.$error
+            ? ['入力されたパスワードが確認用パスワードと一致しません. ']
+            : []
+        "
+        :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+        :type="visible ? 'text' : 'password'"
+        @click:append-inner="visible = !visible"
         label="パスワード確認"
         name="passwordCheck"
-        type="password"
         clearable
       ></v-text-field>
       <v-select
@@ -367,7 +381,7 @@
       ></v-select>
       <v-checkbox
         v-model="termsAccepted"
-        label="当サイトの利用規約およびプライバシーポリシーに同意する. (利用規約・プライバシーポリシーはページ下部のフッターからご確認いただけます. )"
+        label="当サイトの利用規約およびプライバシーポリシーに同意する. (利用規約・プライバシーポリシーはページ下部のフッターからご確認いただけます。 )"
       ></v-checkbox>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       <v-btn :disabled="!termsAccepted" color="indigo" @click="clickButton"> 登録する </v-btn>
