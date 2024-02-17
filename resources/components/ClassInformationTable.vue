@@ -77,7 +77,7 @@
         </tr>
         <tr>
           <td><p>シラバス</p></td>
-          <td><a :href="modifiedData.syllabusUrl">{{ modifiedData.syllabusUrl }}</a></td>
+          <td><a :href="modifiedData.syllabusUrl" target="_blank">{{ modifiedData.syllabusUrl }}</a></td>
         </tr>
       </tbody>
     </v-table>
