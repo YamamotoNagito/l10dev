@@ -292,7 +292,8 @@
     { label: "優", value: "優" },
     { label: "良", value: "良" },
     { label: "可", value: "可" },
-    { label: "不可", value: "不可" }
+    { label: "不可", value: "不可" },
+    { label: "未定", value: "未定" }
   ]);
 
   const creditLevel = ref(3);
@@ -313,7 +314,6 @@
     { label: "とても面白い", value: 5 }
   ]);
 
-  // ラベル後回し
   const skillLevel = ref("3");
   const skillLevelOptions = ref([
     { label: "まったく役に立たない", value: "1" },
