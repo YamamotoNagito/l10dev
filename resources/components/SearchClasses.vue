@@ -382,18 +382,25 @@
                 <v-combobox
                   v-model="detailedCondition.teacherName"
                   clearable
-                  placeholder="服部淳生"
+                  placeholder="広大太郎"
                   :items="candidateTeacherNameList"
                 ></v-combobox>
               </v-container>
               <!-- 他の条件についても同様にコードを追加 -->
 
-              <v-expansion-panels class="mb-4">
-                <v-expansion-panel>
-                  <v-expansion-panel-title>より詳しい条件で探す</v-expansion-panel-title>
+              <v-expansion-panels class="mb-3">
+                <v-expansion-panel elevation="0">
+                  <v-expansion-panel-title >
+                    <v-row no-gutters>
+                      <v-col cols="12" class="d-flex justify-center">
+                        詳細検索
+                      </v-col>
+                    </v-row>
+                  </v-expansion-panel-title>
                   <v-expansion-panel-text>
                     <v-container class="detailed-totalEvaluationList-list-container">
                       <!-- 以下、他の条件の追加 -->
+
                       <v-container class="category-name-and-content-container">
                         <p class="category-name">開講場所</p>
                         <v-select
@@ -528,7 +535,7 @@
                 <v-btn color="orange-darken-1" @click="searchByLectureCode">
                   <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
                 </v-btn>
-                <p class="text-red text-center">
+                <p class="text-center">
                   {{ messageInLectureCodeTab }}
                 </p>
               </v-container>
@@ -542,8 +549,9 @@
 
 <style scoped>
   .category-name {
-    font-size: 1.3rem;
+    @apply text-md-h5 text-sm-h6;
   }
+
   .tab-name {
     font-size: 1.3rem;
   }
