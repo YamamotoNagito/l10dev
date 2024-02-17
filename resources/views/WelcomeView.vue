@@ -7,7 +7,7 @@
 
 <template>
   <BaseUI>
-    <template v-slot:header>
+    <template #header>
       <pageTitle title="ようこそ" />
     </template>
     <Welcome></Welcome>

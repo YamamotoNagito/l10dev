@@ -5,7 +5,7 @@
 
 <template>
   <BaseUI>
-    <template v-slot:header>
+    <template #header>
       <pageTitle title="プライバシーポリシー" />
     </template>
     <PrivacyPolicy></PrivacyPolicy>
