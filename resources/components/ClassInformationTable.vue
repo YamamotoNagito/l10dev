@@ -61,15 +61,25 @@
       categoryName: "開講時期",
       information: modifiedData.integratedTime
     },
-    {
-      categoryName: "シラバス",
-      information: modifiedData.syllabusUrl
-    }
+
   ]);
+
+  const url = modifiedData.syllabusUrl
 </script>
 
 <template>
   <v-container>
-    <v-data-table :headers="headers" :items="items" hide-default-footer> </v-data-table>
+    <v-table>
+      <tbody>
+        <tr v-for="item in items" :key="item.categoryName">
+          <td><p>{{ item.categoryName }}</p></td>
+          <td><p>{{ item.information }}</p></td>
+        </tr>
+        <tr>
+          <td><p>シラバス</p></td>
+          <td><a :href="modifiedData.syllabusUrl">{{ modifiedData.syllabusUrl }}</a></td>
+        </tr>
+      </tbody>
+    </v-table>
   </v-container>
 </template>
