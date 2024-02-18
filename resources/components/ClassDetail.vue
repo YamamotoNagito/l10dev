@@ -8,35 +8,37 @@
 
   const props = defineProps(["classDetailData"]);
   const router = useRouter();
-
-  const classDetailData = props.classDetailData;
 </script>
 
 <template>
   <v-row class="mb-15">
     <v-col cols="12">
-      <v-container class="d-flex flex-row justify-center align-center">
-        <h2 class="text-h3 text-center">
-          {{ classInformationData?.lectureName }}
-        </h2>
-        <v-btn class="d-flex flex-row ml-5" color="orange"
-          ><v-icon>mdi-pencil</v-icon>
-          <p
-            class="text-h9"
-            @click="
-              router.push({
-                name: 'class/post',
-                query: {
-                  lectureName: classDetailData?.classInformationData?.lectureName,
-                  teacherName: classDetailData?.classInformationData?.teacherName
-                }
-              })
-            "
-          >
-            レビュー投稿
-          </p>
-        </v-btn>
-      </v-container>
+      <v-row justify="center">
+        <v-col cols="12">
+          <h2 class="text-h3 text-center">
+            {{ classDetailData?.classInformationData?.lectureName }}
+          </h2>
+        </v-col>
+        <v-col cols="12" class="d-flex flex-row justify-center">
+          <v-btn class="d-flex flex-row ml-5" color="orange"
+            ><v-icon>mdi-pencil</v-icon>
+            <p
+              class="text-h9"
+              @click="
+                router.push({
+                  name: 'class/post',
+                  query: {
+                    lectureName: classDetailData?.classInformationData?.lectureName,
+                    teacherName: classDetailData?.classInformationData?.teacherName
+                  }
+                })
+              "
+            >
+              レビュー投稿
+            </p>
+          </v-btn>
+        </v-col>
+      </v-row>
       <v-expansion-panels>
         <v-expansion-panel>
           <v-expansion-panel-title> 基本情報 </v-expansion-panel-title>
