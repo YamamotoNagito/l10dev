@@ -33,4 +33,4 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: make app.php.test
+        run: php artisan test
