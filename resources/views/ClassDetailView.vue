@@ -70,7 +70,7 @@
     <v-alert type="error">{{ error }}</v-alert>
   </v-container>
 
-  <v-container v-else-if="classDetailData">
+  <v-container v-else-if="classDetailData" class="pa-0 ma-0">
     <ClassDetail :class-detail-data="classDetailData"></ClassDetail>
   </v-container>
 </template>
