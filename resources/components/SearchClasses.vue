@@ -151,7 +151,7 @@
   const allCorrectMinMax = () => {
     if(
       isCorrectMinMax("totalEvaluation") &&
-      isCorrectMinMax("creditLevel") && 
+      isCorrectMinMax("creditLevel") &&
       isCorrectMinMax("interestLevel") &&
       isCorrectMinMax("skillLevel")
     ){
@@ -168,7 +168,7 @@
     messageInConditionalTab.value = "";
     if (
       //バリデーションチェック(どれか1つでも入力していたら(nullでなければ)通過)
-      isAllNull(detailedCondition.value) 
+      isAllNull(detailedCondition.value)
     ) {
       //バリデーションが通らなかったときに実行
       messageInConditionalTab.value = "検索する条件を入力してください";
@@ -360,10 +360,10 @@
 </script>
 
 <template>
-  <v-container class="mb-16">
+  <v-container class="mb-16" fluid>
     <v-row justify="center">
       <v-card width="900px">
-        <v-tabs v-model="tab" align-tabs="center" bg-color="orange-darken-1" height="60px">
+        <v-tabs v-model="tab" align-tabs="center" bg-color="third" height="60px">
           <v-tab value="one" class="tab-name">条件で探す</v-tab>
           <v-tab value="two" class="tab-name">講義コードで探す</v-tab>
         </v-tabs>
