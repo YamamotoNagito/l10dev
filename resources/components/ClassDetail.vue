@@ -6,7 +6,7 @@
   import ClassInformationTable from "./ClassInformationTable.vue";
   import RadarChart from "./RadarChart.vue";
 
-  const props = defineProps(["classDetailData"]);
+  const { classDetailData } = defineProps(["classDetailData"]);
   const router = useRouter();
 </script>
 
@@ -39,18 +39,25 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-expansion-panels>
-        <v-expansion-panel>
-          <v-expansion-panel-title> 基本情報 </v-expansion-panel-title>
-          <v-expansion-panel-text>
-            <ClassInformationTable
-              :class-information-data="classDetailData?.classInformationData"
-            ></ClassInformationTable>
-            <RadarChart :radar-chart-data="classDetailData?.classRadarChartData"></RadarChart>
-            <GraphTabs :class-bar-graph-data="classDetailData?.classBarGraphData"></GraphTabs>
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-      </v-expansion-panels>
+      <v-row>
+        <v-col v-if="classDetailData">
+          <v-expansion-panels>
+            <v-expansion-panel>
+              <v-expansion-panel-title> 基本情報 </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                <ClassInformationTable
+                  :class-information-data="classDetailData?.classInformationData"
+                ></ClassInformationTable>
+                <RadarChart :radar-chart-data="classDetailData?.classRadarChartData"></RadarChart>
+                <GraphTabs :class-bar-graph-data="classDetailData?.classBarGraphData"></GraphTabs>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-col>
+        <v-col v-else>
+          <p>データを取得できませんでした．</p>
+        </v-col>
+      </v-row>
       <ReviewListVue :review-data-list="classDetailData?.reviewDataList"></ReviewListVue>
     </v-col>
   </v-row>
