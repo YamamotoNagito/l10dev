@@ -29,13 +29,48 @@ class UserController extends Controller
     // 新規登録時の処理
     public function create(Request $request)
     {
-        // メールアドレスがすでに存在するか確認
-        $existingUser = User::where('userEmail', $request['userEmail'])->first();
+        $messages = [
+            'userName.required' => 'ユーザー名は必須項目です。',
+            'userName.string' => 'ユーザー名は文字列である必要があります。',
+            'userName.max' => 'ユーザー名は255文字以内で入力してください。',
 
-        if ($existingUser) {
-            // 既に存在する場合はエラーを返すか、任意の処理を行う
-            throw ValidationException::withMessages(['userEmail' => 'このメールアドレスはすでに使用されています']);
-        }
+            'userEmail.required' => 'メールアドレスは必須項目です。',
+            'userEmail.string' => 'メールアドレスは文字列である必要があります。',
+            'userEmail.email' => 'メールアドレスの形式が正しくありません。',
+            'userEmail.max' => 'メールアドレスは255文字以内で入力してください。',
+            'userEmail.unique' => 'このメールアドレスは既に使用されています。',
+
+            'password.required' => 'パスワードは必須項目です。',
+            'password.string' => 'パスワードは文字列である必要があります。',
+            'password.min' => 'パスワードは最低8文字必要です。',
+            'password.max' => 'パスワードは255文字以内で入力してください。',
+
+            'category.required' => 'カテゴリは必須項目です。',
+            'category.string' => 'カテゴリは文字列である必要があります。',
+            'category.max' => 'カテゴリは255文字以内で入力してください。',
+
+            'faculty.required' => '学部は必須項目です。',
+            'faculty.string' => '学部は文字列である必要があります。',
+            'faculty.max' => '学部は255文字以内で入力してください。',
+
+            'department.required' => '学科は必須項目です。',
+            'department.string' => '学科は文字列である必要があります。',
+            'department.max' => '学科は255文字以内で入力してください。',
+
+            'admissionYear.required' => '入学年度は必須項目です。',
+            'admissionYear.string' => '入学年度は文字列である必要があります。',
+            'admissionYear.max' => '入学年度は255文字以内で入力してください。',
+        ];
+
+        $validatedData = $request->validate([
+            'userName' => 'required|string|max:255',
+            'userEmail' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|max:255',
+            'category' => 'required|string|max:255',
+            'faculty' => 'required|string|max:255',
+            'department' => 'required|string|max:255',
+            'admissionYear' => 'required|string|max:255',
+        ], $messages);
 
         $user = User::query()->create([
             'userName'=>$request['userName'],
@@ -49,11 +84,6 @@ class UserController extends Controller
             'updatedAt'=>now(),
         ]);
 
-
-        // $user = Auth::user();
-        // $user->updateCreatedAt();
-        // $user->updateUpdatedAt();
-
         // ユーザーに権限を付与;
         $user->assignRole('user');
         $user->givePermissionTo('user');
@@ -66,8 +96,6 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        // return back();
-        // return response()->json(['success' => true,'role' => $user->getRoleNames()]);
         return response()->json(['success' => true,'id' => $user->userId,'role' => $user->getRoleNames()]);
     }
 
@@ -110,12 +138,12 @@ class UserController extends Controller
          ->select('reviewId','attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments','createdAt')
          ->get();
 
-        $reviewInfo = $reviews->map(function ($review) {        
+        $reviewInfo = $reviews->map(function ($review) {
 
             $userName = Reviews::find($review->reviewId)->user->userName;
             $userId = Reviews::find($review->reviewId)->user->userId;
             $lectureName = Reviews::find($review->reviewId)->lecture->lectureName;
-            
+
             return [
                 'userId' => $userId,
                 'userName' => $userName,
@@ -199,8 +227,6 @@ class UserController extends Controller
             return response()->json(['success' => false]);
             Log::debug("メアド・パスワードのどちらかが間違ってます");
         }
-
-        return back();
     }
 
     public function logout()
