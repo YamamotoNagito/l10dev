@@ -324,12 +324,15 @@
 
   // detailedCondition.value.lectureNameまたはdetailedCondition.value.teacherNameが変化したら実行
   watch([() => detailedCondition.value.lectureName, () => detailedCondition.value.teacherName], () => {
-    if (detailedCondition.value.lectureName === null && detailedCondition.value.teacherName === null) {
-      candidateLectureNameList.value = [];
-      candidateTeacherNameList.value = [];
-    } else {
-      filterCandidateConditions();
-    }
+    filterCandidateConditions()
+    // このコメントアウトは保存してください！
+    // 検索候補をすべて消去したら候補を表示しなくなる条件分岐
+    // if (detailedCondition.value.lectureName === null && detailedCondition.value.teacherName === null) {
+    //   candidateLectureNameList.value = [];
+    //   candidateTeacherNameList.value = [];
+    // } else {
+    //   filterCandidateConditions();
+    // }
   });
 
   // filteredCandidateConditionsListが更新されたら実行
@@ -353,10 +356,11 @@
   );
 
   // 検索候補の初期設定
-  // 今は元からから空の配列になっているが，今後デフォルトの検索候補を出す可能性を考えて関数にした
+  // デフォルトの検索候補はすべての授業名・担当教員名である
   const makeDefaultCandidateLectureNameList = () => {
-    candidateLectureNameList.value = [];
-    candidateTeacherNameList.value = [];
+    // candidateLectureNameList.value = [];
+    // candidateTeacherNameList.value = [];
+    filterCandidateConditions()
   };
 </script>
 
@@ -380,6 +384,7 @@
                   placeholder="一攫千金特論"
                   :items="candidateLectureNameList"
                   variant="outlined"
+                  prepend-inner-icon="mdi-magnify"
                 ></v-combobox>
               </v-container>
               <v-container class="category-name-and-content-container">
@@ -390,6 +395,7 @@
                   placeholder="広大太郎"
                   :items="candidateTeacherNameList"
                   variant="outlined"
+                  prepend-inner-icon="mdi-magnify"
                 ></v-combobox>
               </v-container>
               <!-- 他の条件についても同様にコードを追加 -->

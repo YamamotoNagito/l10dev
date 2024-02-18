@@ -17,7 +17,7 @@
 </script>
 
 <template>
-  <v-card class="d-flex flex-column">
+  <v-card flat class="d-flex flex-column">
     <v-container class="d-flex justify-center">
       <v-tabs v-model="tab">
         <v-tab value="one">みんなの成績</v-tab>
