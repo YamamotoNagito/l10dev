@@ -324,11 +324,11 @@ const visible = ref(false);
         "
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
         :type="visible ? 'text' : 'password'"
-        @click:append-inner="visible = !visible"
-
         label="パスワード(8~32文字)"
+
         name="password"
         clearable
+        @click:append-inner="visible = !visible"
       ></v-text-field>
       <v-text-field
         v-model="passwordCheck"
@@ -339,10 +339,10 @@ const visible = ref(false);
         "
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
         :type="visible ? 'text' : 'password'"
-        @click:append-inner="visible = !visible"
         label="パスワード確認"
         name="passwordCheck"
         clearable
+        @click:append-inner="visible = !visible"
       ></v-text-field>
       <v-select
         v-model="category"

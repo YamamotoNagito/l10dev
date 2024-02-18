@@ -468,8 +468,8 @@
                         <v-row justify="space-between">
                           <v-col cols="6">
                             <v-select
-                              label="以上"
                               v-model="detailedCondition.totalEvaluation.min"
+                              label="以上"
                               :items="evaluationRateList"
                               class="pulldown-list"
                               clearable
@@ -477,8 +477,8 @@
                           </v-col>
                           <v-col cols="6">
                             <v-select
-                              label="以下"
                               v-model="detailedCondition.totalEvaluation.max"
+                              label="以下"
                               :items="evaluationRateList"
                               class="pulldown-list"
                               clearable
@@ -492,8 +492,8 @@
                         <v-row justify="space-between">
                             <v-col cols="6">
                               <v-select
-                                label="以上"
                                 v-model="detailedCondition.creditLevel.min"
+                                label="以上"
                                 :items="evaluationRateList"
                                 class="pulldown-list"
                                 clearable
@@ -501,8 +501,8 @@
                             </v-col>
                             <v-col cols="6">
                               <v-select
-                                label="以下"
                                 v-model="detailedCondition.creditLevel.max"
+                                label="以下"
                                 :items="evaluationRateList"
                                 class="pulldown-list"
                                 clearable
@@ -516,8 +516,8 @@
                         <v-row justify="space-between">
                             <v-col cols="6">
                               <v-select
-                              label="以上"
-                                v-model="detailedCondition.interestLevel.min"
+                              v-model="detailedCondition.interestLevel.min"
+                                label="以上"
                                 :items="evaluationRateList"
                                 class="pulldown-list"
                                 clearable
@@ -525,8 +525,8 @@
                             </v-col>
                             <v-col cols="6">
                               <v-select
-                              label="以下"
-                                v-model="detailedCondition.interestLevel.max"
+                              v-model="detailedCondition.interestLevel.max"
+                                label="以下"
                                 :items="evaluationRateList"
                                 class="pulldown-list"
                                 clearable
@@ -540,8 +540,8 @@
                         <v-row justify="space-between">
                             <v-col cols="6">
                               <v-select
-                                label="以上"
                                 v-model="detailedCondition.skillLevel.min"
+                                label="以上"
                                 :items="evaluationRateList"
                                 class="pulldown-list"
                                 clearable
@@ -549,8 +549,8 @@
                             </v-col>
                             <v-col cols="6">
                               <v-select
-                                label="以下"
                                 v-model="detailedCondition.skillLevel.max"
+                                label="以下"
                                 :items="evaluationRateList"
                                 class="pulldown-list"
                                 clearable
