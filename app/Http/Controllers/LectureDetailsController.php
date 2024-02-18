@@ -84,14 +84,14 @@ class LectureDetailsController extends Controller
         // 講義idの取得
         $lectureId = LectureDetails::where('lectureCode', $lectureCode)
                       ->value('lectureId');
-        
+
         // 講義idの有無を判別
         if($lectureId == null){
             return response()->json(['success' => false,'message' => '講義コードが存在しません']);
         }else{
             return response()->json(['success' => true, 'lectureId' => $lectureId, 'message' => '講義コードが存在します']);
         }
-        
+
     }
 
     // 講義コードから授業情報の出力
@@ -116,7 +116,7 @@ class LectureDetailsController extends Controller
         // $lectureId = $lectureDetail->lecture->lectureId;
         // Log::Debug("lectureId");
         // Log::Debug($lectureId);
-        
+
         // ⓵Lecutesモデルから講義IDが一致する授業名を取得する
         $lecture = Lectures::where("lectureId",$lectureId)->first(["lectureName","teacherName"]);
         Log::Debug("lecture");
@@ -151,7 +151,7 @@ class LectureDetailsController extends Controller
                     ->get();
 
         $review_info = $reviews->map(function ($review) {
-            
+
             $userName = Reviews::find($review->reviewId)->user->userName;
             $userId = Reviews::find($review->reviewId)->user->userId;
             $lectureName = Reviews::find($review->reviewId)->lecture->lectureName;
@@ -204,34 +204,39 @@ class LectureDetailsController extends Controller
                                  ->get()
                                  ->groupBy('attendanceConfirm')
                                  ->map->count();
-        
+
         //  過去問のカウント処理
         $pastExamPossessionCounts = Reviews::where('lectureId', $lectureId)
                                  ->select('pastExamPossession')
                                  ->get()
                                  ->groupBy('pastExamPossession')
                                  ->map->count();
-                                 
+
         //  週ごとの課題のカウント処理
         $weeklyAssignmentsCounts = Reviews::where('lectureId', $lectureId)
                                  ->select('weeklyAssignments')
                                  ->get()
                                  ->groupBy('weeklyAssignments')
                                  ->map->count();
-        
+
         //  中間課題のカウント処理
         $midtermAssignmentsCounts = Reviews::where('lectureId', $lectureId)
                                   ->select('midtermAssignments')
                                   ->get()
                                   ->groupBy('midtermAssignments')
                                   ->map->count();
-        
+
         //  最終課題のカウント処理
         $finalAssignmentsCounts = Reviews::where('lectureId', $lectureId)
                                   ->select('finalAssignments')
                                   ->get()
                                   ->groupBy('finalAssignments')
                                   ->map->count();
+
+        # $lecture がnullの場合はデータが存在しないので、404エラーを返す
+        if ($lecture == null) {
+            return response()->json(['message' => 'データが存在しません'], 404);
+        }
 
         $classDetailData = [
             'classInformationData' => [
