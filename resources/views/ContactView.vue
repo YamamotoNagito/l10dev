@@ -1,9 +1,14 @@
 <script setup>
   import Contact from "../components/Contact.vue";
   import pageTitle from "../components/pageTitle.vue";
+  import BaseUI from "../components/shared/BaseUI.vue";
 </script>
 
 <template>
-  <pageTitle title="お問い合わせ" />
-  <Contact></Contact>
+  <BaseUI>
+    <template #header>
+      <pageTitle title="お問い合わせ" />
+    </template>
+    <Contact></Contact>
+  </BaseUI>
 </template>

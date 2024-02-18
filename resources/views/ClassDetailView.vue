@@ -1,9 +1,12 @@
 <script setup>
   import { ref, getCurrentInstance, onBeforeMount } from "vue";
+  import { useRouter } from "vue-router";
   import ClassDetail from "../components/ClassDetail.vue";
   import Loading from "../components/Loading.vue";
   import axios from "axios";
   // import pageTitle from '../components/pageTitle.vue';
+
+  const router = useRouter();
 
   const lectureId = ref(null);
   // 後でこのコメントアウトは外す！
@@ -23,18 +26,20 @@
       console.log(response.data);
 
       return response.data;
-
       // その他の処理
     } catch (error) {
       if (error.response) {
         // サーバーからのエラーレスポンスがある場合
+        if (error.response.status === 404) {
+          router.push({
+            name: "notFound"
+          });
+        }
         console.error(error.response.data); // エラーレスポンスをコンソールに出力
       } else {
         // リクエストがサーバーに届かなかった場合など
         console.error(error.message);
       }
-      // しっかりとBEでエラーメッセージを返しているならば、messageを代入しても良い
-      error.value = "エラーが発生しました。時間をおいて再度お試しください。";
     }
   };
 
@@ -65,7 +70,7 @@
     <v-alert type="error">{{ error }}</v-alert>
   </v-container>
 
-  <v-container v-else>
+  <v-container v-else-if="classDetailData">
     <ClassDetail :class-detail-data="classDetailData"></ClassDetail>
   </v-container>
 </template>

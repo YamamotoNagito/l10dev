@@ -4,6 +4,10 @@
 </script>
 
 <template>
-  <pageTitle title="プライバシーポリシー" />
-  <PrivacyPolicy></PrivacyPolicy>
+  <BaseUI>
+    <template #header>
+      <pageTitle title="プライバシーポリシー" />
+    </template>
+    <PrivacyPolicy></PrivacyPolicy>
+  </BaseUI>
 </template>

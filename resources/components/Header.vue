@@ -57,7 +57,7 @@
       <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
     </v-btn> -->
 
-    <v-toolbar-title class="hidden-md-and-down" @click="router.push({ name: 'welcome' })">
+    <v-toolbar-title class="hidden-md-and-down" style="cursor : pointer" @click="router.push({ name: 'welcome' })">
       かえで ~広大生の学びを支える情報サイト~
     </v-toolbar-title>
     <v-spacer />
