@@ -1,6 +1,6 @@
 <script setup>
-import Terms from "../components/Terms.vue";
-import pageTitle from "../components/pageTitle.vue";
+  import Terms from "../components/Terms.vue";
+  import pageTitle from "../components/pageTitle.vue";
 </script>
 
 <template>

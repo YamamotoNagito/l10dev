@@ -1,6 +1,6 @@
 <script setup>
-import ProfileEdit from "../components/ProfileEdit.vue";
-import pageTitle from "../components/pageTitle.vue";
+  import ProfileEdit from "../components/ProfileEdit.vue";
+  import pageTitle from "../components/pageTitle.vue";
 </script>
 
 <template>

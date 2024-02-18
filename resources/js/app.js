@@ -27,40 +27,26 @@ const router = createRouter({
     { path: "/", name: "welcome", component: WelcomeView },
     { path: "/register", name: "register", component: RegisterView },
     { path: "/login", name: "login", component: LoginView },
-    {
-      path: "/reset-password",
-      name: "reset-password",
-      component: RessetPasswordView,
-      meta: { requiresAuth: true },
-    },
+    { path: "/reset-password", name: "reset-password", component: RessetPasswordView, meta: { requiresAuth: true } },
     // 後々/profileにmeta: { requiresAuth: true },を追加する(ログインしていないと見れない)
     { path: "/profile/", name: "profile", component: ProfileView },
-    {
-      path: "/profile/edit",
-      name: "profile/edit",
-      component: ProfileEditView,
-      meta: { requiresAuth: true },
-    },
+    { path: "/profile/edit", name: "profile/edit", component: ProfileEditView, meta: { requiresAuth: true } },
     { path: "/class", name: "class", component: ClassListView },
     {
       path: "/class/:lectureId/detail",
       name: "class/:lectureId/detail",
       component: ClassDetailView,
       props: true,
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true }
     },
     { path: "/class/post", name: "class/post", component: ClassPostView },
-    {
-      path: "/privacy-policy",
-      name: "privacy-policy",
-      component: PrivacyPolicyView,
-      meta: { requiresAuth: true },
-    },
+    { path: "/privacy-policy", name: "privacy-policy", component: PrivacyPolicyView, meta: { requiresAuth: true } },
     { path: "/terms", name: "terms", component: TermsView },
     { path: "/contact", name: "contact", component: ContactView },
     { path: "/:catchAll(.*)", name: "notFound", component: NotFoundView },
+    { path: "/:catchAll(.*)", name: "not-found", component: NotFoundView }
     // 設定画面を追加する.
-  ],
+  ]
 });
 
 router.beforeEach((to, from, next) => {

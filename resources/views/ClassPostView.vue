@@ -1,6 +1,6 @@
 <script setup>
-import ClassPost from "../components/ClassPost.vue";
-import pageTitle from "../components/pageTitle.vue";
+  import ClassPost from "../components/ClassPost.vue";
+  import pageTitle from "../components/pageTitle.vue";
 </script>
 
 <template>

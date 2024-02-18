@@ -1,102 +1,87 @@
 <script setup>
-import { ref } from "vue";
-import axios from "axios";
-import { useStore } from "vuex";
+  import { ref } from "vue";
+  import axios from "axios";
+  import { useStore } from "vuex";
 
-import RadarChart from "./RadarChart.vue";
-import StarRading from "./StarRating.vue";
+  import RadarChart from "./RadarChart.vue";
+  import StarRading from "./StarRating.vue";
 
-const store = useStore();
-const props = defineProps(["reviewData"]);
+  const store = useStore();
+  const props = defineProps(["reviewData"]);
 
-const reviewUserId = ref(props.reviewData.userId);
-const requestUserId = ref(store.getters.userInfo.id);
-const requestReviewId = ref(props.reviewData.reviewId);
+  const reviewUserId = ref(props.reviewData.userId);
+  const requestUserId = ref(store.getters.userInfo.id);
+  const requestReviewId = ref(props.reviewData.reviewId);
 
-console.log("reviewUserId:", reviewUserId.value);
-console.log("requestUserId:", requestUserId.value);
+  console.log("reviewUserId:", reviewUserId.value);
+  console.log("requestUserId:", requestUserId.value);
 
-console.log(
-  "reviewUserId:",
-  reviewUserId.value,
-  "Type:",
-  typeof reviewUserId.value
-);
-console.log(
-  "requestUserId:",
-  requestUserId.value,
-  "Type:",
-  typeof requestUserId.value
-);
+  console.log("reviewUserId:", reviewUserId.value, "Type:", typeof reviewUserId.value);
+  console.log("requestUserId:", requestUserId.value, "Type:", typeof requestUserId.value);
 
-console.log(
-  "reviewUserId === requestUserId:",
-  reviewUserId.value === requestUserId.value
-);
+  console.log("reviewUserId === requestUserId:", reviewUserId.value === requestUserId.value);
 
-console.log;
+  console.log;
 
-// const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
+  // const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
 
-const radarChartData = {
-  creditLevel: props.reviewData.creditLevel,
-  interestLevel: props.reviewData.interestLevel,
-  skillLevel: props.reviewData.skillLevel,
-};
+  const radarChartData = {
+    creditLevel: props.reviewData.creditLevel,
+    interestLevel: props.reviewData.interestLevel,
+    skillLevel: props.reviewData.skillLevel
+  };
 
-const items = ref([
-  { title: "編集する", action: "edit" },
-  { title: "削除する", action: "delete" },
-]);
+  const items = ref([
+    { title: "編集する", action: "edit" },
+    { title: "削除する", action: "delete" }
+  ]);
 
-const showDialog = ref(false); // ダイアログの表示状態
+  const showDialog = ref(false); // ダイアログの表示状態
 
-// ケバブボタンのクリックイベント
-const handleMenuItemClick = async (item) => {
-  console.log("Menu item clicked:", item.title);
-  try {
-    if (item.action === "edit") {
-      // .jsにurlを定義していないが編集ページ遷移かつreviewDataを渡す
-      // router.push({ name: 'EditPage', params: { reviewId: props.reviewData.id } });
-      console.log(response.data);
-    } else if (item.action === "delete") {
-      showDialog.value = true;
-      // console.log(requestReviewId.value);
+  // ケバブボタンのクリックイベント
+  const handleMenuItemClick = async (item) => {
+    console.log("Menu item clicked:", item.title);
+    try {
+      if (item.action === "edit") {
+        // .jsにurlを定義していないが編集ページ遷移かつreviewDataを渡す
+        // router.push({ name: 'EditPage', params: { reviewId: props.reviewData.id } });
+        console.log(response.data);
+      } else if (item.action === "delete") {
+        showDialog.value = true;
+        // console.log(requestReviewId.value);
+      }
+    } catch (error) {
+      console.error("API call failed:", error);
     }
-  } catch (error) {
-    console.error("API call failed:", error);
-  }
-};
+  };
 
-// ダイアログの削除ボタンのクリックイベント
-const deleteReview = async () => {
-  try {
-    const response = await axios.delete(
-      `/api/deleteReview/${requestReviewId.value}`
-    );
-    console.log(response.data);
-    showDialog.value = false; // ダイアログを閉じる
-  } catch (error) {
-    console.error("API call failed:", error);
-    showDialog.value = false; // エラー発生時もダイアログを閉じる
-  }
-};
+  // ダイアログの削除ボタンのクリックイベント
+  const deleteReview = async () => {
+    try {
+      const response = await axios.delete(`/api/deleteReview/${requestReviewId.value}`);
+      console.log(response.data);
+      showDialog.value = false; // ダイアログを閉じる
+    } catch (error) {
+      console.error("API call failed:", error);
+      showDialog.value = false; // エラー発生時もダイアログを閉じる
+    }
+  };
 
-// const isLiked = ref(false);
-// const isReported = ref(false);
+  // const isLiked = ref(false);
+  // const isReported = ref(false);
 
-// const toggleLiked = () => {
-//   if (isLiked.value) {
-//     likeOnReviewInButton.value--;
-//   } else {
-//     likeOnReviewInButton.value++;
-//   }
-//   isLiked.value = !isLiked.value;
-// };
+  // const toggleLiked = () => {
+  //   if (isLiked.value) {
+  //     likeOnReviewInButton.value--;
+  //   } else {
+  //     likeOnReviewInButton.value++;
+  //   }
+  //   isLiked.value = !isLiked.value;
+  // };
 
-// const toggleReported = () => {
-//   isReported.value = !isReported.value;
-// };
+  // const toggleReported = () => {
+  //   isReported.value = !isReported.value;
+  // };
 </script>
 
 <template>
@@ -109,41 +94,22 @@ const deleteReview = async () => {
           </v-col>
           <!-- 授業名をreviewDataから取得して表示する -->
           <v-col cols="12" lg="3">
-            <v-container class="text-h5">{{
-              reviewData.lectureName
-            }}</v-container>
+            <v-container class="text-h5">{{ reviewData.lectureName }}</v-container>
           </v-col>
           <v-col cols="12" lg="3">
-            <StarRading
-              :totalEvaluation="reviewData.totalEvaluation"
-            ></StarRading>
+            <StarRading :total-evaluation="reviewData.totalEvaluation"></StarRading>
           </v-col>
         </v-row>
       </v-col>
       <v-col cols="1">
-        <v-btn
-          v-if="reviewUserId === requestUserId"
-          icon="mdi-dots-horizontal"
-          variant="text"
-        >
-        </v-btn>
+        <v-btn v-if="reviewUserId === requestUserId" icon="mdi-dots-horizontal" variant="text"> </v-btn>
 
-        <v-menu
-          activator="parent"
-          location="start"
-          v-if="reviewUserId === requestUserId"
-        >
+        <v-menu v-if="reviewUserId === requestUserId" activator="parent" location="start">
           <v-list>
-            <v-list-item
-              v-for="(item, index) in items"
-              :key="index"
-              :value="index"
-              @click="handleMenuItemClick(item)"
-            >
-              <v-list-item-title
-                :style="item.title === '削除する' ? 'color: red' : ''"
-                >{{ item.title }}</v-list-item-title
-              >
+            <v-list-item v-for="(item, index) in items" :key="index" :value="index" @click="handleMenuItemClick(item)">
+              <v-list-item-title :style="item.title === '削除する' ? 'color: red' : ''">{{
+                item.title
+              }}</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -154,9 +120,7 @@ const deleteReview = async () => {
             <v-card-text>このレビューを削除してもよろしいですか？</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="grey" text @click="showDialog = false"
-                >キャンセル</v-btn
-              >
+              <v-btn color="grey" text @click="showDialog = false">キャンセル</v-btn>
               <v-btn color="red" text @click="deleteReview">削除</v-btn>
             </v-card-actions>
           </v-card>
@@ -166,9 +130,7 @@ const deleteReview = async () => {
     <v-row>
       <v-col>
         <v-container class="d-flex flex-row align-center pl-1">
-          <v-card-subtitle
-            >受講年度：{{ reviewData.attendanceYear }}年</v-card-subtitle
-          >
+          <v-card-subtitle>受講年度：{{ reviewData.attendanceYear }}年</v-card-subtitle>
           <v-card-subtitle>投稿日：{{ reviewData.createdAt }}</v-card-subtitle>
         </v-container>
       </v-col>
@@ -187,7 +149,7 @@ const deleteReview = async () => {
         <v-expansion-panel-text>
           <v-row justify="center">
             <v-col cols="12" sm="12" md="5" lg="5">
-              <RadarChart :radarChartData="radarChartData"></RadarChart>
+              <RadarChart :radar-chart-data="radarChartData"></RadarChart>
             </v-col>
             <v-col cols="12" sm="12" md="6" lg="6">
               <v-container>

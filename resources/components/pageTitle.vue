@@ -1,11 +1,11 @@
 <script setup>
-import { defineProps } from "vue";
-import kaedeMainImg from "../assets/img/kaedeKey.png";
+  import { defineProps } from "vue";
+  import kaedeMainImg from "../assets/img/kaedeKey.png";
 
-const propData = defineProps({
-  title: String,
-});
-console.log("loaded.");
+  const propData = defineProps({
+    title: String
+  });
+  console.log("loaded.");
 </script>
 
 <template>
@@ -17,9 +17,9 @@ console.log("loaded.");
 </template>
 
 <style>
-#title-block {
-  display: flex;
-  justify-content: center; /*左右中央*/
-  align-items: center; /*上下中央*/
-}
+  #title-block {
+    display: flex;
+    justify-content: center; /*左右中央*/
+    align-items: center; /*上下中央*/
+  }
 </style>
