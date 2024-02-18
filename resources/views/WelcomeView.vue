@@ -11,6 +11,8 @@
       <pageTitle title="ようこそ" />
     </template>
     <Welcome></Welcome>
-    <SearchClasses></SearchClasses>
+    <v-container>
+      <SearchClasses></SearchClasses>
+    </v-container>
   </BaseUI>
 </template>
