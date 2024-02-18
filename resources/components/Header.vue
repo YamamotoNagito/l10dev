@@ -51,7 +51,7 @@
   };
 </script>
 <template>
-  <v-app-bar color="orange-darken-1" scroll-behavior="hide" elevation="3">
+  <v-app-bar color="primary" elevation="3" absolute>
     <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer" />
     <!-- <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
       <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
