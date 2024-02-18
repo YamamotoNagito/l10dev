@@ -91,9 +91,9 @@
 
   const evaluationRateList = ["", "1", "2", "3", "4", "5"];
   const totalRateList = ["おすすめしない", "", "3", "4", "5"];
-  // const creditRateList = ["激難", "難", "普通", "楽", "超楽"];
-  // const interestRateList = ["全く面白くない", "面白くない", "普通", "面白い", "とても面白い"];
-  // const skillRateList = ["全く役に立たない", "あまり役に立たない", "普通", "役立つ", "とても役立つ"];
+  const creditRateList = ["激難", "難", "普通", "楽", "超楽"];
+  const interestRateList = ["全く面白くない", "面白くない", "普通", "面白い", "とても面白い"];
+  const skillRateList = ["全く役に立たない", "あまり役に立たない", "普通", "役立つ", "とても役立つ"];
 
 
   //講義コードで検索する際はこのデータをバックに送る
@@ -373,7 +373,7 @@
           <v-tab value="two" class="tab-name">講義コードで探す</v-tab>
         </v-tabs>
 
-        <v-card-text>
+        <v-card-text class="px-0 px-sm-4 px-md-4 px-lg-4">
           <v-window v-model="tab">
             <v-window-item value="one">
               <v-container class="category-name-and-content-container">
@@ -409,7 +409,7 @@
                       </v-col>
                     </v-row>
                   </v-expansion-panel-title>
-                  <v-expansion-panel-text>
+                  <v-expansion-panel-text class="class-v-expansion-panel-text">
                     <!-- 以下、他の条件の追加 -->
 
                     <!-- 大学に関する区分（開講部局，開講区分，開講場所） -->
@@ -540,26 +540,26 @@
                         </v-row>
                         <v-row>
                           <!-- 下限 -->
-                          <v-col cols="5">
+                          <v-col cols="5.5">
                             <v-select
                               v-model="detailedCondition.totalEvaluation.min"
                               label="下限"
                               :items="evaluationRateList"
-                              class="pulldown-list no-margin-padding"
+                              class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
                               ></v-select>
                           </v-col>
-                          <v-col cols="2" class="d-flex justify-center mt-4">
+                          <v-col cols="1" class="d-flex justify-center mt-4">
                             <p>〜</p>
                           </v-col>
                           <!-- 上限 -->
-                          <v-col cols="5">
+                          <v-col cols="5.5">
                             <v-select
                               v-model="detailedCondition.totalEvaluation.max"
                               label="上限"
                               :items="evaluationRateList"
-                              class="pulldown-list no-margin-padding"
+                              class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
                               ></v-select>
@@ -578,26 +578,26 @@
                         </v-row>
                         <v-row>
                           <!-- 下限 -->
-                          <v-col cols="5">
+                          <v-col cols="5.5">
                             <v-select
                               v-model="detailedCondition.creditLevel.min"
                               label="下限"
                               :items="creditRateList"
-                              class="pulldown-list no-margin-padding"
+                              class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
                               ></v-select>
                           </v-col>
-                          <v-col cols="2" class="d-flex justify-center mt-4">
+                          <v-col cols="1" class="d-flex justify-center mt-4">
                             <p>〜</p>
                           </v-col>
                           <!-- 上限 -->
-                          <v-col cols="5">
+                          <v-col cols="5.5">
                             <v-select
                               v-model="detailedCondition.creditLevel.max"
                               label="上限"
                               :items="creditRateList"
-                              class="pulldown-list no-margin-padding"
+                              class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
                               ></v-select>
@@ -617,26 +617,26 @@
                         </v-row>
                         <v-row>
                           <!-- 下限 -->
-                          <v-col cols="5">
+                          <v-col cols="5.5">
                             <v-select
                               v-model="detailedCondition.interestLevel.min"
                               label="下限"
                               :items="interestRateList"
-                              class="pulldown-list no-margin-padding"
+                              class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
                               ></v-select>
                           </v-col>
-                          <v-col cols="2" class="d-flex justify-center mt-4">
+                          <v-col cols="1" class="d-flex justify-center mt-4">
                             <p>〜</p>
                           </v-col>
                           <!-- 上限 -->
-                          <v-col cols="5">
+                          <v-col cols="5.5">
                             <v-select
                               v-model="detailedCondition.interestLevel.max"
                               label="上限"
                               :items="interestRateList"
-                              class="pulldown-list no-margin-padding"
+                              class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
                               ></v-select>
@@ -656,26 +656,26 @@
                         </v-row>
                         <v-row>
                           <!-- 下限 -->
-                          <v-col cols="5">
+                          <v-col cols="5.5">
                             <v-select
                               v-model="detailedCondition.skillLevel.min"
                               label="下限"
                               :items="skillRateList"
-                              class="pulldown-list no-margin-padding"
+                              class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
                               ></v-select>
                           </v-col>
-                          <v-col cols="2" class="d-flex justify-center mt-4">
+                          <v-col cols="1" class="d-flex justify-center mt-4">
                             <p>〜</p>
                           </v-col>
                           <!-- 上限 -->
-                          <v-col cols="5">
+                          <v-col cols="5.5">
                             <v-select
                               v-model="detailedCondition.skillLevel.max"
                               label="上限"
                               :items="skillRateList"
-                              class="pulldown-list no-margin-padding"
+                              class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
                               ></v-select>
@@ -733,4 +733,19 @@
   .pulldown-list{
     margin: 20px;
   }
+
+  /* .class-v-select >>> .v-field__input{
+    width: 100px;
+    font-size: 10px;
+    padding: 0;
+  } */
+  /* .class-v-select >>> .v-field__append-inner{
+    width: 15px;
+  } */
+  /* .class-v-select >>> .v-field__clearable{
+    width: 15px;
+  } */
+  /* .class-v-expansion-panel-text >>> .v-expansion-panel-text__wrapper{
+    padding: 10px;
+  } */
 </style>
