@@ -131,8 +131,8 @@ const deleteReview = async () => {
           <details class="detail-toggle">
             <summary>詳細</summary>
             <v-row justify="center">
-              <v-col cols="12" sm="12" md="6" lg="6">
-                <v-table class="ma-5">
+              <v-col cols="12" sm="12" md="12" lg="6">
+                <v-table class="ma-5 review-table">
                   <tbody>
                     <tr>
                       <td>評定</td>
@@ -161,7 +161,7 @@ const deleteReview = async () => {
                   </tbody>
                 </v-table>
               </v-col>
-              <v-col cols="12" sm="12" md="5" lg="5">
+              <v-col cols="12" sm="12" md="12" lg="5">
                 <RadarChart class="ma-5" :radar-chart-data="radarChartData"></RadarChart>
               </v-col>
             </v-row>
@@ -174,7 +174,10 @@ const deleteReview = async () => {
 
 <style>
 .detail-toggle{
-  background-color: white;
+  background-color: #ECEFF1;
   border-radius: 2px;
+}
+.review-table{
+  background-color: #ECEFF1;
 }
 </style>
