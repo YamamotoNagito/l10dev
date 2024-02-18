@@ -13,17 +13,9 @@
   const requestUserId = ref(store.getters.userInfo.id);
   const requestReviewId = ref(props.reviewData.reviewId);
 
-  console.log("reviewUserId:", reviewUserId.value);
-  console.log("requestUserId:", requestUserId.value);
-
   console.log("reviewUserId:", reviewUserId.value, "Type:", typeof reviewUserId.value);
   console.log("requestUserId:", requestUserId.value, "Type:", typeof requestUserId.value);
-
   console.log("reviewUserId === requestUserId:", reviewUserId.value === requestUserId.value);
-
-  console.log;
-
-  // const likeOnReviewInButton = ref(props.reviewData.likeOnReview);
 
   const radarChartData = {
     creditLevel: props.reviewData.creditLevel,
@@ -66,22 +58,6 @@
       showDialog.value = false; // エラー発生時もダイアログを閉じる
     }
   };
-
-  // const isLiked = ref(false);
-  // const isReported = ref(false);
-
-  // const toggleLiked = () => {
-  //   if (isLiked.value) {
-  //     likeOnReviewInButton.value--;
-  //   } else {
-  //     likeOnReviewInButton.value++;
-  //   }
-  //   isLiked.value = !isLiked.value;
-  // };
-
-  // const toggleReported = () => {
-  //   isReported.value = !isReported.value;
-  // };
 </script>
 
 <template>
@@ -89,14 +65,14 @@
     <v-row justify="space-around">
       <v-col cols="11">
         <v-row justify="center" align="center">
-          <v-col cols="12" lg="6">
-            <v-container class="text-h5">{{ reviewData.userName }}</v-container>
+          <v-col cols="12" sm="" md="" lg="12">
+            <p class="text-h5">{{ reviewData.userName }}</p>
           </v-col>
           <!-- 授業名をreviewDataから取得して表示する -->
-          <v-col cols="12" lg="3">
-            <v-container class="text-h5">{{ reviewData.lectureName }}</v-container>
+          <v-col cols="12" sm="" md="" lg="12">
+            <p class="text-h5">{{ reviewData.lectureName }}</p>
           </v-col>
-          <v-col cols="12" lg="3">
+          <v-col cols="12" sm="" md="" lg="12">
             <StarRading :total-evaluation="reviewData.totalEvaluation"></StarRading>
           </v-col>
         </v-row>
@@ -128,11 +104,9 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
-        <v-container class="d-flex flex-row align-center pl-1">
+      <v-col class="d-flex flex-row align-center">
           <v-card-subtitle>受講年度：{{ reviewData.attendanceYear }}年</v-card-subtitle>
           <v-card-subtitle>投稿日：{{ reviewData.createdAt }}</v-card-subtitle>
-        </v-container>
       </v-col>
     </v-row>
     <v-row>
@@ -144,7 +118,7 @@
     </v-row>
 
     <v-expansion-panels>
-      <v-expansion-panel>
+      <v-expansion-panel elevation="0">
         <v-expansion-panel-title> 詳細情報 </v-expansion-panel-title>
         <v-expansion-panel-text>
           <v-row justify="center">
