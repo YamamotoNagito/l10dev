@@ -89,12 +89,102 @@
   const timePeriodList = ["1コマ", "2コマ", "3コマ", "4コマ", "5コマ", "6コマ", "7コマ"];
   const gradeList = ["B1", "B2", "B3", "B4", "B5"];
 
-  const evaluationRateList = ["", "1", "2", "3", "4", "5"];
-  const totalRateList = ["おすすめしない", "", "3", "4", "5"];
-  const creditRateList = ["激難", "難", "普通", "楽", "超楽"];
-  const interestRateList = ["全く面白くない", "面白くない", "普通", "面白い", "とても面白い"];
-  const skillRateList = ["全く役に立たない", "あまり役に立たない", "普通", "役立つ", "とても役立つ"];
+  // const evaluationRateList = ["1", "2", "3", "4", "5"];
+  // const creditRateList = ["激難", "難", "普通", "楽", "超楽"];
+  // const interestRateList = ["全く面白くない", "面白くない", "普通", "面白い", "とても面白い"];
+  // const skillRateList = ["全く役に立たない", "あまり役に立たない", "普通", "役立つ", "とても役立つ"];
 
+  const evaluationRateList = [
+  {
+    title: "5",
+    rate: "5"
+  },
+  {
+    title: "4",
+    rate: "4"
+  },
+  {
+    title: "3",
+    rate: "3"
+  },
+  {
+    title: "2",
+    rate: "2"
+  },
+  {
+    title: "1",
+    rate: "1"
+  }
+];
+
+const creditRateList = [
+  {
+    title: "超楽",
+    rate: "5"
+  },
+  {
+    title: "楽",
+    rate: "4"
+  },
+  {
+    title: "普通",
+    rate: "3"
+  },
+  {
+    title: "難",
+    rate: "2"
+  },
+  {
+    title: "激難",
+    rate: "1"
+  }
+];
+
+const interestRateList = [
+  {
+    title: "とても面白い",
+    rate: "5"
+  },
+  {
+    title: "面白い",
+    rate: "4"
+  },
+  {
+    title: "普通",
+    rate: "3"
+  },
+  {
+    title: "面白くない",
+    rate: "2"
+  },
+  {
+    title: "全く面白くない",
+    rate: "1"
+  }
+];
+
+const skillRateList = [
+  {
+    title: "とても役立つ",
+    rate: "5"
+  },
+  {
+    title: "役立つ",
+    rate: "4"
+  },
+  {
+    title: "普通",
+    rate: "3"
+  },
+  {
+    title: "あまり役に立たない",
+    rate: "2"
+  },
+  {
+    title: "全く役に立たない",
+    rate: "1"
+  }
+];
 
   //講義コードで検索する際はこのデータをバックに送る
   const searchClassByLectureCode = ref({
@@ -545,6 +635,8 @@
                               v-model="detailedCondition.totalEvaluation.min"
                               label="下限"
                               :items="evaluationRateList"
+                              item-value="rate"
+                              item-text="title"
                               class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
@@ -559,6 +651,8 @@
                               v-model="detailedCondition.totalEvaluation.max"
                               label="上限"
                               :items="evaluationRateList"
+                              item-value="rate"
+                              item-text="title"
                               class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
@@ -583,6 +677,8 @@
                               v-model="detailedCondition.creditLevel.min"
                               label="下限"
                               :items="creditRateList"
+                              item-value="rate"
+                              item-text="title"
                               class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
@@ -597,6 +693,8 @@
                               v-model="detailedCondition.creditLevel.max"
                               label="上限"
                               :items="creditRateList"
+                              item-value="rate"
+                              item-text="title"
                               class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
@@ -622,6 +720,8 @@
                               v-model="detailedCondition.interestLevel.min"
                               label="下限"
                               :items="interestRateList"
+                              item-value="rate"
+                              item-text="title"
                               class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
@@ -636,6 +736,8 @@
                               v-model="detailedCondition.interestLevel.max"
                               label="上限"
                               :items="interestRateList"
+                              item-value="rate"
+                              item-text="title"
                               class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
@@ -661,6 +763,8 @@
                               v-model="detailedCondition.skillLevel.min"
                               label="下限"
                               :items="skillRateList"
+                              item-value="rate"
+                              item-text="title"
                               class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
@@ -675,6 +779,8 @@
                               v-model="detailedCondition.skillLevel.max"
                               label="上限"
                               :items="skillRateList"
+                              item-value="rate"
+                              item-text="title"
                               class="pulldown-list no-margin-padding class-v-select"
                               clearable
                               variant="outlined"
