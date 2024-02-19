@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Reviews;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
+use App\Http\Requests\UserCreateRequest;
 
 class UserController extends Controller
 {
@@ -27,16 +28,8 @@ class UserController extends Controller
      * Show the form for creating a new resource.
      */
     // 新規登録時の処理
-    public function create(Request $request)
+    public function create(UserCreateRequest $request)
     {
-        // メールアドレスがすでに存在するか確認
-        $existingUser = User::where('userEmail', $request['userEmail'])->first();
-
-        if ($existingUser) {
-            // 既に存在する場合はエラーを返すか、任意の処理を行う
-            throw ValidationException::withMessages(['userEmail' => 'このメールアドレスはすでに使用されています']);
-        }
-
         $user = User::query()->create([
             'userName'=>$request['userName'],
             'userEmail'=>$request['userEmail'],
@@ -48,11 +41,6 @@ class UserController extends Controller
             'createdAt'=>now(),
             'updatedAt'=>now(),
         ]);
-
-
-        // $user = Auth::user();
-        // $user->updateCreatedAt();
-        // $user->updateUpdatedAt();
 
         // ユーザーに権限を付与;
         $user->assignRole('user');
@@ -66,8 +54,6 @@ class UserController extends Controller
 
         Auth::login($user);
 
-        // return back();
-        // return response()->json(['success' => true,'role' => $user->getRoleNames()]);
         return response()->json(['success' => true,'id' => $user->userId,'role' => $user->getRoleNames()]);
     }
 
@@ -110,12 +96,12 @@ class UserController extends Controller
          ->select('reviewId','attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments','createdAt')
          ->get();
 
-        $reviewInfo = $reviews->map(function ($review) {        
+        $reviewInfo = $reviews->map(function ($review) {
 
             $userName = Reviews::find($review->reviewId)->user->userName;
             $userId = Reviews::find($review->reviewId)->user->userId;
             $lectureName = Reviews::find($review->reviewId)->lecture->lectureName;
-            
+
             return [
                 'userId' => $userId,
                 'userName' => $userName,
@@ -199,8 +185,6 @@ class UserController extends Controller
             return response()->json(['success' => false]);
             Log::debug("メアド・パスワードのどちらかが間違ってます");
         }
-
-        return back();
     }
 
     public function logout()

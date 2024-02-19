@@ -804,7 +804,7 @@ const skillRateList = [
                 ></v-text-field>
               </v-container>
               <v-container class="d-flex">
-                <v-btn color="orange-darken-1" @click="searchByLectureCode">
+                <v-btn color="primary" @click="searchByLectureCode">
                   <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
                 </v-btn>
                 <p class="text-center">
