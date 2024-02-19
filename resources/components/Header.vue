@@ -51,7 +51,7 @@
   };
 </script>
 <template>
-  <v-app-bar color="orange-darken-1" scroll-behavior="hide" elevation="3">
+  <v-app-bar color="background" elevation="1" absolute>
     <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer" />
     <!-- <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
       <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
@@ -61,7 +61,7 @@
       かえで ~広大生の学びを支える情報サイト~
     </v-toolbar-title>
     <v-spacer />
-    <v-btn @click="router.push({ name: 'welcome' })">
+    <v-btn @click="router.push({ name: 'welcome' })" variant="outlined" color="primary">
       <v-icon>mdi-magnify</v-icon>
       授業検索
     </v-btn>
@@ -100,6 +100,7 @@
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
+
 </template>
 
 <style>

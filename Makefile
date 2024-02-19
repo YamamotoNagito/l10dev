@@ -16,6 +16,9 @@ app.logs:
 app.shell:
 	docker-compose exec l10dev-app /bin/bash
 
+app.php.test:
+	docker-compose exec l10dev-app php artisan test
+
 
 mysql.logs:
 	docker-compose logs -f l10dev-mysql
