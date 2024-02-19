@@ -1,5 +1,5 @@
 <script setup>
-  import Register from "../components/RegisterForm.vue";
+  import Register from "../components/Register.vue";
   import pageTitle from "../components/pageTitle.vue";
   import BaseUI from "../components/shared/BaseUI.vue";
 </script>
