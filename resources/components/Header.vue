@@ -61,7 +61,7 @@
       かえで ~広大生の学びを支える情報サイト~
     </v-toolbar-title>
     <v-spacer />
-    <v-btn @click="router.push({ name: 'welcome' })">
+    <v-btn @click="router.push({ name: 'welcome' })" variant="outlined" color="primary">
       <v-icon>mdi-magnify</v-icon>
       授業検索
     </v-btn>
