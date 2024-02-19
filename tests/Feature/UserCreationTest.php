@@ -246,7 +246,7 @@ class UserCreationTest extends TestCase
     public function testCreateNewUserWithTooLongStringParameters()
     {
         $requestPayload = [
-            'userName' => str_repeat('a', 256),
+            'userName' => str_repeat('a', 33),
             'userEmail' => str_repeat('a', 256) . '@example.com',
             'password' => str_repeat('a', 33),
             'category' => str_repeat('a', 256),
@@ -260,10 +260,10 @@ class UserCreationTest extends TestCase
         $response
             ->assertStatus(422)
             ->assertJson([
-                'message' => 'ユーザー名は255文字以内で入力してください。 (and 6 more errors)',
+                'message' => 'ユーザー名は32文字以内で入力してください。 (and 6 more errors)',
                 'errors' => [
                     'userName' => [
-                        'ユーザー名は255文字以内で入力してください。'
+                        'ユーザー名は32文字以内で入力してください。'
                     ],
                     'userEmail' => [
                         'メールアドレスは255文字以内で入力してください。'
