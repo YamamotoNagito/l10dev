@@ -1,0 +1,36 @@
+name: Laravel Tests
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: composer install
+        run: composer install -n --prefer-dist  --no-progress --no-suggest
+      - name: copy .env
+        run: cp .env.example .env
+      - name: generate key
+        run: php artisan key:generate
+      - name: Create Database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+      - name: migrate
+        run: php artisan migrate
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+      - name: Execute tests
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan test
