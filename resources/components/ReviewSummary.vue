@@ -129,6 +129,7 @@ const deleteReview = async () => {
       <v-row>
         <v-col cols="12" sm="" md="" lg="" class="pa-3">
           <details class="detail-toggle">
+            <!-- summaryタグを使用してトグルみたいにした -->
             <summary>詳細</summary>
             <v-row justify="center">
               <v-col cols="12" sm="12" md="12" lg="6">
