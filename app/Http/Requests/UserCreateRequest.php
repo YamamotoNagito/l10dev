@@ -24,7 +24,7 @@ class UserCreateRequest extends FormRequest
         return [
             'userName' => 'required|string|max:255',
             'userEmail' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|max:255',
+            'password' => 'required|string|min:8|max:32',
             'category' => 'required|string|max:255',
             'faculty' => 'required|string|max:255',
             'department' => 'required|string|max:255',
@@ -53,7 +53,7 @@ class UserCreateRequest extends FormRequest
             'password.required' => 'パスワードは必須項目です。',
             'password.string' => 'パスワードは文字列である必要があります。',
             'password.min' => 'パスワードは最低8文字必要です。',
-            'password.max' => 'パスワードは255文字以内で入力してください。',
+            'password.max' => 'パスワードは32文字以内で入力してください。',
 
             'category.required' => 'カテゴリは必須項目です。',
             'category.string' => 'カテゴリは文字列である必要があります。',

@@ -77,6 +77,51 @@ class UserCreationTest extends TestCase
         ]);
     }
 
+    // パスワードの最小長を満たさない場合にエラーになることのテスト
+    public function testCreateNewUserWithTooShortPassword()
+    {
+        $requestPayload = [
+            'userName' => 'テストユーザー',
+            'userEmail' => 'fuga@hoge.com',
+            'password' => str_repeat('a', 7),
+            'category' => 'テストカテゴリ',
+            'faculty' => 'テスト学部',
+            'department' => 'テスト学科',
+            'admissionYear' => "2021",
+        ];
+
+        $response = $this->json('POST', '/api/register', $requestPayload);
+
+        $response
+            ->assertStatus(422)
+            ->assertJson([
+                'message' => 'パスワードは最低8文字必要です。',
+                'errors' => [
+                    'password' => [
+                        'パスワードは最低8文字必要です。'
+                    ]
+                ]
+            ]);
+
+        // パスワードを8文字にして再度リクエストを送信
+        $requestPayload['password'] = str_repeat('a', 8);
+        $response = $this->json('POST', '/api/register', $requestPayload);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'id' => true,
+                'role' => true,
+            ]);
+
+        // データベースにユーザーが正しく作成されたことの検証
+        $this->assertDatabaseHas('users', [
+            'userEmail' => $requestPayload['userEmail'],
+        ]);
+    }
+
+
     // アドレスが重複した場合にエラーになることのテスト
     public function testCreateNewUserWithDuplicateEmail()
     {
@@ -203,7 +248,7 @@ class UserCreationTest extends TestCase
         $requestPayload = [
             'userName' => str_repeat('a', 256),
             'userEmail' => str_repeat('a', 256) . '@example.com',
-            'password' => str_repeat('a', 256),
+            'password' => str_repeat('a', 33),
             'category' => str_repeat('a', 256),
             'faculty' => str_repeat('a', 256),
             'department' => str_repeat('a', 256),
@@ -224,7 +269,7 @@ class UserCreationTest extends TestCase
                         'メールアドレスは255文字以内で入力してください。'
                     ],
                     'password' => [
-                        'パスワードは255文字以内で入力してください。'
+                        'パスワードは32文字以内で入力してください。'
                     ],
                     'category' => [
                         'カテゴリは255文字以内で入力してください。'
