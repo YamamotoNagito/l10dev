@@ -89,11 +89,6 @@
   const timePeriodList = ["1コマ", "2コマ", "3コマ", "4コマ", "5コマ", "6コマ", "7コマ"];
   const gradeList = ["B1", "B2", "B3", "B4", "B5"];
 
-  // const evaluationRateList = ["1", "2", "3", "4", "5"];
-  // const creditRateList = ["激難", "難", "普通", "楽", "超楽"];
-  // const interestRateList = ["全く面白くない", "面白くない", "普通", "面白い", "とても面白い"];
-  // const skillRateList = ["全く役に立たない", "あまり役に立たない", "普通", "役立つ", "とても役立つ"];
-
   const evaluationRateList = [
   {
     title: "5",
