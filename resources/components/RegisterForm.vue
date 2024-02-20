@@ -301,6 +301,7 @@
         name="userName"
         type="name"
         clearable
+        variant="outlined"
       ></v-text-field>
       <v-text-field
         v-model="userEmail"
@@ -309,6 +310,7 @@
         name="userEmail"
         type="email"
         clearable
+        variant="outlined"
       ></v-text-field>
       <v-text-field
         v-model="password"
@@ -318,6 +320,7 @@
         label="パスワード(8~32文字)"
         name="password"
         clearable
+        variant="outlined"
         @click:append-inner="visible = !visible"
       ></v-text-field>
       <v-text-field
@@ -328,6 +331,7 @@
         label="パスワード確認"
         name="passwordCheck"
         clearable
+        variant="outlined"
         @click:append-inner="visible = !visible"
       ></v-text-field>
       <v-select
@@ -337,6 +341,7 @@
         label="所属"
         name="category"
         type="text"
+        variant="outlined"
       ></v-select>
       <v-select
         v-show="isStudent"
@@ -346,6 +351,7 @@
         label="学部・研究科"
         name="faculty"
         type="text"
+        variant="outlined"
       ></v-select>
       <v-select
         v-show="isStudent"
@@ -355,6 +361,7 @@
         label="学科・学類・専攻など"
         name="department"
         type="text"
+        variant="outlined"
       ></v-select>
       <v-select
         v-show="isStudent"
@@ -364,6 +371,7 @@
         label="入学年度"
         name="admissionYear"
         type="text"
+        variant="outlined"
       ></v-select>
       <v-checkbox
         v-model="termsAccepted"

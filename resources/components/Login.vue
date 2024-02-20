@@ -98,6 +98,7 @@ const visible = ref(false);
       name="userEmail"
       type="email"
       clearable
+      variant="outlined"
     ></v-text-field>
     <v-text-field
       v-model="password"
@@ -106,6 +107,7 @@ const visible = ref(false);
       label="パスワード"
       name="password"
       clearable
+      variant="outlined"
       @click:append-inner="visible = !visible"
     ></v-text-field>
     <!-- <v-btn @click="clickButton">送信</v-btn> -->

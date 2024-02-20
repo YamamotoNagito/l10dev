@@ -11,6 +11,7 @@
             :items="candidateLectureNameList"
             :error-messages="v$.lectureName.$error ? ['授業名を入力してください. '] : []"
             clearable
+            variant="outlined"
           ></v-autocomplete>
           <p class="text-h6">担当教員名</p>
           <v-autocomplete
@@ -20,6 +21,7 @@
             :items="candidateTeacherNameList"
             :error-messages="v$.teacherName.$error ? ['教員名を入力してください. '] : []"
             clearable
+            variant="outlined"
           ></v-autocomplete>
         </v-col>
       </v-row>

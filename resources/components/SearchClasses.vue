@@ -788,7 +788,7 @@ const skillRateList = [
                 </v-expansion-panel>
               </v-expansion-panels>
 
-              <p class="text-red text-center">{{ messageInConditionalTab }}</p>
+              <p class="text-center">{{ messageInConditionalTab }}</p>
               <v-btn color="orange-darken-1" @click="sendQueryToClassListView">
                 <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
               </v-btn>
