@@ -801,6 +801,7 @@ const skillRateList = [
                   v-model="searchClassByLectureCode.lectureCode"
                   placeholder="KA*******"
                   clearable
+                  variant="outlined"
                 ></v-text-field>
               </v-container>
               <v-container class="d-flex">
