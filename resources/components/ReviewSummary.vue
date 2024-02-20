@@ -171,11 +171,21 @@ const deleteReview = async () => {
       </v-row>
     </v-col>
   </v-row>
+  <v-row>
+    <v-col cols="12">
+      <!-- 区切り線 -->
+        <v-divider
+          :thickness="1"
+          class="border-opacity-100"
+          color="primary"
+        ></v-divider>
+    </v-col>
+  </v-row>
 </template>
 
 <style>
 .detail-toggle{
-  background-color: #ECEFF1;
+  background-color: none;
   border-radius: 2px;
 }
 .review-table{
