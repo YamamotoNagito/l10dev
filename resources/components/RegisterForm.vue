@@ -13,7 +13,6 @@
   const userEmail = ref("");
   const password = ref("");
 
-  const universityName = ref("");
   const category = ref("");
   const faculty = ref("");
   const department = ref("");
@@ -22,9 +21,9 @@
 
   const termsAccepted = ref(false);
 
-const errorMessage = ref(""); // エラーメッセージ用の変数
-let isStudent = ref(false);
-const visible = ref(false);
+  const errorMessage = ref(""); // エラーメッセージ用の変数
+  let isStudent = ref(false);
+  const visible = ref(false);
 
   // 新規登録に関するapiを呼び出してくる
   // 書き方は,Login.vueを参照すること
@@ -270,7 +269,6 @@ const visible = ref(false);
 
       try {
         const response = await axios.post("/api/register", data);
-        console.log("response");
         // console.log(response);
         // console.log(response.data.id);
         data["id"] = response.data.id;
@@ -283,12 +281,9 @@ const visible = ref(false);
       } catch (error) {
         errorMessage.value =
           "登録できませんでした. サーバーのエラー, または既に使用されているメールアドレスである可能性があります. ";
-        if (error.response) {
+        if (error?.response?.data) {
           // サーバーからのエラーレスポンスがある場合
-          console.error(error.response.data); // エラーレスポンスをコンソールに出力
-        } else {
-          // リクエストがサーバーに届かなかった場合など
-          console.error(error.message);
+          errorMessage.value = error.response.data?.message;
         }
       }
     }
@@ -317,26 +312,17 @@ const visible = ref(false);
       ></v-text-field>
       <v-text-field
         v-model="password"
-        :error-messages="
-          v$.password.$error
-            ? ['8字以上32字以下の, 有効なパスワードを入力してください. ']
-            : []
-        "
+        :error-messages="v$.password.$error ? ['8字以上32字以下の, 有効なパスワードを入力してください. '] : []"
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
         :type="visible ? 'text' : 'password'"
         label="パスワード(8~32文字)"
-
         name="password"
         clearable
         @click:append-inner="visible = !visible"
       ></v-text-field>
       <v-text-field
         v-model="passwordCheck"
-        :error-messages="
-          v$.passwordCheck.$error
-            ? ['入力されたパスワードが確認用パスワードと一致しません. ']
-            : []
-        "
+        :error-messages="v$.passwordCheck.$error ? ['入力されたパスワードが確認用パスワードと一致しません. '] : []"
         :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
         :type="visible ? 'text' : 'password'"
         label="パスワード確認"
@@ -383,15 +369,8 @@ const visible = ref(false);
         v-model="termsAccepted"
         label="当サイトの利用規約およびプライバシーポリシーに同意する. (利用規約・プライバシーポリシーはページ下部のフッターからご確認いただけます。 )"
       ></v-checkbox>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <v-alert v-if="errorMessage" type="error" variant="tonal" class="mb-6">{{ errorMessage }}</v-alert>
       <v-btn :disabled="!termsAccepted" color="indigo" @click="clickButton"> 登録する </v-btn>
     </v-form>
   </v-container>
 </template>
-
-<style scoped>
-  .error-message {
-    color: red;
-    font-weight: bold;
-  }
-</style>

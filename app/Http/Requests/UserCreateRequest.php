@@ -22,7 +22,7 @@ class UserCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userName' => 'required|string|max:255',
+            'userName' => 'required|string|max:32',
             'userEmail' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|max:32',
             'category' => 'required|string|max:255',
@@ -42,7 +42,7 @@ class UserCreateRequest extends FormRequest
         return [
             'userName.required' => 'ユーザー名は必須項目です。',
             'userName.string' => 'ユーザー名は文字列である必要があります。',
-            'userName.max' => 'ユーザー名は255文字以内で入力してください。',
+            'userName.max' => 'ユーザー名は32文字以内で入力してください。',
 
             'userEmail.required' => 'メールアドレスは必須項目です。',
             'userEmail.string' => 'メールアドレスは文字列である必要があります。',
