@@ -110,14 +110,6 @@ const deleteReview = async () => {
           </v-dialog>
         </v-col>
       </v-row>
-      <v-row justify="start">
-        <v-col cols="12" sm="5" md="3" lg="3" class="pb-0">
-          <p class="text-h10">受講年度：{{ reviewData.attendanceYear }}年</p>
-        </v-col>
-        <v-col cols="12" sm="6" md="6" lg="6">
-          <p class="text-h10">投稿日：{{ reviewData.createdAt }}</p>
-        </v-col>
-      </v-row>
       <v-row>
         <v-col cols="12" sm="" md="" lg="">
           <p class="text-h10">
@@ -130,7 +122,15 @@ const deleteReview = async () => {
         <v-col cols="12" sm="" md="" lg="" class="pa-3">
           <details class="detail-toggle">
             <!-- summaryタグを使用してトグルみたいにした -->
-            <summary>詳細</summary>
+            <summary class="text-h6" >詳細</summary>
+            <v-row justify="start">
+              <v-col cols="12" sm="5" md="3" lg="3" class="pb-0">
+                <p class="text-h10">受講年度：{{ reviewData.attendanceYear }}年</p>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" lg="6">
+                <p class="text-h10">投稿日：{{ reviewData.createdAt }}</p>
+              </v-col>
+            </v-row>
             <v-row justify="center">
               <v-col cols="12" sm="12" md="12" lg="6">
                 <v-table class="ma-5 review-table">
