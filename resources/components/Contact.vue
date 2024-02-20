@@ -79,7 +79,6 @@
 
 <template>
   <v-container>
-    <!-- <p class="text-h6 text-md-h4 text-lg-h3">お問い合わせ</p> -->
     <br />
     <p class="text-h6 text-md-h5 text-lg-h4">ユーザ情報</p>
     <v-text-field
@@ -89,6 +88,8 @@
       placeholder="広島 かえで"
       hide-details="auto"
       clearable
+      variant="outlined"
+      class="my-2"
     ></v-text-field>
     <v-text-field
       v-model="emailInputed"
@@ -97,6 +98,7 @@
       placeholder="Kaede@gmail.com"
       type="email"
       clearable
+      variant="outlined"
     ></v-text-field>
     <p class="text-h6 text-md-h5 text-lg-h4">カテゴリ</p>
     <v-select
@@ -109,6 +111,8 @@
       :items="category_items"
       label="お問い合わせ内容に最も合うものを選んでください. "
       clearable
+      variant="outlined"
+      class="my-2"
     ></v-select>
     <p class="text-h6 text-md-h5 text-lg-h4">お問い合わせ内容</p>
     <v-textarea
@@ -116,9 +120,11 @@
       :error-messages="v$.message.$error ? ['2000文字以内で, お問い合わせ内容を入力してください. '] : []"
       name="input-7-1"
       filled
-      label="お問い合わせ内容を記述してください. "
+      placeholder=""
       auto-grow
       clearable
+      variant="outlined"
+      class="my-2"
     ></v-textarea>
     <!-- <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> -->
     <v-btn color="primary" @click="clickButton">送信する</v-btn>
