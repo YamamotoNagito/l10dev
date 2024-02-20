@@ -125,6 +125,7 @@
       clearable
       variant="outlined"
       class="my-2"
+      counter="2000"
     ></v-textarea>
     <!-- <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> -->
     <v-btn color="primary" @click="clickButton">送信する</v-btn>
