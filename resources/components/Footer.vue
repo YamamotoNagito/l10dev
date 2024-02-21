@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="bg-grey-lighten-1" app absolute>
+  <v-footer class="bg-third" app absolute>
     <v-row no-gutters>
       <v-col cols="0" sm="0" md="2" lg="2" xl="2"></v-col>
       <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center">
@@ -16,10 +16,7 @@
       <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center">
         <v-btn variant="text" rounded="xl" @click="router.push({ name: 'contact' })"> お問い合わせ </v-btn>
       </v-col>
-      <!-- <v-col cols="0" sm="0" md="2" lg="2" xl="2"></v-col>
-            <v-col class="text-center mt-4" cols="12">
-              {{ new Date().getFullYear() }} — かえで
-            </v-col> -->
+      <v-col cols="0" sm="0" md="2" lg="2" xl="2"></v-col>
     </v-row>
   </v-footer>
 </template>
