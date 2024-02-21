@@ -387,6 +387,7 @@
           // router.push('/reviews');
           // フォームのリセット
           resetForm();
+          errorMessage.value = "";
         } else {
           errorMessage.value = response.data.message;
         }
