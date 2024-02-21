@@ -14,10 +14,15 @@ const emits = defineEmits(["toggleShowDialog"])
                     <v-icon icon="mdi-alert" color="red"></v-icon>
                     </v-card-text>
                 </v-col>
-                <v-col cols="11">
+                <v-col cols="11" class="pb-0">
                     <v-card-text><p class="text-center text-red">
                             {{ messageInDialog }}
                     </p></v-card-text>
+                </v-col>
+            </v-row>
+            <v-row>
+                <v-col class="d-flex justify-center pt-0">
+                    <v-btn class="mb-2" color="orange" flat><p class="text-white">OK</p></v-btn>
                 </v-col>
             </v-row>
         </v-card>
