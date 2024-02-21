@@ -102,7 +102,7 @@
         </v-row>
       </v-btn-toggle>
       <!-- 過去問・レポートの有無 -->
-       <v-row class="mt-5">
+      <v-row class="mt-5">
         <v-col>
           <p class="custom-text-style">過去問・レポートの所持</p>
         </v-col>

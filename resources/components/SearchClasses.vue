@@ -2,13 +2,13 @@
   import { ref, watch, onMounted } from "vue";
   import { useRouter } from "vue-router";
   import axios from "axios";
-  import Dialog from "./shared/Dialog.vue"
+  import Dialog from "./shared/Dialog.vue";
 
   const router = useRouter();
   // どっちのタブを開くのか，情報を格納する変数
   const tab = ref(null);
 
-  const showDialog = ref(false)
+  const showDialog = ref(false);
 
   // 条件で検索する際はこのデータをバックに送る
   const detailedCondition = ref({
@@ -93,104 +93,104 @@
   const gradeList = ["B1", "B2", "B3", "B4", "B5"];
 
   const evaluationRateList = [
-  {
-    title: "5",
-    rate: "5"
-  },
-  {
-    title: "4",
-    rate: "4"
-  },
-  {
-    title: "3",
-    rate: "3"
-  },
-  {
-    title: "2",
-    rate: "2"
-  },
-  {
-    title: "1",
-    rate: "1"
-  }
-];
+    {
+      title: "5",
+      rate: "5"
+    },
+    {
+      title: "4",
+      rate: "4"
+    },
+    {
+      title: "3",
+      rate: "3"
+    },
+    {
+      title: "2",
+      rate: "2"
+    },
+    {
+      title: "1",
+      rate: "1"
+    }
+  ];
 
-const creditRateList = [
-  {
-    title: "超楽",
-    rate: "5"
-  },
-  {
-    title: "楽",
-    rate: "4"
-  },
-  {
-    title: "普通",
-    rate: "3"
-  },
-  {
-    title: "難",
-    rate: "2"
-  },
-  {
-    title: "激難",
-    rate: "1"
-  }
-];
+  const creditRateList = [
+    {
+      title: "超楽",
+      rate: "5"
+    },
+    {
+      title: "楽",
+      rate: "4"
+    },
+    {
+      title: "普通",
+      rate: "3"
+    },
+    {
+      title: "難",
+      rate: "2"
+    },
+    {
+      title: "激難",
+      rate: "1"
+    }
+  ];
 
-const interestRateList = [
-  {
-    title: "とても面白い",
-    rate: "5"
-  },
-  {
-    title: "面白い",
-    rate: "4"
-  },
-  {
-    title: "普通",
-    rate: "3"
-  },
-  {
-    title: "面白くない",
-    rate: "2"
-  },
-  {
-    title: "全く面白くない",
-    rate: "1"
-  }
-];
+  const interestRateList = [
+    {
+      title: "とても面白い",
+      rate: "5"
+    },
+    {
+      title: "面白い",
+      rate: "4"
+    },
+    {
+      title: "普通",
+      rate: "3"
+    },
+    {
+      title: "面白くない",
+      rate: "2"
+    },
+    {
+      title: "全く面白くない",
+      rate: "1"
+    }
+  ];
 
-const skillRateList = [
-  {
-    title: "とても役立つ",
-    rate: "5"
-  },
-  {
-    title: "役立つ",
-    rate: "4"
-  },
-  {
-    title: "普通",
-    rate: "3"
-  },
-  {
-    title: "あまり役に立たない",
-    rate: "2"
-  },
-  {
-    title: "全く役に立たない",
-    rate: "1"
-  }
-];
+  const skillRateList = [
+    {
+      title: "とても役立つ",
+      rate: "5"
+    },
+    {
+      title: "役立つ",
+      rate: "4"
+    },
+    {
+      title: "普通",
+      rate: "3"
+    },
+    {
+      title: "あまり役に立たない",
+      rate: "2"
+    },
+    {
+      title: "全く役に立たない",
+      rate: "1"
+    }
+  ];
 
   //講義コードで検索する際はこのデータをバックに送る
   const searchClassByLectureCode = ref({
     lectureCode: null
   });
 
-// メッセージ
-const messageInDialog = ref("")
+  // メッセージ
+  const messageInDialog = ref("");
 
   // オブジェクトからvalueがNULLのkeyとvalueのペアを削除する関数
   function removeNullValues(obj) {
@@ -212,7 +212,7 @@ const messageInDialog = ref("")
   // オブジェクトが入れ子構造になっていても実行可能
   const isAllNull = (obj) => {
     for (const key in obj) {
-      if (typeof obj[key] === 'object') {
+      if (typeof obj[key] === "object") {
         if (!isAllNull(obj[key])) {
           return false;
         }
@@ -226,31 +226,31 @@ const messageInDialog = ref("")
   };
 
   // 数字の大小で検索するとき，大小関係が自然であることを判定する関数
-  const isCorrectMinMax = (objectName) =>{
-    const min = detailedCondition.value[objectName].min
-    const max = detailedCondition.value[objectName].max
-    if(min === null || max === null){
-      return true
-    }else if(min <= max){
-      return true
-    }else{
-      return false
+  const isCorrectMinMax = (objectName) => {
+    const min = detailedCondition.value[objectName].min;
+    const max = detailedCondition.value[objectName].max;
+    if (min === null || max === null) {
+      return true;
+    } else if (min <= max) {
+      return true;
+    } else {
+      return false;
     }
-  }
+  };
 
   // 全ての大小関係がそろっているか確認する関数
   const allCorrectMinMax = () => {
-    if(
+    if (
       isCorrectMinMax("totalEvaluation") &&
       isCorrectMinMax("creditLevel") &&
       isCorrectMinMax("interestLevel") &&
       isCorrectMinMax("skillLevel")
-    ){
-      return true
-    }else{
-      return false
+    ) {
+      return true;
+    } else {
+      return false;
     }
-  }
+  };
 
   // 条件で検索するボタンが押されたときに発火する関数
   //検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
@@ -263,7 +263,7 @@ const messageInDialog = ref("")
     ) {
       //バリデーションが通らなかったときに実行
       messageInDialog.value = "検索する条件を入力してください";
-      showDialog.value = true
+      showDialog.value = true;
       // console.log(
       //   'バリデーション通過ならず',
       //   "lectureName: ",detailedCondition.value.lectureName,  '\n',
@@ -280,11 +280,10 @@ const messageInDialog = ref("")
       //   "interestLevelString: ",interestLevelString.value, '\n',
       //   "skillLevelString: ",skillLevelString.value,
       // );
-    } else if(!allCorrectMinMax()){
-      messageInDialog.value = "評価値の大小関係を修正してください"
-      showDialog.value=true
-    }
-    else{
+    } else if (!allCorrectMinMax()) {
+      messageInDialog.value = "評価値の大小関係を修正してください";
+      showDialog.value = true;
+    } else {
       //バリデーション通過時に実行
 
       // console.log(
@@ -350,7 +349,7 @@ const messageInDialog = ref("")
         router.push({ path: `class/${lectureId}/detail` }, { params: lectureId });
       } else {
         messageInDialog.value = "存在しない講義コードです．";
-        showDialog.value = true
+        showDialog.value = true;
       }
 
       // その他の処理
@@ -413,7 +412,7 @@ const messageInDialog = ref("")
 
   // detailedCondition.value.lectureNameまたはdetailedCondition.value.teacherNameが変化したら実行
   watch([() => detailedCondition.value.lectureName, () => detailedCondition.value.teacherName], () => {
-    filterCandidateConditions()
+    filterCandidateConditions();
     // このコメントアウトは保存してください！
     // 検索候補をすべて消去したら候補を表示しなくなる条件分岐
     // if (detailedCondition.value.lectureName === null && detailedCondition.value.teacherName === null) {
@@ -449,19 +448,20 @@ const messageInDialog = ref("")
   const makeDefaultCandidateLectureNameList = () => {
     // candidateLectureNameList.value = [];
     // candidateTeacherNameList.value = [];
-    filterCandidateConditions()
+    filterCandidateConditions();
   };
 </script>
 
 <template>
+  <v-container class="mb-8 custom-background" fluid>
     <v-row justify="center">
       <v-col>
-        <v-card max-width="900px" class="mx-auto">
+        <v-card max-width="900px" class="mx-auto" elevation="5">
           <v-tabs v-model="tab" align-tabs="center" height="60px">
             <v-tab value="one" class="tab-name">条件で探す</v-tab>
             <v-tab value="two" class="tab-name">講義コードで探す</v-tab>
           </v-tabs>
-  
+
           <v-card-text class="px-0 px-sm-4 px-md-4 px-lg-4">
             <v-window v-model="tab">
               <v-window-item value="one">
@@ -488,10 +488,10 @@ const messageInDialog = ref("")
                   ></v-combobox>
                 </v-container>
                 <!-- 他の条件についても同様にコードを追加 -->
-  
+
                 <v-expansion-panels class="mb-3">
                   <v-expansion-panel elevation="0" bg-color="" collapse-icon="mdi-magnify">
-                    <v-expansion-panel-title >
+                    <v-expansion-panel-title>
                       <v-row>
                         <v-col cols="12" class="d-flex justify-center">
                           <p class="pl-5">詳細検索</p>
@@ -500,12 +500,12 @@ const messageInDialog = ref("")
                     </v-expansion-panel-title>
                     <v-expansion-panel-text class="class-v-expansion-panel-text">
                       <!-- 以下、他の条件の追加 -->
-  
+
                       <!-- 大学に関する区分（開講部局，開講区分，開講場所） -->
                       <v-row class="my-3">
                         <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
                           <v-row>
-                            <p class="category-name" >開講場所</p>
+                            <p class="category-name">開講場所</p>
                           </v-row>
                           <v-row>
                             <v-select
@@ -519,7 +519,7 @@ const messageInDialog = ref("")
                         </v-col>
                         <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
                           <v-row>
-                            <p class="category-name" >開講部局</p>
+                            <p class="category-name">開講部局</p>
                           </v-row>
                           <v-row>
                             <v-select
@@ -546,7 +546,7 @@ const messageInDialog = ref("")
                           </v-row>
                         </v-col>
                       </v-row>
-  
+
                       <!-- 時間に関する区分（ターム，曜日，時間） -->
                       <v-row class="my-3">
                         <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
@@ -592,7 +592,7 @@ const messageInDialog = ref("")
                           </v-row>
                         </v-col>
                       </v-row>
-  
+
                       <!-- 履修年次に関する区分 -->
                       <v-row class="my-3">
                         <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
@@ -610,14 +610,10 @@ const messageInDialog = ref("")
                           </v-row>
                         </v-col>
                       </v-row>
-  
+
                       <!-- 区切り線 -->
-                      <v-divider
-                        :thickness="1"
-                        class="border-opacity-100"
-                        color="primary"
-                      ></v-divider>
-  
+                      <v-divider :thickness="1" class="border-opacity-100" color="primary"></v-divider>
+
                       <!-- 総合評価 -->
                       <v-row class="my-3">
                         <v-col>
@@ -639,7 +635,7 @@ const messageInDialog = ref("")
                                 class="pulldown-list no-margin-padding class-v-select"
                                 clearable
                                 variant="outlined"
-                                ></v-select>
+                              ></v-select>
                             </v-col>
                             <v-col cols="1" class="d-flex justify-center mt-4">
                               <p>〜</p>
@@ -655,7 +651,7 @@ const messageInDialog = ref("")
                                 class="pulldown-list no-margin-padding class-v-select"
                                 clearable
                                 variant="outlined"
-                                ></v-select>
+                              ></v-select>
                             </v-col>
                           </v-row>
                         </v-col>
@@ -681,7 +677,7 @@ const messageInDialog = ref("")
                                 class="pulldown-list no-margin-padding class-v-select"
                                 clearable
                                 variant="outlined"
-                                ></v-select>
+                              ></v-select>
                             </v-col>
                             <v-col cols="1" class="d-flex justify-center mt-4">
                               <p>〜</p>
@@ -697,12 +693,12 @@ const messageInDialog = ref("")
                                 class="pulldown-list no-margin-padding class-v-select"
                                 clearable
                                 variant="outlined"
-                                ></v-select>
+                              ></v-select>
                             </v-col>
                           </v-row>
                         </v-col>
                       </v-row>
-  
+
                       <!-- 面白さ -->
                       <v-row>
                         <v-col>
@@ -724,7 +720,7 @@ const messageInDialog = ref("")
                                 class="pulldown-list no-margin-padding class-v-select"
                                 clearable
                                 variant="outlined"
-                                ></v-select>
+                              ></v-select>
                             </v-col>
                             <v-col cols="1" class="d-flex justify-center mt-4">
                               <p>〜</p>
@@ -740,12 +736,12 @@ const messageInDialog = ref("")
                                 class="pulldown-list no-margin-padding class-v-select"
                                 clearable
                                 variant="outlined"
-                                ></v-select>
+                              ></v-select>
                             </v-col>
                           </v-row>
                         </v-col>
                       </v-row>
-  
+
                       <!-- スキルが身につくか -->
                       <v-row>
                         <v-col>
@@ -767,7 +763,7 @@ const messageInDialog = ref("")
                                 class="pulldown-list no-margin-padding class-v-select"
                                 clearable
                                 variant="outlined"
-                                ></v-select>
+                              ></v-select>
                             </v-col>
                             <v-col cols="1" class="d-flex justify-center mt-4">
                               <p>〜</p>
@@ -783,7 +779,7 @@ const messageInDialog = ref("")
                                 class="pulldown-list no-margin-padding class-v-select"
                                 clearable
                                 variant="outlined"
-                                ></v-select>
+                              ></v-select>
                             </v-col>
                           </v-row>
                         </v-col>
@@ -794,12 +790,13 @@ const messageInDialog = ref("")
                 <v-row justify="center" align="center">
                   <v-col class="d-flex justify-center">
                     <v-btn color="primary" @click="sendQueryToClassListView">
-                      <v-icon start icon="mdi-magnify" color="white"></v-icon><p class="text-white">検索</p>
+                      <v-icon start icon="mdi-magnify" color="white"></v-icon>
+                      <p class="text-white">検索</p>
                     </v-btn>
                   </v-col>
                 </v-row>
               </v-window-item>
-  
+
               <v-window-item value="two">
                 <v-container class="category-and-content-container">
                   <p class="category-name">講義コード</p>
@@ -813,7 +810,8 @@ const messageInDialog = ref("")
                 <v-row justify="center" align="center">
                   <v-col cols="12" class="d-flex justify-center">
                     <v-btn color="primary" @click="searchByLectureCode">
-                      <v-icon start icon="mdi-magnify" color="white"></v-icon><p class="text-white">検索</p>
+                      <v-icon start icon="mdi-magnify" color="white"></v-icon>
+                      <p class="text-white">検索</p>
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -821,9 +819,14 @@ const messageInDialog = ref("")
             </v-window>
           </v-card-text>
         </v-card>
-        <Dialog :showDialog="showDialog" :messageInDialog="messageInDialog" @toggleShowDialog="showDialog = !showDialog"></Dialog>
+        <Dialog
+          :showDialog="showDialog"
+          :messageInDialog="messageInDialog"
+          @toggleShowDialog="showDialog = !showDialog"
+        ></Dialog>
       </v-col>
     </v-row>
+  </v-container>
 </template>
 
 <style scoped>
@@ -831,17 +834,20 @@ const messageInDialog = ref("")
     @apply text-md-h5 text-sm-h6;
   } */
 
-.no-margin-padding {
-  margin: 0 !important;
-  padding: 0 !important;
-}
+  .no-margin-padding {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
   .tab-name {
     font-size: 1.3rem;
   }
-  .pulldown-list{
+  .pulldown-list {
     margin: 20px;
   }
 
+  .custom-background {
+    background: linear-gradient(to bottom, #ff971d 50px, /* 上部20%の色 */ #ffffff 50px /* 20%以降の色 */);
+  }
   /* .class-v-select >>> .v-field__input{
     width: 100px;
     font-size: 10px;

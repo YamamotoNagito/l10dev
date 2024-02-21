@@ -86,13 +86,21 @@
 <template>
   <BaseUI>
     <template #header>
-      <pageTitle title="検索結果" />
+      <v-container class="pb-8 bg-primary" fluid>
+        <div id="title-block">
+          <p class="text-white text-h6 text-md-h4 text-lg-h4">大学生による授業評価をオープンに</p>
+        </div>
+      </v-container>
     </template>
 
-    <v-container v-if="classDataList">
-      <ClassList :class-data-list="classDataList"></ClassList>
-    </v-container>
-
-    <v-container v-else> Loading ... </v-container>
+    <ClassList :class-data-list="classDataList"></ClassList>
   </BaseUI>
 </template>
+
+<style>
+  #title-block {
+    display: flex;
+    justify-content: center; /*左右中央*/
+    align-items: center; /*上下中央*/
+  }
+</style>

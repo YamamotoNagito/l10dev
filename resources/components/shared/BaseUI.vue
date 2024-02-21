@@ -1,6 +1,6 @@
 <!-- BaseUI.vue -->
 <template>
-  <!-- 上下左右に padding をつける -->
+  <!-- 下に padding をつける -->
   <div class="pb-12">
     <!-- header スロット -->
     <div>
