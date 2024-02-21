@@ -75,7 +75,7 @@ class ReviewsController extends Controller
                       ->where('lectureId', $lectureId)
                       ->value('lectureId');
     if($existingRecord){
-        return response()->json(['success' => false, 'message' => '既に同じユーザーと授業の組み合わせが存在します']);
+        return response()->json(['success' => false, 'message' => '既に同じユーザーと授業の組み合わせが存在します'], 400);
     }
 
 

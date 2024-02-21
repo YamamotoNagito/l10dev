@@ -103,6 +103,27 @@ class ReviewStoreTest extends TestCase
         $this->assertDatabaseMissing('reviews', $anotherExpected);
     }
 
+    // 既に同じ userId かつ同じ lectureId が存在する場合にエラーになることのテスト
+    public function test_post_review_with_existing_user_id_and_lecture_id()
+    {
+        $requestPayload = $this->createRequestPayload([
+            'userId' => $this->user->userId,
+        ]);
+
+        // 既に同じ userId かつ同じ lectureId のレビューを作成
+        $this->json('POST', '/api/reviews', $requestPayload);
+
+        $response = $this->json('POST', '/api/reviews', $requestPayload);
+
+        $response->assertStatus(400)->assertJson([
+                'success' => false,
+                'message' => '既に同じユーザーと授業の組み合わせが存在します',
+            ]);
+
+        // データベースにレビューが作成されていることの検証
+        $this->assertDatabaseHas('reviews', $this->expected);
+    }
+
     private function createRequestPayload($overrides = [])
     {
         return array_merge([
