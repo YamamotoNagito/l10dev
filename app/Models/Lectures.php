@@ -15,7 +15,8 @@ class Lectures extends Model
 
     protected $table = 'lectures';
     protected $primaryKey = 'lectureId';
-    public $timestamps = true;
+    // migrationファイルにはcreated_atとupdated_atがないので、自動更新を無効にする
+    public $timestamps = false;
 
     protected $fillable = [
         'lectureName',
