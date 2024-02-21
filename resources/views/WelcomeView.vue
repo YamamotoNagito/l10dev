@@ -1,5 +1,4 @@
 <script setup>
-  import Welcome from "../components/Welcome.vue";
   import SearchClasses from "../components/SearchClasses.vue";
   import pageTitle from "../components/pageTitle.vue";
   import BaseUI from "../components/shared/BaseUI.vue";
@@ -8,9 +7,8 @@
 <template>
   <BaseUI>
     <template #header>
-      <pageTitle title="ようこそ" />
+      <pageTitle title="大学生による授業評価をオープンに" />
     </template>
-    <Welcome></Welcome>
     <SearchClasses></SearchClasses>
   </BaseUI>
 </template>

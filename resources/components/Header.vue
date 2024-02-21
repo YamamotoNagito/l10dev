@@ -51,22 +51,27 @@
   };
 </script>
 <template>
-  <v-app-bar color="background" elevation="1" absolute>
+  <v-app-bar color="primary" elevation="0" absolute height="50">
     <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer" />
-    <!-- <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
+    <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
       <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
-    </v-btn> -->
+    </v-btn>
 
-    <v-toolbar-title class="hidden-md-and-down" style="cursor : pointer" @click="router.push({ name: 'welcome' })">
-      かえで ~広大生の学びを支える情報サイト~
+    <v-toolbar-title
+      color="background"
+      class="hidden-md-and-down"
+      style="cursor: pointer"
+      @click="router.push({ name: 'welcome' })"
+    >
+      かえで
     </v-toolbar-title>
     <v-spacer />
-    <v-btn @click="router.push({ name: 'welcome' })" variant="outlined" color="primary">
+    <v-btn variant="text" color="background" @click="router.push({ name: 'welcome' })">
       <v-icon>mdi-magnify</v-icon>
       授業検索
     </v-btn>
 
-    <v-btn v-if="!store.getters.isLoggedIn" @click="router.push({ name: 'login' })">
+    <v-btn variant="text" color="background" v-if="!store.getters.isLoggedIn" @click="router.push({ name: 'login' })">
       <v-icon>mdi-login</v-icon>
       ログイン
     </v-btn>
@@ -100,7 +105,6 @@
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
-
 </template>
 
 <style>
