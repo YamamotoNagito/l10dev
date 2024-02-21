@@ -5,9 +5,6 @@
   import axios from "axios";
   // import { mdiAccount, mdiLogout } from '@mdi/js';
 
-  // ドロワーの開閉状態を管理する変数
-  const drawer = ref(false);
-
   const router = useRouter();
   const store = useStore();
 
@@ -91,44 +88,21 @@
           <v-icon>mdi-pencil</v-icon>
           レビュー投稿
         </v-btn>
-        <!-- <v-btn v-if="store.getters.isLoggedIn" variant="text" color="white">
+        <v-btn
+          variant="text"
+          color="background"
+          v-if="store.getters.isLoggedIn"
+          @click="router.push({ name: 'mypage' })"
+        >
           <v-icon>mdi-menu</v-icon>
-        </v-btn> -->
-        <!-- <v-menu v-if="store.getters.isLoggedIn" activator="parent" location="start">
-          <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index" :value="index" @click="handleMenuItemClick(item)">
-              <v-list-item-title :style="item.title === '削除する' ? 'color: red' : ''">{{
-                item.title
-              }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu> -->
-        <!-- <v-dialog v-model="showDialog" persistent max-width="300px">
-          <v-card>
-            <v-card-title class="text-h5">確認</v-card-title>
-            <v-card-text>このレビューを削除してもよろしいですか？</v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="grey" text @click="showDialog = false">キャンセル</v-btn>
-              <v-btn color="red" text @click="deleteReview">削除</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog> -->
-        <!-- <v-btn variant="text" color="background" v-if="store.getters.isLoggedIn" @click="clickProfileButton">
-          <v-icon>mdi-account</v-icon>
-          プロフィール
-        </v-btn> -->
-        <!-- <v-btn variant="text" color="white" @click="clickLogoutButton">
-          <v-icon>mdi-logout</v-icon>
-          ログアウト
-        </v-btn> -->
+        </v-btn>
       </v-col>
       <v-col cols="0" sm="0" md="1" lg="1" xl="1"></v-col>
     </v-row>
   </v-app-bar>
 
   <!-- ハンバーガーメニューの中身（サイドバー） -->
-  <v-navigation-drawer v-model="drawer" temporary>
+  <!-- <v-navigation-drawer v-model="drawer" temporary>
     <v-list nav>
       <v-list-item>
         <v-btn block variant="text" @click="clickProfileButton">
@@ -136,12 +110,6 @@
           プロフィール
         </v-btn>
       </v-list-item>
-      <!-- <v-list-item>
-        <v-btn block variant="text" @click="router.push({ name: ''})">
-          <v-icon>mdi-cog</v-icon>
-            設定
-          </v-btn>
-        </v-list-item> -->
       <v-list-item>
         <v-btn block variant="text" color="red" @click="clickLogoutButton">
           <v-icon>mdi-logout</v-icon>
@@ -149,7 +117,7 @@
         </v-btn>
       </v-list-item>
     </v-list>
-  </v-navigation-drawer>
+  </v-navigation-drawer> -->
 </template>
 
 <style></style>
