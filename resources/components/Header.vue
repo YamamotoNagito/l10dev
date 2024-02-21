@@ -53,9 +53,9 @@
 <template>
   <v-app-bar color="primary" elevation="0" absolute height="50">
     <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer" />
-    <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
+    <!-- <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
       <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
-    </v-btn>
+    </v-btn> -->
 
     <v-toolbar-title
       color="background"
@@ -80,6 +80,11 @@
       <v-icon>mdi-pencil</v-icon>
       レビュー投稿
     </v-btn>
+
+    <v-btn v-if="store.getters.isLoggedIn" @click="clickProfileButton">
+      <v-icon>mdi-account</v-icon>
+      プロフィール
+    </v-btn>
   </v-app-bar>
 
   <!-- ハンバーガーメニューの中身（サイドバー） -->
@@ -91,12 +96,6 @@
           プロフィール
         </v-btn>
       </v-list-item>
-      <!-- <v-list-item>
-        <v-btn block variant="text" @click="router.push({ name: ''})">
-          <v-icon>mdi-cog</v-icon>
-            設定
-          </v-btn>
-        </v-list-item> -->
       <v-list-item>
         <v-btn block variant="text" color="red" @click="clickLogoutButton">
           <v-icon>mdi-logout</v-icon>
@@ -107,8 +106,4 @@
   </v-navigation-drawer>
 </template>
 
-<style>
-  /* #kaede-icon-btn {
-    background-color: rgb(117, 105, 85);
-  } */
-</style>
+<style></style>
