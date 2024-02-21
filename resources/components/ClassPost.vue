@@ -189,6 +189,7 @@
             variant="outlined"
             :error-messages="v$.comments.$error ? ['入力内容は2000文字以内にしてください. '] : []"
             auto-grow
+            placeholder="例：この授業はどんな人におすすめか，過去問は役に立ったか，など"
           ></v-textarea>
         </v-col>
       </v-row>
