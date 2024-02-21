@@ -41,6 +41,18 @@ class ReviewsController extends Controller
     // リクエストデータをログに記録
     Log::Debug($request);
 
+    // 現在認証されているユーザーのIDを取得
+    $userId = auth()->id();
+
+    // ユーザーが存在しない場合にはエラーが出るようにする
+    if ($userId == null) {
+      return response()->json(['success' => false, 'message' => 'ユーザーが存在しません'], 401);
+    }
+    // セッションのユーザーIDとリクエストのユーザーIDが一致するかチェック
+    else if ($userId != $request['userId']) {
+      return response()->json(['success' => false, 'message' => 'ユーザーIDが一致しません'], 401);
+    }
+
     // レクチャーidの取得
     $lectureId = Lectures::where('lectureName', $request['lectureName'])
                   ->where('teacherName', $request['teacherName'])

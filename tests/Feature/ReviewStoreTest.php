@@ -25,6 +25,8 @@ class ReviewStoreTest extends TestCase
         $this->user = User::factory()->create();
         $this->lecture = Lectures::factory()->create();
 
+        // ここでactingAsを使用してユーザーを認証済みにする
+        $this->actingAs($this->user);
     }
 
     /**
@@ -117,6 +119,44 @@ class ReviewStoreTest extends TestCase
             'interestLevel' => 3,
             'skillLevel' => 3,
             'comments' => 'コメント',
+        ]);
+    }
+
+    // 存在する別の userId を指定した場合にエラーになることのテスト
+    public function test_post_review_with_invalid_user_id()
+    {
+        // 別のユーザーを作成
+        $anotherUser = User::factory()->create();
+
+        $requestPayload = [
+            'userId' => $anotherUser->userId,
+            'lectureName' => $this->lecture->lectureName,
+            'teacherName' => $this->lecture->teacherName,
+            'attendanceYear' => 2021,
+            'attendanceConfirm' => '出席確認',
+            'weeklyAssignments' => '週課題',
+            'midtermAssignments' => '中間課題',
+            'finalAssignments' => '期末課題',
+            'pastExamPossession' => '過去問所持',
+            'grades' => '成績',
+            'creditLevel' => 3,
+            'interestLevel' => 3,
+            'skillLevel' => 3,
+            'comments' => 'コメント',
+        ];
+
+        $response = $this->json('POST', '/api/reviews', $requestPayload);
+
+        $response
+            ->assertStatus(401)
+            ->assertJson([
+                'success' => false,
+                'message' => 'ユーザーIDが一致しません',
+            ]);
+
+        // データベースにレビューが作成されていないことの検証
+        $this->assertDatabaseMissing('reviews', [
+            'userId' => $anotherUser->userId,
         ]);
     }
 }
