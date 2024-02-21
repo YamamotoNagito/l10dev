@@ -15,6 +15,7 @@ class ReviewStoreTest extends TestCase
 
     protected $user;
     protected $lecture;
+    protected $expected;
 
     protected function setUp(): void
     {
@@ -27,17 +28,10 @@ class ReviewStoreTest extends TestCase
 
         // ここでactingAsを使用してユーザーを認証済みにする
         $this->actingAs($this->user);
-    }
 
-    /**
-     * A basic feature test example.
-     */
-    public function test_post_review_success()
-    {
-        $requestPayload = [
+        $this->expected = [
             'userId' => $this->user->userId,
-            'lectureName' => $this->lecture->lectureName,
-            'teacherName' => $this->lecture->teacherName,
+            'lectureId' => $this->lecture->lectureId,
             'attendanceYear' => 2021,
             'attendanceConfirm' => '出席確認',
             'weeklyAssignments' => '週課題',
@@ -50,76 +44,39 @@ class ReviewStoreTest extends TestCase
             'skillLevel' => 3,
             'comments' => 'コメント',
         ];
+    }
 
+    // 基本的なレビューの投稿が成功することのテスト
+    public function test_post_review_success()
+    {
+        $requestPayload = $this->createRequestPayload([
+            'userId' => $this->user->userId,
+        ]);
         $response = $this->json('POST', '/api/reviews', $requestPayload);
 
-        $response
-            ->assertStatus(200)
-            ->assertJson([
-                'success' => true,
-            ]);
+        $response->assertStatus(200)->assertJson(['success' => true]);
 
         // データベースにレビューが正しく作成されたことの検証
-        $this->assertDatabaseHas('reviews', [
-            'userId' => $this->user->userId,
-            'attendanceYear' => 2021,
-            'attendanceConfirm' => '出席確認',
-            'weeklyAssignments' => '週課題',
-            'midtermAssignments' => '中間課題',
-            'finalAssignments' => '期末課題',
-            'pastExamPossession' => '過去問所持',
-            'grades' => '成績',
-            'creditLevel' => 3,
-            'interestLevel' => 3,
-            'skillLevel' => 3,
-            'comments' => 'コメント',
-        ]);
+        $this->assertDatabaseHas('reviews', $this->expected);
     }
 
     // 存在しない授業名の場合にエラーになることのテスト
     public function test_post_review_with_invalid_lecture_name()
     {
-        $requestPayload = [
+        $requestPayload = $this->createRequestPayload([
             'userId' => $this->user->userId,
             'lectureName' => '存在しない授業名',
-            'teacherName' => $this->lecture->teacherName,
-            'attendanceYear' => 2021,
-            'attendanceConfirm' => '出席確認',
-            'weeklyAssignments' => '週課題',
-            'midtermAssignments' => '中間課題',
-            'finalAssignments' => '期末課題',
-            'pastExamPossession' => '過去問所持',
-            'grades' => '成績',
-            'creditLevel' => 3,
-            'interestLevel' => 3,
-            'skillLevel' => 3,
-            'comments' => 'コメント',
-        ];
+        ]);
 
         $response = $this->json('POST', '/api/reviews', $requestPayload);
 
-        $response
-            ->assertStatus(200)
-            ->assertJson([
+        $response->assertStatus(200)->assertJson([
                 'success' => false,
                 'message' => '授業が存在しません',
             ]);
 
         // データベースにレビューが作成されていないことの検証
-        $this->assertDatabaseMissing('reviews', [
-            'userId' => $this->user->userId,
-            'attendanceYear' => 2021,
-            'attendanceConfirm' => '出席確認',
-            'weeklyAssignments' => '週課題',
-            'midtermAssignments' => '中間課題',
-            'finalAssignments' => '期末課題',
-            'pastExamPossession' => '過去問所持',
-            'grades' => '成績',
-            'creditLevel' => 3,
-            'interestLevel' => 3,
-            'skillLevel' => 3,
-            'comments' => 'コメント',
-        ]);
+        $this->assertDatabaseMissing('reviews', $this->expected);
     }
 
     // 存在する別の userId を指定した場合にエラーになることのテスト
@@ -128,8 +85,27 @@ class ReviewStoreTest extends TestCase
         // 別のユーザーを作成
         $anotherUser = User::factory()->create();
 
-        $requestPayload = [
+        $requestPayload = $this->createRequestPayload([
             'userId' => $anotherUser->userId,
+        ]);
+
+        $response = $this->json('POST', '/api/reviews', $requestPayload);
+
+        $response->assertStatus(401)->assertJson([
+                'success' => false,
+                'message' => 'ユーザーIDが一致しません',
+            ]);
+
+        // データベースにレビューが作成されていないことの検証
+        // $this->expected の userId を別のユーザーの userId に変更
+        $anotherExpected = $this->expected;
+        $anotherExpected['userId'] = $anotherUser->userId;
+        $this->assertDatabaseMissing('reviews', $anotherExpected);
+    }
+
+    private function createRequestPayload($overrides = [])
+    {
+        return array_merge([
             'lectureName' => $this->lecture->lectureName,
             'teacherName' => $this->lecture->teacherName,
             'attendanceYear' => 2021,
@@ -143,20 +119,7 @@ class ReviewStoreTest extends TestCase
             'interestLevel' => 3,
             'skillLevel' => 3,
             'comments' => 'コメント',
-        ];
-
-        $response = $this->json('POST', '/api/reviews', $requestPayload);
-
-        $response
-            ->assertStatus(401)
-            ->assertJson([
-                'success' => false,
-                'message' => 'ユーザーIDが一致しません',
-            ]);
-
-        // データベースにレビューが作成されていないことの検証
-        $this->assertDatabaseMissing('reviews', [
-            'userId' => $anotherUser->userId,
-        ]);
+        ], $overrides);
     }
+
 }
