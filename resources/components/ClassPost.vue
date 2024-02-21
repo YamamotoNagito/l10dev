@@ -102,7 +102,7 @@
         </v-row>
       </v-btn-toggle>
       <!-- 過去問・レポートの有無 -->
-       <v-row class="mt-5">
+      <v-row class="mt-5">
         <v-col>
           <p class="custom-text-style">過去問・レポートの所持</p>
         </v-col>
@@ -217,7 +217,6 @@
   import { ref, onMounted, watch } from "vue";
   import axios from "axios";
   import { useRouter } from "vue-router";
-  import Button from "./Button.vue";
   import { computed } from "vue";
   import { useDisplay } from "vuetify";
   import { useStore } from "vuex";
@@ -246,7 +245,8 @@
     { label: 2019, value: 2019 },
     { label: 2018, value: 2018 },
     { label: 2017, value: 2017 },
-    { label: "その他", value: "その他" }
+    // その他の場合は -1 として扱う
+    { label: "その他", value: -1 }
   ]);
 
   const attendanceConfirm = ref("なし");
