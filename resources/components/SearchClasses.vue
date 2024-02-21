@@ -846,20 +846,6 @@
   }
 
   .custom-background {
-    background: linear-gradient(to bottom, #ff971d 50px, /* 上部20%の色 */ #ffffff 50px /* 20%以降の色 */);
+    background: linear-gradient(to bottom, #ff971d 60px, /* 上部20%の色 */ #ffffff 60px /* 20%以降の色 */);
   }
-  /* .class-v-select >>> .v-field__input{
-    width: 100px;
-    font-size: 10px;
-    padding: 0;
-  } */
-  /* .class-v-select >>> .v-field__append-inner{
-    width: 15px;
-  } */
-  /* .class-v-select >>> .v-field__clearable{
-    width: 15px;
-  } */
-  /* .class-v-expansion-panel-text >>> .v-expansion-panel-text__wrapper{
-    padding: 10px;
-  } */
 </style>
