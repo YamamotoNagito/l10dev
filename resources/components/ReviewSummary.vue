@@ -25,23 +25,20 @@
   };
 
   const menuItems = ref([
-    { title: "編集する", action: "edit", style: "" },
+    // { title: "編集する", action: "edit", style: "" },
     { title: "削除する", action: "delete", style: "color: red" }
   ]);
 
   const showDialog = ref(false); // ダイアログの表示状態
 
-  // ケバブボタンのクリックイベント
   const handleMenuItemClick = async (item) => {
     console.log("Menu item clicked:", item.title);
     try {
       if (item.action === "edit") {
-        // .jsにurlを定義していないが編集ページ遷移かつreviewDataを渡す
+        // 編集ページへの遷移処理をここに記述
         // router.push({ name: 'EditPage', params: { reviewId: props.reviewData.id } });
-        console.log(response.data);
       } else if (item.action === "delete") {
         showDialog.value = true;
-        // console.log(requestReviewId.value);
       }
     } catch (error) {
       console.error("API call failed:", error);
