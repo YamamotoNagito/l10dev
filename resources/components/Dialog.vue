@@ -3,21 +3,10 @@ import { defineProps, defineEmits } from "vue"
 
 const props = defineProps(["showDialog", "messageInDialog"])
 const emits = defineEmits(["toggleShowDialog"])
-
-const toggleShowDialog = () => {
-    emits("toggleShowDialog")
-}
-
-
-
-// const handleClick = () => {
-//   // 親コンポーネントの showDialog プロパティを反転させる
-//     $defineEmits(toggleShowDialog)
-// }
 </script>
 
 <template>
-    <v-dialog v-model="props.showDialog" persistent width="320px" @click="toggleShowDialog">
+    <v-dialog v-model="props.showDialog" persistent width="320px" @click="emits('toggleShowDialog')">
         <v-card>
             <v-row>
                 <v-col cols="1">
@@ -27,7 +16,7 @@ const toggleShowDialog = () => {
                 </v-col>
                 <v-col cols="11">
                     <v-card-text><p class="text-center text-red">
-                            {{ props.messageInDialog }}
+                            {{ messageInDialog }}
                     </p></v-card-text>
                 </v-col>
             </v-row>
