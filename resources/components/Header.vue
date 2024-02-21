@@ -50,10 +50,10 @@
       });
   };
 
-  const items = ref([
-    { title: "プロフィール", action: "profile" },
-    { title: "ログアウト", action: "logout" }
-  ]);
+  // const items = ref([
+  //   { title: "プロフィール", action: "profile" },
+  //   { title: "ログアウト", action: "logout" }
+  // ]);
 </script>
 <template>
   <v-app-bar color="primary" elevation="0" absolute height="80" class="d-flex">
@@ -95,11 +95,11 @@
           レビュー投稿
         </v-btn>
 
-        <v-btn v-if="store.getters.isLoggedIn" variant="text" color="white">
+        <!-- <v-btn v-if="store.getters.isLoggedIn" variant="text" color="white">
           <v-icon>mdi-menu</v-icon>
-        </v-btn>
+        </v-btn> -->
 
-        <v-menu v-if="store.getters.isLoggedIn" activator="parent" location="start">
+        <!-- <v-menu v-if="store.getters.isLoggedIn" activator="parent" location="start">
           <v-list>
             <v-list-item v-for="(item, index) in items" :key="index" :value="index" @click="handleMenuItemClick(item)">
               <v-list-item-title :style="item.title === '削除する' ? 'color: red' : ''">{{
@@ -107,9 +107,9 @@
               }}</v-list-item-title>
             </v-list-item>
           </v-list>
-        </v-menu>
+        </v-menu> -->
 
-        <v-dialog v-model="showDialog" persistent max-width="300px">
+        <!-- <v-dialog v-model="showDialog" persistent max-width="300px">
           <v-card>
             <v-card-title class="text-h5">確認</v-card-title>
             <v-card-text>このレビューを削除してもよろしいですか？</v-card-text>
@@ -119,7 +119,7 @@
               <v-btn color="red" text @click="deleteReview">削除</v-btn>
             </v-card-actions>
           </v-card>
-        </v-dialog>
+        </v-dialog> -->
 
         <!-- <v-btn variant="text" color="background" v-if="store.getters.isLoggedIn" @click="clickProfileButton">
           <v-icon>mdi-account</v-icon>
