@@ -102,7 +102,7 @@
         </v-row>
       </v-btn-toggle>
       <!-- 過去問・レポートの有無 -->
-       <v-row class="mt-5">
+      <v-row class="mt-5">
         <v-col>
           <p class="custom-text-style">過去問・レポートの所持</p>
         </v-col>
@@ -194,16 +194,7 @@
         </v-col>
       </v-row>
 
-      <v-row v-if="errorMessage">
-        <v-col>
-          <p class="error-message">{{ errorMessage }}</p>
-        </v-col>
-      </v-row>
-      <v-row v-if="message">
-        <v-col>
-          <p class="error-message">{{ message }}</p>
-        </v-col>
-      </v-row>
+      <v-alert v-if="errorMessage" type="error" variant="tonal" class="mb-6">{{ errorMessage }}</v-alert>
       <v-row>
         <v-col class="text-center custom-text-style">
           <v-btn text="投稿する" color="primary" @click="clickButton"></v-btn>
@@ -217,7 +208,6 @@
   import { ref, onMounted, watch } from "vue";
   import axios from "axios";
   import { useRouter } from "vue-router";
-  import Button from "./Button.vue";
   import { computed } from "vue";
   import { useDisplay } from "vuetify";
   import { useStore } from "vuex";
@@ -233,7 +223,6 @@
   // router.currentRoute.value.queryに授業名と担当教員名が入っているはず
   const router = useRouter();
 
-  const message = ref("");
   const errorMessage = ref(""); // エラーメッセージ用の変数
 
   const attendanceYear = ref(2024);
@@ -399,8 +388,7 @@
           // フォームのリセット
           resetForm();
         } else {
-          console.log(response.data.message);
-          message.value = response.data.message;
+          errorMessage.value = response.data.message;
         }
 
         // その他の処理
@@ -456,12 +444,13 @@
       candidateConditionsList.value = response.data; // 仮に response.data が候補条件のリストであると仮定
       makeDefaultCandidateLectureNameList();
     } catch (error) {
-      if (error.response) {
+      if (error?.response?.data) {
         // サーバーからのエラーレスポンスがある場合
-        console.error(error.response.data); // エラーレスポンスをコンソールに出力
+        errorMessage.value = error.response.data?.message;
       } else {
         // リクエストがサーバーに届かなかった場合など
-        console.error(error.message);
+        errorMessage.value =
+          "登録できませんでした. サーバーのエラー, または既に使用されているメールアドレスである可能性があります. ";
       }
     }
   };
@@ -523,9 +512,5 @@
   }
   .custom-text-style {
     @apply text-md-h5 text-sm-h6;
-  }
-  .error-message {
-    color: red;
-    font-weight: bold;
   }
 </style>
