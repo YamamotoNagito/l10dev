@@ -71,27 +71,27 @@
           授業検索
         </v-btn>
         <v-btn
+          v-if="!store.getters.isLoggedIn"
           variant="text"
           color="background"
-          v-if="!store.getters.isLoggedIn"
           @click="router.push({ name: 'login' })"
         >
           <v-icon>mdi-login</v-icon>
           ログイン
         </v-btn>
         <v-btn
+          v-if="store.getters.isLoggedIn"
           variant="text"
           color="background"
-          v-if="store.getters.isLoggedIn"
           @click="router.push({ name: 'class/post' })"
         >
           <v-icon>mdi-pencil</v-icon>
           レビュー投稿
         </v-btn>
         <v-btn
+          v-if="store.getters.isLoggedIn"
           variant="text"
           color="background"
-          v-if="store.getters.isLoggedIn"
           @click="router.push({ name: 'mypage' })"
         >
           <v-icon>mdi-menu</v-icon>

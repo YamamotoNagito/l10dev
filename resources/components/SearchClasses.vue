@@ -2,7 +2,7 @@
   import { ref, watch, onMounted } from "vue";
   import { useRouter } from "vue-router";
   import axios from "axios";
-  import Dialog from "./shared/Dialog.vue";
+  import Dialog from "./shared/ComfirmDialog.vue";
 
   const router = useRouter();
   // どっちのタブを開くのか，情報を格納する変数
