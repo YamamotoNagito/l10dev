@@ -51,20 +51,18 @@
   };
 </script>
 <template>
-  <v-app-bar color="primary" elevation="0" absolute height="50">
-    <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer" />
+  <v-app-bar color="primary" elevation="0" absolute height="80">
     <!-- <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
       <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
     </v-btn> -->
 
-    <v-toolbar-title
-      color="background"
-      class="hidden-md-and-down"
+    <v-app-bar-title
+      class="text-white hidden-md-and-down"
       style="cursor: pointer"
       @click="router.push({ name: 'welcome' })"
     >
       かえで
-    </v-toolbar-title>
+    </v-app-bar-title>
     <v-spacer />
     <v-btn variant="text" color="background" @click="router.push({ name: 'welcome' })">
       <v-icon>mdi-magnify</v-icon>
@@ -76,19 +74,29 @@
       ログイン
     </v-btn>
 
-    <v-btn v-if="store.getters.isLoggedIn" @click="router.push({ name: 'class/post' })">
+    <v-btn
+      variant="text"
+      color="background"
+      v-if="store.getters.isLoggedIn"
+      @click="router.push({ name: 'class/post' })"
+    >
       <v-icon>mdi-pencil</v-icon>
       レビュー投稿
     </v-btn>
 
-    <v-btn v-if="store.getters.isLoggedIn" @click="clickProfileButton">
+    <v-btn variant="text" color="background" v-if="store.getters.isLoggedIn" @click="clickProfileButton">
       <v-icon>mdi-account</v-icon>
       プロフィール
+    </v-btn>
+
+    <v-btn variant="text" color="white" @click="clickLogoutButton">
+      <v-icon>mdi-logout</v-icon>
+      ログアウト
     </v-btn>
   </v-app-bar>
 
   <!-- ハンバーガーメニューの中身（サイドバー） -->
-  <v-navigation-drawer v-model="drawer" temporary>
+  <!-- <v-navigation-drawer v-model="drawer" temporary>
     <v-list nav>
       <v-list-item>
         <v-btn block variant="text" @click="clickProfileButton">
@@ -103,7 +111,7 @@
         </v-btn>
       </v-list-item>
     </v-list>
-  </v-navigation-drawer>
+  </v-navigation-drawer> -->
 </template>
 
 <style></style>

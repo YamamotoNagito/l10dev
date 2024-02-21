@@ -26,9 +26,7 @@
 
 <template>
   <!-- 検索機能 -->
-  <SearchClasses class="mt-6"></SearchClasses>
-
-  <!-- <p class="text-center text-h4">授業一覧</p> -->
+  <SearchClasses></SearchClasses>
 
   <!-- ここから検索で出てきた授業のリスト -->
   <v-container class="d-flex flex-column align-center ga-5">

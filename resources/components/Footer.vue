@@ -1,10 +1,6 @@
 <template>
-  <v-footer class="bg-grey-lighten-1" app absolute>
+  <v-footer class="bg-third" app absolute>
     <v-row no-gutters>
-      <v-col class="mt-4" cols="12">
-        <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
-        <span class="ml-2">かえで</span>
-      </v-col>
       <v-col cols="0" sm="0" md="2" lg="2" xl="2"></v-col>
       <v-col cols="6" sm="3" md="2" lg="2" xl="2" class="d-flex justify-center">
         <v-btn variant="text" rounded="xl" @click="navigateToExternalUrl"> かえで製作委員会 </v-btn>
