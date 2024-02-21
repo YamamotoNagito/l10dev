@@ -2,10 +2,13 @@
   import { ref, watch, onMounted } from "vue";
   import { useRouter } from "vue-router";
   import axios from "axios";
+  import Dialog from "./Dialog.vue"
 
   const router = useRouter();
   // どっちのタブを開くのか，情報を格納する変数
   const tab = ref(null);
+
+  const showDialog = ref(false)
 
   // 条件で検索する際はこのデータをバックに送る
   const detailedCondition = ref({
@@ -186,10 +189,8 @@ const skillRateList = [
     lectureCode: null
   });
 
-  // 講義コードで検索するタブのメッセージ
-  const messageInLectureCodeTab = ref("");
-  // 条件で検索するタブのメッセージ
-  const messageInConditionalTab = ref("");
+// メッセージ
+const messageInDialog = ref("")
 
   // オブジェクトからvalueがNULLのkeyとvalueのペアを削除する関数
   function removeNullValues(obj) {
@@ -255,13 +256,14 @@ const skillRateList = [
   //検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
   const sendQueryToClassListView = async () => {
     // メッセージを更新して空に
-    messageInConditionalTab.value = "";
+    messageInDialog.value = "";
     if (
       //バリデーションチェック(どれか1つでも入力していたら(nullでなければ)通過)
       isAllNull(detailedCondition.value)
     ) {
       //バリデーションが通らなかったときに実行
-      messageInConditionalTab.value = "検索する条件を入力してください";
+      messageInDialog.value = "検索する条件を入力してください";
+      showDialog.value = true
       // console.log(
       //   'バリデーション通過ならず',
       //   "lectureName: ",detailedCondition.value.lectureName,  '\n',
@@ -279,7 +281,8 @@ const skillRateList = [
       //   "skillLevelString: ",skillLevelString.value,
       // );
     } else if(!allCorrectMinMax()){
-      messageInConditionalTab.value = "評価値の大小関係を修正してください"
+      messageInDialog.value = "評価値の大小関係を修正してください"
+      showDialog.value=true
     }
     else{
       //バリデーション通過時に実行
@@ -346,7 +349,8 @@ const skillRateList = [
         const lectureId = response.data.lectureId;
         router.push({ path: `class/${lectureId}/detail` }, { params: lectureId });
       } else {
-        messageInLectureCodeTab.value = "存在しない講義コードです．";
+        messageInDialog.value = "存在しない講義コードです．";
+        showDialog.value = true
       }
 
       // その他の処理
@@ -450,374 +454,376 @@ const skillRateList = [
 </script>
 
 <template>
-  <v-container class="mb-8">
     <v-row justify="center">
-      <v-card width="900px">
-        <v-tabs v-model="tab" align-tabs="center" height="60px">
-          <v-tab value="one" class="tab-name">条件で探す</v-tab>
-          <v-tab value="two" class="tab-name">講義コードで探す</v-tab>
-        </v-tabs>
-
-        <v-card-text class="px-0 px-sm-4 px-md-4 px-lg-4">
-          <v-window v-model="tab">
-            <v-window-item value="one">
-              <v-container class="category-name-and-content-container">
-                <p class="category-name">授業名</p>
-                <v-combobox
-                  v-model="detailedCondition.lectureName"
-                  clearable
-                  placeholder="一攫千金特論"
-                  :items="candidateLectureNameList"
-                  variant="outlined"
-                  prepend-inner-icon="mdi-magnify"
-                ></v-combobox>
-              </v-container>
-              <v-container class="category-name-and-content-container">
-                <p class="category-name">担当教員名</p>
-                <v-combobox
-                  v-model="detailedCondition.teacherName"
-                  clearable
-                  placeholder="広大太郎"
-                  :items="candidateTeacherNameList"
-                  variant="outlined"
-                  prepend-inner-icon="mdi-magnify"
-                ></v-combobox>
-              </v-container>
-              <!-- 他の条件についても同様にコードを追加 -->
-
-              <v-expansion-panels class="mb-3">
-                <v-expansion-panel elevation="0" bg-color="" collapse-icon="mdi-magnify">
-                  <v-expansion-panel-title >
-                    <v-row>
-                      <v-col cols="12" class="d-flex justify-center">
-                        詳細検索
-                      </v-col>
-                    </v-row>
-                  </v-expansion-panel-title>
-                  <v-expansion-panel-text class="class-v-expansion-panel-text">
-                    <!-- 以下、他の条件の追加 -->
-
-                    <!-- 大学に関する区分（開講部局，開講区分，開講場所） -->
-                    <v-row class="my-3">
-                      <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
-                        <v-row>
-                          <p class="category-name" >開講場所</p>
-                        </v-row>
-                        <v-row>
-                          <v-select
-                            v-model="detailedCondition.location"
-                            :items="locationList"
-                            class="pulldown-list no-margin-padding"
-                            clearable
-                            variant="outlined"
-                          ></v-select>
-                        </v-row>
-                      </v-col>
-                      <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
-                        <v-row>
-                          <p class="category-name" >開講部局</p>
-                        </v-row>
-                        <v-row>
-                          <v-select
-                            v-model="detailedCondition.faculty"
-                            :items="facultyList"
-                            class="pulldown-list no-margin-padding"
-                            clearable
-                            variant="outlined"
-                          ></v-select>
-                        </v-row>
-                      </v-col>
-                      <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
-                        <v-row>
-                          <p class="category-name">開講区分</p>
-                        </v-row>
-                        <v-row>
-                          <v-select
-                            v-model="detailedCondition.category"
-                            :items="categoryList"
-                            class="pulldown-list no-margin-padding"
-                            clearable
-                            variant="outlined"
-                          ></v-select>
-                        </v-row>
-                      </v-col>
-                    </v-row>
-
-                    <!-- 時間に関する区分（ターム，曜日，時間） -->
-                    <v-row class="my-3">
-                      <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
-                        <v-row>
-                          <p class="category-name">ターム</p>
-                        </v-row>
-                        <v-row>
-                          <v-select
-                            v-model="detailedCondition.term"
-                            :items="termList"
-                            class="pulldown-list no-margin-padding"
-                            clearable
-                            variant="outlined"
-                          ></v-select>
-                        </v-row>
-                      </v-col>
-                      <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
-                        <v-row>
-                          <p class="category-name">曜日</p>
-                        </v-row>
-                        <v-row>
-                          <v-select
-                            v-model="detailedCondition.dayOfWeek"
-                            :items="dayOfWeekList"
-                            class="pulldown-list no-margin-padding"
-                            clearable
-                            variant="outlined"
-                          ></v-select>
-                        </v-row>
-                      </v-col>
-                      <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
-                        <v-row>
-                          <p class="category-name">時間</p>
-                        </v-row>
-                        <v-row>
-                          <v-select
-                            v-model="detailedCondition.timePeriod"
-                            :items="timePeriodList"
-                            class="pulldown-list no-margin-padding"
-                            clearable
-                            variant="outlined"
-                          ></v-select>
-                        </v-row>
-                      </v-col>
-                    </v-row>
-
-                    <!-- 履修年次に関する区分 -->
-                    <v-row class="my-3">
-                      <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
-                        <v-row>
-                          <p class="category-name">履修年次</p>
-                        </v-row>
-                        <v-row>
-                          <v-select
-                            v-model="detailedCondition.grade"
-                            :items="gradeList"
-                            class="pulldown-list no-margin-padding"
-                            clearable
-                            variant="outlined"
-                          ></v-select>
-                        </v-row>
-                      </v-col>
-                    </v-row>
-
-                    <!-- 区切り線 -->
-                    <v-divider
-                      :thickness="1"
-                      class="border-opacity-100"
-                      color="primary"
-                    ></v-divider>
-
-                    <!-- 総合評価 -->
-                    <v-row class="my-3">
-                      <v-col>
-                        <!-- 表題 -->
-                        <v-row>
-                          <v-col cols="12">
-                            <p class="category-name d-flex justify-center">総合評価</p>
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <!-- 下限 -->
-                          <v-col cols="5.5">
+      <v-col>
+        <v-card max-width="900px" class="mx-auto">
+          <v-tabs v-model="tab" align-tabs="center" height="60px">
+            <v-tab value="one" class="tab-name">条件で探す</v-tab>
+            <v-tab value="two" class="tab-name">講義コードで探す</v-tab>
+          </v-tabs>
+  
+          <v-card-text class="px-0 px-sm-4 px-md-4 px-lg-4">
+            <v-window v-model="tab">
+              <v-window-item value="one">
+                <v-container class="category-name-and-content-container">
+                  <p class="category-name">授業名</p>
+                  <v-combobox
+                    v-model="detailedCondition.lectureName"
+                    clearable
+                    placeholder="一攫千金特論"
+                    :items="candidateLectureNameList"
+                    variant="outlined"
+                    prepend-inner-icon="mdi-magnify"
+                  ></v-combobox>
+                </v-container>
+                <v-container class="category-name-and-content-container">
+                  <p class="category-name">担当教員名</p>
+                  <v-combobox
+                    v-model="detailedCondition.teacherName"
+                    clearable
+                    placeholder="広大太郎"
+                    :items="candidateTeacherNameList"
+                    variant="outlined"
+                    prepend-inner-icon="mdi-magnify"
+                  ></v-combobox>
+                </v-container>
+                <!-- 他の条件についても同様にコードを追加 -->
+  
+                <v-expansion-panels class="mb-3">
+                  <v-expansion-panel elevation="0" bg-color="" collapse-icon="mdi-magnify">
+                    <v-expansion-panel-title >
+                      <v-row>
+                        <v-col cols="12" class="d-flex justify-center">
+                          <p class="pl-5">詳細検索</p>
+                        </v-col>
+                      </v-row>
+                    </v-expansion-panel-title>
+                    <v-expansion-panel-text class="class-v-expansion-panel-text">
+                      <!-- 以下、他の条件の追加 -->
+  
+                      <!-- 大学に関する区分（開講部局，開講区分，開講場所） -->
+                      <v-row class="my-3">
+                        <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
+                          <v-row>
+                            <p class="category-name" >開講場所</p>
+                          </v-row>
+                          <v-row>
                             <v-select
-                              v-model="detailedCondition.totalEvaluation.min"
-                              label="下限"
-                              :items="evaluationRateList"
-                              item-value="rate"
-                              item-text="title"
-                              class="pulldown-list no-margin-padding class-v-select"
+                              v-model="detailedCondition.location"
+                              :items="locationList"
+                              class="pulldown-list no-margin-padding"
                               clearable
                               variant="outlined"
-                              ></v-select>
-                          </v-col>
-                          <v-col cols="1" class="d-flex justify-center mt-4">
-                            <p>〜</p>
-                          </v-col>
-                          <!-- 上限 -->
-                          <v-col cols="5.5">
+                            ></v-select>
+                          </v-row>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
+                          <v-row>
+                            <p class="category-name" >開講部局</p>
+                          </v-row>
+                          <v-row>
                             <v-select
-                              v-model="detailedCondition.totalEvaluation.max"
-                              label="上限"
-                              :items="evaluationRateList"
-                              item-value="rate"
-                              item-text="title"
-                              class="pulldown-list no-margin-padding class-v-select"
+                              v-model="detailedCondition.faculty"
+                              :items="facultyList"
+                              class="pulldown-list no-margin-padding"
                               clearable
                               variant="outlined"
-                              ></v-select>
-                          </v-col>
-                        </v-row>
-                      </v-col>
-                    </v-row>
-                    <!-- 単位取得のしやすさ -->
-                    <v-row class="my-3">
-                      <v-col>
-                        <!-- 表題 -->
-                        <v-row>
-                          <v-col cols="12">
-                            <p class="category-name d-flex justify-center">単位取得のしやすさ</p>
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <!-- 下限 -->
-                          <v-col cols="5.5">
+                            ></v-select>
+                          </v-row>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
+                          <v-row>
+                            <p class="category-name">開講区分</p>
+                          </v-row>
+                          <v-row>
                             <v-select
-                              v-model="detailedCondition.creditLevel.min"
-                              label="下限"
-                              :items="creditRateList"
-                              item-value="rate"
-                              item-text="title"
-                              class="pulldown-list no-margin-padding class-v-select"
+                              v-model="detailedCondition.category"
+                              :items="categoryList"
+                              class="pulldown-list no-margin-padding"
                               clearable
                               variant="outlined"
-                              ></v-select>
-                          </v-col>
-                          <v-col cols="1" class="d-flex justify-center mt-4">
-                            <p>〜</p>
-                          </v-col>
-                          <!-- 上限 -->
-                          <v-col cols="5.5">
+                            ></v-select>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+  
+                      <!-- 時間に関する区分（ターム，曜日，時間） -->
+                      <v-row class="my-3">
+                        <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
+                          <v-row>
+                            <p class="category-name">ターム</p>
+                          </v-row>
+                          <v-row>
                             <v-select
-                              v-model="detailedCondition.creditLevel.max"
-                              label="上限"
-                              :items="creditRateList"
-                              item-value="rate"
-                              item-text="title"
-                              class="pulldown-list no-margin-padding class-v-select"
+                              v-model="detailedCondition.term"
+                              :items="termList"
+                              class="pulldown-list no-margin-padding"
                               clearable
                               variant="outlined"
-                              ></v-select>
-                          </v-col>
-                        </v-row>
-                      </v-col>
-                    </v-row>
-
-                    <!-- 面白さ -->
-                    <v-row>
-                      <v-col>
-                        <!-- 表題 -->
-                        <v-row>
-                          <v-col cols="12">
-                            <p class="category-name d-flex justify-center">面白さ</p>
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <!-- 下限 -->
-                          <v-col cols="5.5">
+                            ></v-select>
+                          </v-row>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
+                          <v-row>
+                            <p class="category-name">曜日</p>
+                          </v-row>
+                          <v-row>
                             <v-select
-                              v-model="detailedCondition.interestLevel.min"
-                              label="下限"
-                              :items="interestRateList"
-                              item-value="rate"
-                              item-text="title"
-                              class="pulldown-list no-margin-padding class-v-select"
+                              v-model="detailedCondition.dayOfWeek"
+                              :items="dayOfWeekList"
+                              class="pulldown-list no-margin-padding"
                               clearable
                               variant="outlined"
-                              ></v-select>
-                          </v-col>
-                          <v-col cols="1" class="d-flex justify-center mt-4">
-                            <p>〜</p>
-                          </v-col>
-                          <!-- 上限 -->
-                          <v-col cols="5.5">
+                            ></v-select>
+                          </v-row>
+                        </v-col>
+                        <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
+                          <v-row>
+                            <p class="category-name">時間</p>
+                          </v-row>
+                          <v-row>
                             <v-select
-                              v-model="detailedCondition.interestLevel.max"
-                              label="上限"
-                              :items="interestRateList"
-                              item-value="rate"
-                              item-text="title"
-                              class="pulldown-list no-margin-padding class-v-select"
+                              v-model="detailedCondition.timePeriod"
+                              :items="timePeriodList"
+                              class="pulldown-list no-margin-padding"
                               clearable
                               variant="outlined"
-                              ></v-select>
-                          </v-col>
-                        </v-row>
-                      </v-col>
-                    </v-row>
-
-                    <!-- スキルが身につくか -->
-                    <v-row>
-                      <v-col>
-                        <!-- 表題 -->
-                        <v-row>
-                          <v-col cols="12">
-                            <p class="category-name d-flex justify-center">スキルが身につくか</p>
-                          </v-col>
-                        </v-row>
-                        <v-row>
-                          <!-- 下限 -->
-                          <v-col cols="5.5">
+                            ></v-select>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+  
+                      <!-- 履修年次に関する区分 -->
+                      <v-row class="my-3">
+                        <v-col cols="12" sm="12" md="4" lg="4" class="px-5">
+                          <v-row>
+                            <p class="category-name">履修年次</p>
+                          </v-row>
+                          <v-row>
                             <v-select
-                              v-model="detailedCondition.skillLevel.min"
-                              label="下限"
-                              :items="skillRateList"
-                              item-value="rate"
-                              item-text="title"
-                              class="pulldown-list no-margin-padding class-v-select"
+                              v-model="detailedCondition.grade"
+                              :items="gradeList"
+                              class="pulldown-list no-margin-padding"
                               clearable
                               variant="outlined"
-                              ></v-select>
-                          </v-col>
-                          <v-col cols="1" class="d-flex justify-center mt-4">
-                            <p>〜</p>
-                          </v-col>
-                          <!-- 上限 -->
-                          <v-col cols="5.5">
-                            <v-select
-                              v-model="detailedCondition.skillLevel.max"
-                              label="上限"
-                              :items="skillRateList"
-                              item-value="rate"
-                              item-text="title"
-                              class="pulldown-list no-margin-padding class-v-select"
-                              clearable
-                              variant="outlined"
-                              ></v-select>
-                          </v-col>
-                        </v-row>
-                      </v-col>
-                    </v-row>
-                  </v-expansion-panel-text>
-                </v-expansion-panel>
-              </v-expansion-panels>
-
-              <p class="text-center">{{ messageInConditionalTab }}</p>
-              <v-btn color="orange-darken-1" @click="sendQueryToClassListView">
-                <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
-              </v-btn>
-            </v-window-item>
-
-            <v-window-item value="two">
-              <v-container class="category-and-content-container">
-                <p class="category-name">講義コード</p>
-                <v-text-field
-                  v-model="searchClassByLectureCode.lectureCode"
-                  placeholder="KA*******"
-                  clearable
-                  variant="outlined"
-                ></v-text-field>
-              </v-container>
-              <v-container class="d-flex">
-                <v-btn color="primary" @click="searchByLectureCode">
-                  <v-icon start icon="mdi-checkbox-marked-circle"></v-icon>検索
-                </v-btn>
-                <p class="text-center">
-                  {{ messageInLectureCodeTab }}
-                </p>
-              </v-container>
-            </v-window-item>
-          </v-window>
-        </v-card-text>
-      </v-card>
+                            ></v-select>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+  
+                      <!-- 区切り線 -->
+                      <v-divider
+                        :thickness="1"
+                        class="border-opacity-100"
+                        color="primary"
+                      ></v-divider>
+  
+                      <!-- 総合評価 -->
+                      <v-row class="my-3">
+                        <v-col>
+                          <!-- 表題 -->
+                          <v-row>
+                            <v-col cols="12">
+                              <p class="category-name d-flex justify-center">総合評価</p>
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <!-- 下限 -->
+                            <v-col cols="5.5">
+                              <v-select
+                                v-model="detailedCondition.totalEvaluation.min"
+                                label="下限"
+                                :items="evaluationRateList"
+                                item-value="rate"
+                                item-text="title"
+                                class="pulldown-list no-margin-padding class-v-select"
+                                clearable
+                                variant="outlined"
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="1" class="d-flex justify-center mt-4">
+                              <p>〜</p>
+                            </v-col>
+                            <!-- 上限 -->
+                            <v-col cols="5.5">
+                              <v-select
+                                v-model="detailedCondition.totalEvaluation.max"
+                                label="上限"
+                                :items="evaluationRateList"
+                                item-value="rate"
+                                item-text="title"
+                                class="pulldown-list no-margin-padding class-v-select"
+                                clearable
+                                variant="outlined"
+                                ></v-select>
+                            </v-col>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+                      <!-- 単位取得のしやすさ -->
+                      <v-row class="my-3">
+                        <v-col>
+                          <!-- 表題 -->
+                          <v-row>
+                            <v-col cols="12">
+                              <p class="category-name d-flex justify-center">単位取得のしやすさ</p>
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <!-- 下限 -->
+                            <v-col cols="5.5">
+                              <v-select
+                                v-model="detailedCondition.creditLevel.min"
+                                label="下限"
+                                :items="creditRateList"
+                                item-value="rate"
+                                item-text="title"
+                                class="pulldown-list no-margin-padding class-v-select"
+                                clearable
+                                variant="outlined"
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="1" class="d-flex justify-center mt-4">
+                              <p>〜</p>
+                            </v-col>
+                            <!-- 上限 -->
+                            <v-col cols="5.5">
+                              <v-select
+                                v-model="detailedCondition.creditLevel.max"
+                                label="上限"
+                                :items="creditRateList"
+                                item-value="rate"
+                                item-text="title"
+                                class="pulldown-list no-margin-padding class-v-select"
+                                clearable
+                                variant="outlined"
+                                ></v-select>
+                            </v-col>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+  
+                      <!-- 面白さ -->
+                      <v-row>
+                        <v-col>
+                          <!-- 表題 -->
+                          <v-row>
+                            <v-col cols="12">
+                              <p class="category-name d-flex justify-center">面白さ</p>
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <!-- 下限 -->
+                            <v-col cols="5.5">
+                              <v-select
+                                v-model="detailedCondition.interestLevel.min"
+                                label="下限"
+                                :items="interestRateList"
+                                item-value="rate"
+                                item-text="title"
+                                class="pulldown-list no-margin-padding class-v-select"
+                                clearable
+                                variant="outlined"
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="1" class="d-flex justify-center mt-4">
+                              <p>〜</p>
+                            </v-col>
+                            <!-- 上限 -->
+                            <v-col cols="5.5">
+                              <v-select
+                                v-model="detailedCondition.interestLevel.max"
+                                label="上限"
+                                :items="interestRateList"
+                                item-value="rate"
+                                item-text="title"
+                                class="pulldown-list no-margin-padding class-v-select"
+                                clearable
+                                variant="outlined"
+                                ></v-select>
+                            </v-col>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+  
+                      <!-- スキルが身につくか -->
+                      <v-row>
+                        <v-col>
+                          <!-- 表題 -->
+                          <v-row>
+                            <v-col cols="12">
+                              <p class="category-name d-flex justify-center">スキルが身につくか</p>
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <!-- 下限 -->
+                            <v-col cols="5.5">
+                              <v-select
+                                v-model="detailedCondition.skillLevel.min"
+                                label="下限"
+                                :items="skillRateList"
+                                item-value="rate"
+                                item-text="title"
+                                class="pulldown-list no-margin-padding class-v-select"
+                                clearable
+                                variant="outlined"
+                                ></v-select>
+                            </v-col>
+                            <v-col cols="1" class="d-flex justify-center mt-4">
+                              <p>〜</p>
+                            </v-col>
+                            <!-- 上限 -->
+                            <v-col cols="5.5">
+                              <v-select
+                                v-model="detailedCondition.skillLevel.max"
+                                label="上限"
+                                :items="skillRateList"
+                                item-value="rate"
+                                item-text="title"
+                                class="pulldown-list no-margin-padding class-v-select"
+                                clearable
+                                variant="outlined"
+                                ></v-select>
+                            </v-col>
+                          </v-row>
+                        </v-col>
+                      </v-row>
+                    </v-expansion-panel-text>
+                  </v-expansion-panel>
+                </v-expansion-panels>
+                <v-row justify="center" align="center">
+                  <v-col class="d-flex justify-center">
+                    <v-btn color="primary" @click="sendQueryToClassListView">
+                      <v-icon start icon="mdi-magnify" color="white"></v-icon><p class="text-white">検索</p>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-window-item>
+  
+              <v-window-item value="two">
+                <v-container class="category-and-content-container">
+                  <p class="category-name">講義コード</p>
+                  <v-text-field
+                    v-model="searchClassByLectureCode.lectureCode"
+                    placeholder="KA*******"
+                    clearable
+                    variant="outlined"
+                  ></v-text-field>
+                </v-container>
+                <v-row justify="center" align="center">
+                  <v-col cols="12" class="d-flex justify-center">
+                    <v-btn color="primary" @click="searchByLectureCode">
+                      <v-icon start icon="mdi-magnify" color="white"></v-icon><p class="text-white">検索</p>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-window-item>
+            </v-window>
+          </v-card-text>
+        </v-card>
+        <Dialog :showDialog="showDialog" :messageInDialog="messageInDialog" @toggleShowDialog="showDialog = !showDialog"></Dialog>
+      </v-col>
     </v-row>
-  </v-container>
 </template>
 
 <style scoped>
