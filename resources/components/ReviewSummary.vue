@@ -62,123 +62,117 @@ const deleteReview = async () => {
 
 <template>
   <v-row>
-    <v-col cols="12">
-      <v-row>
-        <!-- ユーザ名・授業名・星評価 -->
-        <v-col cols="10.5">
-          <v-row justify="center" align="center">
-            <v-col cols="12" sm="12" md="12" lg="12" class="pb-0">
-              <p class="text-h9 text-md-h5">{{ reviewData.userName }}</p>
+    <v-col cols="12" class="pa-2">
+      <v-card variant="outlined" class="ma-0">
+        <v-container>
+          <v-row>
+            <!-- ユーザ名・授業名・星評価 -->
+            <v-col cols="10.5">
+              <v-row justify="start" align="center">
+                <v-col cols="12" sm="12" md="12" lg="12" class="pb-0">
+                  <p class="text-h11"><span class="text-h6 text-blue">{{ reviewData.userName }}</span> : <span class="text-h11 text-grey-darken-2">{{reviewData.lectureName}}</span></p>
+                </v-col>
+              </v-row>
+              <v-row justify="start" align="center">
+                <v-col cols="12" sm="12" md="12" lg="12">
+                  <StarRading :total-evaluation="reviewData.totalEvaluation"></StarRading>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols=12 class="pb-0">
+                  <p class="text-h10">
+                {{ reviewData.comments }}
+              </p>
+                </v-col>
+              </v-row>
+              <v-row justify="start" align="center">
+                <v-col cols="12" sm="5" md="3" lg="3" class="pb-0">
+                    <p class="text-h10 text-grey">受講年度：{{ reviewData.attendanceYear }}年</p>
+                </v-col>
+              </v-row>
             </v-col>
-            <!-- 授業名をreviewDataから取得して表示する -->
-            <v-col cols="12" sm="12" md="12" lg="12" class="pb-0">
-              <p class="text-h10 text-md-h5">{{ reviewData.lectureName }}</p>
-            </v-col>
-            <v-col cols="12" sm="12" md="12" lg="12">
-              <StarRading :total-evaluation="reviewData.totalEvaluation"></StarRading>
+            <!-- 編集・削除ボタン -->
+            <v-col cols="1" class="pt-0" justify="end">
+              <v-btn v-if="reviewUserId === requestUserId" icon="mdi-dots-horizontal" variant="text"> </v-btn>
+              <v-menu v-if="reviewUserId === requestUserId" activator="parent" location="start">
+                <v-list>
+                  <v-list-item
+                    v-for="(item, index) in items"
+                    :key="index"
+                    :value="index"
+                    @click="handleMenuItemClick(item)"
+                  >
+                    <v-list-item-title :style="item.title === '削除する' ? 'color: red' : ''">{{
+                      item.title
+                    }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <!-- 編集・削除のモーダル -->
+              <v-dialog v-model="showDialog" persistent max-width="300px">
+                <v-card>
+                  <v-card-title class="text-h5">確認</v-card-title>
+                  <v-card-text>このレビューを削除してもよろしいですか？</v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="grey" text @click="showDialog = false">キャンセル</v-btn>
+                    <v-btn color="red" text @click="deleteReview">削除</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </v-col>
           </v-row>
-        </v-col>
-        <!-- 編集・削除ボタン -->
-        <v-col cols="1" class="pt-0">
-          <v-btn v-if="reviewUserId === requestUserId" icon="mdi-dots-horizontal" variant="text"> </v-btn>
-          <v-menu v-if="reviewUserId === requestUserId" activator="parent" location="start">
-            <v-list>
-              <v-list-item
-                v-for="(item, index) in items"
-                :key="index"
-                :value="index"
-                @click="handleMenuItemClick(item)"
-              >
-                <v-list-item-title :style="item.title === '削除する' ? 'color: red' : ''">{{
-                  item.title
-                }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <!-- 編集・削除のモーダル -->
-          <v-dialog v-model="showDialog" persistent max-width="300px">
-            <v-card>
-              <v-card-title class="text-h5">確認</v-card-title>
-              <v-card-text>このレビューを削除してもよろしいですか？</v-card-text>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="grey" text @click="showDialog = false">キャンセル</v-btn>
-                <v-btn color="red" text @click="deleteReview">削除</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" sm="" md="" lg="">
-          <p class="text-h10">
-            {{ reviewData.comments }}
-          </p>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" sm="" md="" lg="" class="pa-3">
-          <details class="detail-toggle">
-            <!-- summaryタグを使用してトグルみたいにした -->
-            <summary class="text-h6" >詳細</summary>
-            <v-row justify="start">
-              <v-col cols="12" sm="5" md="3" lg="3" class="pb-0">
-                <p class="text-h10">受講年度：{{ reviewData.attendanceYear }}年</p>
-              </v-col>
-              <v-col cols="12" sm="6" md="6" lg="6">
-                <p class="text-h10">投稿日：{{ reviewData.createdAt }}</p>
-              </v-col>
-            </v-row>
-            <v-row justify="center">
-              <v-col cols="12" sm="12" md="12" lg="6">
-                <v-table class="ma-5 review-table">
-                  <tbody>
-                    <tr>
-                      <td>評定</td>
-                      <td>{{ reviewData.grades }}</td>
-                    </tr>
-                    <tr>
-                      <td>出欠確認</td>
-                      <td>{{ reviewData.attendanceConfirm }}</td>
-                    </tr>
-                    <tr>
-                      <td>過去問の所持</td>
-                      <td>{{ reviewData.pastExamPossession }}</td>
-                    </tr>
-                    <tr>
-                      <td>日々の課題</td>
-                      <td>{{ reviewData.weeklyAssignments }}</td>
-                    </tr>
-                    <tr>
-                      <td>中間レポ・テスト</td>
-                      <td>{{ reviewData.midtermAssignments }}</td>
-                    </tr>
-                    <tr>
-                      <td>期末レポ・テスト</td>
-                      <td>{{ reviewData.finalAssignments }}</td>
-                    </tr>
-                  </tbody>
-                </v-table>
-              </v-col>
-              <v-col cols="12" sm="12" md="12" lg="5">
-                <RadarChart class="ma-5" :radar-chart-data="radarChartData"></RadarChart>
-              </v-col>
-            </v-row>
-          </details>
-        </v-col>
-      </v-row>
-    </v-col>
-  </v-row>
-  <v-row>
-    <v-col cols="12">
-      <!-- 区切り線 -->
-        <v-divider
-          :thickness="1"
-          class="border-opacity-100"
-          color="primary"
-        ></v-divider>
+    
+          <v-row>
+            <v-col cols="12" sm="" md="" lg="" class="pa-3">
+              <details class="detail-toggle">
+                <!-- summaryタグを使用してトグルみたいにした -->
+                <summary class="text-h7" >評定・カテゴリ別評価</summary>
+                <v-row justify="start">
+                  <v-col cols="12" sm="6" md="6" lg="6">
+                    <p class="text-h10 text-grey ml-5">投稿日：{{ reviewData.createdAt }}</p>
+                  </v-col>
+                </v-row>
+                <v-row justify="center">
+                  <v-col cols="12" sm="12" md="12" lg="6">
+                    <v-table class="ma-5 review-table">
+                      <tbody>
+                        <tr>
+                          <td>評定</td>
+                          <td>{{ reviewData.grades }}</td>
+                        </tr>
+                        <tr>
+                          <td>出欠確認</td>
+                          <td>{{ reviewData.attendanceConfirm }}</td>
+                        </tr>
+                        <tr>
+                          <td>過去問の所持</td>
+                          <td>{{ reviewData.pastExamPossession }}</td>
+                        </tr>
+                        <tr>
+                          <td>日々の課題</td>
+                          <td>{{ reviewData.weeklyAssignments }}</td>
+                        </tr>
+                        <tr>
+                          <td>中間レポ・テスト</td>
+                          <td>{{ reviewData.midtermAssignments }}</td>
+                        </tr>
+                        <tr>
+                          <td>期末レポ・テスト</td>
+                          <td>{{ reviewData.finalAssignments }}</td>
+                        </tr>
+                      </tbody>
+                    </v-table>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="12" lg="5">
+                    <RadarChart class="ma-5" :radar-chart-data="radarChartData"></RadarChart>
+                  </v-col>
+                </v-row>
+              </details>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
     </v-col>
   </v-row>
 </template>
