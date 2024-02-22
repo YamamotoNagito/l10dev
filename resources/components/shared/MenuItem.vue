@@ -1,5 +1,5 @@
 <template>
-  <v-menu activator="parent" location="bottom">
+  <v-menu activator="parent">
     <v-list>
       <v-list-item v-for="(item, index) in menuItems" :key="index" :value="index" @click="handleItemClick(item)">
         <v-list-item-title :style="item.style">

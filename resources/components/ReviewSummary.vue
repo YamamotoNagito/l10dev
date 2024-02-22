@@ -101,6 +101,7 @@
                 v-if="reviewUserId === requestUserId"
                 :menu-items="menuItems"
                 :on-menu-item-click="handleMenuItemClick"
+                location="left"
               ></menu-item>
               <!-- 編集・削除のモーダル -->
               <confirm-dialog
