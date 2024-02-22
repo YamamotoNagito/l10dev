@@ -3,7 +3,6 @@
   import { ref, onBeforeMount } from "vue";
   import axios from "axios";
   import ClassList from "../components/ClassList.vue";
-  import pageTitle from "../components/pageTitle.vue";
   import BaseUI from "../components/shared/BaseUI.vue";
 
   // searchClasses.vueで「検索」ボタンを押すととquery付きのpathでこのファイルのViewがrouter.pushで読み込まれる
@@ -21,7 +20,7 @@
     console.log("detailed condition is:");
     console.log(detailedCondition.value);
     try {
-      const response = await axios.post("/api/searchByConditions", detailedCondition.value);
+      const response = await axios.get("/api/searchByConditions", detailedCondition.value);
       console.log("response");
       console.log(response);
       classDataList.value = response.data;
