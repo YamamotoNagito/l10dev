@@ -13,6 +13,7 @@ use App\Models\Reviews;
 use App\Models\ReviewLogs;
 use App\Models\Lectures;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreReviewRequest;
 
 class ReviewsController extends Controller
 {
@@ -35,10 +36,22 @@ class ReviewsController extends Controller
   /**
    * Store a newly created resource in storage.
    */
-  public function store(Request $request)
+  public function store(StoreReviewRequest $request)
   {
     // リクエストデータをログに記録
     Log::Debug($request);
+
+    // 現在認証されているユーザーのIDを取得
+    $userId = auth()->id();
+
+    // ユーザーが存在しない場合にはエラーが出るようにする
+    if ($userId == null) {
+      return response()->json(['success' => false, 'message' => 'ユーザーが存在しません'], 401);
+    }
+    // セッションのユーザーIDとリクエストのユーザーIDが一致するかチェック
+    else if ($userId != $request['userId']) {
+      return response()->json(['success' => false, 'message' => 'ユーザーIDが一致しません'], 401);
+    }
 
     // レクチャーidの取得
     $lectureId = Lectures::where('lectureName', $request['lectureName'])
@@ -62,7 +75,7 @@ class ReviewsController extends Controller
                       ->where('lectureId', $lectureId)
                       ->value('lectureId');
     if($existingRecord){
-        return response()->json(['success' => false, 'message' => '既に同じユーザーと授業の組み合わせが存在します']);
+        return response()->json(['success' => false, 'message' => '既に同じユーザーと授業の組み合わせが存在します'], 400);
     }
 
 
@@ -102,30 +115,8 @@ class ReviewsController extends Controller
       'createdAt' => now(),
     ]);
 
-  //   $validated = $request->validate([
-  //     'lectureId' => 'required|exists:lectures,lectureId',
-  //     'userId' => 'required|exists:users,userId',
-  //     'attendance_year' => 'required|integer',
-  //     'attendance_confirm' => 'required|string',
-  //     'weekly_assignments' => 'required|string',
-  //     'midterm_assignments' => 'required|string',
-  //     'final_assignments' => 'required|string',
-  //     'past_exam_possession' => 'required|string',
-  //     'grades' => 'required|string|',
-  //     'credit_level' => 'required|integer',
-  //     'interest_level' => 'required|integer',
-  //     'skill_level' => 'required|integer',
-  //     'comments' => 'nullable|string|max:2048',
-  //     'is_visible' => 'required|boolean'
-  // ]);
-
-  // $review = new Reviews($validated);
-
-  // // レビューをデータベースに保存
-  // $review->save();
-
     // 登録処理を行う
-    return response()->json(['success' => true,'message' => '授業を登録します']);
+    return response()->json(['success' => true,'message' => 'レビューの投稿に成功しました！']);
   }
 
   /**

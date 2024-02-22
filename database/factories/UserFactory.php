@@ -18,11 +18,18 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'userName' => fake()->name(),
+            'userEmail' => fake()->unique()->safeEmail(),
+            'password' => bcrypt('password'), // ここではbcryptを使用してパスワードをハッシュ化
+            'universityName' => "広島大学", // デフォルトの大学名
+            'category' => fake()->word(), // 任意のカテゴリー名
+            'faculty' => fake()->word(), // 任意の学部名
+            'department' => fake()->word(), // 任意の学科名
+            'admissionYear' => fake()->year(), // 入学年
+            'isActive' => true, // デフォルトでアクティブ
+            'createdAt' => now(), // ユーザー作成日時
+            'updatedAt' => now(), // 最終更新日時
+            'lastLoginAt' => now(), // 最終ログイン日時
         ];
     }
 

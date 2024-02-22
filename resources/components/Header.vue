@@ -5,9 +5,6 @@
   import axios from "axios";
   // import { mdiAccount, mdiLogout } from '@mdi/js';
 
-  // ドロワーの開閉状態を管理する変数
-  const drawer = ref(false);
-
   const router = useRouter();
   const store = useStore();
 
@@ -49,36 +46,63 @@
         console.log(err);
       });
   };
+
+  // const items = ref([
+  //   { title: "プロフィール", action: "profile" },
+  //   { title: "ログアウト", action: "logout" }
+  // ]);
 </script>
 <template>
-  <v-app-bar color="background" elevation="1" absolute>
-    <v-app-bar-nav-icon v-if="store.getters.isLoggedIn" @click.stop="drawer = !drawer" />
-    <!-- <v-btn icon @click="navigateToWelcome" id="kaede-icon-btn">
-      <img :src="kaedeMainImg" alt="kaedeMainImg" width="40" height="40" />
-    </v-btn> -->
-
-    <v-toolbar-title class="hidden-md-and-down" style="cursor : pointer" @click="router.push({ name: 'welcome' })">
-      かえで ~広大生の学びを支える情報サイト~
-    </v-toolbar-title>
-    <v-spacer />
-    <v-btn @click="router.push({ name: 'welcome' })" variant="outlined" color="primary">
-      <v-icon>mdi-magnify</v-icon>
-      授業検索
-    </v-btn>
-
-    <v-btn v-if="!store.getters.isLoggedIn" @click="router.push({ name: 'login' })">
-      <v-icon>mdi-login</v-icon>
-      ログイン
-    </v-btn>
-
-    <v-btn v-if="store.getters.isLoggedIn" @click="router.push({ name: 'class/post' })">
-      <v-icon>mdi-pencil</v-icon>
-      レビュー投稿
-    </v-btn>
+  <v-app-bar color="primary" elevation="0" absolute height="80" class="d-flex">
+    <v-row align="center">
+      <v-col cols="0" sm="0" md="1" lg="1" xl="1"> </v-col>
+      <v-col cols="2" sm="2" md="2" lg="2" xl="2">
+        <v-toolbar-title
+          class="text-white hidden-md-and-down"
+          style="cursor: pointer"
+          @click="router.push({ name: 'welcome' })"
+        >
+          かえで
+        </v-toolbar-title>
+      </v-col>
+      <v-col cols="8" sm="8" md="8" lg="8" xl="8" class="d-flex justify-end ml-auto">
+        <v-btn variant="text" color="background" @click="router.push({ name: 'welcome' })">
+          <v-icon>mdi-magnify</v-icon>
+          授業検索
+        </v-btn>
+        <v-btn
+          v-if="!store.getters.isLoggedIn"
+          variant="text"
+          color="background"
+          @click="router.push({ name: 'login' })"
+        >
+          <v-icon>mdi-login</v-icon>
+          ログイン
+        </v-btn>
+        <v-btn
+          v-if="store.getters.isLoggedIn"
+          variant="text"
+          color="background"
+          @click="router.push({ name: 'class/post' })"
+        >
+          <v-icon>mdi-pencil</v-icon>
+          レビュー投稿
+        </v-btn>
+        <v-btn
+          v-if="store.getters.isLoggedIn"
+          variant="text"
+          color="background"
+          @click="router.push({ name: 'mypage' })"
+        >
+          <v-icon>mdi-menu</v-icon>
+        </v-btn>
+      </v-col>
+      <v-col cols="0" sm="0" md="1" lg="1" xl="1"></v-col>
+    </v-row>
   </v-app-bar>
 
   <!-- ハンバーガーメニューの中身（サイドバー） -->
-  <v-navigation-drawer v-model="drawer" temporary>
+  <!-- <v-navigation-drawer v-model="drawer" temporary>
     <v-list nav>
       <v-list-item>
         <v-btn block variant="text" @click="clickProfileButton">
@@ -86,12 +110,6 @@
           プロフィール
         </v-btn>
       </v-list-item>
-      <!-- <v-list-item>
-        <v-btn block variant="text" @click="router.push({ name: ''})">
-          <v-icon>mdi-cog</v-icon>
-            設定
-          </v-btn>
-        </v-list-item> -->
       <v-list-item>
         <v-btn block variant="text" color="red" @click="clickLogoutButton">
           <v-icon>mdi-logout</v-icon>
@@ -99,12 +117,7 @@
         </v-btn>
       </v-list-item>
     </v-list>
-  </v-navigation-drawer>
-
+  </v-navigation-drawer> -->
 </template>
 
-<style>
-  /* #kaede-icon-btn {
-    background-color: rgb(117, 105, 85);
-  } */
-</style>
+<style></style>
