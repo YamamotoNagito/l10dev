@@ -72,7 +72,12 @@
         <v-btn v-if="store.getters.isLoggedIn" variant="text" color="background" @click="toggleMenu">
           <v-icon>mdi-menu</v-icon>
         </v-btn>
-        <menu-item v-if="isMenuVisible" :menu-items="menuItems" :on-menu-item-click="handleMenuItemClick"></menu-item>
+        <menu-item
+          v-if="isMenuVisible"
+          :menu-items="menuItems"
+          :on-menu-item-click="handleMenuItemClick"
+          location="bottom"
+        ></menu-item>
       </v-col>
       <v-col cols="1" sm="1" md="1" lg="1" xl="1"></v-col>
     </v-row>
