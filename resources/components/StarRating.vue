@@ -5,9 +5,5 @@
 </script>
 
 <template>
-  <v-row>
-    <v-col class="py-0">
-      <v-rating readonly :length="5" :size="17" :model-value="totalEvaluation" active-color="blue"></v-rating>
-    </v-col>
-  </v-row>
+  <v-rating readonly :length="5" :size="20" :model-value="totalEvaluation" active-color="blue"></v-rating>
 </template>
