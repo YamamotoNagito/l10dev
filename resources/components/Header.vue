@@ -2,74 +2,55 @@
   import { ref } from "vue";
   import { useStore } from "vuex";
   import { useRouter } from "vue-router";
-  import axios from "axios";
+  import MenuItem from "./shared/MenuItem.vue";
   // import { mdiAccount, mdiLogout } from '@mdi/js';
 
   const router = useRouter();
   const store = useStore();
 
-  const navigateToWelcome = () => {
-    router.push({ name: "welcome" });
+  const isMenuVisible = ref(false);
+  const menuItems = ref([
+    { title: "プロフィール", action: "profile", style: "" },
+    { title: "ログアウト", action: "logout", style: "color: red" }
+  ]);
+
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
   };
 
-  const clickProfileButton = async () => {
-    // console.log("クリックされたで");
-    // console.log(store.getters.userInfo.id);
-
+  const handleMenuItemClick = async (item) => {
     try {
-      router.push({ name: "profile" });
-
-      // その他の処理
-    } catch (error) {
-      if (error.response) {
-        // サーバーからのエラーレスポンスがある場合
-        console.error(error.response.data); // エラーレスポンスをコンソールに出力
-      } else {
-        // リクエストがサーバーに届かなかった場合など
-        console.error(error.message);
-      }
-    }
-  };
-
-  const clickLogoutButton = async () => {
-    await axios
-      .post("/api/logout")
-      .then((response) => {
-        // ちゃんと送信できたか確認用
-        // console.log(response.data.success);
-        // if(response.data.success){
-        // }
+      if (item.action === "profile") {
+        await router.push({ name: "profile" });
+      } else if (item.action === "logout") {
+        // ログアウト処理を実行
         store.dispatch("logout");
-        router.push({ name: "welcome" });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        await router.push({ name: "login" });
+      }
+    } catch (error) {
+      console.error("ナビゲーションエラー:", error);
+      // エラー処理をここに記述
+    }
+    isMenuVisible.value = false;
   };
-
-  // const items = ref([
-  //   { title: "プロフィール", action: "profile" },
-  //   { title: "ログアウト", action: "logout" }
-  // ]);
 </script>
 <template>
   <v-app-bar color="primary" elevation="0" absolute height="80" class="d-flex">
     <v-row align="center">
-      <v-col cols="0" sm="0" md="1" lg="1" xl="1"> </v-col>
-      <v-col cols="2" sm="2" md="2" lg="2" xl="2">
-        <v-toolbar-title
-          class="text-white hidden-md-and-down"
-          style="cursor: pointer"
-          @click="router.push({ name: 'welcome' })"
-        >
+      <v-col cols="1" sm="1" md="1" lg="1" xl="1"> </v-col>
+      <v-col cols="2" sm="2" md="2" lg="2" xl="2" class="justify-start">
+        <v-toolbar-title class="text-white" style="cursor: pointer" @click="router.push({ name: 'welcome' })">
           かえで
         </v-toolbar-title>
       </v-col>
-      <v-col cols="8" sm="8" md="8" lg="8" xl="8" class="d-flex justify-end ml-auto">
+      <v-col cols="1" sm="3" md="3" lg="5" xl="5"></v-col>
+      <v-col cols="3" sm="2" md="2" lg="1" xl="1" class="justify-end">
         <v-btn variant="text" color="background" @click="router.push({ name: 'welcome' })">
           <v-icon>mdi-magnify</v-icon>
           授業検索
         </v-btn>
+      </v-col>
+      <v-col cols="3" sm="2" md="2" lg="1" xl="1" class="justify-center ma-auto">
         <v-btn
           v-if="!store.getters.isLoggedIn"
           variant="text"
@@ -88,36 +69,16 @@
           <v-icon>mdi-pencil</v-icon>
           レビュー投稿
         </v-btn>
-        <v-btn
-          v-if="store.getters.isLoggedIn"
-          variant="text"
-          color="background"
-          @click="router.push({ name: 'mypage' })"
-        >
+      </v-col>
+      <v-col cols="1" sm="1" md="1" lg="1" xl="1" class="justify-start">
+        <v-btn v-if="store.getters.isLoggedIn" variant="text" color="background" @click="toggleMenu">
           <v-icon>mdi-menu</v-icon>
         </v-btn>
+        <menu-item v-if="isMenuVisible" :menu-items="menuItems" :on-menu-item-click="handleMenuItemClick"></menu-item>
       </v-col>
-      <v-col cols="0" sm="0" md="1" lg="1" xl="1"></v-col>
+      <v-col cols="1" sm="1" md="1" lg="1" xl="1"></v-col>
     </v-row>
   </v-app-bar>
-
-  <!-- ハンバーガーメニューの中身（サイドバー） -->
-  <!-- <v-navigation-drawer v-model="drawer" temporary>
-    <v-list nav>
-      <v-list-item>
-        <v-btn block variant="text" @click="clickProfileButton">
-          <v-icon>mdi-account</v-icon>
-          プロフィール
-        </v-btn>
-      </v-list-item>
-      <v-list-item>
-        <v-btn block variant="text" color="red" @click="clickLogoutButton">
-          <v-icon>mdi-logout</v-icon>
-          ログアウト
-        </v-btn>
-      </v-list-item>
-    </v-list>
-  </v-navigation-drawer> -->
 </template>
 
 <style></style>
