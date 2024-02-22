@@ -36,21 +36,19 @@
 </script>
 <template>
   <v-app-bar color="primary" elevation="0" absolute height="80" class="d-flex">
-    <v-row align="center">
+    <v-row align="center" no-gutters>
       <v-col cols="1" sm="1" md="1" lg="1" xl="1"> </v-col>
       <v-col cols="2" sm="2" md="2" lg="2" xl="2" class="justify-start">
         <v-toolbar-title class="text-white" style="cursor: pointer" @click="router.push({ name: 'welcome' })">
           かえで
         </v-toolbar-title>
       </v-col>
-      <v-col cols="1" sm="3" md="3" lg="5" xl="5"></v-col>
-      <v-col cols="3" sm="2" md="2" lg="1" xl="1" class="justify-end">
+      <v-col cols="1" sm="3" md="3" lg="3" xl="3"></v-col>
+      <v-col cols="6" sm="4" md="4" lg="4" xl="4" class="d-flex justify-end ml-auto">
         <v-btn variant="text" color="background" @click="router.push({ name: 'welcome' })">
           <v-icon>mdi-magnify</v-icon>
           授業検索
         </v-btn>
-      </v-col>
-      <v-col cols="3" sm="2" md="2" lg="1" xl="1" class="justify-center ma-auto">
         <v-btn
           v-if="!store.getters.isLoggedIn"
           variant="text"
@@ -70,7 +68,7 @@
           レビュー投稿
         </v-btn>
       </v-col>
-      <v-col cols="1" sm="1" md="1" lg="1" xl="1" class="justify-start">
+      <v-col v-if="store.getters.isLoggedIn" cols="1" sm="1" md="1" lg="1" xl="1" class="d-flex justify-start mr-auto">
         <v-btn v-if="store.getters.isLoggedIn" variant="text" color="background" @click="toggleMenu">
           <v-icon>mdi-menu</v-icon>
         </v-btn>
