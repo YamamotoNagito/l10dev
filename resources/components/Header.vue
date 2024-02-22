@@ -8,6 +8,12 @@
   const router = useRouter();
   const store = useStore();
 
+  const btnSize = ref("large");
+
+  const checkLoggedIn = () => {
+    return store.getters.isLoggedIn;
+  };
+
   const isMenuVisible = ref(false);
   const menuItems = ref([
     { title: "プロフィール", action: "profile", style: "" },
@@ -36,23 +42,22 @@
 </script>
 <template>
   <v-app-bar color="primary" elevation="0" absolute height="80" class="d-flex">
-    <v-row align="center">
-      <v-col cols="1" sm="1" md="1" lg="1" xl="1"> </v-col>
-      <v-col cols="2" sm="2" md="2" lg="2" xl="2" class="justify-start">
-        <v-toolbar-title class="text-white" style="cursor: pointer" @click="router.push({ name: 'welcome' })">
+    <v-row align="center" no-gutters>
+      <v-col cols="0" sm="1" md="1" lg="1" xl="1"> </v-col>
+      <v-col cols="3" sm="2" md="2" lg="2" xl="2">
+        <v-toolbar-title class="text-white pl-3" style="cursor: pointer" @click="router.push({ name: 'welcome' })">
           かえで
         </v-toolbar-title>
       </v-col>
-      <v-col cols="1" sm="3" md="3" lg="5" xl="5"></v-col>
-      <v-col cols="3" sm="2" md="2" lg="1" xl="1" class="justify-end">
-        <v-btn variant="text" color="background" @click="router.push({ name: 'welcome' })">
+      <v-col cols="1" sm="3" md="3" lg="3" xl="3"></v-col>
+      <v-col cols="6" sm="4" md="4" lg="4" xl="4" class="d-flex justify-end ml-auto">
+        <v-btn :size="btnSize" variant="text" color="background" @click="router.push({ name: 'welcome' })">
           <v-icon>mdi-magnify</v-icon>
-          授業検索
+          検索
         </v-btn>
-      </v-col>
-      <v-col cols="3" sm="2" md="2" lg="1" xl="1" class="justify-center ma-auto">
         <v-btn
-          v-if="!store.getters.isLoggedIn"
+          v-if="!checkLoggedIn()"
+          :size="btnSize"
           variant="text"
           color="background"
           @click="router.push({ name: 'login' })"
@@ -61,22 +66,28 @@
           ログイン
         </v-btn>
         <v-btn
-          v-if="store.getters.isLoggedIn"
+          v-if="checkLoggedIn()"
+          :size="btnSize"
           variant="text"
           color="background"
           @click="router.push({ name: 'class/post' })"
         >
           <v-icon>mdi-pencil</v-icon>
-          レビュー投稿
+          投稿
         </v-btn>
       </v-col>
-      <v-col cols="1" sm="1" md="1" lg="1" xl="1" class="justify-start">
-        <v-btn v-if="store.getters.isLoggedIn" variant="text" color="background" @click="toggleMenu">
+      <v-col v-if="checkLoggedIn()" cols="2" sm="1" md="1" lg="1" xl="1" class="d-flex justify-start">
+        <v-btn v-if="checkLoggedIn()" :size="btnSize" variant="text" color="background" @click="toggleMenu">
           <v-icon>mdi-menu</v-icon>
         </v-btn>
-        <menu-item v-if="isMenuVisible" :menu-items="menuItems" :on-menu-item-click="handleMenuItemClick"></menu-item>
+        <menu-item
+          v-if="isMenuVisible"
+          :menu-items="menuItems"
+          :on-menu-item-click="handleMenuItemClick"
+          location="bottom"
+        ></menu-item>
       </v-col>
-      <v-col cols="1" sm="1" md="1" lg="1" xl="1"></v-col>
+      <v-col cols="0" sm="1" md="1" lg="1" xl="1"></v-col>
     </v-row>
   </v-app-bar>
 </template>
