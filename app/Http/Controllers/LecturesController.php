@@ -85,12 +85,12 @@ class LecturesController extends Controller
     //     if (!is_array($array)) {
     //         return $array;
     //     }
-    
+
     //     $object = new \stdClass();
     //     foreach ($array as $key => $value) {
     //         $object->$key = arrayToObject($value);
     //     }
-    
+
     //     return $object;
     // }
 
@@ -103,83 +103,8 @@ class LecturesController extends Controller
 
         $selectedConditions = $request->input();
 
-        // Log::Debug($this->arrayToObject($selectedConditions));
-
-        // $selectedConditions = array_filter($selectedConditions, function ($value) {
-        //     return $value !== NULL;
-        // });
-
-        // if (is_array($request)) {
-        //     // NULLの値を持つ要素を削除
-        //     $selectedConditions = array_filter($request, function ($value) {
-        //         return $value !== NULL;
-        //     });
-        
-        //     // 結果を表示または利用
-        //     print_r($filteredRequest);
-        // } else {
-        //     // エラー処理または適切な処理を行う
-        //     echo "Invalid request format";
-        // }
-
-        // Log::Debug(gettype($selectedConditions));
-        // Log::Debug($selectedConditions);
-
-        // $selectedConditions=[
-
-        //     // Lectureテーブル(授業名・先生名)の情報
-            // "lectureName" => "プログラ",
-        //     "teacherName" => "",
-
-        //     // // LectureDetailsテーブルの情報
-        //     // location => "",
-        //     // faculty => "",
-        //     // category => "",
-        //     // grade => "",
-
-        //     // // LectureDetailTimesテーブルの情報
-        //     // term => "",
-        //     // dayOfWeek => "",
-        //     // timePeriod => "",
-            
-        //     // // Reviewテーブルの情報
-        //     // totalEvaluationMin => "",
-        //     // totalEvaluationMax => "",
-        //     // creditLevelMin => "",
-        //     // creditLevelMax => "",
-        //     // interestLevelMin => "",
-        //     // interestLevelMax => "",
-        //     // skillLevelMin => "",
-        //     // skillLevelMin => "",
-        // ];
-
         Log::Debug(gettype($selectedConditions));
         Log::Debug($selectedConditions);
-        
-        // // Lectureテーブル(授業名・先生名)の情報
-        // $lectureName = "";
-        // $teatureName = "";
-
-        // // LectureDetailsテーブルの情報
-        // $location = "";
-        // $faculty = "";
-        // $category = "";
-        // $grade = "";
-
-        // // LectureDetailTimesテーブルの情報
-        // $term = "";
-        // $dayOfWeek = "";
-        // $timePeriod = "";
-        
-        // // Reviewテーブルの情報
-        // $totalEvaluationMin = "";
-        // $totalEvaluationMax = "";
-        // $creditLevelMin = "";
-        // $creditLevelMax = "";
-        // $interestLevelMin = "";
-        // $interestLevelMax = "";
-        // $skillLevelMin = "";
-        // $skillLevelMin = "";
 
         $lectureIds = DB::table('lectureDetailTimes')
                     ->leftJoin('lectureDetails', 'lectureDetailTimes.lectureDetailId', '=', 'lectureDetails.lectureDetailId')
@@ -190,91 +115,70 @@ class LecturesController extends Controller
                             switch ($conditionKey) {
                                 case 'lectureName':
                                     Log::Debug("検索します");
-                                    // $query->where('lectures.lectureName', $conditionValue);
-                                    
                                     $query->where('lectures.lectureName', 'like', '%' . $conditionValue . '%');
-                                    // $query->where('lectureDetais.', $conditionValue);
-                                    // $query->where('lectureDetailTimes.', $conditionValue);
                                     break;
                                 case 'teacherName':
                                     $query->where('lectures.teacherName', 'like', '%' . $conditionValue . '%');
-                                    // $query->where('lectureDetais.', $conditionValue);
-                                    // $query->where('lectureDetailTimes.', $conditionValue);
                                     break;
-
                                 case 'location':
-                                    // $query->where('lectures.', $conditionValue);
-                                    $query->where('lectureDetais.location', $conditionValue);
-                                    // $query->where('lectureDetailTimes.', $conditionValue);
+                                    $query->where('lectureDetails.location', $conditionValue);
                                     break;
                                 case 'faculty':
-                                    // $query->where('lectures.', $conditionValue);
-                                    $query->where('lectureDetais.faculty', $conditionValue);
-                                    // $query->where('lectureDetailTimes.', $conditionValue);
+                                    $query->where('lectureDetails.faculty', $conditionValue);
                                     break;
                                 case 'category':
-                                    // $query->where('lectures.', $conditionValue);
-                                    $query->where('lectureDetais.category', $conditionValue);
-                                    // $query->where('lectureDetailTimes.', $conditionValue);
+                                    $query->where('lectureDetails.category', $conditionValue);
                                     break;
                                 case 'grade':
-                                    // $query->where('lectures.', $conditionValue);
-                                    $query->where('lectureDetais.grade', $conditionValue);
-                                    // $query->where('lectureDetailTimes.', $conditionValue);
+                                    $query->where('lectureDetails.grade', $conditionValue);
                                     break;
 
                                 case 'term':
-                                    // $query->where('lectures.', $conditionValue);
-                                    // $query->where('lectureDetais.', $conditionValue);
                                     $query->where('lectureDetailTimes.term', $conditionValue);
                                     break;
                                 case 'dayOfWeek':
-                                    // $query->where('lectures.', $conditionValue);
-                                    // $query->where('lectureDetais.', $conditionValue);
                                     $query->where('lectureDetailTimes.dayOfWeek', $conditionValue);
                                     break;
                                 case 'timePeriod':
-                                    // $query->where('lectures.', $conditionValue);
-                                    // $query->where('lectureDetais.', $conditionValue);
                                     $query->where('lectureDetailTimes.timePeriod', $conditionValue);
                                     break;
 
 
                                 case 'totalEvaluationMin':
-                                    $query->groupBy('lectures.lectureId')  
-                                          ->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '>=', $conditionValue);
+                                    $query->groupBy('lectures.lectureId')
+                                           ->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '>=', $conditionValue);
                                     break;
-                                    
+
                                 case 'totalEvaluationMax':
-                                    $query->groupBy('lectures.lectureId')  
+                                    $query->groupBy('lectures.lectureId')
                                           ->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '<', $conditionValue);
                                     break;
 
                                 case 'creditLevelMin':
-                                    $query->groupBy('lectures.lectureId')  
+                                    $query->groupBy('lectures.lectureId')
                                           ->having(DB::raw('AVG(reviews.creditLevel)'), '>=', $conditionValue);
                                     break;
-                                    
+
                                 case 'creditLevelMax':
-                                    $query->groupBy('lectures.lectureId')  
+                                    $query->groupBy('lectures.lectureId')
                                           ->having(DB::raw('AVG(reviews.creditLevel)'), '<', $conditionValue);
                                     break;
-                                          
+
                                 case 'interestLevelMin':
-                                    $query->groupBy('lectures.lectureId')  
+                                    $query->groupBy('lectures.lectureId')
                                             ->having(DB::raw('AVG(reviews.interestLevel)'), '>=', $conditionValue);
                                     break;
                                 case 'interestLevelMax':
-                                    $query->groupBy('lectures.lectureId')  
+                                    $query->groupBy('lectures.lectureId')
                                             ->having(DB::raw('AVG(reviews.interestLevel)'), '<', $conditionValue);
                                     break;
-                                            
+
                                 case 'skillLevelMin':
-                                    $query->groupBy('lectures.lectureId')  
+                                    $query->groupBy('lectures.lectureId')
                                             ->having(DB::raw('AVG(reviews.skillLevel)'), '>=', $conditionValue);
                                             break;
                                 case 'skillLevelMax':
-                                    $query->groupBy('lectures.lectureId')  
+                                    $query->groupBy('lectures.lectureId')
                                             ->having(DB::raw('AVG(reviews.skillLevel)'), '<', $conditionValue);
                                     break;
                             }
@@ -305,7 +209,7 @@ class LecturesController extends Controller
             }else{
                 $totalEvaluation = 0;
             }
-            
+
             return [
                 'lectureId' => $item->lectureId,
                 'lectureName' => $item->lectureName,
@@ -323,7 +227,7 @@ class LecturesController extends Controller
                        ->sortByDesc('numberOfReviews')
                        ->take(100)
                        ->values();
-        
+
         return $classDataList;
     }
 }
