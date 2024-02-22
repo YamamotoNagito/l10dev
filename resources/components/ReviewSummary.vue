@@ -6,6 +6,7 @@
   import RadarChart from "./RadarChart.vue";
   import StarRading from "./StarRating.vue";
   import MenuItem from "./shared/MenuItem.vue";
+  import ConfirmDialog from "./shared/ConfirmDialog.vue";
 
   const store = useStore();
   const props = defineProps(["reviewData"]);
@@ -29,7 +30,7 @@
     { title: "削除する", action: "delete", style: "color: red" }
   ]);
 
-  const showDialog = ref(false); // ダイアログの表示状態
+  const isDialogVisible = ref(false);
 
   const handleMenuItemClick = async (item) => {
     console.log("Menu item clicked:", item.title);
@@ -38,7 +39,7 @@
         // 編集ページへの遷移処理をここに記述
         // router.push({ name: 'EditPage', params: { reviewId: props.reviewData.id } });
       } else if (item.action === "delete") {
-        showDialog.value = true;
+        isDialogVisible.value = true;
       }
     } catch (error) {
       console.error("API call failed:", error);
@@ -50,10 +51,10 @@
     try {
       const response = await axios.delete(`/api/deleteReview/${requestReviewId.value}`);
       console.log(response.data);
-      showDialog.value = false; // ダイアログを閉じる
+      isDialogVisible.value = false; // ダイアログを閉じる
     } catch (error) {
       console.error("API call failed:", error);
-      showDialog.value = false; // エラー発生時もダイアログを閉じる
+      isDialogVisible.value = false; // エラー発生時もダイアログを閉じる
     }
   };
 </script>
@@ -102,17 +103,12 @@
                 :on-menu-item-click="handleMenuItemClick"
               ></menu-item>
               <!-- 編集・削除のモーダル -->
-              <v-dialog v-model="showDialog" persistent max-width="300px">
-                <v-card>
-                  <v-card-title class="text-h5">確認</v-card-title>
-                  <v-card-text>このレビューを削除してもよろしいですか？</v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="grey" text @click="showDialog = false">キャンセル</v-btn>
-                    <v-btn color="red" text @click="deleteReview">削除</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+              <confirm-dialog
+                :is-dialog-visible="isDialogVisible"
+                @confirm="deleteReview"
+                @cancel="cancelDelete"
+                message-in-dialog="このレビューを削除してもよろしいですか？"
+              ></confirm-dialog>
             </v-col>
           </v-row>
 
