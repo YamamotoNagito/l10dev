@@ -60,7 +60,7 @@
 
 <template>
   <v-row>
-    <v-col cols="12" class="pa-2">
+    <v-col cols="12" class="pa-0">
       <v-card variant="outlined" class="ma-0">
         <v-container>
           <v-row>

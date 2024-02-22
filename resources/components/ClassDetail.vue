@@ -15,7 +15,7 @@
     <v-col cols="12">
       <v-row justify="center">
         <v-col cols="12">
-          <h2 class="text-h3 text-center">
+          <h2 class="text-h5 text-sm-h5 text-md-h4 text-lg-h4 text-center">
             {{ classDetailData?.classInformationData?.lectureName }}
           </h2>
         </v-col>
@@ -45,11 +45,19 @@
             <v-expansion-panel>
               <v-expansion-panel-title> 基本情報 </v-expansion-panel-title>
               <v-expansion-panel-text>
-                <ClassInformationTable
-                  :class-information-data="classDetailData?.classInformationData"
-                ></ClassInformationTable>
-                <RadarChart :radar-chart-data="classDetailData?.classRadarChartData"></RadarChart>
-                <GraphTabs :class-bar-graph-data="classDetailData?.classBarGraphData"></GraphTabs>
+                <v-row>
+                  <v-col cols="12">
+                    <ClassInformationTable :class-information-data="classDetailData?.classInformationData"></ClassInformationTable>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="12" md="12" lg="12">
+                    <RadarChart :radar-chart-data="classDetailData?.classRadarChartData"></RadarChart>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="12" lg="12">
+                    <GraphTabs :class-bar-graph-data="classDetailData?.classBarGraphData"></GraphTabs>
+                  </v-col>
+                </v-row>                
               </v-expansion-panel-text>
             </v-expansion-panel>
           </v-expansion-panels>

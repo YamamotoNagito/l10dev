@@ -57,8 +57,7 @@
 </script>
 
 <template>
-  <v-container>
-    <v-table>
+  <v-table>
       <tbody>
         <tr v-for="item in tableItemList" :key="item.categoryName">
           <td><p>{{ item.categoryName }}</p></td>
@@ -74,5 +73,4 @@
         </tr>
       </tbody>
     </v-table>
-  </v-container>
 </template>

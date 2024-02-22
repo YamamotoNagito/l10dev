@@ -21,7 +21,7 @@
 </script>
 
 <template>
-  <v-container v-if="reviewDataList" class="d-flex flex-column align-center">
+  <v-container v-if="reviewDataList" class="d-flex flex-column align-center px-0">
     <v-container v-for="n in reviewDataList.length" :key="n" class="pa-0">
       <ReviewSummary class="ma-auto" :review-data="reviewDataList[n - 1]"></ReviewSummary>
     </v-container>
