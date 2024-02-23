@@ -3,7 +3,6 @@
   import { useDisplay } from "vuetify";
   import Welcome from "../components/Welcome.vue";
   import SearchClasses from "../components/SearchClasses.vue";
-  import BaseUI from "../components/shared/BaseUI.vue";
   import FontChangeTitle from "../components/shared/FontChangeTitle.vue";
 
   const { xs, sm, md, lg, xl, xxl } = useDisplay();
