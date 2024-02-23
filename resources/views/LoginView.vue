@@ -7,7 +7,7 @@
 <template>
   <BaseUI>
     <template #header>
-      <pageTitle title="ログインする" />
+      <pageTitle title="ログイン" />
     </template>
     <Login></Login>
   </BaseUI>
