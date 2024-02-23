@@ -225,7 +225,7 @@ class LecturesController extends Controller
 
         // 最大100個
         $classDataList = $classDataList
-                    //    ->sortByDesc('numberOfReviews')
+                       ->sortByDesc('numberOfReviews')
                        ->take(100)
                        ->values();
 
