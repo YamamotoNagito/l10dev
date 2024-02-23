@@ -100,11 +100,6 @@ class LecturesController extends Controller
         // リクエストの中身一覧を見てみる
         Log::Debug($request);
 
-        // ログを有効にする
-        // \DB::enableQueryLog();
-
-
-
         $selectedConditions = $request->input();
 
         Log::Debug(gettype($selectedConditions));
@@ -228,9 +223,6 @@ class LecturesController extends Controller
                        ->sortByDesc('numberOfReviews')
                        ->take(100)
                        ->values();
-
-        // ログを出力
-        // dd(\DB::getQueryLog());
 
         return $classDataList;
     }
