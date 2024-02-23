@@ -3,7 +3,7 @@
   import { ref, onBeforeMount } from "vue";
   import axios from "axios";
   import { useStore } from "vuex";
-  import pageTitle from "../components/pageTitle.vue";
+  import pageTitle from "../components/shared/pageTitle.vue";
   import BaseUI from "../components/shared/BaseUI.vue";
 
   const store = useStore();

@@ -1,6 +1,6 @@
 <script setup>
   import { defineProps } from "vue";
-  import kaedeMainImg from "../assets/img/kaedeKey.png";
+  import kaedeMainImg from "../../assets/img/kaedeKey.png";
 
   const propData = defineProps({
     title: String
@@ -18,10 +18,4 @@
   </v-container>
 </template>
 
-<style>
-  #title-block {
-    display: flex;
-    justify-content: center; /*左右中央*/
-    align-items: center; /*上下中央*/
-  }
-</style>
+<style></style>
