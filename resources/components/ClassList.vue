@@ -4,22 +4,22 @@
   import { useRouter } from "vue-router";
   import ClassSummary from "./ClassSummary.vue";
   import SearchClasses from "./SearchClasses.vue";
+  import { useItemsPerPage } from "../js/useItemsPerpage.js";
 
   // classListView.vueから授業情報のリストを受け取る
   const props = defineProps(["classDataList"]);
 
-  // paginationで1ページに表示する授業数
-  const itemsPerPage = 5;
-
   // paginationで現在何ページ目か
   const currentPage = ref(1);
 
-  const totalPages = computed(() => Math.ceil(props.classDataList.length / itemsPerPage));
+  // paginationで1ページに表示する授業数
+  const itemsPerPage = useItemsPerPage();
+  const totalPages = computed(() => Math.ceil(props.classDataList.length / itemsPerPage.value));
 
   // 1つのpagination内に表示する授業情報のリストを，displayedItemsに格納する
   const displayedItems = computed(() => {
-    const start = (currentPage.value - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
+    const start = (currentPage.value - 1) * itemsPerPage.value;
+    const end = start + itemsPerPage.value;
     return props.classDataList.slice(start, end);
   });
 </script>
