@@ -101,7 +101,9 @@ class LecturesController extends Controller
         Log::Debug($request);
 
         // ログを有効にする
-        \DB::enableQueryLog();
+        // \DB::enableQueryLog();
+
+
 
         $selectedConditions = $request->input();
 
@@ -189,27 +191,26 @@ class LecturesController extends Controller
                     ->distinct()
                     ->pluck('lectures.lectureId');
 
-        // $lectureIds からデータを取得する処理を実装
-        $classData = Lectures::whereIn('lectureId', $lectureIds)->get();
+        $classData = Lectures::whereIn('lectureId', $lectureIds)
+        ->with(['reviews' => function($query) {
+            $query->select(
+                'lectureId',
+                DB::raw('SUM(skillLevel) as totalSkillLevel'),
+                DB::raw('SUM(interestLevel) as totalInterestLevel'),
+                DB::raw('SUM(creditLevel) as totalCreditLevel'),
+                DB::raw('COUNT(*) as reviewCount')
+            )->groupBy('lectureId');
+        }])
+        ->get();
+
         $classDataList = $classData->map(function ($item) {
+            // レビューデータの処理
+            $reviewData = $item->reviews->first(); // Eager Loadingにより取得したレビューデータを使用
 
-            $reviewData = DB::table('reviews')
-                        ->where('lectureId', $item->lectureId)
-                        ->select(
-                            DB::raw('SUM(skillLevel) as totalSkillLevel'),
-                            DB::raw('SUM(interestLevel) as totalInterestLevel'),
-                            DB::raw('SUM(creditLevel) as totalCreditLevel'),
-                            DB::raw('COUNT(*) as reviewCount')
-                        )
-                        ->first();
-
-            // Log::Debug($reviewData->reviewCount);
-
-            if ($reviewData->reviewCount > 0){
+            $totalEvaluation = 0;
+            if ($reviewData && $reviewData->reviewCount > 0) {
                 // 平均を計算
                 $totalEvaluation = ($reviewData->totalSkillLevel + $reviewData->totalInterestLevel + $reviewData->totalCreditLevel) / $reviewData->reviewCount / 3;
-            }else{
-                $totalEvaluation = 0;
             }
 
             return [
@@ -218,18 +219,18 @@ class LecturesController extends Controller
                 'lectureCode' => $item->lectureCode,
                 'teacherName' => $item->teacherName,
                 'totalEvaluation' => $totalEvaluation,
-                'numberOfReviews' => $reviewData->reviewCount,
+                'numberOfReviews' => $reviewData ? $reviewData->reviewCount : 0,
             ];
         });
 
         // 最大100個
         $classDataList = $classDataList
-                       ->sortByDesc('numberOfReviews')
+                    //    ->sortByDesc('numberOfReviews')
                        ->take(100)
                        ->values();
 
         // ログを出力
-        dd(\DB::getQueryLog());
+        // dd(\DB::getQueryLog());
 
         return $classDataList;
     }
