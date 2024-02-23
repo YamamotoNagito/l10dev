@@ -395,13 +395,14 @@
 
         // その他の処理
       } catch (error) {
-        errorMessage.value = "何らかの原因により登録できませんでした. ";
+        errorMessage.value = "レビューを投稿できませんでした。時間をおいて再度お試しください。";
         if (error.response) {
           // サーバーからのエラーレスポンスがある場合
           console.error(error.response.data); // エラーレスポンスをコンソールに出力
+          errorMessage.value = error.response.data?.message;
         } else {
           // リクエストがサーバーに届かなかった場合など
-          console.error(error.message);
+          errorMessage.value = "レビューを投稿できませんでした。時間をおいて再度お試しください。";
         }
       }
     }
