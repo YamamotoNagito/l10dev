@@ -20,7 +20,9 @@
     console.log("detailed condition is:");
     console.log(detailedCondition.value);
     try {
-      const response = await axios.get("/api/searchByConditions", detailedCondition.value);
+      const response = await axios.get("/api/searchByConditions", {
+        params: detailedCondition.value
+      });
       console.log("response");
       console.log(response);
       classDataList.value = response.data;
