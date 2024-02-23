@@ -14,7 +14,7 @@ return [
     */
 
     'charset' => 'UTF-8',
-    
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -180,6 +180,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Spatie\Permission\PermissionServiceProvider::class,
+        App\Providers\DatabaseQueryServiceProvider::class,
     ])->toArray(),
 
     /*

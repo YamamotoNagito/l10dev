@@ -98,8 +98,10 @@ class LecturesController extends Controller
     public function searchByConditions(Request $request)
     {
         // リクエストの中身一覧を見てみる
-
         Log::Debug($request);
+
+        // ログを有効にする
+        \DB::enableQueryLog();
 
         $selectedConditions = $request->input();
 
@@ -220,13 +222,14 @@ class LecturesController extends Controller
             ];
         });
 
-        Log::Debug($lectureIds);
-
         // 最大100個
         $classDataList = $classDataList
                        ->sortByDesc('numberOfReviews')
                        ->take(100)
                        ->values();
+
+        // ログを出力
+        dd(\DB::getQueryLog());
 
         return $classDataList;
     }
