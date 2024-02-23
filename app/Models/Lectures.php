@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use App\Models\Reviews;
 
 class Lectures extends Model
 {
@@ -22,4 +23,9 @@ class Lectures extends Model
         'lectureName',
         'teacherName',
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Reviews::class, 'lectureId', 'lectureId');
+    }
 }
