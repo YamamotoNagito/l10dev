@@ -819,9 +819,9 @@
           </v-card-text>
         </v-card>
         <Dialog
-          :show-dialog="showDialog"
-          :message-in-dialog="messageInDialog"
-          @toggle-show-dialog="showDialog = !showDialog"
+          :showDialog="showDialog"
+          :messageInDialog="messageInDialog"
+          @toggleShowDialog="showDialog = !showDialog"
         ></Dialog>
       </v-col>
     </v-row>
