@@ -344,7 +344,6 @@
       console.log("response");
       console.log(response);
       if (response.data.success) {
-        messageInLectureCodeTab.value = "";
         const lectureId = response.data.lectureId;
         router.push({ path: `class/${lectureId}/detail` }, { params: lectureId });
       } else {
