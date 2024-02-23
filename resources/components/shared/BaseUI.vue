@@ -1,12 +1,12 @@
 <!-- BaseUI.vue -->
 <template>
   <!-- 下に padding をつける -->
-  <div class="pb-12">
+  <v-container class="pb-12">
     <!-- header スロット -->
     <div>
       <slot name="header"></slot>
     </div>
     <!-- メインコンテンツのスロット -->
     <slot></slot>
-  </div>
+  </v-container>
 </template>
