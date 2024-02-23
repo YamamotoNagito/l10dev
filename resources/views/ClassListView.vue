@@ -6,6 +6,7 @@
   import BaseUI from "../components/shared/BaseUI.vue";
   import FontChangeTitle from "../components/shared/FontChangeTitle.vue";
 
+
   // searchClasses.vueで「検索」ボタンを押すととquery付きのpathでこのファイルのViewがrouter.pushで読み込まれる
   // path内のそのqueryをpathから取得し，格納する．
   // この情報を検索条件としてバックに投げる．
@@ -86,15 +87,11 @@
 </script>
 
 <template>
-  <BaseUI>
-    <template #header>
-      <v-container class="pb-8 bg-primary" fluid>
-        <FontChangeTitle> 大学生による授業評価を、オープンに。 </FontChangeTitle>
-      </v-container>
-    </template>
-
-    <ClassList :class-data-list="classDataList"></ClassList>
-  </BaseUI>
+  <v-container class="pb-8 bg-primary" fluid>
+    <FontChangeTitle> 大学生による授業評価を、オープンに。 </FontChangeTitle>
+  </v-container>
+  </template>
+  <ClassList :class-data-list="classDataList"></ClassList>
 </template>
 
 <style>

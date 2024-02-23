@@ -35,16 +35,13 @@
 </script>
 
 <template>
-  <BaseUI>
-    <template #header>
-      <v-container class="pb-8 bg-primary" fluid>
-        <FontChangeTitle>
-          大学生による授業評価を、オープンに。
-          <!-- ~広大生の学びを支える情報サイト~ -->
-        </FontChangeTitle>
-      </v-container>
-    </template>
-    <Welcome></Welcome>
-    <SearchClasses></SearchClasses>
-  </BaseUI>
+  <v-container class="pb-8 bg-primary" fluid>
+    <FontChangeTitle>
+      大学生による授業評価を、オープンに。
+      <!-- ~広大生の学びを支える情報サイト~ -->
+    </FontChangeTitle>
+  </v-container>
+  </template>
+  <Welcome></Welcome>
+  <SearchClasses></SearchClasses>
 </template>
