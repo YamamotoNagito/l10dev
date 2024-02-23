@@ -344,7 +344,6 @@
       console.log("response");
       console.log(response);
       if (response.data.success) {
-        messageInLectureCodeTab.value = "";
         const lectureId = response.data.lectureId;
         router.push({ path: `class/${lectureId}/detail` }, { params: lectureId });
       } else {
@@ -820,9 +819,9 @@
           </v-card-text>
         </v-card>
         <Dialog
-          :showDialog="showDialog"
-          :messageInDialog="messageInDialog"
-          @toggleShowDialog="showDialog = !showDialog"
+          :show-dialog="showDialog"
+          :message-in-dialog="messageInDialog"
+          @toggle-show-dialog="showDialog = !showDialog"
         ></Dialog>
       </v-col>
     </v-row>
