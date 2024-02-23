@@ -15,21 +15,31 @@
   const fontSize = ref("");
 
   // text-h◯とfontの変更は同時に使用できないため，fontSizeを使用する
+  const fontSizeMap = {
+    xxl: "2.8rem",
+    xl: "2.4rem",
+    lg: "2.0rem",
+    md: "1.8rem",
+    sm: "1.5rem",
+    xs: "1.2rem",
+    default: "0.8rem"
+  };
+
   const setFontSize = () => {
     if (xxl.value) {
-      fontSize.value = "2.8rem";
+      fontSize.value = fontSizeMap.xxl;
     } else if (xl.value) {
-      fontSize.value = "2.4rem";
+      fontSize.value = fontSizeMap.xl;
     } else if (lg.value) {
-      fontSize.value = "2.0rem";
+      fontSize.value = fontSizeMap.lg;
     } else if (md.value) {
-      fontSize.value = "1.8rem";
+      fontSize.value = fontSizeMap.md;
     } else if (sm.value) {
-      fontSize.value = "1.5rem";
+      fontSize.value = fontSizeMap.sm;
     } else if (xs.value) {
-      fontSize.value = "1.2rem";
+      fontSize.value = fontSizeMap.xs;
     } else {
-      fontSize.value = "0.8rem";
+      fontSize.value = fontSizeMap.default;
     }
   };
 
