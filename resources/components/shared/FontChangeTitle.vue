@@ -15,36 +15,25 @@
   const fontSize = ref("");
 
   // text-h◯とfontの変更は同時に使用できないため，fontSizeを使用する
-  const fontSizeMap = {
-    xxl: "2.8rem",
-    xl: "2.4rem",
-    lg: "2.0rem",
-    md: "1.8rem",
-    sm: "1.5rem",
-    xs: "1.2rem",
-    default: "0.8rem"
-  };
-
   const setFontSize = () => {
     if (xxl.value) {
-      fontSize.value = fontSizeMap.xxl;
+      fontSize.value = "2.2rem";
     } else if (xl.value) {
-      fontSize.value = fontSizeMap.xl;
+      fontSize.value = "2rem";
     } else if (lg.value) {
-      fontSize.value = fontSizeMap.lg;
+      fontSize.value = "1.8rem";
     } else if (md.value) {
-      fontSize.value = fontSizeMap.md;
+      fontSize.value = "1.5rem";
     } else if (sm.value) {
-      fontSize.value = fontSizeMap.sm;
+      fontSize.value = "1.2rem";
     } else if (xs.value) {
-      fontSize.value = fontSizeMap.xs;
+      fontSize.value = "1rem";
     } else {
-      fontSize.value = fontSizeMap.default;
+      fontSize.value = "0.8rem";
     }
   };
 
   onMounted(setFontSize);
-
   watch([xs, sm, md, lg, xl, xxl], setFontSize);
 </script>
 
