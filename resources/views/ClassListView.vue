@@ -4,6 +4,7 @@
   import axios from "axios";
   import ClassList from "../components/ClassList.vue";
   import BaseUI from "../components/shared/BaseUI.vue";
+  import FontChangeTitle from "../components/shared/FontChangeTitle.vue";
 
   // searchClasses.vueで「検索」ボタンを押すととquery付きのpathでこのファイルのViewがrouter.pushで読み込まれる
   // path内のそのqueryをpathから取得し，格納する．
@@ -88,9 +89,7 @@
   <BaseUI>
     <template #header>
       <v-container class="pb-8 bg-primary" fluid>
-        <div id="title-block">
-          <p class="text-white text-h6 text-md-h4 text-lg-h4">大学生による授業評価をオープンに</p>
-        </div>
+        <FontChangeTitle> 大学生による授業評価を、オープンに。 </FontChangeTitle>
       </v-container>
     </template>
 

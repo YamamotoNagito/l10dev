@@ -6,7 +6,7 @@
   src: url("./fonts/KaiseiDecol-Medium.ttf") format("truetype");
 }
 
-/* @font-face {
+@font-face {
   font-family: "Rampart";
   font-style: normal;
   font-weight: 400;
@@ -20,4 +20,4 @@
   font-weight: 400;
   font-display: swap;
   src: url("./fonts/MPLUSRounded1c-Medium.ttf") format("truetype");
-} */
+}

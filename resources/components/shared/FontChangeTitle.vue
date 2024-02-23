@@ -1,10 +1,15 @@
+<!-- Title.vue -->
+<template>
+  <div id="title-block">
+    <p :style="{ fontSize: fontSize, fontFamily: 'Kaisei' }" class="text-white">
+      <slot></slot>
+    </p>
+  </div>
+</template>
+
 <script setup>
   import { ref, watch, onMounted } from "vue";
   import { useDisplay } from "vuetify";
-  import Welcome from "../components/Welcome.vue";
-  import SearchClasses from "../components/SearchClasses.vue";
-  import BaseUI from "../components/shared/BaseUI.vue";
-  import FontChangeTitle from "../components/shared/FontChangeTitle.vue";
 
   const { xs, sm, md, lg, xl, xxl } = useDisplay();
   const fontSize = ref("");
@@ -30,21 +35,13 @@
 
   onMounted(setFontSize);
 
-  // ブレークポイントが変更されたときにフォントサイズを更新
   watch([xs, sm, md, lg, xl, xxl], setFontSize);
 </script>
 
-<template>
-  <BaseUI>
-    <template #header>
-      <v-container class="pb-8 bg-primary" fluid>
-        <FontChangeTitle>
-          大学生による授業評価を、オープンに。
-          <!-- ~広大生の学びを支える情報サイト~ -->
-        </FontChangeTitle>
-      </v-container>
-    </template>
-    <Welcome></Welcome>
-    <SearchClasses></SearchClasses>
-  </BaseUI>
-</template>
+<style>
+  #title-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
