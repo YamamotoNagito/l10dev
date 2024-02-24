@@ -4,15 +4,16 @@
   import ClassDetail from "../components/ClassDetail.vue";
   import Loading from "../components/Loading.vue";
   import axios from "axios";
-  // import pageTitle from '../components/pageTitle.vue';
+  import { useMessage } from "../components/composables/useMessage";
+  import CommonAlert from "../components/shared/CommonAlert.vue";
 
   const router = useRouter();
+  const { message, messageType, setErrorMessage } = useMessage();
 
   const lectureId = ref(null);
   // 後でこのコメントアウトは外す！
   const classDetailData = ref(null);
   const isLoading = ref(true);
-  const error = ref(null);
 
   const getclassDetailData = async (lectureId) => {
     const data = {
@@ -35,11 +36,9 @@
             name: "notFound"
           });
         }
-        console.error(error.response.data); // エラーレスポンスをコンソールに出力
-      } else {
-        // リクエストがサーバーに届かなかった場合など
-        console.error(error.message);
       }
+      // リクエストがサーバーに届かなかった場合など
+      setErrorMessage("エラーが発生しました。時間をおいて再度お試しください。");
     }
   };
 
@@ -51,12 +50,8 @@
     console.log(`lecture id  is ${lectureId.value}`);
 
     classDetailData.value = await getclassDetailData(lectureId);
-    // classDetailData.value = getclassDetailData(lectureCode.value);
 
     isLoading.value = false;
-
-    // console.log(classDetailData2)
-    console.log(classDetailData.value);
   });
 </script>
 
@@ -65,12 +60,9 @@
     <Loading />
   </v-container>
 
-  <!-- とりあえずエラーメッセージをそのまま表示する -->
-  <v-container v-else-if="error">
-    <v-alert type="error">{{ error }}</v-alert>
-  </v-container>
-
   <v-container v-else-if="classDetailData">
     <ClassDetail :class-detail-data="classDetailData"></ClassDetail>
   </v-container>
+
+  <common-alert :message="message" :type="messageType" />
 </template>
