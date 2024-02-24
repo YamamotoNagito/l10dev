@@ -29,9 +29,12 @@
         if (response.data.success) {
           data["id"] = response.data.id;
           data["role"] = response.data.role;
+          // console.log(response)
+          // console.log(response.data.role)
+          // console.log(data['role'])
           console.log(data);
           store.dispatch("login", data);
-          router.push("/profile");
+          router.push({ name: "profile" });
         } else {
           //ログインに失敗したときのエラーメッセージ
           errorMessage.value = "ログインできませんでした。メールアドレスまたはパスワードを確認してください。";
