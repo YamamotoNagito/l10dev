@@ -145,45 +145,45 @@ class LecturesController extends Controller
                         }
                     })
 
-                    ->groupBy('lectures.lectureId')
-                    ->having(function ($query) use ($selectedConditions) {
-                        foreach ($selectedConditions as $conditionKey => $conditionValue) {
-                            switch ($conditionKey) {
+                    // ->groupBy('lectures.lectureId')
+                    // ->having(function ($query) use ($selectedConditions) {
+                    //     foreach ($selectedConditions as $conditionKey => $conditionValue) {
+                    //         switch ($conditionKey) {
 
-                                case 'totalEvaluationMin':
-                                    $query->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '>=', $conditionValue);
-                                    break;
+                    //             case 'totalEvaluationMin':
+                    //                 $query->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '>=', $conditionValue);
+                    //                 break;
 
-                                case 'totalEvaluationMax':
-                                    $query->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '<=', $conditionValue);
-                                    break;
+                    //             case 'totalEvaluationMax':
+                    //                 $query->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '<=', $conditionValue);
+                    //                 break;
 
-                                case 'creditLevelMin':
-                                    $query->having(DB::raw('AVG(reviews.creditLevel)'), '>=', $conditionValue);
-                                    break;
+                    //             case 'creditLevelMin':
+                    //                 $query->having(DB::raw('AVG(reviews.creditLevel)'), '>=', $conditionValue);
+                    //                 break;
 
-                                case 'creditLevelMax':
-                                    $query->having(DB::raw('AVG(reviews.creditLevel)'), '<=', $conditionValue);
-                                    break;
+                    //             case 'creditLevelMax':
+                    //                 $query->having(DB::raw('AVG(reviews.creditLevel)'), '<=', $conditionValue);
+                    //                 break;
 
-                                case 'interestLevelMin':
-                                    $query->having(DB::raw('AVG(reviews.interestLevel)'), '>=', $conditionValue);
-                                    break;
+                    //             case 'interestLevelMin':
+                    //                 $query->having(DB::raw('AVG(reviews.interestLevel)'), '>=', $conditionValue);
+                    //                 break;
 
-                                case 'interestLevelMax':
-                                    $query->having(DB::raw('AVG(reviews.interestLevel)'), '<=', $conditionValue);
-                                    break;
+                    //             case 'interestLevelMax':
+                    //                 $query->having(DB::raw('AVG(reviews.interestLevel)'), '<=', $conditionValue);
+                    //                 break;
 
-                                case 'skillLevelMin':
-                                    $query->having(DB::raw('AVG(reviews.skillLevel)'), '>=', $conditionValue);
-                                            break;
+                    //             case 'skillLevelMin':
+                    //                 $query->having(DB::raw('AVG(reviews.skillLevel)'), '>=', $conditionValue);
+                    //                         break;
                                             
-                                case 'skillLevelMax':
-                                    $query->having(DB::raw('AVG(reviews.skillLevel)'), '<=', $conditionValue);
-                                    break;
-                            }
-                        }
-                    })
+                    //             case 'skillLevelMax':
+                    //                 $query->having(DB::raw('AVG(reviews.skillLevel)'), '<=', $conditionValue);
+                    //                 break;
+                    //         }
+                    //     }
+                    // })
                     
                     ->distinct()
                     ->pluck('lectures.lectureId');
