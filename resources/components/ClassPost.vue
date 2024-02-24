@@ -194,7 +194,7 @@
         </v-col>
       </v-row>
 
-      <v-alert v-if="errorMessage" type="error" variant="tonal" class="mb-6">{{ errorMessage }}</v-alert>
+      <common-alert :message="message" :type="messageType" />
       <v-row>
         <v-col class="text-center custom-text-style">
           <v-btn text="投稿する" color="primary" @click="clickButton"></v-btn>
@@ -213,8 +213,11 @@
   import { useStore } from "vuex";
   import { useVuelidate } from "@vuelidate/core";
   import { required, maxLength } from "@vuelidate/validators";
+  import { useMessage } from "./composables/useMessage";
+  import CommonAlert from "./shared/CommonAlert.vue";
 
   const store = useStore();
+  const { message, messageType, setErrorMessage, setSuccessMessage, setWarningMessage } = useMessage();
 
   // 授業名と担当教員名を宣言・デフォルト値はnullにしておく
   const lectureName = ref(null);
@@ -222,8 +225,6 @@
 
   // router.currentRoute.value.queryに授業名と担当教員名が入っているはず
   const router = useRouter();
-
-  const errorMessage = ref(""); // エラーメッセージ用の変数
 
   const attendanceYear = ref(2024);
   const attendanceYearOptions = ref([
@@ -360,6 +361,14 @@
 
     // バリデーションチェック
     v$.value.$validate();
+
+    // 担当教員名と授業名が入力されていない場合はエラーを出す
+    // validationの仕組みがあるようだが、一旦愚直にエラーを出す
+    if (!lectureName.value || !teacherName.value) {
+      setWarningMessage("授業名と担当教員名を入力してください. ");
+      return;
+    }
+
     if (!v$.value.$invalid) {
       //バリデーション通過したら実行
       const data = {
@@ -388,20 +397,18 @@
           // router.push('/reviews');
           // フォームのリセット
           resetForm();
-          errorMessage.value = "";
+          setSuccessMessage("投稿が完了しました！");
         } else {
-          errorMessage.value = response.data.message;
+          setErrorMessage("投稿に失敗しました. ");
         }
-
         // その他の処理
       } catch (error) {
-        errorMessage.value = "何らかの原因により登録できませんでした. ";
         if (error.response) {
           // サーバーからのエラーレスポンスがある場合
-          console.error(error.response.data); // エラーレスポンスをコンソールに出力
+          setErrorMessage(error.response.data.message);
         } else {
           // リクエストがサーバーに届かなかった場合など
-          console.error(error.message);
+          setErrorMessage("何らかの原因により登録できませんでした. ");
         }
       }
     }
@@ -448,11 +455,12 @@
     } catch (error) {
       if (error?.response?.data) {
         // サーバーからのエラーレスポンスがある場合
-        errorMessage.value = error.response.data?.message;
+        setErrorMessage(error.response.data.message);
       } else {
         // リクエストがサーバーに届かなかった場合など
-        errorMessage.value =
-          "登録できませんでした. サーバーのエラー, または既に使用されているメールアドレスである可能性があります. ";
+        setErrorMessage(
+          "登録できませんでした. サーバーのエラー, または既に使用されているメールアドレスである可能性があります."
+        );
       }
     }
   };
