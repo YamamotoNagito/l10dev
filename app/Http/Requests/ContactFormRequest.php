@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use  \Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ContactFormRequest extends FormRequest
 {
@@ -15,6 +17,22 @@ class ContactFormRequest extends FormRequest
     }
 
     /**
+     * @Override
+     * 勝手にリダイレクトさせない
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        $data = [
+            // 先頭のエラーメッセージを表示する
+            'message' => $validator->errors()->first(),
+            'errors'  => $validator->errors()->toArray(),
+        ];
+
+        throw new HttpResponseException(response()->json($data, 422));
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
@@ -24,7 +42,7 @@ class ContactFormRequest extends FormRequest
         return [
             'name' => 'required|max:32',
             'email' => 'required|email',
-            'category' => 'required|string',
+            'category' => 'required|string|max:32',
             'message' => 'required|string|max:2000', // 2000文字以内のバリデーションルールを修正
         ];
     }
@@ -44,6 +62,7 @@ class ContactFormRequest extends FormRequest
             'email.email' => 'メールアドレスが無効です。',
             'category.required' => 'カテゴリーは必須項目です。',
             'category.string' => 'カテゴリーは文字列である必要があります。',
+            'category.max' => 'カテゴリーは最大32文字までです。',
             'message.required' => 'メッセージは必須項目です。',
             'message.string' => 'メッセージは文字列である必要があります。',
             'message.max' => 'メッセージは最大2000文字までです。',

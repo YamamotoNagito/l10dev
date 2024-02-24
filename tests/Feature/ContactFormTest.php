@@ -62,13 +62,10 @@ class ContactFormTest extends TestCase
         ];
 
         $response = $this->post('/api/contact', $contactData);
-        // $response->assertStatus(422);
+        $response->assertStatus(422);
 
-        Log::debug('Test response:', ['content' => $response->getContent()]);
-
-        $response->assertSessionHasErrors([
+        $response->assertJsonValidationErrors([
             'name' => '名前は最大32文字までです。',
-            'email' => 'メールアドレスは255文字以内で入力してください。',
             'category' => 'カテゴリーは最大32文字までです。',
             'message' => 'メッセージは最大2000文字までです。',
         ]);
@@ -85,9 +82,9 @@ class ContactFormTest extends TestCase
         ];
 
         $response = $this->post('/api/contact', $contactData);
-        // $response->assertStatus(422);
+        $response->assertStatus(422);
 
-        $response->assertSessionHasErrors([
+        $response->assertJsonValidationErrors([
             'name' => '名前は必須項目です。',
             'email' => 'メールアドレスは必須項目です。',
             'category' => 'カテゴリーは必須項目です。',
