@@ -2,13 +2,13 @@
   import { ref, watch, onMounted } from "vue";
   import { useRouter } from "vue-router";
   import axios from "axios";
-  import Dialog from "./shared/OkDialog.vue";
+  import { useMessage } from "../components/composables/useMessage";
+  import CommonAlert from "../components/shared/CommonAlert.vue";
 
   const router = useRouter();
   // どっちのタブを開くのか，情報を格納する変数
   const tab = ref(null);
-
-  const showDialog = ref(false);
+  const { message, messageType, setErrorMessage, setWarningMessage } = useMessage();
 
   // 条件で検索する際はこのデータをバックに送る
   const detailedCondition = ref({
@@ -262,51 +262,11 @@
       isAllNull(detailedCondition.value)
     ) {
       //バリデーションが通らなかったときに実行
-      messageInDialog.value = "検索する条件を入力してください";
-      showDialog.value = true;
-      // console.log(
-      //   'バリデーション通過ならず',
-      //   "lectureName: ",detailedCondition.value.lectureName,  '\n',
-      //   "teacherName: ",detailedCondition.value.teacherName, '\n',
-      //   "location: ",detailedCondition.value.location, '\n',
-      //   "faculty: ",detailedCondition.value.faculty, '\n',
-      //   "category: ",detailedCondition.value.category, '\n',
-      //   "term: ",detailedCondition.value.term, '\n',
-      //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
-      //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
-      //   "grade: ",detailedCondition.value.grade, '\n',
-      //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
-      //   "creditLevelString: ",creditLevelString.value, '\n',
-      //   "interestLevelString: ",interestLevelString.value, '\n',
-      //   "skillLevelString: ",skillLevelString.value,
-      // );
+      setWarningMessage("検索する条件を入力してください");
     } else if (!allCorrectMinMax()) {
-      messageInDialog.value = "評価値の大小関係を修正してください";
-      showDialog.value = true;
+      setWarningMessage("評価値の大小関係を修正してください");
     } else {
       //バリデーション通過時に実行
-
-      // console.log(
-      //   "バリデーション通過！！",
-      //   "lectureName: ",detailedCondition.value.lectureName, '\n',
-      //   "teacherName: ",detailedCondition.value.teacherName, '\n',
-      //   "location: ",detailedCondition.value.location, '\n',
-      //   "faculty: ",detailedCondition.value.faculty, '\n',
-      //   "category: ",detailedCondition.value.category, '\n',
-      //   "term: ",detailedCondition.value.term, '\n',
-      //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
-      //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
-      //   "grade: ",detailedCondition.value.grade, '\n',
-      //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
-      //   "creditLevelString: ",creditLevelString.value, '\n',
-      //   "interestLevelString: ",interestLevelString.value, '\n',
-      //   "skillLevelString: ",skillLevelString.value,
-      // );
-      // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
-      // detailedCondition.value.totalEvaluation = updateEvaluationObject(totalEvaluationString.value);
-      // detailedCondition.value.creditLevel = updateEvaluationObject(creditLevelString.value);
-      // detailedCondition.value.interestLevel = updateEvaluationObject(interestLevelString.value);
-      // detailedCondition.value.skillLevel = updateEvaluationObject(skillLevelString.value);
 
       const query = {
         lectureName: detailedCondition.value.lectureName,
@@ -347,18 +307,17 @@
         const lectureId = response.data.lectureId;
         router.push({ path: `class/${lectureId}/detail` }, { params: lectureId });
       } else {
-        messageInDialog.value = "存在しない講義コードです．";
-        showDialog.value = true;
+        setErrorMessage("存在しない講義コードです．");
       }
 
       // その他の処理
     } catch (error) {
       if (error.response) {
         // サーバーからのエラーレスポンスがある場合
-        console.error(error.response.data); // エラーレスポンスをコンソールに出力
+        setErrorMessage(error.response.data.message); // エラーメッセージを表示
       } else {
         // リクエストがサーバーに届かなかった場合など
-        console.error(error.message);
+        setErrorMessage("エラーが発生しました。時間をおいて再度お試しください。");
       }
     }
   };
@@ -377,10 +336,10 @@
     } catch (error) {
       if (error.response) {
         // サーバーからのエラーレスポンスがある場合
-        console.error(error.response.data); // エラーレスポンスをコンソールに出力
+        setErrorMessage(error.response.data.message); // エラーメッセージを表示
       } else {
         // リクエストがサーバーに届かなかった場合など
-        console.error(error.message);
+        setErrorMessage("エラーが発生しました。時間をおいて再度お試しください。");
       }
     }
   };
@@ -818,11 +777,7 @@
             </v-window>
           </v-card-text>
         </v-card>
-        <Dialog
-          :showDialog="showDialog"
-          :messageInDialog="messageInDialog"
-          @toggleShowDialog="showDialog = !showDialog"
-        ></Dialog>
+        <common-alert :message="message" :type="messageType" />
       </v-col>
     </v-row>
   </v-container>
