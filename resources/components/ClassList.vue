@@ -3,30 +3,28 @@
   import axios from "axios";
   import { useRouter } from "vue-router";
   import ClassSummary from "./ClassSummary.vue";
-  import SearchClasses from "./SearchClasses.vue";
   import { useItemsPerPage } from "../js/useItemsPerpage.js";
 
   // classListView.vueから授業情報のリストを受け取る
   const props = defineProps(["classDataList"]);
 
-  // paginationで1ページに表示する授業数
-  const itemsPerPage = useItemsPerPage();
-
   // paginationで現在何ページ目か
   const currentPage = ref(1);
 
-  const totalPages = computed(() => Math.ceil(props.classDataList.length / itemsPerPage));
+  // paginationで1ページに表示する授業数
+  const itemsPerPage = useItemsPerPage();
+  const totalPages = computed(() => Math.ceil(props.classDataList.length / itemsPerPage.value));
 
   // 1つのpagination内に表示する授業情報のリストを，displayedItemsに格納する
   const displayedItems = computed(() => {
-    const start = (currentPage.value - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
+    const start = (currentPage.value - 1) * itemsPerPage.value;
+    const end = start + itemsPerPage.value;
     return props.classDataList.slice(start, end);
   });
 </script>
 
 <template>
-  <!-- 検索で出てきた授業のリスト -->
+  <!-- ここから検索で出てきた授業のリスト -->
   <v-container class="d-flex flex-column align-center ga-5">
     <v-container v-for="n in displayedItems.length" :key="n">
       <ClassSummary class="mx-auto" :class-data="displayedItems[n - 1]"></ClassSummary>
