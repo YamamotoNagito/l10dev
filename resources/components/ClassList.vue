@@ -3,7 +3,6 @@
   import axios from "axios";
   import { useRouter } from "vue-router";
   import ClassSummary from "./ClassSummary.vue";
-  import SearchClasses from "./SearchClasses.vue";
   import { useItemsPerPage } from "../js/useItemsPerpage.js";
 
   // classListView.vueから授業情報のリストを受け取る
@@ -25,11 +24,6 @@
 </script>
 
 <template>
-  <!-- 検索機能 -->
-  <SearchClasses></SearchClasses>
-
-  <!-- <p class="text-center text-h4">授業一覧</p> -->
-
   <!-- ここから検索で出てきた授業のリスト -->
   <v-container class="d-flex flex-column align-center ga-5">
     <v-container v-for="n in displayedItems.length" :key="n">
