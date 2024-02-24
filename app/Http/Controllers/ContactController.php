@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Validation\ValidationException;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Http\Requests\ContactFormRequest;
 
 class ContactController extends Controller
 {
@@ -33,18 +34,28 @@ class ContactController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ContactFormRequest $request)
     {
         Log::Debug($request);
 
-        Contact::query()->create([
-            'name'=>$request['name'],
-            'email'=>$request['email'],
-            'category'=>$request['category'],
-            'message'=>$request['message'],
-            'createdAt'=>now(),
+        // バリデーションルールを定義
+        $validatedData = $request->validate([
+            'name' => 'required|max:32', // 必須、32文字以内
+            'email' => 'required|email', // 必須、Eメール形式
+            'category' => 'required|string', // 必須、とりあえず文字列であることだけ検証
+            'message' => 'required|string|2000', // 必須、2000文字以内
         ]);
 
+        // バリデーションが通れば、データベースにデータを保存
+        Contact::query()->create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'category' => $request['category'],
+            'message' => $request['message'],
+            'createdAt' => now(),
+        ]);
+
+        // 処理後、前のページにリダイレクト
         return back();
     }
 
