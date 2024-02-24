@@ -6,18 +6,18 @@
 
   const { reviewDataList } = toRefs(props);
 
-  console.log("review data list is : ");
-  console.log(reviewDataList);
+  // console.log("review data list is : ");
+  // console.log(reviewDataList);
 
   const itemsPerPage = 10;
   const currentPage = ref(1);
 
   const totalPages = computed(() => Math.ceil(reviewDataList.value.length / itemsPerPage));
-  const displayedItems = computed(() => {
-    const start = (currentPage.value - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    return reviewDataList.value.slice(start, end);
-  });
+  // const displayedItems = computed(() => {
+  //   const start = (currentPage.value - 1) * itemsPerPage;
+  //   const end = start + itemsPerPage;
+  //   return reviewDataList.value.slice(start, end);
+  // });
 </script>
 
 <template>
