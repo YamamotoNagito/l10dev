@@ -38,14 +38,6 @@ class ContactController extends Controller
     {
         Log::Debug($request);
 
-        // バリデーションルールを定義
-        $validatedData = $request->validate([
-            'name' => 'required|max:32', // 必須、32文字以内
-            'email' => 'required|email', // 必須、Eメール形式
-            'category' => 'required|string', // 必須、とりあえず文字列であることだけ検証
-            'message' => 'required|string|2000', // 必須、2000文字以内
-        ]);
-
         // バリデーションが通れば、データベースにデータを保存
         Contact::query()->create([
             'name' => $request['name'],
@@ -55,8 +47,8 @@ class ContactController extends Controller
             'createdAt' => now(),
         ]);
 
-        // 処理後、前のページにリダイレクト
-        return back();
+       // 成功メッセージを返す
+        return response()->json(['success' => true, 'message' => 'お問い合わせを受け付けました。']);
     }
 
     /**

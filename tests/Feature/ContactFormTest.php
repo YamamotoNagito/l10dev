@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 use App\Models\User;
 
@@ -36,11 +37,13 @@ class ContactFormTest extends TestCase
         // 問い合わせ作成のルートをPOSTリクエストで呼び出し
         $response = $this->post('/api/contact', $contactData);
 
-        // リダイレクトを検証
-        $response->assertRedirect('/somewhere');
+        // レスポンスが正常であることを検証
+        $response->assertStatus(200);
+        // 「お問い合わせを受け付けました。」というメッセージが返されることを検証
+        $response->assertJson(['success' => true, 'message' => 'お問い合わせを受け付けました。']);
 
         // データベースにデータが保存されたか検証
-        $this->assertDatabaseHas('contacts', [
+        $this->assertDatabaseHas('contact', [
             'name' => 'John Doe',
             'email' => 'john@example.com',
             'category' => 'General Inquiry',
@@ -59,6 +62,9 @@ class ContactFormTest extends TestCase
         ];
 
         $response = $this->post('/api/contact', $contactData);
+        // $response->assertStatus(422);
+
+        Log::debug('Test response:', ['content' => $response->getContent()]);
 
         $response->assertSessionHasErrors([
             'name' => '名前は最大32文字までです。',
@@ -79,6 +85,7 @@ class ContactFormTest extends TestCase
         ];
 
         $response = $this->post('/api/contact', $contactData);
+        // $response->assertStatus(422);
 
         $response->assertSessionHasErrors([
             'name' => '名前は必須項目です。',
