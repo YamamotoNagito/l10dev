@@ -39,4 +39,4 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: LOG_SQL_ENABLE=false php artisan test
+        run: LOG_LEVEL=critical LOG_SQL_ENABLE=false php artisan test

@@ -18,7 +18,7 @@ app.shell:
 
 app.php.test:
 # test実行時には、SQLログを出力しない
-	docker-compose exec l10dev-app LOG_SQL_ENABLE=false php artisan test
+	docker-compose exec l10dev-app LOG_LEVEL=critical LOG_SQL_ENABLE=false php artisan test
 
 
 mysql.logs:
