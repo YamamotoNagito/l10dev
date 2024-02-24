@@ -66,13 +66,30 @@
         </tr>
         <tr>
           <td><p>開講時期</p></td>
-          <td v-for="time in modifiedData.integratedTimeList" :key="time">{{ time }}<br></td>
+          <td v-for="time in modifiedData.integratedTimeList" :key="time"><p>{{ time }}</p></td>
         </tr>
         <tr>
           <td><p>シラバス</p></td>
-          <td v-for="syllabusUrl in modifiedData.syllabusUrlList" :key="syllabusUrl"><a :href="syllabusUrl" target="_blank">{{ syllabusUrl }}</a><br></td>
+          <td v-for="syllabusUrl in modifiedData.syllabusUrlList" :key="syllabusUrl"><a :href="syllabusUrl" target="_blank" class="text-blue text-underline">url</a><br></td>
         </tr>
       </tbody>
     </v-table>
   </v-container>
 </template>
+
+<style scoped>
+ td{
+  min-width: 120px;
+  max-width: 150px;
+ }
+
+/* p{
+  max-width: 100%;
+  font-size: 10px;
+}
+
+a{
+  max-width: 100%;
+  font-size: 10px;
+} */
+</style>
