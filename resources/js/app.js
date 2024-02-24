@@ -20,6 +20,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import "vuetify/styles";
 import "@mdi/font/css/materialdesignicons.css";
 import vuetify from "./plugins/vuetify";
+import "./../assets/font.css";
 
 const router = createRouter({
   history: createWebHistory(),

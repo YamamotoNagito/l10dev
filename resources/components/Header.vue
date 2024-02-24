@@ -45,7 +45,11 @@
     <v-row align="center" no-gutters>
       <v-col cols="0" sm="1" md="1" lg="1" xl="1"> </v-col>
       <v-col cols="3" sm="2" md="2" lg="2" xl="2">
-        <v-toolbar-title class="text-white pl-3" style="cursor: pointer" @click="router.push({ name: 'welcome' })">
+        <v-toolbar-title
+          class="text-white d-flex justify-center mr-7"
+          style="cursor: pointer"
+          @click="router.push({ name: 'welcome' })"
+        >
           かえで
         </v-toolbar-title>
       </v-col>
