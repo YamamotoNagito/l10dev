@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, watch, onMounted } from "vue";
+  import { ref, watch, onMounted, defineProps } from "vue";
   import { useRouter } from "vue-router";
   import axios from "axios";
   import Dialog from "./shared/OkDialog.vue";
@@ -7,6 +7,8 @@
   const router = useRouter();
   // どっちのタブを開くのか，情報を格納する変数
   const tab = ref(null);
+
+  const { detailedConditionQuery } = defineProps(["detailedConditionQuery"])
 
   const showDialog = ref(false);
 
@@ -264,49 +266,11 @@
       //バリデーションが通らなかったときに実行
       messageInDialog.value = "検索する条件を入力してください";
       showDialog.value = true;
-      // console.log(
-      //   'バリデーション通過ならず',
-      //   "lectureName: ",detailedCondition.value.lectureName,  '\n',
-      //   "teacherName: ",detailedCondition.value.teacherName, '\n',
-      //   "location: ",detailedCondition.value.location, '\n',
-      //   "faculty: ",detailedCondition.value.faculty, '\n',
-      //   "category: ",detailedCondition.value.category, '\n',
-      //   "term: ",detailedCondition.value.term, '\n',
-      //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
-      //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
-      //   "grade: ",detailedCondition.value.grade, '\n',
-      //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
-      //   "creditLevelString: ",creditLevelString.value, '\n',
-      //   "interestLevelString: ",interestLevelString.value, '\n',
-      //   "skillLevelString: ",skillLevelString.value,
-      // );
     } else if (!allCorrectMinMax()) {
       messageInDialog.value = "評価値の大小関係を修正してください";
       showDialog.value = true;
     } else {
       //バリデーション通過時に実行
-
-      // console.log(
-      //   "バリデーション通過！！",
-      //   "lectureName: ",detailedCondition.value.lectureName, '\n',
-      //   "teacherName: ",detailedCondition.value.teacherName, '\n',
-      //   "location: ",detailedCondition.value.location, '\n',
-      //   "faculty: ",detailedCondition.value.faculty, '\n',
-      //   "category: ",detailedCondition.value.category, '\n',
-      //   "term: ",detailedCondition.value.term, '\n',
-      //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
-      //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
-      //   "grade: ",detailedCondition.value.grade, '\n',
-      //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
-      //   "creditLevelString: ",creditLevelString.value, '\n',
-      //   "interestLevelString: ",interestLevelString.value, '\n',
-      //   "skillLevelString: ",skillLevelString.value,
-      // );
-      // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
-      // detailedCondition.value.totalEvaluation = updateEvaluationObject(totalEvaluationString.value);
-      // detailedCondition.value.creditLevel = updateEvaluationObject(creditLevelString.value);
-      // detailedCondition.value.interestLevel = updateEvaluationObject(interestLevelString.value);
-      // detailedCondition.value.skillLevel = updateEvaluationObject(skillLevelString.value);
 
       const query = {
         lectureName: detailedCondition.value.lectureName,
@@ -385,8 +349,16 @@
     }
   };
 
+  const insertQuery = (queryObj) => {
+    console.log("Insert Query : query is")
+    console.log(queryObj)
+    // detailedConditionにqueryObjの各値を入れていきたい
+    // 注意点として，queryObjが指定したkeyを保持しているか判定する必要がある
+  }
+
   onMounted(() => {
     fetchData();
+    insertQuery(detailedConditionQuery)
   });
 
   const filteredCandidateConditionsList = ref([]);

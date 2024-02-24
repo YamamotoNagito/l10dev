@@ -91,7 +91,7 @@
   </v-container>
   <!-- <ClassList :class-data-list="classDataList"></ClassList> -->
   <!-- 検索機能 -->
-  <SearchClasses></SearchClasses>
+  <SearchClasses :detailedConditionQuery="detailedCondition"></SearchClasses>
 
   <!-- ここから検索で出てきた授業のリスト -->
   <ClassList :classDataList="classDataList"></ClassList>
