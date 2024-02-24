@@ -189,9 +189,6 @@
     lectureCode: null
   });
 
-  // メッセージ
-  const messageInDialog = ref("");
-
   // オブジェクトからvalueがNULLのkeyとvalueのペアを削除する関数
   function removeNullValues(obj) {
     const result = {};
@@ -255,8 +252,6 @@
   // 条件で検索するボタンが押されたときに発火する関数
   //検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
   const sendQueryToClassListView = async () => {
-    // メッセージを更新して空に
-    messageInDialog.value = "";
     if (
       //バリデーションチェック(どれか1つでも入力していたら(nullでなければ)通過)
       isAllNull(detailedCondition.value)
