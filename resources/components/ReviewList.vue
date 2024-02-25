@@ -6,8 +6,8 @@
 
   const { reviewDataList } = toRefs(props);
 
-  console.log("review data list is : ");
-  console.log(reviewDataList);
+  // console.log("review data list is : ");
+  // console.log(reviewDataList);
 
   const itemsPerPage = 10;
   const currentPage = ref(1);

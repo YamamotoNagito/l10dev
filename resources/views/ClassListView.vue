@@ -1,8 +1,10 @@
 <script setup>
   import { useRoute, onBeforeRouteUpdate } from "vue-router";
-  import { ref, onBeforeMount } from "vue";
+  import { ref, onBeforeMount, computed } from "vue";
   import axios from "axios";
-  import ClassList from "../components/ClassList.vue";
+  import FontChangeTitle from "../components/shared/FontChangeTitle.vue";
+  import ClassList from "../components/ClassList.vue"
+  import SearchClasses from "../components/SearchClasses.vue";
 
   // searchClasses.vueで「検索」ボタンを押すととquery付きのpathでこのファイルのViewがrouter.pushで読み込まれる
   // path内のそのqueryをpathから取得し，格納する．
@@ -85,17 +87,12 @@
 
 <template>
   <v-container class="pb-8 bg-primary" fluid>
-    <div id="title-block">
-      <p class="text-white text-h6 text-md-h4 text-lg-h4">大学生による授業評価をオープンに</p>
-    </div>
+    <FontChangeTitle> 大学生による授業評価を、オープンに。 </FontChangeTitle>
   </v-container>
-  <ClassList :class-data-list="classDataList"></ClassList>
-</template>
+  <!-- <ClassList :class-data-list="classDataList"></ClassList> -->
+  <!-- 検索機能 -->
+  <SearchClasses></SearchClasses>
 
-<style>
-  #title-block {
-    display: flex;
-    justify-content: center; /*左右中央*/
-    align-items: center; /*上下中央*/
-  }
-</style>
+  <!-- ここから検索で出てきた授業のリスト -->
+  <ClassList :classDataList="classDataList"></ClassList>
+</template>

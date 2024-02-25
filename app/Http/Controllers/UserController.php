@@ -52,7 +52,7 @@ class UserController extends Controller
         Log::Debug($user->getRoleNames());
         Log::Debug($user->getDirectPermissions());
 
-        Auth::login($user);
+        Auth::loginUsingId($user->userId);
 
         return response()->json(['success' => true,'id' => $user->userId,'role' => $user->getRoleNames()]);
     }

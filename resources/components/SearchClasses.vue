@@ -457,8 +457,8 @@
       <v-col>
         <v-card max-width="900px" class="mx-auto" elevation="5">
           <v-tabs v-model="tab" align-tabs="center" height="60px">
-            <v-tab value="one" class="tab-name">条件で探す</v-tab>
-            <v-tab value="two" class="tab-name">講義コードで探す</v-tab>
+            <v-tab value="one" class="tab-name w-50"><p class="text-subtitle-1 text-md-h6">条件で探す</p></v-tab>
+            <v-tab value="two" class="tab-name w-50"><p class="text-subtitle-1 text-md-h6">講義コードで探す</p></v-tab>
           </v-tabs>
 
           <v-card-text class="px-0 px-sm-4 px-md-4 px-lg-4">
