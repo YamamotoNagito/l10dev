@@ -105,7 +105,7 @@ class LecturesController extends Controller
         Log::Debug(gettype($selectedConditions));
         Log::Debug($selectedConditions);
 
-        $lectureIds = DB::table('lectureDetailTimes')
+        $lectureIdsQuery = DB::table('lectureDetailTimes')
                     ->leftJoin('lectureDetails', 'lectureDetailTimes.lectureDetailId', '=', 'lectureDetails.lectureDetailId')
                     ->leftJoin('lectures', 'lectureDetails.lectureId', '=', 'lectures.lectureId')
                     ->leftJoin('reviews', 'reviews.lectureId', '=', 'lectures.lectureId')
@@ -145,49 +145,41 @@ class LecturesController extends Controller
                         }
                     })
 
-                    ->groupBy('lectures.lectureId')
-                    ->having(function ($query) use ($selectedConditions) {
-                        foreach ($selectedConditions as $conditionKey => $conditionValue) {
-                            switch ($conditionKey) {
+                    ->groupBy('lectures.lectureId');
 
-                                case 'totalEvaluationMin':
-                                    $query->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '>=', $conditionValue);
-                                    break;
+        // 総合評価の条件がある場合にのみ having を適用
+        if (isset($selectedConditions['totalEvaluationMin'])) {
+            $lectureIdsQuery->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '>=', $selectedConditions['totalEvaluationMin']);
+        }
 
-                                case 'totalEvaluationMax':
-                                    $query->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '<=', $conditionValue);
-                                    break;
+        if (isset($selectedConditions['totalEvaluationMax'])) {
+            $lectureIdsQuery->having(DB::raw('(AVG(reviews.skillLevel) + AVG(reviews.interestLevel) + AVG(reviews.creditLevel)) / 3'), '<=', $selectedConditions['totalEvaluationMax']);
+        }
 
-                                case 'creditLevelMin':
-                                    $query->having(DB::raw('AVG(reviews.creditLevel)'), '>=', $conditionValue);
-                                    break;
+        if (isset($selectedConditions['creditLevelMin'])) {
+            $lectureIdsQuery->having(DB::raw('AVG(reviews.creditLevel)'), '>=', $selectedConditions['creditLevelMin']);
+        }
 
-                                case 'creditLevelMax':
-                                    $query->having(DB::raw('AVG(reviews.creditLevel)'), '<=', $conditionValue);
-                                    break;
+        if (isset($selectedConditions['creditLevelMax'])) {
+            $lectureIdsQuery->having(DB::raw('AVG(reviews.creditLevel)'), '<=', $selectedConditions['creditLevelMax']);
+        }
 
-                                case 'interestLevelMin':
-                                    $query->having(DB::raw('AVG(reviews.interestLevel)'), '>=', $conditionValue);
-                                    break;
+        if (isset($selectedConditions['interestLevelMin'])) {
+            $lectureIdsQuery->having(DB::raw('AVG(reviews.interestLevel)'), '>=', $selectedConditions['interestLevelMin']);
+        }
 
-                                case 'interestLevelMax':
-                                    $query->having(DB::raw('AVG(reviews.interestLevel)'), '<=', $conditionValue);
-                                    break;
+        if (isset($selectedConditions['interestLevelMax'])) {
+            $lectureIdsQuery->having(DB::raw('AVG(reviews.interestLevel)'), '<=', $selectedConditions['interestLevelMax']);
+        }
 
-                                case 'skillLevelMin':
-                                    $query->having(DB::raw('AVG(reviews.skillLevel)'), '>=', $conditionValue);
-                                            break;
-                                            
-                                case 'skillLevelMax':
-                                    $query->having(DB::raw('AVG(reviews.skillLevel)'), '<=', $conditionValue);
-                                    break;
-                            }
-                        }
-                    })
-                    
-                    ->distinct()
-                    ->pluck('lectures.lectureId');
+        if (isset($selectedConditions['skillLevelMin'])) {
+            $lectureIdsQuery->having(DB::raw('AVG(reviews.skillLevel)'), '>=', $selectedConditions['skillLevelMin']);
+        }
 
+        if (isset($selectedConditions['skillLevelMax'])) {
+            $lectureIdsQuery->having(DB::raw('AVG(reviews.skillLevel)'), '<=', $selectedConditions['skillLevelMax']);
+        }
+        $lectureIds = $lectureIdsQuery->pluck('lectures.lectureId');
         $classData = Lectures::whereIn('lectureId', $lectureIds)
         ->with(['reviews' => function($query) {
             $query->select(
