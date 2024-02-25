@@ -13,11 +13,6 @@
   const currentPage = ref(1);
 
   const totalPages = computed(() => Math.ceil(reviewDataList.value.length / itemsPerPage));
-  const displayedItems = computed(() => {
-    const start = (currentPage.value - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    return reviewDataList.value.slice(start, end);
-  });
 </script>
 
 <template>
