@@ -20,11 +20,7 @@ jobs:
           script: |
             cd ${{ secrets.SERVER_DEPLOY_DIR }}
             git checkout -f develop
-      - name: composer install
-        run: composer install
-      - name: migrate database
-        run: php artisan migrate
-      - name: npm install
-        run: npm install
-      - name: npm run build
-        run: npm run build
+            composer install
+            php artisan migrate
+            npm install
+            npm run build
