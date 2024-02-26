@@ -12,28 +12,26 @@
 
   const router = useRouter();
 
-  // Twitterで共有するための関数
-  const twitterShare = () => {
+
+  const getUrl = () => {
     // class ページの path を取得
     const classPath = router.resolve({ name: "class" }).href;
     // 本番環境でのURL
-    const url = window.location.origin + classPath + '/' +props.classData.lectureId + '/detail';
-
+    return window.location.origin + classPath + '/' +props.classData.lectureId + '/detail';
+};
+  // Twitterで共有するための関数
+  const twitterShare = () => {
     // TwitterへのURL
-    var shareURL = "https://twitter.com/intent/tweet?text=" + "%20%23この授業面白そう" + "&url=" + url;
+    const url = getUrl()
+    // TwitterへのURL
+    const shareURL = "https://twitter.com/intent/tweet?text=" + "%20%23この授業面白そう" + "&url=" + url;
     window.open(shareURL, "_blank");
   };
 
   // Lineで共有するための関数
   const lineShare = () => {
-    // class ページの path を取得
-    const classPath = router.resolve({ name: "class" }).href;
-    // 本番環境でのURL
-    const url = window.location.origin + classPath + '/' +props.classData.lectureId + '/detail';
-
-    // LineへのURL
-    // var shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;
-    var shareURL = "https://social-plugins.line.me/lineit/share?url=" + url;
+    const url = getUrl()
+    const shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;
     window.open(shareURL, "_blank");
   };
 
