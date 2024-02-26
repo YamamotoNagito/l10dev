@@ -8,7 +8,7 @@
   const router = useRouter();
   // どっちのタブを開くのか，情報を格納する変数
   const tab = ref(null);
-  const { message, messageType, setErrorMessage, setWarningMessage } = useMessage();
+  const { message, messageType, uniqueKey, setErrorMessage, setWarningMessage } = useMessage();
 
   // 条件で検索する際はこのデータをバックに送る
   const detailedCondition = ref({
@@ -772,7 +772,7 @@
             </v-window>
           </v-card-text>
         </v-card>
-        <common-alert :message="message" :type="messageType" />
+        <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
       </v-col>
     </v-row>
   </v-container>

@@ -1,6 +1,8 @@
+import { required } from '@vuelidate/validators';
 <template>
   <v-alert
     v-if="message"
+    :key="uniqueKey"
     :type="type"
     class="my-6 alert-high-z-index responsive-min-width"
     closable
@@ -18,11 +20,18 @@
     props: {
       message: {
         type: String,
-        default: ""
+        default: "",
+        required: true
       },
       type: {
         type: String,
-        default: "info"
+        default: "info",
+        required: true
+      },
+      uniqueKey: {
+        type: String,
+        default: "",
+        required: true
       }
     }
   };

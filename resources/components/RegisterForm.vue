@@ -25,7 +25,7 @@
   let isStudent = ref(false);
   const visible = ref(false);
 
-  const { message, messageType, setErrorMessage } = useMessage();
+  const { message, messageType, uniqueKey, setErrorMessage } = useMessage();
 
   // 新規登録に関するapiを呼び出してくる
   // 書き方は,Login.vueを参照すること
@@ -381,7 +381,7 @@
         v-model="termsAccepted"
         label="当サイトの利用規約およびプライバシーポリシーに同意する. (利用規約・プライバシーポリシーはページ下部のフッターからご確認いただけます。 )"
       ></v-checkbox>
-      <common-alert :message="message" :type="messageType" />
+      <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
       <v-btn :disabled="!termsAccepted" color="indigo" @click="clickButton"> 登録する </v-btn>
     </v-form>
   </v-container>
