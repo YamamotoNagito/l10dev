@@ -16,16 +16,16 @@
   const fetchUserProfile = async () => {
     try {
       const userId = String(store.getters.userInfo.id);
-      console.log(userId);
+      // console.log(userId);
       const response = await axios.get(`/api/profile/${userId}`);
-      console.log("API Response:", response.data);
-      console.log("API reviewInfo Response:", response.data.reviewInfo);
+      // console.log("API Response:", response.data);
+      // console.log("API reviewInfo Response:", response.data.reviewInfo);
       userProfile.value = response.data.userData;
 
       // userに対するレビュ一覧を返す変数
       reviewDataList.value = response.data.reviewInfo;
 
-      console.log(reviewDataList.value);
+      // console.log(reviewDataList.value);
       // console.log(reviewInfo.value);
     } catch (error) {
       console.error(error);
