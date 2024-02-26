@@ -64,12 +64,20 @@ onMounted(() => {
     </v-row>
     <v-row align="center" justify="space-between">
       <!-- 星の評価と評価数の合計 -->
-      <v-col cols="8" sm="4" md="" lg="" class="d-flex justify-start align-center my-0 py-0"
+      <!-- 授業あれば「星評価(投稿人数)」を表示するがない際には「投稿がありません」を出力 -->
+      <v-col v-if="classData.numberOfReviews > 0" cols="8" sm="4" md="" lg="" class="d-flex justify-start align-center my-0 py-0"
         ><v-row>
           <v-col cols="12" sm="" md="" lg="" class="d-flex"
             ><StarRating :total-evaluation="classData.totalEvaluation"></StarRating>
             <p class="mt-1">({{ classData.numberOfReviews }})</p></v-col
           >
+        </v-row>
+      </v-col>
+      <v-col v-else cols="8" sm="4" md="" lg="" class="d-flex justify-start align-center my-0 py-0"
+        ><v-row>
+          <v-col cols="12" sm="" md="" lg="" class="d-flex">
+            <p class="mt-1">投稿がありません</p>
+          </v-col>
         </v-row>
       </v-col>
       <v-col cols="12" sm="8" md="" lg="" class="d-flex justify-start justify-sm-end">
