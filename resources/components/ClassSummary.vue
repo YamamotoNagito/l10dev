@@ -31,7 +31,7 @@
   // Lineで共有するための関数
   const lineShare = () => {
     const url = getUrl()
-    const shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;
+    const shareURL = "https://social-plugins.line.me/lineit/share?url="  + url
     window.open(shareURL, "_blank");
   };
 
