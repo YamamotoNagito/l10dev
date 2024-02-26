@@ -5,6 +5,8 @@
   import { useStore } from "vuex";
   import { useVuelidate } from "@vuelidate/core";
   import { required, email, maxLength, minLength, sameAs } from "@vuelidate/validators";
+  import { useMessage } from "../components/composables/useMessage";
+  import CommonAlert from "../components/shared/CommonAlert.vue";
 
   const router = useRouter();
   const store = useStore();
@@ -20,10 +22,10 @@
   const passwordCheck = ref("");
 
   const termsAccepted = ref(false);
-
-  const errorMessage = ref(""); // エラーメッセージ用の変数
   let isStudent = ref(false);
   const visible = ref(false);
+
+  const { message, messageType, uniqueKey, setErrorMessage } = useMessage();
 
   // 新規登録に関するapiを呼び出してくる
   // 書き方は,Login.vueを参照すること
@@ -279,11 +281,13 @@
 
         // その他の処理
       } catch (error) {
-        errorMessage.value =
-          "登録できませんでした. サーバーのエラー, または既に使用されているメールアドレスである可能性があります. ";
         if (error?.response?.data) {
           // サーバーからのエラーレスポンスがある場合
-          errorMessage.value = error.response.data?.message;
+          setErrorMessage(error.response.data.message);
+        } else {
+          setErrorMessage(
+            "登録できませんでした. サーバーのエラー, または既に使用されているメールアドレスである可能性があります. "
+          );
         }
       }
     }
@@ -377,7 +381,7 @@
         v-model="termsAccepted"
         label="当サイトの利用規約およびプライバシーポリシーに同意する. (利用規約・プライバシーポリシーはページ下部のフッターからご確認いただけます。 )"
       ></v-checkbox>
-      <v-alert v-if="errorMessage" type="error" variant="tonal" class="mb-6">{{ errorMessage }}</v-alert>
+      <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
       <v-btn :disabled="!termsAccepted" color="indigo" @click="clickButton"> 登録する </v-btn>
     </v-form>
   </v-container>

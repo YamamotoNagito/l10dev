@@ -194,7 +194,7 @@
         </v-col>
       </v-row>
 
-      <common-alert :message="message" :type="messageType" />
+      <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
       <v-row>
         <v-col class="text-center custom-text-style">
           <v-btn text="投稿する" color="primary" @click="clickButton"></v-btn>
@@ -217,7 +217,7 @@
   import CommonAlert from "./shared/CommonAlert.vue";
 
   const store = useStore();
-  const { message, messageType, setErrorMessage, setSuccessMessage, setWarningMessage } = useMessage();
+  const { message, messageType, uniqueKey, setErrorMessage, setSuccessMessage, setWarningMessage } = useMessage();
 
   // 授業名と担当教員名を宣言・デフォルト値はnullにしておく
   const lectureName = ref(null);
