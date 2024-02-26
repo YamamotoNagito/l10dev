@@ -24,10 +24,6 @@
 </script>
 
 <template>
-  <!-- 検索機能 -->
-  <SearchClasses></SearchClasses>
-
-  <!-- <p class="text-center text-h4">授業一覧</p> -->
   <!-- 授業件数が0件の時の表示 -->
   <v-container v-if="props.classDataList.length === 0" class="d-flex flex-column align-center">
     <p class="text-center text-h5">授業が見つかりませんでした。</p>
