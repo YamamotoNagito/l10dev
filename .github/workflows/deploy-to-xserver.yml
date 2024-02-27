@@ -7,19 +7,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Deploy
+      - name: ssh and deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          password: ${{ secrets.SERVER_PASS }}
+          host: ${{ secrets.SSH_HOST }} # ホスト名
+          username: ${{ secrets.SSH_USERNAME }} # SSH ユーザ名
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # 秘密鍵の内容
+          port: ${{ secrets.SSH_PORT }} # ポート番号
           script: |
-            cd ${{ secrets.SERVER_DEPLOY_DIR }}
-            git checkout -f develop
+            cd /home/hirodaikaede/hirodaikaede.xsrv.jp/public_html/l10dev
+            git fetch origin develop && git checkout -f origin/develop
             composer install
             php artisan migrate
             npm install
