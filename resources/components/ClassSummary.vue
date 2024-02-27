@@ -73,7 +73,8 @@ onMounted(() => {
         </v-row>
       </v-col>
       <v-col cols="12" sm="8" md="" lg="" class="d-flex justify-start justify-sm-end">
-        <v-btn color="orange-darken-1" class="mr-2 mt-1">
+        <p v-if="classData.alreadyReviewed" class="text-h8">レビュー済み</p>
+        <v-btn v-else color="orange-darken-1" class="mr-2 mt-1">
           <v-icon>mdi-pencil</v-icon>
           <p
             class="text-h8"

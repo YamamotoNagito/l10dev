@@ -150,11 +150,18 @@ class LectureDetailsController extends Controller
                     ->select('reviewId','attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments','createdAt')
                     ->get();
 
-        $review_info = $reviews->map(function ($review) {
+        // レビュー済みかどうかの変数を用意する
+        $alreadyReviewed = false;
+
+        $review_info = $reviews->map(function ($review) use ($request,&$alreadyReviewed) {
 
             $userName = Reviews::find($review->reviewId)->user->userName;
             $userId = Reviews::find($review->reviewId)->user->userId;
             $lectureName = Reviews::find($review->reviewId)->lecture->lectureName;
+
+            if($userId === $request['userId']){
+                $alreadyReviewed = true;
+            }
 
             return [
                 'userName' => $userName,
@@ -243,6 +250,7 @@ class LectureDetailsController extends Controller
             // 'classInformationData' => [
                 'lectureName' => $lecture->lectureName,
                 'teacherName' => $lecture->teacherName,
+                'alreadyReviewed' => $alreadyReviewed,
                 // 'lectureDetails' => $lectureDetails,
                 'classInformationDataList' => //[
                     $lectureDetail,

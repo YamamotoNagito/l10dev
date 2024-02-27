@@ -1,5 +1,6 @@
 <script setup>
   import { ref, getCurrentInstance, onBeforeMount } from "vue";
+  import { useStore } from "vuex";
   import { useRouter } from "vue-router";
   import ClassDetail from "../components/ClassDetail.vue";
   import Loading from "../components/Loading.vue";
@@ -7,16 +8,19 @@
   import { useMessage } from "../components/composables/useMessage";
   import CommonAlert from "../components/shared/CommonAlert.vue";
 
+  const store = useStore();
   const router = useRouter();
   const { message, messageType, setErrorMessage } = useMessage();
 
   const lectureId = ref(null);
+  const userId = ref(null);
   // 後でこのコメントアウトは外す！
   const classDetailData = ref(null);
   const isLoading = ref(true);
 
   const getclassDetailData = async (lectureId) => {
     const data = {
+      userId: store.getters.userInfo.id,
       lectureId: lectureId.value
     };
 
