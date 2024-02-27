@@ -1,7 +1,6 @@
 <script setup>
-  import { ref, defineProps, computed } from "vue";
+  import { ref, defineProps, defineEmits,computed } from "vue";
   import ClassSummary from "./ClassSummary.vue";
-  import SearchClasses from "./SearchClasses.vue";
   import NoDataImage from "../assets/img/no_data.svg";
   import { useItemsPerPage } from "../js/useItemsPerpage.js";
 
@@ -21,6 +20,12 @@
     const end = start + itemsPerPage.value;
     return props.classDataList.slice(start, end);
   });
+
+  // Paginationを1ページ目にする関数
+  const goToFirstPage = () => {
+    // currentPage.value = 1
+    console.log("go to first page in child..")
+  }
 </script>
 
 <template>

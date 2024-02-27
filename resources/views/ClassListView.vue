@@ -13,8 +13,19 @@
 
   // 授業一覧内のリストに格納する授業情報リスト．バックから受けとった授業情報のリストをこの変数に格納し，classList.vueに送る
   const classDataList = ref([]);
+  // ClassListコンポーネントのref
+  const classListRef = ref()  
 
   const route = useRoute();
+  // ClassListコンポーネントにあるgoToFirstPage関数を発火したいがうまくいかない
+  const triggerGoToFirstPage = () => {
+    if (classListRef.value && classListRef.value.goToFirstPage) {
+      console.log("go to first page!")
+      classListRef.value.goToFirstPage();
+    } else {
+      console.error('classListRef.value.goToFirstPage is not a function');
+    }
+}
 
   const searchClassByDetailedCondition = async () => {
     // path内のqueryから取得した値がdetailedConditionに格納されているはずなので，それが出力されるはず
@@ -56,6 +67,7 @@
     if (detailedCondition.value && Object.keys(detailedCondition.value).length > 0) {
       console.log("Before Mount: Data exists");
       searchClassByDetailedCondition();
+      triggerGoToFirstPage();
     } else {
       console.log("Before Mount: detailed condition is null or empty");
     }
@@ -75,6 +87,7 @@
     if (detailedCondition.value && Object.keys(detailedCondition.value).length > 0) {
       console.log("Before Route Update: Data exists");
       searchClassByDetailedCondition();
+      triggerGoToFirstPage();
     } else {
       console.log("Before Route Update: detailed condition is null or empty");
     }
@@ -92,5 +105,5 @@
   <!-- 検索機能 -->
   <SearchClasses></SearchClasses>
   <!-- ここから検索で出てきた授業のリスト -->
-  <ClassList :classDataList="classDataList"></ClassList>
+  <ClassList :classDataList="classDataList" ref="classListRef"></ClassList>
 </template>
