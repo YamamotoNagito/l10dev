@@ -25,7 +25,9 @@
           </h2>
         </v-col>
         <v-col cols="12" class="d-flex flex-row justify-center">
-          <v-btn class="d-flex flex-row ml-5" color="orange"
+          <!-- レビューが投稿済みかどうかによって表示する文言を変更する -->
+          <p v-if="classDetailData.classInformationData.alreadyReviewed"> レビュー投稿済みです </p>
+          <v-btn v-else class="d-flex flex-row ml-5" color="orange"
             ><v-icon color="white">mdi-pencil</v-icon>
             <p
               class="text-h9 text-white"
