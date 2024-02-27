@@ -192,7 +192,13 @@ class LecturesController extends Controller
         }])
         ->get();
 
-        $classDataList = $classData->map(function ($item) {
+        // ユーザーが投稿した講義IDの一覧を取得
+        $lectureIdsByUserId = Reviews::where('userId', $request['userId'])->pluck('lectureId')->unique()->toArray();
+
+        // レビュー済みかどうかを判定する変数の準備
+        $alreadyReviewed = false;
+
+        $classDataList = $classData->map(function ($item) use ($lectureIdsByUserId,&$alreadyReviewed) {
             // レビューデータの処理
             $reviewData = $item->reviews->first(); // Eager Loadingにより取得したレビューデータを使用
 
@@ -202,8 +208,15 @@ class LecturesController extends Controller
                 $totalEvaluation = ($reviewData->totalSkillLevel + $reviewData->totalInterestLevel + $reviewData->totalCreditLevel) / $reviewData->reviewCount / 3;
             }
 
+            // レビュー済みかどうかを判定する
+            if(in_array($item->lectureId, $lectureIdsByUserId)){
+                $alreadyReviewed = true;   
+                // Log::Debug("レビュー済みです"); 
+            }
+
             return [
                 'lectureId' => $item->lectureId,
+                'alreadyReviewed' => $alreadyReviewed,
                 'lectureName' => $item->lectureName,
                 'lectureCode' => $item->lectureCode,
                 'teacherName' => $item->teacherName,
