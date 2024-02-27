@@ -1,45 +1,47 @@
 <script setup>
-import { onMounted } from "vue";
-import { useRouter } from "vue-router";
+  import { onMounted } from "vue";
+  import { useRouter } from "vue-router";
 
-import StarRating from "./StarRating.vue";
+  import StarRating from "./StarRating.vue";
 
-// LineとTwitterアイコンの読み込み
-import lineLogo from "../assets/img/line.png";
-import xLogo from "../assets/img/xlogo.png";
+  // LineとTwitterアイコンの読み込み
+  import lineLogo from "../assets/img/line.png";
+  import xLogo from "../assets/img/xlogo.png";
 
-const props = defineProps(["classData"]);
+  const props = defineProps(["classData"]);
 
-const router = useRouter();
+  const router = useRouter();
 
-// Twitterで共有するための関数
-const twitterShare = () => {
-  //シェアされるURL
-  var url = "http://localhost:9001/class";
 
-  // TwitterへのURL
-  var shareURL = "https://twitter.com/intent/tweet?text=" + "%20%23この授業面白そう" + "&url=" + url;
-  window.open(shareURL, '_blank');
+  const getUrl = () => {
+    // class ページの path を取得
+    const classPath = router.resolve({ name: "class" }).href;
+    // 本番環境でのURL
+    return window.location.origin + classPath + '/' +props.classData.lectureId + '/detail';
 };
+  // Twitterで共有するための関数
+  const twitterShare = () => {
+    // TwitterへのURL
+    const url = getUrl()
+    // TwitterへのURL
+    const shareURL = "https://twitter.com/intent/tweet?text=" + "%20%23この授業面白そう" + "&url=" + url;
+    window.open(shareURL, "_blank");
+  };
 
-// Lineで共有するための関数
-const lineShare = () => {
-  //シェアされるURL
-  var url = "http://localhost:9001/class";
+  // Lineで共有するための関数
+  const lineShare = () => {
+    const url = getUrl()
+    const shareURL = "https://social-plugins.line.me/lineit/share?url="  + url
+    window.open(shareURL, "_blank");
+  };
 
-  // LineへのURL
-  // var shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;
-  var shareURL = "https://social-plugins.line.me/lineit/share?url=" + url;
-  window.open(shareURL, '_blank');
-};
-
-onMounted(() => {
-  // Lineボタンのスクリプトを動的に生成し、挿入
-  const lineButtonScript = document.createElement("script");
-  lineButtonScript.src = "https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js";
-  lineButtonScript.async = true;
-  lineButtonScript.defer = true;
-});
+  onMounted(() => {
+    // Lineボタンのスクリプトを動的に生成し、挿入
+    const lineButtonScript = document.createElement("script");
+    lineButtonScript.src = "https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js";
+    lineButtonScript.async = true;
+    lineButtonScript.defer = true;
+  });
 </script>
 
 <template>
@@ -115,7 +117,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-  .text-decoration-underline{
+  .text-decoration-underline {
     cursor: pointer;
   }
 </style>
