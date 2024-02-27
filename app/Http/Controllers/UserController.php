@@ -70,9 +70,10 @@ class UserController extends Controller
      */
     public function show(string $userId)
     {
-        Log::Debug("userId");
-        Log::Debug($userId);
+        // Log::Debug("userId");
+        // Log::Debug($userId);
           // ユーザーを取得
+        // $userId = auth()->id();
         $user = User::findOrFail($userId);
 
         // ユーザー情報を連想配列に格納
