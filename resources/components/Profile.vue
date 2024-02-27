@@ -4,55 +4,17 @@
       <v-card v-if="userProfile" class="my-8">
         <v-card-text justify>
           <v-table>
-            <thead>
-              <tr>
-                <th class="text-left">項目</th>
-                <th class="text-left">情報</th>
-              </tr>
-            </thead>
             <tbody>
-              <tr>
-                <td>ユーザー名</td>
-                <td>{{ userProfile.userName }}</td>
+              <tr v-for="item in tableData" :key="item.label">
+                <td class="label-cell">
+                  <p>{{ item.label }}</p>
+                </td>
+                <td class="value-cell">
+                  <p>{{ item.value }}</p>
+                </td>
               </tr>
-              <tr>
-                <td>メールアドレス</td>
-                <td>{{ userProfile.userEmail }}</td>
-              </tr>
-              <tr>
-                <td>カテゴリー</td>
-                <td>{{ userProfile.category }}</td>
-              </tr>
-              <tr>
-                <td>学部</td>
-                <td>{{ userProfile.faculty }}</td>
-              </tr>
-              <tr>
-                <td>学科</td>
-                <td>{{ userProfile.department }}</td>
-              </tr>
-              <tr>
-                <td>入学年度</td>
-                <td>{{ userProfile.admissionYear }}</td>
-              </tr>
-              <!-- その他の情報 -->
             </tbody>
           </v-table>
-          <!--
-          <v-table>
-            <thead>
-              <tr>
-                <th class="text-left">Name</th>
-                <th class="text-left">Calories</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in desserts" :key="item.name">
-                <td>{{ item.name }}</td>
-                <td>{{ item.calories }}</td>
-              </tr>
-            </tbody>
-          </v-table> -->
         </v-card-text>
       </v-card>
       <v-card v-else>
@@ -82,10 +44,41 @@
 
 <script setup>
   import ReviewList from "./ReviewList.vue";
-  import { ref, defineProps, toRefs } from "vue";
+  import { ref, defineProps, toRefs, computed } from "vue";
 
-  const props = defineProps(["userProfile", "reviewDataList"]);
+  const props = defineProps({
+    userProfile: Object,
+    reviewDataList: Array
+  });
+
+  const { userProfile, reviewDataList } = toRefs(props);
 
   // 「投稿した」「LIKES」のうちどちらのタブを開くのか
   const tab = ref(null);
+
+  // userProfileからテーブル表示用のデータを生成
+  const tableData = computed(() => {
+    if (!userProfile.value) return [];
+    return [
+      { label: "ユーザー名", value: userProfile.value.userName },
+      { label: "メールアドレス", value: userProfile.value.userEmail },
+      { label: "カテゴリー", value: userProfile.value.category },
+      { label: "学部", value: userProfile.value.faculty },
+      { label: "学科", value: userProfile.value.department },
+      { label: "入学年度", value: userProfile.value.admissionYear }
+      // その他の情報を追加可能
+    ];
+  });
 </script>
+
+<style scoped>
+  .label-cell {
+    min-width: 150px; /* ラベルの最小幅 */
+    max-width: 200px; /* ラベルの最大幅 */
+  }
+
+  .value-cell {
+    min-width: 200px; /* 値の最小幅 */
+    max-width: 250px; /* 値の最大幅 */
+  }
+</style>
