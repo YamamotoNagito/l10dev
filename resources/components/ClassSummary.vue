@@ -12,17 +12,16 @@
 
   const router = useRouter();
 
-
   const getUrl = () => {
     // class ページの path を取得
     const classPath = router.resolve({ name: "class" }).href;
     // 本番環境でのURL
-    return window.location.origin + classPath + '/' +props.classData.lectureId + '/detail';
-};
+    return window.location.origin + classPath + "/" + props.classData.lectureId + "/detail";
+  };
   // Twitterで共有するための関数
   const twitterShare = () => {
     // TwitterへのURL
-    const url = getUrl()
+    const url = getUrl();
     // TwitterへのURL
     const shareURL = "https://twitter.com/intent/tweet?text=" + "%20%23この授業面白そう" + "&url=" + url;
     window.open(shareURL, "_blank");
@@ -30,8 +29,8 @@
 
   // Lineで共有するための関数
   const lineShare = () => {
-    const url = getUrl()
-    const shareURL = "https://social-plugins.line.me/lineit/share?url="  + url
+    const url = getUrl();
+    const shareURL = "https://social-plugins.line.me/lineit/share?url=" + url;
     window.open(shareURL, "_blank");
   };
 
@@ -67,7 +66,13 @@
     <v-row align="center" justify="space-between">
       <!-- 星の評価と評価数の合計 -->
       <!-- 授業あれば「星評価(投稿人数)」を表示するがない際には「投稿がありません」を出力 -->
-      <v-col v-if="classData.numberOfReviews > 0" cols="8" sm="4" md="" lg="" class="d-flex justify-start align-center my-0 py-0"
+      <v-col
+        v-if="classData.numberOfReviews > 0"
+        cols="8"
+        sm="4"
+        md=""
+        lg=""
+        class="d-flex justify-start align-center my-0 py-0"
         ><v-row>
           <v-col cols="12" sm="" md="" lg="" class="d-flex"
             ><StarRating :total-evaluation="classData.totalEvaluation"></StarRating>
@@ -83,7 +88,7 @@
         </v-row>
       </v-col>
       <v-col cols="12" sm="8" md="" lg="" class="d-flex justify-start justify-sm-end align-center">
-        <p v-if="classData.alreadyReviewed" class="text-h8">レビュー済み</p>
+        <p v-if="classData.alreadyReviewed" class="text-h8 ma-3">レビュー済み</p>
         <v-btn v-else color="orange-darken-1" class="mr-2 mt-1">
           <v-icon>mdi-pencil</v-icon>
           <p
