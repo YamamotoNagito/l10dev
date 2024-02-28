@@ -6,9 +6,6 @@
 
 <template>
   <BaseUI>
-    <template #header>
-      <pageTitle title="ログインする" />
-    </template>
     <Login></Login>
   </BaseUI>
 </template>

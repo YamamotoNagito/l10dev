@@ -5,36 +5,22 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
+import Image from "../assets/img/good_luck_high_school_student.svg"
+
 
   const router = useRouter();
   const store = useStore();
   const userEmail = ref("");
   const password = ref("");
+  const isPasswordVisible = ref(false)
 
 
 const errorMessage = ref(""); // エラーメッセージ用の変数
 const visible = ref(false);
 
-
-  const clickLogoutButton = async () => {
-    await axios
-      .post("/api/logout")
-      .then((response) => {
-        // ちゃんと送信できたか確認用
-        // console.log(response.data.success);
-        // if(response.data.success){
-        // }
-        store.dispatch("logout");
-        router.push("/profile");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const clickButton = async () => {
     // const store = useStore()
-    console.log("クリックされたで");
+    console.log("login button has been clicked");
     // console.log("クリックされたで2");
     // const res = await axios.get("/register");
     // const res = await axios.get("/api/hello");
@@ -62,7 +48,7 @@ const visible = ref(false);
           router.push("/profile");
         } else {
           //ログインに失敗したときのエラーメッセージ
-          errorMessage.value = "ログインできませんでした。メールアドレスまたはパスワードを確認してください。";
+          errorMessage.value = "メールアドレスまたはパスワードを確認してください。";
         }
         // console.log("OK");
         // axios.get("/profile")
@@ -72,57 +58,99 @@ const visible = ref(false);
         // console.log("×");
       });
   };
-
-  // return{
-  //   userEmail,
-  //   password
-  // }
 </script>
 
 <template>
-  <!-- <h1>ログイン画面</h1> -->
-  <!-- <form action="" method="post"> -->
-  <!-- @csrf -->
-  <!-- <div>
-        <label for="userEmail">メールアドレス</label>
-        <v-input type="userEmail" name="userEmail" id="userEmail"></v-input>
-      </div>
-      <label for="password">パスワード</label>
-      <input type="password" name="password" id="password">
-      <v-text-field type="password" name="password" id="password" label="パスワードを入力してください"></v-text-field>
-      <v-btn type="submit">送信</v-btn> -->
-  <v-form action="" method="post">
-    <v-text-field
-      v-model="userEmail"
-      label="メールアドレス"
-      name="userEmail"
-      type="email"
-      clearable
-      variant="outlined"
-    ></v-text-field>
-    <v-text-field
-      v-model="password"
-      :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-      :type="visible ? 'text' : 'password'"
-      label="パスワード"
-      name="password"
-      clearable
-      variant="outlined"
-      @click:append-inner="visible = !visible"
-    ></v-text-field>
-    <!-- <v-btn @click="clickButton">送信</v-btn> -->
-    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <v-btn color="primary" class="mr-2" @click="clickButton">ログイン</v-btn>
-    <v-btn
-      color="primary"
-      variant="plain"
-      @click="router.push({ name: 'register' })"
-      >アカウントを持っていない方はこちら</v-btn
-    >
-  </v-form>
+  <!-- <v-row justify="center">
+    <v-col cols="5 d-flex align-center justify-center">
+      <v-img :src="Image" alt="img" max-width="200px" class="mb-12"/>
+    </v-col>
+  </v-row> -->
+  <v-row class="auth-wrapper">
+    <v-col cols="12  d-flex align-center justify-center">
+      <v-card
+        class="auth-card pa-4 pt-7 mt-15"
+        max-width="448"
+      >
+        <v-card-text class="pt-2">
+          <h5 class="text-h5 font-weight-semibold mb-4 text-center">
+            かえでにようこそ!
+          </h5>
+          <p class="mb-0 text-center">
+            メールアドレスとパスワードでログインしてください
+          </p>
+        </v-card-text>
+  
+        <v-card-text>
+          <v-form justify="center">
+            <v-row>
+              <!-- email -->
+              <v-col cols="12">
+                <v-text-field
+                  v-model="userEmail"
+                  variant="outlined"
+                  clearable
+                  label="Email"
+                  type="email"
+                />
+              </v-col>
+  
+              <!-- password -->
+              <v-col cols="12">
+                <v-text-field
+                  v-model="password"
+                  variant="outlined"
+                  clearable=""
+                  label="Password"
+                  :type="isPasswordVisible ? 'text' : 'password'"
+                  :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye-outline'"
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                />
+              </v-col>
+  
+              <v-col cols="12">
+                <!-- login button -->
+                <v-btn
+                  color="primary"
+                  block
+                  @click="clickButton"
+                >
+                  Login
+                </v-btn>
+              </v-col>
+  
+              <!-- login error message -->
+              <v-col
+                cols="12"
+                class="text-center text-base error-message"
+              >
+                {{ errorMessage }}
+              </v-col>
+            </v-row>
+            <v-row justify="start">
+              <!-- create account -->
+              <!-- <v-col
+                cols="12" sm="6" md="" lg="" xl=""
+                class="text-center text-base"
+              >
+                <span>初めてご利用になる方</span>
+              </v-col> -->
+              <v-col cols="12" sm="6" md="" lg="" xl=""
+                justify="center" class="text-center text-base text-primary">
+                <RouterLink
+                  to="/register"
+                >
+                  アカウントの新規作成
+                </RouterLink>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
 
 </template>
-
 <style scoped>
   .error-message {
     color: red;
