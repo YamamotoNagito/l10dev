@@ -78,7 +78,7 @@
         <tr>
           <td><p>シラバス</p></td>
           <td v-for="syllabusUrl in modifiedData.syllabusUrlList" :key="syllabusUrl">
-            <a :href="syllabusUrl" target="_blank" class="text-blue text-underline">url</a><br />
+            <a :href="syllabusUrl" target="_blank" class="text-blue text-underline">シラバスに移動</a><br />
           </td>
         </tr>
       </tbody>

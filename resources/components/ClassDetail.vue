@@ -67,10 +67,10 @@
                         <v-btn value="btn-1" rounded="xl" class="class-v-btn" height="50px">5段階評価</v-btn>
                         <v-btn value="btn-2" rounded="xl" class="class-v-btn" height="50px">みんなの成績</v-btn>
                         <v-btn value="btn-3" rounded="xl" class="class-v-btn" height="50px">出欠確認</v-btn>
-                        <v-btn value="btn-4" rounded="xl" class="class-v-btn" height="50px">過去問の普及率</v-btn>
-                        <v-btn value="btn-5" rounded="xl" class="class-v-btn" height="50px">日課の課題・レポート</v-btn>
-                        <v-btn value="btn-6" rounded="xl" class="class-v-btn" height="50px">中間レポート・課題</v-btn>
-                        <v-btn value="btn-7" rounded="xl" class="class-v-btn" height="50px">期末レポート・課題</v-btn>
+                        <v-btn value="btn-4" rounded="xl" class="class-v-btn" height="50px">毎回のレポート・テスト</v-btn>
+                        <v-btn value="btn-5" rounded="xl" class="class-v-btn" height="50px">中間のレポート・テスト</v-btn>
+                        <v-btn value="btn-6" rounded="xl" class="class-v-btn" height="50px">期末のレポート・テスト</v-btn>
+                        <v-btn value="btn-7" rounded="xl" class="class-v-btn" height="50px">過去問・過去レポートの所持</v-btn>
                     </v-btn-toggle>
                   </v-col>
                 </v-row>
@@ -87,16 +87,16 @@
                         <BarGraph :bar-graph-data="classDetailData?.classBarGraphData?.attendanceConfirm" chart-title="出欠確認"></BarGraph>
                       </v-window-item>
                       <v-window-item value=btn-4>
-                        <BarGraph :bar-graph-data="classDetailData?.classBarGraphData?.pastExamPossesion" chart-title="過去問の普及率"></BarGraph>
+                        <BarGraph :bar-graph-data="classDetailData?.classBarGraphData?.weeklyAssignments" chart-title="毎回のレポート・テスト"></BarGraph>
                       </v-window-item>
                       <v-window-item value=btn-5>
-                        <BarGraph :bar-graph-data="classDetailData?.classBarGraphData?.weeklyAssignments" chart-title="日課の課題・レポート"></BarGraph>
+                        <BarGraph :bar-graph-data="classDetailData?.classBarGraphData?.midtermAssignments" chart-title="中間のレポート・テスト"></BarGraph>
                       </v-window-item>
                       <v-window-item value=btn-6>
-                        <BarGraph :bar-graph-data="classDetailData?.classBarGraphData?.midtermAssignments" chart-title="中間レポート・課題"></BarGraph>
+                        <BarGraph :bar-graph-data="classDetailData?.classBarGraphData?.finalAssignments" chart-title="期末のレポート・テスト"></BarGraph>
                       </v-window-item>
                       <v-window-item value=btn-7>
-                        <BarGraph :bar-graph-data="classDetailData?.classBarGraphData?.finalAssignments" chart-title="期末レポート・課題"></BarGraph>
+                        <BarGraph :bar-graph-data="classDetailData?.classBarGraphData?.pastExamPossesion" chart-title="過去問・過去レポートの所持"></BarGraph>
                       </v-window-item>
                     </v-window>
                   </v-col>
