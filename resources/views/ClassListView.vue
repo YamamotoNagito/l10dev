@@ -1,10 +1,9 @@
 <script setup>
-  import { useStore } from "vuex";
   import { useRoute, onBeforeRouteUpdate } from "vue-router";
-  import { ref, onBeforeMount, computed } from "vue";
+  import { ref, onBeforeMount } from "vue";
   import axios from "axios";
   import FontChangeTitle from "../components/shared/FontChangeTitle.vue";
-  import ClassList from "../components/ClassList.vue"
+  import ClassList from "../components/ClassList.vue";
   import SearchClasses from "../components/SearchClasses.vue";
 
   // searchClasses.vueで「検索」ボタンを押すととquery付きのpathでこのファイルのViewがrouter.pushで読み込まれる
@@ -15,7 +14,6 @@
   // 授業一覧内のリストに格納する授業情報リスト．バックから受けとった授業情報のリストをこの変数に格納し，classList.vueに送る
   const classDataList = ref([]);
 
-  const store = useStore();
   const route = useRoute();
 
   const searchClassByDetailedCondition = async () => {
@@ -23,10 +21,9 @@
     console.log("detailed condition is:");
     console.log(detailedCondition.value);
     try {
-      // debugger;
       const response = await axios.get("/api/searchByConditions", {
         params: {
-          ...detailedCondition.value,
+          ...detailedCondition.value
         }
       });
       console.log("response");
