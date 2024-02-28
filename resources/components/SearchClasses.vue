@@ -563,7 +563,7 @@
                           </v-row>
                         </v-col>
                       </v-row>
-                        <!-- ここから上下関係に関する部分．初期リリースでは利用しないのでv-if属性をfalseにして非表示化 -->
+                        <!-- ここから上下関係に関する部分．初期リリースでは利用しないのでv-if属性をfalseにして非表示化します -->
                         <div v-if="false">
                           <!-- 区切り線 -->
                           <!-- <v-divider :thickness="1" class="border-opacity-100" color="primary"></v-divider> -->
