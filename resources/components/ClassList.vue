@@ -3,7 +3,7 @@
   import ClassSummary from "./ClassSummary.vue";
   import SearchClasses from "./SearchClasses.vue";
   import NoDataImage from "../assets/img/no_data.svg";
-  import { useItemsPerPage } from "../js/useItemsPerpage.js";
+  import { useItemsPerPage } from "./composables/useItemsPerpage.js";
 
   // classListView.vueから授業情報のリストを受け取る
   const props = defineProps(["classDataList"]);

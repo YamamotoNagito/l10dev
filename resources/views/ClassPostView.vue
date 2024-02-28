@@ -7,7 +7,7 @@
 <template>
   <BaseUI>
     <template #header>
-      <pageTitle title="レビューを投稿する" />
+      <pageTitle title="レビュー投稿" />
     </template>
     <ClassPost></ClassPost>
   </BaseUI>
