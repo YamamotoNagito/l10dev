@@ -67,7 +67,7 @@
       <!-- 日課のレポート・テスト -->
       <v-row class="mt-5">
         <v-col>
-          <p class="custom-text-style">日課のレポート・テスト</p>
+          <p class="custom-text-style">毎日のレポート・テスト</p>
         </v-col>
       </v-row>
       <v-btn-toggle v-model="weeklyAssignments" variant="outlined" class="full-height">
