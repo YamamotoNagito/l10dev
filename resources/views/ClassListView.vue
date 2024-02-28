@@ -23,10 +23,10 @@
     console.log("detailed condition is:");
     console.log(detailedCondition.value);
     try {
+      // debugger;
       const response = await axios.get("/api/searchByConditions", {
         params: {
           ...detailedCondition.value,
-          userId: store.getters.userInfo.id,
         }
       });
       console.log("response");
