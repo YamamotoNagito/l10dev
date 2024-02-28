@@ -1,6 +1,7 @@
 <script setup>
   import { useRoute, onBeforeRouteUpdate } from "vue-router";
   import { ref, onBeforeMount } from "vue";
+  // import { useStore } from "vuex";
   import axios from "axios";
   import FontChangeTitle from "../components/shared/FontChangeTitle.vue";
   import ClassList from "../components/ClassList.vue";
@@ -14,6 +15,7 @@
   // 授業一覧内のリストに格納する授業情報リスト．バックから受けとった授業情報のリストをこの変数に格納し，classList.vueに送る
   const classDataList = ref([]);
 
+  // const store = useStore();
   const route = useRoute();
 
   const searchClassByDetailedCondition = async () => {

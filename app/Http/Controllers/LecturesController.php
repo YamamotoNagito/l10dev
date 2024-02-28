@@ -100,6 +100,11 @@ class LecturesController extends Controller
         // リクエストの中身一覧を見てみる
         Log::Debug($request);
 
+        // 認証されているユーザーのIDを取得
+        $loginUserId = auth()->id();
+        Log::Debug("loginUserId");
+        Log::Debug($loginUserId);
+
         $selectedConditions = $request->input();
 
         Log::Debug(gettype($selectedConditions));
@@ -193,12 +198,15 @@ class LecturesController extends Controller
         ->get();
 
         // ユーザーが投稿した講義IDの一覧を取得
-        $lectureIdsByUserId = Reviews::where('userId', $request['userId'])->pluck('lectureId')->unique()->toArray();
+        $lectureIdsByUserId = Reviews::where('userId', $loginUserId)->pluck('lectureId')->unique()->toArray();
+        Log::Debug($lectureIdsByUserId);
 
-        // レビュー済みかどうかを判定する変数の準備
-        $alreadyReviewed = false;
 
-        $classDataList = $classData->map(function ($item) use ($lectureIdsByUserId,&$alreadyReviewed) {
+        $classDataList = $classData->map(function ($item) use ($lectureIdsByUserId) {
+
+            $alreadyReviewed = false;
+            $alreadyReviewed = in_array($item->lectureId, $lectureIdsByUserId);
+
             // レビューデータの処理
             $reviewData = $item->reviews->first(); // Eager Loadingにより取得したレビューデータを使用
 
@@ -210,8 +218,8 @@ class LecturesController extends Controller
 
             // レビュー済みかどうかを判定する
             if(in_array($item->lectureId, $lectureIdsByUserId)){
-                $alreadyReviewed = true;   
-                // Log::Debug("レビュー済みです"); 
+                $alreadyReviewed = true;
+                // Log::Debug("レビュー済みです");
             }
 
             return [
