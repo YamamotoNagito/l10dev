@@ -563,180 +563,181 @@
                           </v-row>
                         </v-col>
                       </v-row>
-
-                      <!-- 区切り線 -->
-                      <v-divider :thickness="1" class="border-opacity-100" color="primary"></v-divider>
-
-                      <!-- 総合評価 -->
-                      <v-row class="my-3">
-                        <v-col>
-                          <!-- 表題 -->
-                          <v-row>
-                            <v-col cols="12">
-                              <p class="category-name d-flex justify-center">総合評価</p>
+                        <!-- ここから上下関係に関する部分．初期リリースでは利用しないのでv-if属性をfalseにして非表示化します -->
+                        <div v-if="false">
+                          <!-- 区切り線 -->
+                          <!-- <v-divider :thickness="1" class="border-opacity-100" color="primary"></v-divider> -->
+    
+                          <!-- 総合評価 -->
+                          <v-row class="my-3">
+                            <v-col>
+                              <v-row>
+                                <v-col cols="12">
+                                  <p class="category-name d-flex justify-center">総合評価</p>
+                                </v-col>
+                              </v-row>
+                              <v-row>
+                                <!-- 下限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.totalEvaluation.min"
+                                    label="下限"
+                                    :items="evaluationRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="1" class="d-flex justify-center mt-4">
+                                  <p>〜</p>
+                                </v-col>
+                                <!-- 上限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.totalEvaluation.max"
+                                    label="上限"
+                                    :items="evaluationRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                              </v-row>
                             </v-col>
                           </v-row>
-                          <v-row>
-                            <!-- 下限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.totalEvaluation.min"
-                                label="下限"
-                                :items="evaluationRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                            <v-col cols="1" class="d-flex justify-center mt-4">
-                              <p>〜</p>
-                            </v-col>
-                            <!-- 上限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.totalEvaluation.max"
-                                label="上限"
-                                :items="evaluationRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                          </v-row>
-                        </v-col>
-                      </v-row>
-                      <!-- 単位取得のしやすさ -->
-                      <v-row class="my-3">
-                        <v-col>
-                          <!-- 表題 -->
-                          <v-row>
-                            <v-col cols="12">
-                              <p class="category-name d-flex justify-center">単位取得のしやすさ</p>
-                            </v-col>
-                          </v-row>
-                          <v-row>
-                            <!-- 下限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.creditLevel.min"
-                                label="下限"
-                                :items="creditRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                            <v-col cols="1" class="d-flex justify-center mt-4">
-                              <p>〜</p>
-                            </v-col>
-                            <!-- 上限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.creditLevel.max"
-                                label="上限"
-                                :items="creditRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
+                          <!-- 単位取得のしやすさ -->
+                          <v-row class="my-3">
+                            <v-col>
+                              <!-- 表題 -->
+                              <v-row>
+                                <v-col cols="12">
+                                  <p class="category-name d-flex justify-center">単位取得のしやすさ</p>
+                                </v-col>
+                              </v-row>
+                              <v-row>
+                                <!-- 下限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.creditLevel.min"
+                                    label="下限"
+                                    :items="creditRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="1" class="d-flex justify-center mt-4">
+                                  <p>〜</p>
+                                </v-col>
+                                <!-- 上限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.creditLevel.max"
+                                    label="上限"
+                                    :items="creditRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                              </v-row>
                             </v-col>
                           </v-row>
-                        </v-col>
-                      </v-row>
-
-                      <!-- 面白さ -->
-                      <v-row>
-                        <v-col>
-                          <!-- 表題 -->
+    
+                          <!-- 面白さ -->
                           <v-row>
-                            <v-col cols="12">
-                              <p class="category-name d-flex justify-center">面白さ</p>
+                            <v-col>
+                              <!-- 表題 -->
+                              <v-row>
+                                <v-col cols="12">
+                                  <p class="category-name d-flex justify-center">面白さ</p>
+                                </v-col>
+                              </v-row>
+                              <v-row>
+                                <!-- 下限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.interestLevel.min"
+                                    label="下限"
+                                    :items="interestRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="1" class="d-flex justify-center mt-4">
+                                  <p>〜</p>
+                                </v-col>
+                                <!-- 上限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.interestLevel.max"
+                                    label="上限"
+                                    :items="interestRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                              </v-row>
                             </v-col>
                           </v-row>
+    
+                          <!-- スキルが身につくか -->
                           <v-row>
-                            <!-- 下限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.interestLevel.min"
-                                label="下限"
-                                :items="interestRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                            <v-col cols="1" class="d-flex justify-center mt-4">
-                              <p>〜</p>
-                            </v-col>
-                            <!-- 上限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.interestLevel.max"
-                                label="上限"
-                                :items="interestRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
+                            <v-col>
+                              <!-- 表題 -->
+                              <v-row>
+                                <v-col cols="12">
+                                  <p class="category-name d-flex justify-center">スキルが身につくか</p>
+                                </v-col>
+                              </v-row>
+                              <v-row>
+                                <!-- 下限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.skillLevel.min"
+                                    label="下限"
+                                    :items="skillRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="1" class="d-flex justify-center mt-4">
+                                  <p>〜</p>
+                                </v-col>
+                                <!-- 上限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.skillLevel.max"
+                                    label="上限"
+                                    :items="skillRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                              </v-row>
                             </v-col>
                           </v-row>
-                        </v-col>
-                      </v-row>
-
-                      <!-- スキルが身につくか -->
-                      <v-row>
-                        <v-col>
-                          <!-- 表題 -->
-                          <v-row>
-                            <v-col cols="12">
-                              <p class="category-name d-flex justify-center">スキルが身につくか</p>
-                            </v-col>
-                          </v-row>
-                          <v-row>
-                            <!-- 下限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.skillLevel.min"
-                                label="下限"
-                                :items="skillRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                            <v-col cols="1" class="d-flex justify-center mt-4">
-                              <p>〜</p>
-                            </v-col>
-                            <!-- 上限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.skillLevel.max"
-                                label="上限"
-                                :items="skillRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                          </v-row>
-                        </v-col>
-                      </v-row>
+                        </div> 
                     </v-expansion-panel-text>
                   </v-expansion-panel>
                 </v-expansion-panels>
