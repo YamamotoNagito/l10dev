@@ -4,10 +4,10 @@
       <v-card v-if="userProfile" class="my-6" elevation="2">
         <v-card-text>
           <v-row v-for="item in tableData" :key="item.label" class="d-flex justify-center my-1">
-            <v-col cols="4" sm="5" md="6" lg="6" xl="6">
+            <v-col cols="6" sm="6" md="6" lg="6" xl="6">
               <p class="text-center underline">{{ item.label }}</p>
             </v-col>
-            <v-col cols="8" sm="7" md="6" lg="6" xl="6">
+            <v-col cols="6" sm="6" md="6" lg="6" xl="6">
               <p class="text-center font-weight-black">{{ item.value }}</p>
             </v-col>
           </v-row>
@@ -20,7 +20,7 @@
       </v-card>
     </v-col>
   </v-row>
-  <v-row v-if="reviewDataList.length > 0">
+  <v-row v-if="reviewDataList && reviewDataList.length > 0">
     <v-col cols="12">
       <v-card v-if="reviewDataList" elevation="0">
         <v-tabs v-model="tab" color="deep-purple-accent-4" align-tabs="left">
@@ -35,16 +35,13 @@
     </v-col>
   </v-row>
   <v-row v-else>
-    <v-col cols="12" class="d-flex justify-center">
-      <v-img src="NoPost" alt="NoPost" width="300" height="300"></v-img>
+    <v-col cols="12" class="text-sm-h6 text-md-h5 d-flex justify-center my-5">
+      <p>レビューを投稿しましょう！</p>
     </v-col>
     <v-col cols="12" class="d-flex justify-center">
-      <p>まだ投稿がありません。</p>
+      <v-img :src="NoPost" alt="NoPost" width="200" height="200"></v-img>
     </v-col>
   </v-row>
-  <!-- <v-col cols="12" class="d-flex justify-center">
-      <v-img src="GoodLuck" alt="GoodLuck" width="300" height="300"></v-img>
-    </v-col> -->
 </template>
 
 <script setup>
