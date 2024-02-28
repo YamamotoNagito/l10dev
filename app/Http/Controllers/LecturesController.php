@@ -102,8 +102,6 @@ class LecturesController extends Controller
 
         // 認証されているユーザーのIDを取得
         $loginUserId = auth()->id();
-        Log::Debug("loginUserId");
-        Log::Debug($loginUserId);
 
         $selectedConditions = $request->input();
 
