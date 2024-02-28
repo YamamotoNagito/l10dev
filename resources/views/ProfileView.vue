@@ -16,7 +16,7 @@
       // console.log(userId);
       const response = await axios.get("/api/profile");
 
-      console.log("API Response:", response.data);
+      // console.log("API Response:", response.data);
       // console.log("API reviewInfo Response:", response.data.reviewInfo);
       userProfile.value = response.data.userData;
 
