@@ -72,80 +72,86 @@ const visible = ref(false);
         class="auth-card pa-4 pt-7 mt-15"
         max-width="448"
       >
-        <v-card-text class="pt-2">
-          <h5 class="text-h5 font-weight-semibold mb-4 text-center">
-            かえでにようこそ!
-          </h5>
-          <p class="mb-0 text-center">
-            メールアドレスとパスワードでログインしてください
-          </p>
-        </v-card-text>
-  
-        <v-card-text>
-          <v-form justify="center">
-            <v-row>
-              <!-- email -->
-              <v-col cols="12">
-                <v-text-field
-                  v-model="userEmail"
-                  variant="outlined"
-                  clearable
-                  label="Email"
-                  type="email"
-                />
-              </v-col>
-  
-              <!-- password -->
-              <v-col cols="12">
-                <v-text-field
-                  v-model="password"
-                  variant="outlined"
-                  clearable=""
-                  label="Password"
-                  :type="isPasswordVisible ? 'text' : 'password'"
-                  :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye-outline'"
-                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                />
-              </v-col>
-  
-              <v-col cols="12">
-                <!-- login button -->
-                <v-btn
-                  color="primary"
-                  block
-                  @click="clickButton"
-                >
-                  Login
-                </v-btn>
-              </v-col>
-  
-              <!-- login error message -->
-              <v-col
-                cols="12"
-                class="text-center text-base error-message"
-              >
-                {{ errorMessage }}
-              </v-col>
-            </v-row>
-            <v-row justify="start">
-              <!-- create account -->
-              <!-- <v-col
-                cols="12" sm="6" md="" lg="" xl=""
-                class="text-center text-base"
-              >
-                <span>初めてご利用になる方</span>
-              </v-col> -->
-              <v-col cols="12" sm="6" md="" lg="" xl=""
-                justify="center" class="text-center text-base text-primary">
-                <RouterLink
-                  to="/register"
-                >
-                  アカウントの新規作成
-                </RouterLink>
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-card-text>
+        <v-row justify="center">
+          <v-col cols="12">
+            <v-card-text class="pt-2">
+              <h5 class="text-h5 font-weight-semibold mb-4 text-center">
+                かえでにようこそ!
+              </h5>
+              <p class="mb-0 text-center">
+                メールアドレスとパスワードでログインしてください
+              </p>
+            </v-card-text>
+          </v-col>
+    
+          <v-col cols="12">
+            <v-card-text>
+              <v-form justify="center">
+                <v-row>
+                  <!-- email -->
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="userEmail"
+                      variant="outlined"
+                      clearable
+                      label="Email"
+                      type="email"
+                    />
+                  </v-col>
+      
+                  <!-- password -->
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="password"
+                      variant="outlined"
+                      clearable=""
+                      label="Password"
+                      :type="isPasswordVisible ? 'text' : 'password'"
+                      :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye-outline'"
+                      @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                    />
+                  </v-col>
+      
+                  <v-col cols="12">
+                    <!-- login button -->
+                    <v-btn
+                      color="primary"
+                      block
+                      @click="clickButton"
+                    >
+                      Login
+                    </v-btn>
+                  </v-col>
+      
+                  <!-- login error message -->
+                  <v-col
+                    cols="12"
+                    class="text-center text-base error-message"
+                  >
+                    {{ errorMessage }}
+                  </v-col>
+                </v-row>
+                <v-row justify="start">
+                  <!-- create account -->
+                  <!-- <v-col
+                    cols="12" sm="6" md="" lg="" xl=""
+                    class="text-center text-base"
+                  >
+                    <span>初めてご利用になる方</span>
+                  </v-col> -->
+                  <v-col cols="12" sm="6" md="" lg="" xl=""
+                    justify="center" class="text-center text-base text-primary">
+                    <RouterLink
+                      to="/register"
+                    >
+                      アカウントの新規作成
+                    </RouterLink>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card-text>
+          </v-col>
+        </v-row>
       </v-card>
     </v-col>
   </v-row>
