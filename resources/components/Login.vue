@@ -5,9 +5,6 @@ import axios from "axios";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
-import Image from "../assets/img/good_luck_high_school_student.svg"
-
-
   const router = useRouter();
   const store = useStore();
   const userEmail = ref("");
@@ -61,15 +58,10 @@ const visible = ref(false);
 </script>
 
 <template>
-  <!-- <v-row justify="center">
-    <v-col cols="5 d-flex align-center justify-center">
-      <v-img :src="Image" alt="img" max-width="200px" class="mb-12"/>
-    </v-col>
-  </v-row> -->
   <v-row class="auth-wrapper">
     <v-col cols="12  d-flex align-center justify-center">
       <v-card
-        class="auth-card pa-4 pt-7 mt-15"
+        class="auth-card pa-4 pt-7 mt-15 mb-15"
         max-width="448"
       >
         <v-row justify="center">
@@ -122,7 +114,7 @@ const visible = ref(false);
                       Login
                     </v-btn>
                   </v-col>
-      
+
                   <!-- login error message -->
                   <v-col
                     cols="12"
