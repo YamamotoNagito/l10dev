@@ -1,0 +1,25 @@
+name: Deploy to Xserver
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }} # ホスト名
+          username: ${{ secrets.SSH_USERNAME }} # SSH ユーザ名
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # 秘密鍵の内容
+          port: ${{ secrets.SSH_PORT }} # ポート番号
+          script: |
+            cd /home/hirodaikaede/hirodaikaede.xsrv.jp/public_html/l10dev
+            git fetch origin develop && git checkout -f origin/develop
+            composer install
+            php artisan migrate
+            npm install
+            npm run build
