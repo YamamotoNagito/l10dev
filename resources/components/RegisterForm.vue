@@ -365,9 +365,8 @@
               variant="outlined"
             ></v-select>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" v-if="isStudent">
             <v-select
-              v-show="isStudent"
               v-model="faculty"
               :error-messages="v$.faculty.$error ? ['学部・研究科等を選択してください. '] : []"
               :items="facultyItems"
@@ -377,9 +376,8 @@
               variant="outlined"
             ></v-select>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" v-if="isStudent">
             <v-select
-              v-show="isStudent"
               v-model="department"
               :error-messages="v$.department.$error ? ['学科・類・専攻等を選択してください. '] : []"
               :items="departmentItems"
@@ -389,9 +387,8 @@
               variant="outlined"
             ></v-select>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" v-if="isStudent">
             <v-select
-              v-show="isStudent"
               v-model="admissionYear"
               :error-messages="v$.admissionYear.$error ? ['入学年度を選択してください. '] : []"
               :items="admissionYearItems"
