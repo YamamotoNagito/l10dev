@@ -9,17 +9,64 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
       - name: ssh and deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }} # ホスト名
-          username: ${{ secrets.SSH_USERNAME }} # SSH ユーザ名
+          username: hirodaikaede # SSH ユーザ名
           key: ${{ secrets.SSH_PRIVATE_KEY }} # 秘密鍵の内容
           port: ${{ secrets.SSH_PORT }} # ポート番号
           script: |
+            echo "移動中: /home/hirodaikaede/hirodaikaede.xsrv.jp/public_html/l10dev"
             cd /home/hirodaikaede/hirodaikaede.xsrv.jp/public_html/l10dev
+            echo "移動完了"
+
+            echo "git fetch & checkout 実行中"
             git fetch origin develop && git checkout -f origin/develop
+            if [ $? -eq 0 ]; then
+              echo "git fetch & checkout 成功"
+            else
+              echo "git fetch & checkout 失敗"
+              exit 1
+            fi
+
+            echo "composer install 実行中"
             composer install
-            php artisan migrate
-            npm install
+            if [ $? -eq 0 ]; then
+              echo "composer install 成功"
+            else
+              echo "composer install 失敗"
+              exit 1
+            fi
+
+            echo "php artisan migrate 実行中"
+            php artisan migrate --force
+            if [ $? -eq 0 ]; then
+              echo "php artisan migrate 成功"
+            else
+              echo "php artisan migrate 失敗"
+              exit 1
+            fi
+
+            echo "npm install 実行中"
+            /home/hirodaikaede/.nodebrew/current/bin/npm install --verbose
+            if [ $? -eq 0 ]; then
+              echo "npm install 成功"
+            else
+              echo "npm install 失敗"
+              exit 1
+            fi
+
+            echo "npm run build 実行中"
             npm run build
+            if [ $? -eq 0 ]; then
+              echo "npm run build 成功"
+            else
+              echo "npm run build 失敗"
+              exit 1
+            fi
