@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col cols="8">
+    <v-col cols="12" sm="9" md="8" lg="8" xl="">
       <v-row>
         <v-col>
           <p class="text-h6">授業名</p>
@@ -34,7 +34,15 @@
       </v-row>
       <v-btn-toggle v-model="attendanceYear" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in attendanceYearOptions" :key="option.value" cols="4" sm="2" md="2" lg="" xl="">
+          <v-col
+            v-for="option in attendanceYearOptions"
+            :key="option.value"
+            cols="auto"
+            sm="auto"
+            md="atuo"
+            lg=""
+            xl=""
+          >
             <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
@@ -49,23 +57,23 @@
       </v-row>
       <v-btn-toggle v-model="attendanceConfirm" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in attendanceConfirmOptions" :key="option.value" cols="4" sm="" md="" lg="" xl="">
+          <v-col v-for="option in attendanceConfirmOptions" :key="option.value" cols="auto" sm="" md="" lg="" xl="">
             <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
         </v-row>
       </v-btn-toggle>
-      <!-- 毎回のレポート・テスト -->
+      <!-- 日課のレポート・テスト -->
       <v-row class="mt-5">
         <v-col>
-          <p class="custom-text-style">毎回のレポート・テスト</p>
+          <p class="custom-text-style">毎日のレポート・テスト</p>
         </v-col>
       </v-row>
       <v-btn-toggle v-model="weeklyAssignments" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in weeklyAssignmentsOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
+          <v-col v-for="option in weeklyAssignmentsOptions" :key="option.value" cols="auto" sm="auto" md="auto" lg="">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -79,8 +87,8 @@
       </v-row>
       <v-btn-toggle v-model="midtermAssignments" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in midtermAssignmentsOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
+          <v-col v-for="option in midtermAssignmentsOptions" :key="option.value" cols="auto" sm="auto" md="auto" lg="">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -94,8 +102,8 @@
       </v-row>
       <v-btn-toggle v-model="finalAssignments" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in finalAssignmentsOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
+          <v-col v-for="option in finalAssignmentsOptions" :key="option.value" cols="auto" sm="auto" md="" lg="">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -104,13 +112,13 @@
       <!-- 過去問・レポートの有無 -->
       <v-row class="mt-5">
         <v-col>
-          <p class="custom-text-style">過去問・レポートの所持</p>
+          <p class="custom-text-style">過去レポート・過去問の所持</p>
         </v-col>
       </v-row>
       <v-btn-toggle v-model="pastExamPossession" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in pastExamPossessionOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
+          <v-col v-for="option in pastExamPossessionOptions" :key="option.value" cols="auto" sm="auto" md="" lg="">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -124,8 +132,8 @@
       </v-row>
       <v-btn-toggle v-model="grades" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in gradesOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
+          <v-col v-for="option in gradesOptions" :key="option.value" cols="auto" sm="auto" md="" lg="">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -139,8 +147,8 @@
       </v-row>
       <v-btn-toggle v-model="creditLevel" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in creditLevelOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
+          <v-col v-for="option in creditLevelOptions" :key="option.value" cols="auto" sm="auto" md="" lg="">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -154,8 +162,8 @@
       </v-row>
       <v-btn-toggle v-model="interestLevel" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in interestLevelOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
+          <v-col v-for="option in interestLevelOptions" :key="option.value" cols="auto" sm="auto" md="" lg="">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -169,8 +177,8 @@
       </v-row>
       <v-btn-toggle v-model="skillLevel" variant="outlined" class="full-height">
         <v-row no-gutters class="my-2">
-          <v-col v-for="option in skillLevelOptions" :key="option.value" cols="" sm="" md="" lg="">
-            <v-btn :value="option.value" rounded="xl" class="ml-0" color="primary">
+          <v-col v-for="option in skillLevelOptions" :key="option.value" cols="auto" sm="auto" md="" lg="">
+            <v-btn :value="option.value" :size="btnSize" rounded="xl" class="ml-0" color="primary">
               {{ option.label }}
             </v-btn>
           </v-col>
@@ -194,10 +202,12 @@
         </v-col>
       </v-row>
 
-      <common-alert :message="message" :type="messageType" />
+      <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
       <v-row>
         <v-col class="text-center custom-text-style">
-          <v-btn text="投稿する" color="primary" @click="clickButton"></v-btn>
+          <v-btn color="primary" @click="clickButton">
+            <p class="text-white">投稿する</p>
+          </v-btn>
         </v-col>
       </v-row>
     </v-col>
@@ -217,7 +227,7 @@
   import CommonAlert from "./shared/CommonAlert.vue";
 
   const store = useStore();
-  const { message, messageType, setErrorMessage, setSuccessMessage, setWarningMessage } = useMessage();
+  const { message, messageType, uniqueKey, setErrorMessage, setSuccessMessage, setWarningMessage } = useMessage();
 
   // 授業名と担当教員名を宣言・デフォルト値はnullにしておく
   const lectureName = ref(null);
@@ -243,8 +253,8 @@
   const attendanceConfirm = ref("なし");
   const attendanceConfirmOptions = ref([
     { label: "なし", value: "なし" },
-    { label: "毎回", value: "毎回" },
-    { label: "たまに", value: "たまに" }
+    { label: "たまに", value: "たまに" },
+    { label: "毎回", value: "毎回" }
   ]);
 
   const weeklyAssignments = ref("なし");
@@ -275,19 +285,19 @@
   const pastExamPossession = ref("なし");
   const pastExamPossessionOptions = ref([
     { label: "なし", value: "なし" },
-    { label: "過去問＋過去レポート", value: "レポ問" },
+    { label: "過去レポートのみ", value: "過去レポート" },
     { label: "過去問のみ", value: "過去問" },
-    { label: "過去レポートのみ", value: "過去レポート" }
+    { label: "過去レポート&過去問", value: "レポ問" }
   ]);
 
   const grades = ref("良");
   const gradesOptions = ref([
-    { label: "秀", value: "秀" },
-    { label: "優", value: "優" },
-    { label: "良", value: "良" },
-    { label: "可", value: "可" },
+    { label: "未定", value: "未定" },
     { label: "不可", value: "不可" },
-    { label: "未定", value: "未定" }
+    { label: "可", value: "可" },
+    { label: "良", value: "良" },
+    { label: "優", value: "優" },
+    { label: "秀", value: "秀" }
   ]);
 
   const creditLevel = ref(3);

@@ -97,6 +97,12 @@ class LectureDetailsController extends Controller
     // 講義コードから授業情報の出力
     public function searchByLectureId(Request $request)
     {
+        // ログインユーザーのIDを取得
+        $loginUserId = auth()->id();
+        Log::debug("loginUserId");
+        Log::debug($loginUserId);
+
+
         // 講義コードの取得
         // $lectureCode = "ABC123";
         // $lectureCode = $request['lectureCode'];
@@ -150,11 +156,18 @@ class LectureDetailsController extends Controller
                     ->select('reviewId','attendanceYear', 'attendanceConfirm', 'weeklyAssignments', 'midtermAssignments', 'finalAssignments', 'pastExamPossession', 'grades', 'creditLevel', 'interestLevel', 'skillLevel', 'comments','createdAt')
                     ->get();
 
-        $review_info = $reviews->map(function ($review) {
+        // レビュー済みかどうかの変数を用意する
+        $alreadyReviewed = false;
+
+        $review_info = $reviews->map(function ($review) use (&$alreadyReviewed, $loginUserId) {
 
             $userName = Reviews::find($review->reviewId)->user->userName;
             $userId = Reviews::find($review->reviewId)->user->userId;
             $lectureName = Reviews::find($review->reviewId)->lecture->lectureName;
+
+            if($userId ===  $loginUserId){
+                $alreadyReviewed = true;
+            }
 
             return [
                 'userName' => $userName,
@@ -243,6 +256,7 @@ class LectureDetailsController extends Controller
             // 'classInformationData' => [
                 'lectureName' => $lecture->lectureName,
                 'teacherName' => $lecture->teacherName,
+                'alreadyReviewed' => $alreadyReviewed,
                 // 'lectureDetails' => $lectureDetails,
                 'classInformationDataList' => //[
                     $lectureDetail,

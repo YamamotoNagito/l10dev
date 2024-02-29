@@ -3,7 +3,7 @@
 
   const props = defineProps(["classInformationData"]);
 
-  //　年度，ターム，曜日，時限をまとめて一つの文字列にする関数 
+  //　年度，ターム，曜日，時限をまとめて一つの文字列にする関数
   const integrateLectureDetailTimes = (lectureDetailTimes) => {
     return `${lectureDetailTimes.year}-${lectureDetailTimes.term}-${lectureDetailTimes.dayOfWeek}-${lectureDetailTimes.timePeriod}`;
   };
@@ -19,23 +19,24 @@
       // シラバスのurlをまとめて1つの配列に挿入
       const syllabusUrlList = classInformationData.classInformationDataList.map((obj) => obj.syllabusUrl);
       // 開講場所をまとめて１つの配列に挿入
-      const integratedTimeList = classInformationData.classInformationDataList
-        .map((obj) => obj.lectureDetailTimes.map((obj) => integrateLectureDetailTimes(obj)).join(" , "))
+      const integratedTimeList = classInformationData.classInformationDataList.map((obj) =>
+        obj.lectureDetailTimes.map((obj) => integrateLectureDetailTimes(obj)).join(" , ")
+      );
 
       classInformationData.lectureCode = lectureCodesString;
       classInformationData.location = locationString;
 
-      classInformationData.integratedTimeList= integratedTimeList;
-      classInformationData.syllabusUrlList = syllabusUrlList
+      classInformationData.integratedTimeList = integratedTimeList;
+      classInformationData.syllabusUrlList = syllabusUrlList;
 
       return classInformationData;
     }
   };
-// propsのclassInformationDataを親コンポーネントから読み込んで，基本情報の表で使うデータセットのオブジェクトを作成．
+  // propsのclassInformationDataを親コンポーネントから読み込んで，基本情報の表で使うデータセットのオブジェクトを作成．
   const modifiedData = modifyClassInformationData(props.classInformationData);
 
-// 表の行名とその中のコンテンツをまとめる
-// ただし，表の中で改行が必要なものについては個別に定義
+  // 表の行名とその中のコンテンツをまとめる
+  // ただし，表の中で改行が必要なものについては個別に定義
   const tableItemList = ref([
     {
       categoryName: "授業名",
@@ -52,7 +53,7 @@
     {
       categoryName: "開講場所",
       information: modifiedData.location
-    },
+    }
   ]);
 </script>
 
@@ -61,18 +62,43 @@
     <v-table>
       <tbody>
         <tr v-for="item in tableItemList" :key="item.categoryName">
-          <td><p>{{ item.categoryName }}</p></td>
-          <td><p>{{ item.information }}</p></td>
+          <td>
+            <p>{{ item.categoryName }}</p>
+          </td>
+          <td>
+            <p>{{ item.information }}</p>
+          </td>
         </tr>
         <tr>
           <td><p>開講時期</p></td>
-          <td v-for="time in modifiedData.integratedTimeList" :key="time">{{ time }}<br></td>
+          <td v-for="time in modifiedData.integratedTimeList" :key="time">
+            <p>{{ time }}</p>
+          </td>
         </tr>
         <tr>
           <td><p>シラバス</p></td>
-          <td v-for="syllabusUrl in modifiedData.syllabusUrlList" :key="syllabusUrl"><a :href="syllabusUrl" target="_blank">{{ syllabusUrl }}</a><br></td>
+          <td v-for="syllabusUrl in modifiedData.syllabusUrlList" :key="syllabusUrl">
+            <a :href="syllabusUrl" target="_blank" class="text-blue text-underline">シラバスに移動</a><br />
+          </td>
         </tr>
       </tbody>
     </v-table>
   </v-container>
 </template>
+
+<style scoped>
+  td {
+    min-width: 120px;
+    max-width: 150px;
+  }
+
+  /* p{
+  max-width: 100%;
+  font-size: 10px;
+}
+
+a{
+  max-width: 100%;
+  font-size: 10px;
+} */
+</style>

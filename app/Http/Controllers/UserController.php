@@ -68,11 +68,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $userId)
+    public function show()
     {
-        Log::Debug("userId");
-        Log::Debug($userId);
-          // ユーザーを取得
+        $userId = auth()->id();
+
         $user = User::findOrFail($userId);
 
         // ユーザー情報を連想配列に格納

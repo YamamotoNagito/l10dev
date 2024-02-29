@@ -2,6 +2,7 @@
   import { useRouter } from "vue-router";
   import pageTitle from "../components/shared/pageTitle.vue";
   import BaseUI from "../components/shared/BaseUI.vue";
+  import NotFoundImage from "../assets/img/not_found.svg";
   const router = useRouter();
 </script>
 
@@ -10,9 +11,11 @@
     <template #header>
       <pageTitle title="ページが存在しません" />
     </template>
-    <v-container class="d-flex flex-column">
-      <!-- <p class="text-center text-h5">ページが存在しません</p> -->
-      <v-btn rounded max-width="150px" class="mx-auto" @click="router.push({ name: 'welcome' })">ホームに戻る</v-btn>
+    <v-container class="d-flex flex-column align-center justify-center">
+      <v-img :src="NotFoundImage" alt="not_found" width="700" class="mb-12" contain />
+      <v-btn rounded max-width="150px" class="mx-auto mt-5" @click="router.push({ name: 'welcome' })"
+        >ホームに戻る</v-btn
+      >
     </v-container>
   </BaseUI>
 </template>

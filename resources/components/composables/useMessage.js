@@ -43,6 +43,7 @@ import { ref } from "vue";
 export function useMessage() {
   const message = ref("");
   const messageType = ref("");
+  const uniqueKey = ref(0);
 
   /**
    * メッセージ状態をエラーメッセージに設定します。
@@ -54,6 +55,7 @@ export function useMessage() {
   function setErrorMessage(msg) {
     message.value = msg;
     messageType.value = "error";
+    uniqueKey.value = _generateRandomKey();
   }
 
   /**
@@ -66,6 +68,7 @@ export function useMessage() {
   function setSuccessMessage(msg) {
     message.value = msg;
     messageType.value = "success";
+    uniqueKey.value = _generateRandomKey();
   }
 
   /**
@@ -78,6 +81,7 @@ export function useMessage() {
   function setWarningMessage(msg) {
     message.value = msg;
     messageType.value = "warning";
+    uniqueKey.value = _generateRandomKey();
   }
 
   /**
@@ -90,7 +94,13 @@ export function useMessage() {
   function setInfoMessage(msg) {
     message.value = msg;
     messageType.value = "info";
+    uniqueKey.value = _generateRandomKey();
   }
 
-  return { message, messageType, setErrorMessage, setSuccessMessage, setWarningMessage, setInfoMessage };
+  // private function
+  function _generateRandomKey() {
+    return "key-" + Math.random().toString(36).substr(2, 9);
+  }
+
+  return { message, messageType, uniqueKey, setErrorMessage, setSuccessMessage, setWarningMessage, setInfoMessage };
 }

@@ -35,7 +35,7 @@ Route::post('/reviews', [ReviewsController::class, 'store']);
 Route::post('/contact', [ContactController::class, 'store']);
 
 // プロフィール
-Route::get('/profile/{user_id}', [UserController::class, 'show']);
+Route::get('/profile', [UserController::class, 'show']);
 
 // 講義コードを持つかどうかの検索画面
 Route::post('/hasLectureCode', [LectureDetailsController::class, 'hasLectureCode']);

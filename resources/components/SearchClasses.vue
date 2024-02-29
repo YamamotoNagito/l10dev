@@ -2,13 +2,13 @@
   import { ref, watch, onMounted } from "vue";
   import { useRouter } from "vue-router";
   import axios from "axios";
-  import Dialog from "./shared/OkDialog.vue";
+  import { useMessage } from "../components/composables/useMessage";
+  import CommonAlert from "../components/shared/CommonAlert.vue";
 
   const router = useRouter();
   // どっちのタブを開くのか，情報を格納する変数
   const tab = ref(null);
-
-  const showDialog = ref(false);
+  const { message, messageType, uniqueKey, setErrorMessage, setWarningMessage } = useMessage();
 
   // 条件で検索する際はこのデータをバックに送る
   const detailedCondition = ref({
@@ -189,9 +189,6 @@
     lectureCode: null
   });
 
-  // メッセージ
-  const messageInDialog = ref("");
-
   // オブジェクトからvalueがNULLのkeyとvalueのペアを削除する関数
   function removeNullValues(obj) {
     const result = {};
@@ -255,58 +252,16 @@
   // 条件で検索するボタンが押されたときに発火する関数
   //検索条件を/class（classListView.vue）のpath内のクエリとして，router.pushされた後はそのqueryをClassListView.vueが受け取って処理する
   const sendQueryToClassListView = async () => {
-    // メッセージを更新して空に
-    messageInDialog.value = "";
     if (
       //バリデーションチェック(どれか1つでも入力していたら(nullでなければ)通過)
       isAllNull(detailedCondition.value)
     ) {
       //バリデーションが通らなかったときに実行
-      messageInDialog.value = "検索する条件を入力してください";
-      showDialog.value = true;
-      // console.log(
-      //   'バリデーション通過ならず',
-      //   "lectureName: ",detailedCondition.value.lectureName,  '\n',
-      //   "teacherName: ",detailedCondition.value.teacherName, '\n',
-      //   "location: ",detailedCondition.value.location, '\n',
-      //   "faculty: ",detailedCondition.value.faculty, '\n',
-      //   "category: ",detailedCondition.value.category, '\n',
-      //   "term: ",detailedCondition.value.term, '\n',
-      //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
-      //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
-      //   "grade: ",detailedCondition.value.grade, '\n',
-      //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
-      //   "creditLevelString: ",creditLevelString.value, '\n',
-      //   "interestLevelString: ",interestLevelString.value, '\n',
-      //   "skillLevelString: ",skillLevelString.value,
-      // );
+      setWarningMessage("検索する条件を入力してください");
     } else if (!allCorrectMinMax()) {
-      messageInDialog.value = "評価値の大小関係を修正してください";
-      showDialog.value = true;
+      setWarningMessage("評価値の大小関係を修正してください");
     } else {
       //バリデーション通過時に実行
-
-      // console.log(
-      //   "バリデーション通過！！",
-      //   "lectureName: ",detailedCondition.value.lectureName, '\n',
-      //   "teacherName: ",detailedCondition.value.teacherName, '\n',
-      //   "location: ",detailedCondition.value.location, '\n',
-      //   "faculty: ",detailedCondition.value.faculty, '\n',
-      //   "category: ",detailedCondition.value.category, '\n',
-      //   "term: ",detailedCondition.value.term, '\n',
-      //   "dayOfWeek: ",detailedCondition.value.dayOfWeek, '\n',
-      //   "timePeriod: ",detailedCondition.value.timePeriod, '\n',
-      //   "grade: ",detailedCondition.value.grade, '\n',
-      //   "totalEvaluationString: ",totalEvaluationString.value, '\n',
-      //   "creditLevelString: ",creditLevelString.value, '\n',
-      //   "interestLevelString: ",interestLevelString.value, '\n',
-      //   "skillLevelString: ",skillLevelString.value,
-      // );
-      // プルダウンの文字列からオブジェクトを生成し，datailedConditionに格納する
-      // detailedCondition.value.totalEvaluation = updateEvaluationObject(totalEvaluationString.value);
-      // detailedCondition.value.creditLevel = updateEvaluationObject(creditLevelString.value);
-      // detailedCondition.value.interestLevel = updateEvaluationObject(interestLevelString.value);
-      // detailedCondition.value.skillLevel = updateEvaluationObject(skillLevelString.value);
 
       const query = {
         lectureName: detailedCondition.value.lectureName,
@@ -347,18 +302,17 @@
         const lectureId = response.data.lectureId;
         router.push({ path: `class/${lectureId}/detail` }, { params: lectureId });
       } else {
-        messageInDialog.value = "存在しない講義コードです．";
-        showDialog.value = true;
+        setErrorMessage("存在しない講義コードです．");
       }
 
       // その他の処理
     } catch (error) {
       if (error.response) {
         // サーバーからのエラーレスポンスがある場合
-        console.error(error.response.data); // エラーレスポンスをコンソールに出力
+        setErrorMessage(error.response.data.message); // エラーメッセージを表示
       } else {
         // リクエストがサーバーに届かなかった場合など
-        console.error(error.message);
+        setErrorMessage("エラーが発生しました。時間をおいて再度お試しください。");
       }
     }
   };
@@ -377,10 +331,10 @@
     } catch (error) {
       if (error.response) {
         // サーバーからのエラーレスポンスがある場合
-        console.error(error.response.data); // エラーレスポンスをコンソールに出力
+        setErrorMessage(error.response.data.message); // エラーメッセージを表示
       } else {
         // リクエストがサーバーに届かなかった場合など
-        console.error(error.message);
+        setErrorMessage("エラーが発生しました。時間をおいて再度お試しください。");
       }
     }
   };
@@ -609,180 +563,181 @@
                           </v-row>
                         </v-col>
                       </v-row>
-
-                      <!-- 区切り線 -->
-                      <v-divider :thickness="1" class="border-opacity-100" color="primary"></v-divider>
-
-                      <!-- 総合評価 -->
-                      <v-row class="my-3">
-                        <v-col>
-                          <!-- 表題 -->
-                          <v-row>
-                            <v-col cols="12">
-                              <p class="category-name d-flex justify-center">総合評価</p>
+                        <!-- ここから上下関係に関する部分．初期リリースでは利用しないのでv-if属性をfalseにして非表示化します -->
+                        <div v-if="false">
+                          <!-- 区切り線 -->
+                          <!-- <v-divider :thickness="1" class="border-opacity-100" color="primary"></v-divider> -->
+    
+                          <!-- 総合評価 -->
+                          <v-row class="my-3">
+                            <v-col>
+                              <v-row>
+                                <v-col cols="12">
+                                  <p class="category-name d-flex justify-center">総合評価</p>
+                                </v-col>
+                              </v-row>
+                              <v-row>
+                                <!-- 下限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.totalEvaluation.min"
+                                    label="下限"
+                                    :items="evaluationRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="1" class="d-flex justify-center mt-4">
+                                  <p>〜</p>
+                                </v-col>
+                                <!-- 上限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.totalEvaluation.max"
+                                    label="上限"
+                                    :items="evaluationRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                              </v-row>
                             </v-col>
                           </v-row>
-                          <v-row>
-                            <!-- 下限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.totalEvaluation.min"
-                                label="下限"
-                                :items="evaluationRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                            <v-col cols="1" class="d-flex justify-center mt-4">
-                              <p>〜</p>
-                            </v-col>
-                            <!-- 上限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.totalEvaluation.max"
-                                label="上限"
-                                :items="evaluationRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                          </v-row>
-                        </v-col>
-                      </v-row>
-                      <!-- 単位取得のしやすさ -->
-                      <v-row class="my-3">
-                        <v-col>
-                          <!-- 表題 -->
-                          <v-row>
-                            <v-col cols="12">
-                              <p class="category-name d-flex justify-center">単位取得のしやすさ</p>
-                            </v-col>
-                          </v-row>
-                          <v-row>
-                            <!-- 下限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.creditLevel.min"
-                                label="下限"
-                                :items="creditRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                            <v-col cols="1" class="d-flex justify-center mt-4">
-                              <p>〜</p>
-                            </v-col>
-                            <!-- 上限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.creditLevel.max"
-                                label="上限"
-                                :items="creditRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
+                          <!-- 単位取得のしやすさ -->
+                          <v-row class="my-3">
+                            <v-col>
+                              <!-- 表題 -->
+                              <v-row>
+                                <v-col cols="12">
+                                  <p class="category-name d-flex justify-center">単位取得のしやすさ</p>
+                                </v-col>
+                              </v-row>
+                              <v-row>
+                                <!-- 下限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.creditLevel.min"
+                                    label="下限"
+                                    :items="creditRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="1" class="d-flex justify-center mt-4">
+                                  <p>〜</p>
+                                </v-col>
+                                <!-- 上限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.creditLevel.max"
+                                    label="上限"
+                                    :items="creditRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                              </v-row>
                             </v-col>
                           </v-row>
-                        </v-col>
-                      </v-row>
-
-                      <!-- 面白さ -->
-                      <v-row>
-                        <v-col>
-                          <!-- 表題 -->
+    
+                          <!-- 面白さ -->
                           <v-row>
-                            <v-col cols="12">
-                              <p class="category-name d-flex justify-center">面白さ</p>
+                            <v-col>
+                              <!-- 表題 -->
+                              <v-row>
+                                <v-col cols="12">
+                                  <p class="category-name d-flex justify-center">面白さ</p>
+                                </v-col>
+                              </v-row>
+                              <v-row>
+                                <!-- 下限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.interestLevel.min"
+                                    label="下限"
+                                    :items="interestRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="1" class="d-flex justify-center mt-4">
+                                  <p>〜</p>
+                                </v-col>
+                                <!-- 上限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.interestLevel.max"
+                                    label="上限"
+                                    :items="interestRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                              </v-row>
                             </v-col>
                           </v-row>
+    
+                          <!-- スキルが身につくか -->
                           <v-row>
-                            <!-- 下限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.interestLevel.min"
-                                label="下限"
-                                :items="interestRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                            <v-col cols="1" class="d-flex justify-center mt-4">
-                              <p>〜</p>
-                            </v-col>
-                            <!-- 上限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.interestLevel.max"
-                                label="上限"
-                                :items="interestRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
+                            <v-col>
+                              <!-- 表題 -->
+                              <v-row>
+                                <v-col cols="12">
+                                  <p class="category-name d-flex justify-center">スキルが身につくか</p>
+                                </v-col>
+                              </v-row>
+                              <v-row>
+                                <!-- 下限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.skillLevel.min"
+                                    label="下限"
+                                    :items="skillRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                                <v-col cols="1" class="d-flex justify-center mt-4">
+                                  <p>〜</p>
+                                </v-col>
+                                <!-- 上限 -->
+                                <v-col cols="5.5">
+                                  <v-select
+                                    v-model="detailedCondition.skillLevel.max"
+                                    label="上限"
+                                    :items="skillRateList"
+                                    item-value="rate"
+                                    item-text="title"
+                                    class="pulldown-list no-margin-padding class-v-select"
+                                    clearable
+                                    variant="outlined"
+                                  ></v-select>
+                                </v-col>
+                              </v-row>
                             </v-col>
                           </v-row>
-                        </v-col>
-                      </v-row>
-
-                      <!-- スキルが身につくか -->
-                      <v-row>
-                        <v-col>
-                          <!-- 表題 -->
-                          <v-row>
-                            <v-col cols="12">
-                              <p class="category-name d-flex justify-center">スキルが身につくか</p>
-                            </v-col>
-                          </v-row>
-                          <v-row>
-                            <!-- 下限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.skillLevel.min"
-                                label="下限"
-                                :items="skillRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                            <v-col cols="1" class="d-flex justify-center mt-4">
-                              <p>〜</p>
-                            </v-col>
-                            <!-- 上限 -->
-                            <v-col cols="5.5">
-                              <v-select
-                                v-model="detailedCondition.skillLevel.max"
-                                label="上限"
-                                :items="skillRateList"
-                                item-value="rate"
-                                item-text="title"
-                                class="pulldown-list no-margin-padding class-v-select"
-                                clearable
-                                variant="outlined"
-                              ></v-select>
-                            </v-col>
-                          </v-row>
-                        </v-col>
-                      </v-row>
+                        </div> 
                     </v-expansion-panel-text>
                   </v-expansion-panel>
                 </v-expansion-panels>
@@ -818,11 +773,7 @@
             </v-window>
           </v-card-text>
         </v-card>
-        <Dialog
-          :showDialog="showDialog"
-          :messageInDialog="messageInDialog"
-          @toggleShowDialog="showDialog = !showDialog"
-        ></Dialog>
+        <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
       </v-col>
     </v-row>
   </v-container>

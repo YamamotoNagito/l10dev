@@ -1,12 +1,11 @@
 name: Laravel Tests
 
 on:
-  push:
-    branches:
-      - develop
   pull_request:
     branches:
       - develop
+    paths-ignore:
+      - "resources/**"
 
 jobs:
   laravel-tests:
@@ -14,29 +13,37 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
         with:
-          node-version: "16"
-      - name: Install Node.js dependencies
-        run: npm install
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
       - name: composer install
         run: composer install -n --prefer-dist  --no-progress --no-suggest
+
       - name: copy .env
         run: cp .env.example .env
+
       - name: generate key
         run: php artisan key:generate
+
       - name: Create Database
         run: |
           mkdir -p database
           touch database/database.sqlite
+
       - name: migrate
         run: php artisan migrate
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
+
       - name: Execute tests
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: php artisan test
+        run: LOG_LEVEL=critical LOG_SQL_ENABLE=false php artisan test

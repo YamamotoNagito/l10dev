@@ -1,45 +1,46 @@
 <script setup>
-import { onMounted } from "vue";
-import { useRouter } from "vue-router";
+  import { onMounted } from "vue";
+  import { useRouter } from "vue-router";
 
-import StarRating from "./StarRating.vue";
+  import StarRating from "./StarRating.vue";
 
-// LineとTwitterアイコンの読み込み
-import lineLogo from "../assets/img/line.png";
-import xLogo from "../assets/img/xlogo.png";
+  // LineとTwitterアイコンの読み込み
+  import lineLogo from "../assets/img/line.png";
+  import xLogo from "../assets/img/xlogo.png";
 
-const props = defineProps(["classData"]);
+  const props = defineProps(["classData"]);
 
-const router = useRouter();
+  const router = useRouter();
 
-// Twitterで共有するための関数
-const twitterShare = () => {
-  //シェアされるURL
-  var url = "http://localhost:9001/class";
+  const getUrl = () => {
+    // class ページの path を取得
+    const classPath = router.resolve({ name: "class" }).href;
+    // 本番環境でのURL
+    return window.location.origin + classPath + "/" + props.classData.lectureId + "/detail";
+  };
+  // Twitterで共有するための関数
+  const twitterShare = () => {
+    // TwitterへのURL
+    const url = getUrl();
+    // TwitterへのURL
+    const shareURL = "https://twitter.com/intent/tweet?text=" + "%20%23この授業面白そう" + "&url=" + url;
+    window.open(shareURL, "_blank");
+  };
 
-  // TwitterへのURL
-  var shareURL = "https://twitter.com/intent/tweet?text=" + "%20%23この授業面白そう" + "&url=" + url;
-  window.open(shareURL, '_blank');
-};
+  // Lineで共有するための関数
+  const lineShare = () => {
+    const url = getUrl();
+    const shareURL = "https://social-plugins.line.me/lineit/share?url=" + url;
+    window.open(shareURL, "_blank");
+  };
 
-// Lineで共有するための関数
-const lineShare = () => {
-  //シェアされるURL
-  var url = "http://localhost:9001/class";
-
-  // LineへのURL
-  // var shareURL = 'https://twitter.com/intent/tweet?text=' + "%20%23この授業面白そう" + '&url=' + url;
-  var shareURL = "https://social-plugins.line.me/lineit/share?url=" + url;
-  window.open(shareURL, '_blank');
-};
-
-onMounted(() => {
-  // Lineボタンのスクリプトを動的に生成し、挿入
-  const lineButtonScript = document.createElement("script");
-  lineButtonScript.src = "https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js";
-  lineButtonScript.async = true;
-  lineButtonScript.defer = true;
-});
+  onMounted(() => {
+    // Lineボタンのスクリプトを動的に生成し、挿入
+    const lineButtonScript = document.createElement("script");
+    lineButtonScript.src = "https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js";
+    lineButtonScript.async = true;
+    lineButtonScript.defer = true;
+  });
 </script>
 
 <template>
@@ -64,7 +65,14 @@ onMounted(() => {
     </v-row>
     <v-row align="center" justify="space-between">
       <!-- 星の評価と評価数の合計 -->
-      <v-col cols="8" sm="4" md="" lg="" class="d-flex justify-start align-center my-0 py-0"
+      <!-- 授業あれば「星評価(投稿人数)」を表示するがない際には「投稿がありません」を出力 -->
+      <v-col
+        v-if="classData.numberOfReviews > 0"
+        cols="8"
+        sm="4"
+        md=""
+        lg=""
+        class="d-flex justify-start align-center my-0 py-0"
         ><v-row>
           <v-col cols="12" sm="" md="" lg="" class="d-flex"
             ><StarRating :total-evaluation="classData.totalEvaluation"></StarRating>
@@ -72,8 +80,16 @@ onMounted(() => {
           >
         </v-row>
       </v-col>
-      <v-col cols="12" sm="8" md="" lg="" class="d-flex justify-start justify-sm-end">
-        <v-btn color="orange-darken-1" class="mr-2 mt-1">
+      <v-col v-else cols="8" sm="4" md="" lg="" class="d-flex justify-start align-center my-0 py-0"
+        ><v-row>
+          <v-col cols="12" sm="" md="" lg="" class="d-flex">
+            <p class="mt-1">投稿がありません</p>
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="12" sm="8" md="" lg="" class="d-flex justify-start justify-sm-end align-center">
+        <p v-if="classData.alreadyReviewed" class="text-h8 ma-3">レビュー済み</p>
+        <v-btn v-else color="orange-darken-1" class="mr-2 mt-1">
           <v-icon>mdi-pencil</v-icon>
           <p
             class="text-h8"
@@ -114,7 +130,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-  .text-decoration-underline{
+  .text-decoration-underline {
     cursor: pointer;
   }
 </style>
