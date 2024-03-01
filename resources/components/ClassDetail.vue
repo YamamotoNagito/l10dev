@@ -20,6 +20,7 @@
     <v-col cols="12">
       <v-row justify="center">
         <v-col cols="12">
+          <!-- 文字の周りに余白を持たせるためのコンポーネント -->
           <v-container>
             <p class="text-h6 text-sm-h5 text-md-h4 text-lg-h4 text-center">
               {{ classDetailData?.classInformationData?.lectureName }}
