@@ -20,9 +20,11 @@
     <v-col cols="12">
       <v-row justify="center">
         <v-col cols="12">
-          <h2 class="text-h3 text-center">
-            {{ classDetailData?.classInformationData?.lectureName }}
-          </h2>
+          <v-container>
+            <p class="text-h6 text-sm-h5 text-md-h4 text-lg-h4 text-center">
+              {{ classDetailData?.classInformationData?.lectureName }}
+            </p>
+          </v-container>
         </v-col>
         <v-col cols="12" class="d-flex flex-row justify-center">
           <!-- レビューが投稿済みかどうかによって表示する文言を変更する -->
