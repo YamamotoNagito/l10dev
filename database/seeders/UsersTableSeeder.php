@@ -27,19 +27,6 @@ class UsersTableSeeder extends Seeder
           'admissionYear' => "2023",
       ]);
 
-      if ($user) {
-       // 初期データの挿入
-       $user = DB::table('users')->insertGetId([
-        'userName' => 'intmain1',
-        'userEmail' => 'intmain1@com',
-        'password' => Hash::make('intmain1@com'),
-        'universityName' => '広島大学',
-        'category' => '学部',
-        'faculty' => '情報科学部',
-        'department' => '情報科学科',
-        'admissionYear' => "2023",
-    ]);
-
     $user2 = DB::table('users')->insertGetId([
         'userName' => 'intmain3',
         'userEmail' => 'intmain3@com',
