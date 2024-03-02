@@ -2,88 +2,85 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class ReviewsTableSeeder extends Seeder
 {
     public function run()
     {
-        // レビューデータの挿入
-        DB::table('reviews')->insert([
-            'lectureId' => 1,
-            'userId' => 1,
-            'attendanceYear' => 2022,
-            'attendanceConfirm' => '出席あり',
-            'weeklyAssignments' => '良い',
-            'midtermAssignments' => '普通',
-            'finalAssignments' => '良い',
-            'pastExamPossession' => 'あり',
-            'grades' => 'A',
-            'creditLevel' => 3,
-            'interestLevel' => 4,
-            'skillLevel' => 5,
-            'comments' => 'この講義は非常に面白かったです。',
-            'createdAt' => now(),
-            'updatedAt' => now(),
-        ]);
+        $csvFile = database_path('csv/reviews.csv');
+        $handle = fopen($csvFile, 'r');
 
-        DB::table('reviews')->insert([
-            'lectureId' => 1,
-            'userId' => 2,
-            'attendanceYear' => 2024,
-            'attendanceConfirm' => '出席なし',
-            'weeklyAssignments' => '良い',
-            'midtermAssignments' => '普通',
-            'finalAssignments' => '良い',
-            'pastExamPossession' => 'あり',
-            'grades' => '優',
-            'creditLevel' => 4,
-            'interestLevel' => 5,
-            'skillLevel' => 1,
-            'comments' => 'この講義は非常に面白かったです。',
-            'createdAt' => now(),
-            'updatedAt' => now(),
-        ]);
+        if ($handle !== FALSE) {
+            fgetcsv($handle); // CSVのヘッダー行をスキップ
 
-        // 別のレビューデータを挿入する場合は、適宜追加
-        DB::table('reviews')->insert([
-            'lectureId' => 2,
-            'userId' => 2,
-            'attendanceYear' => 2023,
-            'attendanceConfirm' => '出席なし',
-            'weeklyAssignments' => '普通',
-            'midtermAssignments' => '悪い',
-            'finalAssignments' => '普通',
-            'pastExamPossession' => 'なし',
-            'grades' => '秀',
-            'creditLevel' => 2,
-            'interestLevel' => 3,
-            'skillLevel' => 4,
-            'comments' => '特に印象に残る講義ではありませんでした。',
-            'createdAt' => now(),
-            'updatedAt' => now(),
-        ]);
+            while (($data = fgetcsv($handle)) !== FALSE) {
+                $validator = Validator::make([
+                    'reviewId' => $data[0],
+                    'lectureId' => $data[1],
+                    'userId' => $data[2],
+                    'attendanceYear' => $data[3],
+                    'attendanceConfirm' => $data[4],
+                    'weeklyAssignments' => $data[5],
+                    'midtermAssignments' => $data[6],
+                    'finalAssignments' => $data[7],
+                    'pastExamPossession' => $data[8],
+                    'grades' => $data[9],
+                    'creditLevel' => $data[10],
+                    'interestLevel' => $data[11],
+                    'skillLevel' => $data[12],
+                    'comments' => $data[13],
+                ], [
+                    'reviewId' => 'required|integer',
+                    'lectureId' => 'required|integer',
+                    'userId' => 'required|integer',
+                    'attendanceYear' => 'required|integer',
+                    'attendanceConfirm' => 'required|string',
+                    'weeklyAssignments' => 'required|string',
+                    'midtermAssignments' => 'required|string',
+                    'finalAssignments' => 'required|string',
+                    'pastExamPossession' => 'required|string',
+                    'grades' => 'required|string',
+                    'creditLevel' => 'required|integer',
+                    'interestLevel' => 'required|integer',
+                    'skillLevel' => 'required|integer',
+                    'comments' => 'required|string',
+                ]);
 
-        // 別のレビューデータを挿入する場合は、適宜追加
-        DB::table('reviews')->insert([
-            'lectureId' => 1,
-            'userId' => 3,
-            'attendanceYear' => 2023,
-            'attendanceConfirm' => '出席なし',
-            'weeklyAssignments' => '普通',
-            'midtermAssignments' => '悪い',
-            'finalAssignments' => '普通',
-            'pastExamPossession' => 'なし',
-            'grades' => '秀',
-            'creditLevel' => 2,
-            'interestLevel' => 3,
-            'skillLevel' => 4,
-            'comments' => '特に印象に残る講義ではありませんでした。',
-            'createdAt' => now(),
-            'updatedAt' => now(),
-        ]);
+                if ($validator->fails()) {
+                    Log::error('バリデーションエラー', [
+                        'errors' => $validator->errors()
+                    ]);
+                    continue;
+                }
 
-        // 他にも必要なデータがあれば同様に挿入
+                DB::table('reviews')->insert([
+                    'reviewId' => $data[0],
+                    'lectureId' => $data[1],
+                    'userId' => $data[2],
+                    'attendanceYear' => $data[3],
+                    'attendanceConfirm' => $data[4],
+                    'weeklyAssignments' => $data[5],
+                    'midtermAssignments' => $data[6],
+                    'finalAssignments' => $data[7],
+                    'pastExamPossession' => $data[8],
+                    'grades' => $data[9],
+                    'creditLevel' => $data[10],
+                    'interestLevel' => $data[11],
+                    'skillLevel' => $data[12],
+                    'comments' => $data[13],
+                ]);
+            }
+
+            fclose($handle);
+        } else {
+            Log::error('CSVファイルを開けませんでした。', [
+                'path' => $csvFile
+            ]);
+        }
     }
 }
