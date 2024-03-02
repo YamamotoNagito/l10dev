@@ -37,7 +37,9 @@
         </v-row>
         <v-row no-gutters>
           <v-col class="d-flex justify-center pt-0">
-            <v-btn class="mt-4 mx-2" color="primary" flat @click="handleConfirm">{{ props.okButtonText }}</v-btn>
+            <v-btn class="mt-4 mx-2" color="primary" flat @click="handleConfirm">
+              <p class="text-white">{{ props.okButtonText }}</p>
+            </v-btn>
             <v-btn class="mt-4 mx-2" color="grey" flat @click="handleCancel">{{ props.cancelButtonText }}</v-btn>
           </v-col>
         </v-row>
