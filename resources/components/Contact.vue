@@ -127,8 +127,9 @@
       class="my-2"
       counter="2000"
     ></v-textarea>
-    <!-- <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> -->
-    <v-btn color="primary" @click="clickButton">送信する</v-btn>
+    <v-row justify="center" class="mt-5">
+      <v-btn color="primary" @click="clickButton" text-color="white"><p class="text-white">送信する</p> </v-btn>
+    </v-row>
   </v-container>
 </template>
 
