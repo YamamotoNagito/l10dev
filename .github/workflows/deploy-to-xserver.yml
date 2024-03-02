@@ -22,8 +22,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }} # 秘密鍵の内容
           port: ${{ secrets.SSH_PORT }} # ポート番号
           script: |
-            echo "移動中: /home/hirodaikaede/hirodaikaede.xsrv.jp/public_html/l10dev"
-            cd /home/hirodaikaede/hirodaikaede.xsrv.jp/public_html/l10dev
+            echo "移動中: /home/hirodaikaede/hirodai-kaede.com/public_html/l10dev"
+            cd /home/hirodaikaede/hirodai-kaede.com/public_html/l10dev
             echo "移動完了"
 
             echo "git fetch & checkout 実行中"
