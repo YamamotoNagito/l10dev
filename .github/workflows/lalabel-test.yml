@@ -46,4 +46,6 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
+          LOG_LEVEL: critical
+          LOG_SQL_ENABLE: false
         run: php artisan test || true
