@@ -50,12 +50,17 @@
   const deleteReview = async () => {
     try {
       const response = await axios.delete(`/api/deleteReview/${requestReviewId.value}`);
-      console.log(response.data);
+      // console.log(response.data);
       isDialogVisible.value = false; // ダイアログを閉じる
     } catch (error) {
-      console.error("API call failed:", error);
+      // console.error("API call failed:", error);
       isDialogVisible.value = false; // エラー発生時もダイアログを閉じる
     }
+  };
+
+  // ダイアログのキャンセルボタンのクリックイベント
+  const cancelDelete = () => {
+    isDialogVisible.value = false; // ダイアログを閉じる
   };
 </script>
 
