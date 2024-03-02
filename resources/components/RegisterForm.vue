@@ -298,113 +298,119 @@
   <v-card class="auth-card pa-4 pt-7 mb-15" max-width="500">
     <v-row justify="center" align="center">
       <v-col cols="12" class="d-flex justify-center">
-        <v-form action="" method="post">
-          <v-col cols="12">
-            <v-card-text class="pt-2">
-              <h5 class="text-h5 font-weight-semibold mb-4 text-center">
-                新規登録
-              </h5>
-            </v-card-text>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              v-model="userName"
-              :error-messages="v$.userName.$error ? ['1字以上32字以下の, 名前を入力してください. '] : []"
-              label="名前"
-              name="userName"
-              type="name"
-              clearable
-              variant="outlined"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              v-model="userEmail"
-              :error-messages="v$.userEmail.$error ? ['有効なメールアドレスを入力してください. '] : []"
-              label="メールアドレス"
-              name="userEmail"
-              type="email"
-              clearable
-              variant="outlined"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              v-model="password"
-              :error-messages="v$.password.$error ? ['8字以上32字以下の, 有効なパスワードを入力してください. '] : []"
-              :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-              :type="visible ? 'text' : 'password'"
-              label="パスワード(8~32文字)"
-              name="password"
-              clearable
-              variant="outlined"
-              @click:append-inner="visible = !visible"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              v-model="passwordCheck"
-              :error-messages="v$.passwordCheck.$error ? ['入力されたパスワードが確認用パスワードと一致しません. '] : []"
-              :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-              :type="visible ? 'text' : 'password'"
-              label="パスワード確認"
-              name="passwordCheck"
-              clearable
-              variant="outlined"
-              @click:append-inner="visible = !visible"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-select
-              v-model="category"
-              :error-messages="v$.category.$error ? ['所属を選択してください. '] : []"
-              :items="categoryItems"
-              label="所属"
-              name="category"
-              type="text"
-              variant="outlined"
-            ></v-select>
-          </v-col>
-          <v-col cols="12" v-if="isStudent">
-            <v-select
-              v-model="faculty"
-              :error-messages="v$.faculty.$error ? ['学部・研究科等を選択してください. '] : []"
-              :items="facultyItems"
-              label="学部・研究科"
-              name="faculty"
-              type="text"
-              variant="outlined"
-            ></v-select>
-          </v-col>
-          <v-col cols="12" v-if="isStudent">
-            <v-select
-              v-model="department"
-              :error-messages="v$.department.$error ? ['学科・類・専攻等を選択してください. '] : []"
-              :items="departmentItems"
-              label="学科・学類・専攻など"
-              name="department"
-              type="text"
-              variant="outlined"
-            ></v-select>
-          </v-col>
-          <v-col cols="12" v-if="isStudent">
-            <v-select
-              v-model="admissionYear"
-              :error-messages="v$.admissionYear.$error ? ['入学年度を選択してください. '] : []"
-              :items="admissionYearItems"
-              label="入学年度"
-              name="admissionYear"
-              type="text"
-              variant="outlined"
-            ></v-select>
-          </v-col>
-          <v-checkbox
-            v-model="termsAccepted"
-            label="当サイトの利用規約およびプライバシーポリシーに同意する. (ページ下部の「利用規約」「プライバシーポリシー」からご確認いただけます． )"
-          ></v-checkbox>
-          <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
-          <v-btn :disabled="!termsAccepted" color="primary" @click="clickButton"> 登録する </v-btn>
-        </v-form>
+        <v-row>
+          <v-form action="" method="post">
+            <v-col cols="12">
+              <v-card-text class="pt-2">
+                <h5 class="text-h5 font-weight-semibold mb-4 text-center">新規登録</h5>
+              </v-card-text>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="userName"
+                :error-messages="v$.userName.$error ? ['1字以上32字以下の, 名前を入力してください. '] : []"
+                label="名前"
+                name="userName"
+                type="name"
+                clearable
+                variant="outlined"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="userEmail"
+                :error-messages="v$.userEmail.$error ? ['有効なメールアドレスを入力してください. '] : []"
+                label="メールアドレス"
+                name="userEmail"
+                type="email"
+                clearable
+                variant="outlined"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="password"
+                :error-messages="v$.password.$error ? ['8字以上32字以下の, 有効なパスワードを入力してください. '] : []"
+                :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                :type="visible ? 'text' : 'password'"
+                label="パスワード(8~32文字)"
+                name="password"
+                clearable
+                variant="outlined"
+                @click:append-inner="visible = !visible"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="passwordCheck"
+                :error-messages="
+                  v$.passwordCheck.$error ? ['入力されたパスワードが確認用パスワードと一致しません. '] : []
+                "
+                :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                :type="visible ? 'text' : 'password'"
+                label="パスワード確認"
+                name="passwordCheck"
+                clearable
+                variant="outlined"
+                @click:append-inner="visible = !visible"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-select
+                v-model="category"
+                :error-messages="v$.category.$error ? ['所属を選択してください. '] : []"
+                :items="categoryItems"
+                label="所属"
+                name="category"
+                type="text"
+                variant="outlined"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" v-if="isStudent">
+              <v-select
+                v-model="faculty"
+                :error-messages="v$.faculty.$error ? ['学部・研究科等を選択してください. '] : []"
+                :items="facultyItems"
+                label="学部・研究科"
+                name="faculty"
+                type="text"
+                variant="outlined"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" v-if="isStudent">
+              <v-select
+                v-model="department"
+                :error-messages="v$.department.$error ? ['学科・類・専攻等を選択してください. '] : []"
+                :items="departmentItems"
+                label="学科・学類・専攻など"
+                name="department"
+                type="text"
+                variant="outlined"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" v-if="isStudent">
+              <v-select
+                v-model="admissionYear"
+                :error-messages="v$.admissionYear.$error ? ['入学年度を選択してください. '] : []"
+                :items="admissionYearItems"
+                label="入学年度"
+                name="admissionYear"
+                type="text"
+                variant="outlined"
+              ></v-select>
+            </v-col>
+            <v-checkbox
+              v-model="termsAccepted"
+              label="当サイトの利用規約およびプライバシーポリシーに同意する. (ページ下部の「利用規約」「プライバシーポリシー」からご確認いただけます． )"
+            ></v-checkbox>
+            <v-col cols="12" class="d-flex justify-center">
+              <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
+              <v-btn :disabled="!termsAccepted" color="primary" @click="clickButton">
+                <p class="text-white">登録する</p>
+              </v-btn>
+            </v-col>
+          </v-form>
+        </v-row>
       </v-col>
     </v-row>
   </v-card>

@@ -1,19 +1,17 @@
 <script setup>
-
-import { ref } from "vue";
-import axios from "axios";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
+  import { ref } from "vue";
+  import axios from "axios";
+  import { useRouter } from "vue-router";
+  import { useStore } from "vuex";
 
   const router = useRouter();
   const store = useStore();
   const userEmail = ref("");
   const password = ref("");
-  const isPasswordVisible = ref(false)
+  const isPasswordVisible = ref(false);
 
-
-const errorMessage = ref(""); // エラーメッセージ用の変数
-const visible = ref(false);
+  const errorMessage = ref(""); // エラーメッセージ用の変数
+  const visible = ref(false);
 
   const clickButton = async () => {
     // const store = useStore()
@@ -60,37 +58,24 @@ const visible = ref(false);
 <template>
   <v-row class="auth-wrapper">
     <v-col cols="12  d-flex align-center justify-center">
-      <v-card
-        class="auth-card pa-4 pt-7 mt-15 mb-15"
-        max-width="448"
-      >
+      <v-card class="auth-card pa-4 pt-7 mt-15 mb-15" max-width="448">
         <v-row justify="center">
           <v-col cols="12">
             <v-card-text class="pt-2">
-              <h5 class="text-h5 font-weight-semibold mb-4 text-center">
-                かえでにようこそ!
-              </h5>
-              <p class="mb-0 text-center">
-                メールアドレスとパスワードでログインしてください
-              </p>
+              <h5 class="text-h5 font-weight-semibold mb-4 text-center">かえでにようこそ!</h5>
+              <p class="mb-0 text-center">メールアドレスとパスワードでログインしてください</p>
             </v-card-text>
           </v-col>
-    
+
           <v-col cols="12">
             <v-card-text>
               <v-form justify="center">
                 <v-row>
                   <!-- email -->
                   <v-col cols="12">
-                    <v-text-field
-                      v-model="userEmail"
-                      variant="outlined"
-                      clearable
-                      label="Email"
-                      type="email"
-                    />
+                    <v-text-field v-model="userEmail" variant="outlined" clearable label="Email" type="email" />
                   </v-col>
-      
+
                   <!-- password -->
                   <v-col cols="12">
                     <v-text-field
@@ -103,23 +88,16 @@ const visible = ref(false);
                       @click:append-inner="isPasswordVisible = !isPasswordVisible"
                     />
                   </v-col>
-      
+
                   <v-col cols="12">
                     <!-- login button -->
-                    <v-btn
-                      color="primary"
-                      block
-                      @click="clickButton"
-                    >
-                      Login
+                    <v-btn color="primary" block @click="clickButton">
+                      <p class="text-white">ログイン</p>
                     </v-btn>
                   </v-col>
 
                   <!-- login error message -->
-                  <v-col
-                    cols="12"
-                    class="text-center text-base error-message"
-                  >
+                  <v-col cols="12" class="text-center text-base error-message">
                     {{ errorMessage }}
                   </v-col>
                 </v-row>
@@ -131,13 +109,8 @@ const visible = ref(false);
                   >
                     <span>初めてご利用になる方</span>
                   </v-col> -->
-                  <v-col cols="12" sm="6" md="" lg="" xl=""
-                    justify="center" class="text-center text-base text-primary">
-                    <RouterLink
-                      to="/register"
-                    >
-                      アカウントの新規作成
-                    </RouterLink>
+                  <v-col cols="12" sm="6" md="" lg="" xl="" justify="center" class="text-center text-base text-primary">
+                    <RouterLink to="/register"> アカウントの新規作成 </RouterLink>
                   </v-col>
                 </v-row>
               </v-form>
@@ -147,7 +120,6 @@ const visible = ref(false);
       </v-card>
     </v-col>
   </v-row>
-
 </template>
 <style scoped>
   .error-message {
