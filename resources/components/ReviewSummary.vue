@@ -7,7 +7,9 @@
   import StarRading from "./StarRating.vue";
   import MenuItem from "./shared/MenuItem.vue";
   import ConfirmDialog from "./shared/ConfirmDialog.vue";
+  import { useRouter } from "vue-router";
 
+  const router = useRouter();
   const store = useStore();
   const props = defineProps(["reviewData"]);
 
@@ -50,8 +52,8 @@
   const deleteReview = async () => {
     try {
       const response = await axios.delete(`/api/deleteReview/${requestReviewId.value}`);
-      // console.log(response.data);
       isDialogVisible.value = false; // ダイアログを閉じる
+      router.go(0); // リロードする際には以下のコード
     } catch (error) {
       // console.error("API call failed:", error);
       isDialogVisible.value = false; // エラー発生時もダイアログを閉じる
