@@ -3,6 +3,7 @@
   import { useStore } from "vuex";
   import { useRouter } from "vue-router";
   import MenuItem from "./shared/MenuItem.vue";
+  import axios from 'axios';
   // import { mdiAccount, mdiLogout } from '@mdi/js';
 
   const router = useRouter();
@@ -30,6 +31,7 @@
         await router.push({ name: "profile" });
       } else if (item.action === "logout") {
         // ログアウト処理を実行
+        await axios.post("/api/logout");
         store.dispatch("logout");
         await router.push({ name: "login" });
       }
