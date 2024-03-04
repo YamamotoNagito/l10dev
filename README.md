@@ -73,6 +73,12 @@ https://qiita.com/yuto_dev/items/d1cc909897ac8277baea
 
 ---
 
+## How to deploy
+
+main ブランチに push すると自動でデプロイされるようになっています。
+以下のようにdevelop to mainのPRを作成してmergeしてください。
+https://github.com/YamamotoNagito/l10dev/pull/441
+
 ### 細かい操作コマンド
 
 #### DB への初期データ格納
