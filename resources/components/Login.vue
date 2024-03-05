@@ -109,7 +109,15 @@
                   >
                     <span>初めてご利用になる方</span>
                   </v-col> -->
-                  <v-col cols="12" sm="6" md="" lg="" xl="" justify="center" class="text-center text-base text-primary">
+                  <v-col
+                    cols="12"
+                    sm="12"
+                    md=""
+                    lg=""
+                    xl=""
+                    justify="center"
+                    class="text-center text-base text-primary"
+                  >
                     <RouterLink to="/register"> アカウントの新規作成 </RouterLink>
                   </v-col>
                 </v-row>
