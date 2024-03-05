@@ -404,7 +404,6 @@
               label="当サイトの利用規約およびプライバシーポリシーに同意する. (ページ下部の「利用規約」「プライバシーポリシー」からご確認いただけます． )"
             ></v-checkbox>
             <v-col cols="12" class="d-flex justify-center">
-              <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
               <v-btn :disabled="!termsAccepted" color="primary" @click="clickButton">
                 <p class="text-white">登録する</p>
               </v-btn>
@@ -414,4 +413,5 @@
       </v-col>
     </v-row>
   </v-card>
+  <common-alert :message="message" :type="messageType" :unique-key="uniqueKey" />
 </template>
