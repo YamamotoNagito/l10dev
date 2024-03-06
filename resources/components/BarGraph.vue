@@ -20,9 +20,28 @@
     };
   };
 
+  // 最大値の大きさごとにグラフの最大の高さを指定する関数
+  const getMaxValueResponse = (arr) => {
+    // 受け取った配列から最大値を取得する
+    const maxValue = Math.max(...arr);
+    // 配列の最大値ごとにグラフの最大高さを返す．
+    if (maxValue < 10) {
+        return 10;
+    } else if (maxValue >= 10 && maxValue < 25) {
+        return 25;
+    } else if (maxValue >= 25 && maxValue < 50) {
+        return 50;
+    } else if(maxValue >= 50 && maxValue < 100){
+        return 100;
+    }else {
+      return maxValue
+    }
+}
+
   const keysAndValues = extractKeyAndValue(props.barGraphData);
   const labels = keysAndValues.keys;
   const data = keysAndValues.values;
+  const maxValue = getMaxValueResponse(data)
 
   // Chart.js
   const loadChartJS = () => {
@@ -75,8 +94,10 @@
           y: {
             beginAtZero: true,
             min: 0,
-            //   max: 100, // Adjust the max value as needed
-            stepSize: 10 // Adjust the step size as needed
+            max: maxValue, // グラフの最大高
+            ticks : {
+              stepSize : 10
+            }
           }
         },
         maintainAspectRatio: false,
