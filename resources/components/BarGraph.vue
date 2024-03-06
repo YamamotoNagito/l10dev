@@ -1,8 +1,6 @@
 <script setup>
   import { ref, onMounted } from "vue";
 
-  // const props = defineProps(["barGraphData"]);
-  // const barGraphData = [20, 30, 40, 50, 60]
   const props = defineProps(["barGraphData", "chartTitle"]);
 
   const extractKeyAndValue = (jsonData) => {
