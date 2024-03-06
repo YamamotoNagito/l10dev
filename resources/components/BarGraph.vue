@@ -22,26 +22,22 @@
 
   // 最大値の大きさごとにグラフの最大の高さを指定する関数
   const getMaxValueResponse = (arr) => {
+    // 境界値
+    const thresholds = [10, 25, 50, 100];
     // 受け取った配列から最大値を取得する
     const maxValue = Math.max(...arr);
-    // 配列の最大値ごとにグラフの最大高さを返す．
-    if (maxValue < 10) {
-        return 10;
-    } else if (maxValue >= 10 && maxValue < 25) {
-        return 25;
-    } else if (maxValue >= 25 && maxValue < 50) {
-        return 50;
-    } else if(maxValue >= 50 && maxValue < 100){
-        return 100;
-    }else {
-      return maxValue
+    for (let threshold of thresholds) {
+      if (maxValue < threshold) {
+        return threshold;
+      }
     }
-}
+    return maxValue;
+  };
 
   const keysAndValues = extractKeyAndValue(props.barGraphData);
   const labels = keysAndValues.keys;
   const data = keysAndValues.values;
-  const maxValue = getMaxValueResponse(data)
+  const maxValue = getMaxValueResponse(data);
 
   // Chart.js
   const loadChartJS = () => {
@@ -95,8 +91,8 @@
             beginAtZero: true,
             min: 0,
             max: maxValue, // グラフの最大高
-            ticks : {
-              stepSize : 10
+            ticks: {
+              stepSize: 10
             }
           }
         },
