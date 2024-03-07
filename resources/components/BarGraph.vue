@@ -92,7 +92,7 @@
             min: 0,
             max: maxValue, // グラフの最大高
             ticks: {
-              stepSize: 10
+              stepSize: 2
             }
           }
         },
