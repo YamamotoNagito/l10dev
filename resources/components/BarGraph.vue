@@ -1,8 +1,6 @@
 <script setup>
   import { ref, onMounted } from "vue";
 
-  // const props = defineProps(["barGraphData"]);
-  // const barGraphData = [20, 30, 40, 50, 60]
   const props = defineProps(["barGraphData", "chartTitle"]);
 
   const extractKeyAndValue = (jsonData) => {
@@ -22,9 +20,24 @@
     };
   };
 
+  // 最大値の大きさごとにグラフの最大の高さを指定する関数
+  const getMaxValueResponse = (arr) => {
+    // 境界値
+    const thresholds = [10, 25, 50, 100];
+    // 受け取った配列から最大値を取得する
+    const maxValue = Math.max(...arr);
+    for (let threshold of thresholds) {
+      if (maxValue < threshold) {
+        return threshold;
+      }
+    }
+    return maxValue;
+  };
+
   const keysAndValues = extractKeyAndValue(props.barGraphData);
   const labels = keysAndValues.keys;
   const data = keysAndValues.values;
+  const maxValue = getMaxValueResponse(data);
 
   // Chart.js
   const loadChartJS = () => {
@@ -77,8 +90,10 @@
           y: {
             beginAtZero: true,
             min: 0,
-            //   max: 100, // Adjust the max value as needed
-            stepSize: 10 // Adjust the step size as needed
+            max: maxValue, // グラフの最大高
+            ticks: {
+              stepSize: 2
+            }
           }
         },
         maintainAspectRatio: false,
