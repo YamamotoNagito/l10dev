@@ -404,7 +404,6 @@
         console.log("response");
 
         if (response.data.success) {
-          // router.push('/reviews');
           // フォームのリセット
           resetForm();
           setSuccessMessage("投稿が完了しました！");

@@ -286,7 +286,7 @@
       const filteredQuery = removeNullValues(query);
 
       router.push({
-        path: "/class",
+        name: "class",
         query: filteredQuery
       });
     }
@@ -300,7 +300,7 @@
       console.log(response);
       if (response.data.success) {
         const lectureId = response.data.lectureId;
-        router.push({ path: `class/${lectureId}/detail` }, { params: lectureId });
+        router.push({ name: 'class-detail', params: { lectureId: lectureId } });
       } else {
         setErrorMessage("存在しない講義コードです．");
       }
