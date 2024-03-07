@@ -51,7 +51,7 @@
         <p
           flat
           class="text-decoration-underline text-blue text-h7 text-sm-h6"
-          @click="router.push('/class/' + classData.lectureId + '/detail')"
+          @click="router.push({ name: 'class-detail', params: { lectureId: classData.lectureId } })"
         >
           {{ classData.lectureName }}
         </p>

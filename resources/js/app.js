@@ -35,7 +35,7 @@ const router = createRouter({
     { path: "/class", name: "class", component: ClassListView },
     {
       path: "/class/:lectureId/detail",
-      name: "class/:lectureId/detail",
+      name: "class-detail",
       component: ClassDetailView,
       props: true,
       meta: { requiresAuth: true }

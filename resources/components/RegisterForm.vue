@@ -277,7 +277,7 @@
         data["role"] = response.data.role;
         // console.log(data['role']);
         store.dispatch("login", data);
-        router.push("/profile");
+        router.push({ name: 'profile' });
 
         // その他の処理
       } catch (error) {
