@@ -3,7 +3,7 @@
   import { useStore } from "vuex";
   import { useRouter } from "vue-router";
   import MenuItem from "./shared/MenuItem.vue";
-  import axios from 'axios';
+  import axios from "axios";
   // import { mdiAccount, mdiLogout } from '@mdi/js';
 
   const router = useRouter();
@@ -48,15 +48,15 @@
       <v-col cols="0" sm="1" md="1" lg="1" xl="1"> </v-col>
       <v-col cols="3" sm="2" md="2" lg="2" xl="2">
         <v-toolbar-title
-          class="text-white d-flex justify-center mr-7"
+          class="text-white d-flex justify-center"
           style="cursor: pointer"
           @click="router.push({ name: 'welcome' })"
         >
           かえで
         </v-toolbar-title>
       </v-col>
-      <v-col cols="1" sm="3" md="3" lg="3" xl="3"></v-col>
-      <v-col cols="6" sm="4" md="4" lg="4" xl="4" class="d-flex justify-end ml-auto">
+      <v-col cols="2" sm="3" md="3" lg="3" xl="3"></v-col>
+      <v-col cols="5" sm="4" md="4" lg="4" xl="4" class="d-flex justify-end ml-auto">
         <v-btn :size="btnSize" variant="text" color="background" @click="router.push({ name: 'welcome' })">
           <v-icon>mdi-magnify</v-icon>
           検索
