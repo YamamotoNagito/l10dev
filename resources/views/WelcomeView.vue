@@ -11,6 +11,6 @@
       <!-- ~広大生の学びを支える情報サイト~ -->
     </FontChangeTitle>
   </v-container>
-  <Welcome></Welcome>
   <SearchClasses></SearchClasses>
+  <Welcome></Welcome>
 </template>
