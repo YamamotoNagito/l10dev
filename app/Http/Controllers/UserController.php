@@ -17,14 +17,6 @@ use App\Http\Requests\UserCreateRequest;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      */
     // 新規登録時の処理
@@ -55,14 +47,6 @@ class UserController extends Controller
         Auth::loginUsingId($user->userId);
 
         return response()->json(['success' => true,'id' => $user->userId,'role' => $user->getRoleNames()]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -129,30 +113,6 @@ class UserController extends Controller
 
         // JSON形式でデータを返す
         return response()->json($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function login(Request $request)

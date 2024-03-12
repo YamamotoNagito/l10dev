@@ -20,9 +20,12 @@
     <v-col cols="12">
       <v-row justify="center">
         <v-col cols="12">
-          <h2 class="text-h3 text-center">
-            {{ classDetailData?.classInformationData?.lectureName }}
-          </h2>
+          <!-- 文字の周りに余白を持たせるためのコンポーネント -->
+          <v-container>
+            <p class="text-h6 text-sm-h5 text-md-h4 text-lg-h4 text-center">
+              {{ classDetailData?.classInformationData?.lectureName }}
+            </p>
+          </v-container>
         </v-col>
         <v-col cols="12" class="d-flex flex-row justify-center">
           <!-- レビューが投稿済みかどうかによって表示する文言を変更する -->
@@ -81,7 +84,7 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col>
+                  <v-col class="d-flex justify-center">
                     <v-window v-model="toggle">
                       <v-window-item value="btn-1">
                         <RadarChart :radar-chart-data="classDetailData?.classRadarChartData"></RadarChart>

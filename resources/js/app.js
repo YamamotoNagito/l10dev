@@ -35,13 +35,13 @@ const router = createRouter({
     { path: "/class", name: "class", component: ClassListView },
     {
       path: "/class/:lectureId/detail",
-      name: "class/:lectureId/detail",
+      name: "class-detail",
       component: ClassDetailView,
       props: true,
       meta: { requiresAuth: true }
     },
     { path: "/class/post", name: "class/post", component: ClassPostView },
-    { path: "/privacy-policy", name: "privacy-policy", component: PrivacyPolicyView, meta: { requiresAuth: true } },
+    { path: "/privacy-policy", name: "privacy-policy", component: PrivacyPolicyView },
     { path: "/terms", name: "terms", component: TermsView },
     { path: "/contact", name: "contact", component: ContactView },
     { path: "/:catchAll(.*)", name: "notFound", component: NotFoundView },

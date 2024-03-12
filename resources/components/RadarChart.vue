@@ -67,6 +67,6 @@
 
 <template>
   <div>
-    <canvas ref="radarChart" width="350" height="350"></canvas>
+    <canvas ref="radarChart" width="600" height="350"></canvas>
   </div>
 </template>
