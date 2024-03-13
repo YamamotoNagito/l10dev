@@ -3,6 +3,9 @@
     <img alt="kaede" src="https://github.com/YamamotoNagito/l10dev/blob/feature/%23484_readme/resources/assets/img/kaedeIcon.png">
   </a>
 </div>
+<p align="center">
+  <a href="https://hirodai-kaede.com/">サイトへ</a>
+</p>
 
 <p align="center">
   <a href="https://www.hiroshima-u.ac.jp/iagcc/news/80635">プロジェクト概要</a>
