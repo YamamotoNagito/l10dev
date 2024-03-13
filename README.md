@@ -3,6 +3,11 @@
     <img alt="kaede" src="https://github.com/YamamotoNagito/l10dev/blob/feature/%23484_readme/resources/assets/img/kaedeIcon.png">
   </a>
 </div>
+
+<h3 align="center">
+  広島大学授業レビューサイト
+</h3>
+
 <p align="center">
   <a href="https://hirodai-kaede.com/">サイトへ</a>
 </p>
@@ -11,9 +16,7 @@
   <a href="https://www.hiroshima-u.ac.jp/iagcc/news/80635">プロジェクト概要</a>
 </p>
 
-<h2 align="center">
-  広島大学授業レビューサイト
-</h2>
+---
 
 <p align="center">
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
