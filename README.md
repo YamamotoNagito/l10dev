@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://hirodai-kaede.com/">
-    <img alt="kaede" src="https://github.com/YamamotoNagito/l10dev/blob/feature/%23480_rewrite_readme/resources/assets/img/kaedeIcon.png">
+    <img alt="kaede" src="https://github.com/YamamotoNagito/l10dev/blob/feature/%23484_readme/resources/assets/img/kaedeIcon.png">
   </a>
 </div>
 
