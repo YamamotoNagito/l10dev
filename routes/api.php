@@ -37,6 +37,9 @@ Route::post('/contact', [ContactController::class, 'store']);
 // プロフィール
 Route::get('/profile', [UserController::class, 'show']);
 
+// プロフィール編集(プロフィール更新)
+Route::post('/update', [UserController::class, 'update']);
+
 // 講義コードを持つかどうかの検索画面
 Route::post('/hasLectureCode', [LectureDetailsController::class, 'hasLectureCode']);
 

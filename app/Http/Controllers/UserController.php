@@ -153,4 +153,11 @@ class UserController extends Controller
 
     //    return redirect('/');
     }
+
+    public function update(Request $request)
+    {
+          $userId = auth()->id();
+          $user = User::find($userId);
+          $user->update($request->all());
+    }
 }
