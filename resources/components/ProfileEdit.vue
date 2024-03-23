@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, watch, onMounted } from "vue";
+  import { ref, watch, onMounted, nextTick } from "vue";
   import axios from "axios";
   import { useRouter } from "vue-router";
   import { useStore } from "vuex";
@@ -26,14 +26,18 @@ const fetchInitialValues = async () => {
     console.log(response.data);
     const data = response.data;
 
-    // バックエンドから取得した初期値を各変数にセットする
     userName.value = data.userName;
     userEmail.value = data.userEmail;
     category.value = data.category;
-    faculty.value = data.faculty;
-    department.value = data.department;
-    admissionYear.value = data.admissionYear;
-
+    
+    nextTick(() => {
+      // DOM の更新後に行いたい処理を記述
+      faculty.value = data.faculty;
+      nextTick(() => {
+        department.value = data.department;
+      });
+      admissionYear.value = data.admissionYear;
+    });
   } catch (error) {
     console.error("初期値の取得に失敗しました。", error);
   }
