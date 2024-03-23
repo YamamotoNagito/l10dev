@@ -272,7 +272,7 @@
     category
   });
 
-  const clickButton = async () => {
+  const clickUpdateButton = async () => {
     // バリデーションチェック
     v$.value.$validate();
     if (!v$.value.$invalid) {
@@ -388,8 +388,11 @@
               ></v-select>
             </v-col>
             <v-col cols="12" class="d-flex justify-center">
-              <v-btn color="primary" @click="clickButton">
-                <p class="text-white">編集する</p>
+              <v-btn color="third ma-auto" @click="router.push({ name: 'profile' })">
+                <p class="text-black">キャンセル</p>
+              </v-btn>
+              <v-btn color="primary ma-auto" @click="clickUpdateButton">
+                <p class="text-white">更新する</p>
               </v-btn>
             </v-col>
           </v-form>
