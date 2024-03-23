@@ -37,6 +37,9 @@ Route::post('/contact', [ContactController::class, 'store']);
 // プロフィール
 Route::get('/profile', [UserController::class, 'show']);
 
+// プロフィール情報の取得
+Route::get('/initialValues', [UserController::class, 'initialValues']);
+
 // プロフィール編集(プロフィール更新)
 Route::post('/update', [UserController::class, 'update']);
 

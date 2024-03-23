@@ -12,6 +12,11 @@
             </v-col>
           </v-row>
         </v-card-text>
+        <v-col class="d-flex justify-center">
+          <v-btn color="primary" @click="clickButton">
+            <p class="text-white">編集する</p>
+          </v-btn>
+        </v-col>
       </v-card>
       <v-card v-else>
         <v-card-text justify>
@@ -49,7 +54,9 @@
   import { ref, defineProps, toRefs, computed } from "vue";
   import NoPost from "../assets/img/no_post_data_at_profile.svg";
   import GoodLuck from "../assets/img/good_luck_high_school_student.svg";
+  import { useRouter } from "vue-router";
 
+  const router = useRouter();
   const props = defineProps({
     userProfile: Object,
     reviewDataList: Array
@@ -78,4 +85,12 @@
     }
     return basicInfo;
   });
+
+  const clickButton = async () => {
+    // const data = {
+    //   userEmail: userEmail.value,
+    //   password: password.value
+    // };
+    router.push({ name: 'profile/edit' });
+  }
 </script>

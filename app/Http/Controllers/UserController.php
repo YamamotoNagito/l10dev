@@ -160,4 +160,28 @@ class UserController extends Controller
           $user = User::find($userId);
           $user->update($request->all());
     }
+
+    public function initialValues()
+    {
+        $userId = auth()->id();
+        $user = User::findOrFail($userId);
+
+        // ユーザー情報を連想配列に格納
+        $userData = [
+            'userName' => $user->userName,
+            'userEmail' => $user->userEmail,
+            'universityName' => $user->universityName,
+            'category' => $user->category,
+            'faculty' => $user->faculty,
+            'department' => $user->department,
+            'admissionYear' => $user->admissionYear,
+            'isActive' => $user->isActive,
+            'createdAt' => $user->createdAt,
+            'updatedAt' => $user->updatedAt,
+            'lastLoginAt' => $user->lastLoginAt,
+        ];
+
+        // JSON形式でデータを返す
+        return response()->json($userData);      
+    }
 }
