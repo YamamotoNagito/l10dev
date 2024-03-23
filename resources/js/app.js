@@ -38,7 +38,6 @@ const router = createRouter({
       name: "class-detail",
       component: ClassDetailView,
       props: true,
-      meta: { requiresAuth: true }
     },
     { path: "/class/post", name: "class/post", component: ClassPostView, meta: { requiresAuth: true } },
     { path: "/privacy-policy", name: "privacy-policy", component: PrivacyPolicyView },
