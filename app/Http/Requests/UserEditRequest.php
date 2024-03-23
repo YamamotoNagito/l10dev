@@ -2,7 +2,12 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use Illuminate\Validation\Rule;
+
 
 class UserEditRequest extends FormRequest
 {
@@ -21,9 +26,23 @@ class UserEditRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = auth()->id(); // 認証されたユーザーのIDを取得
+
+        $user = User::findOrFail($userId);
+
+        log::debug($userId);
+        log::debug($user);
+
         return [
             'userName' => 'required|string|max:32',
-            'userEmail' => 'required|string|email|max:255|unique:users',
+            // userEmailのバリデーションルールを更新
+            'userEmail' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->ignore($user->userEmail, 'userEmail'),
+            ],
             'category' => 'required|string|max:255',
             'faculty' => 'required|string|max:255',
             'department' => 'required|string|max:255',
@@ -48,7 +67,7 @@ class UserEditRequest extends FormRequest
             'userEmail.email' => 'メールアドレスの形式が正しくありません。',
             'userEmail.max' => 'メールアドレスは255文字以内で入力してください。',
             'userEmail.unique' => 'このメールアドレスは既に使用されています。',
-            
+
             'category.required' => 'カテゴリは必須項目です。',
             'category.string' => 'カテゴリは文字列である必要があります。',
             'category.max' => 'カテゴリは255文字以内で入力してください。',
