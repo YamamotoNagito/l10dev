@@ -13,9 +13,14 @@
   const store = useStore();
   const props = defineProps(["reviewData"]);
 
-  const reviewUserId = ref(props.reviewData.userId);
-  const requestUserId = ref(store.getters.userInfo.id);
-  const requestReviewId = ref(props.reviewData.reviewId);
+  const reviewUserId = ref(null);
+  const requestUserId = ref(null);
+  const requestReviewId = ref(null);
+
+  reviewUserId.value = props.reviewData.userId;
+  // ログインしていればユーザーのIDを使用して、そうでなければIDをしようしない(nullを使用する)
+  requestUserId.value = store.getters.userInfo ? store.getters.userInfo.id : null;
+  requestReviewId.value = props.reviewData.reviewId;
 
   console.log("reviewUserId:", reviewUserId.value, "Type:", typeof reviewUserId.value);
   console.log("requestUserId:", requestUserId.value, "Type:", typeof requestUserId.value);

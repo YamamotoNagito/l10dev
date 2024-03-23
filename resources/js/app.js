@@ -30,7 +30,7 @@ const router = createRouter({
     { path: "/login", name: "login", component: LoginView },
     { path: "/reset-password", name: "reset-password", component: RessetPasswordView, meta: { requiresAuth: true } },
     // 後々/profileにmeta: { requiresAuth: true },を追加する(ログインしていないと見れない)
-    { path: "/profile/", name: "profile", component: ProfileView, meta: { requiresAuth: true } },
+    { path: "/profile", name: "profile", component: ProfileView, meta: { requiresAuth: true } },
     { path: "/profile/edit", name: "profile/edit", component: ProfileEditView, meta: { requiresAuth: true } },
     { path: "/class", name: "class", component: ClassListView },
     {
@@ -38,9 +38,8 @@ const router = createRouter({
       name: "class-detail",
       component: ClassDetailView,
       props: true,
-      meta: { requiresAuth: true }
     },
-    { path: "/class/post", name: "class/post", component: ClassPostView },
+    { path: "/class/post", name: "class/post", component: ClassPostView, meta: { requiresAuth: true } },
     { path: "/privacy-policy", name: "privacy-policy", component: PrivacyPolicyView },
     { path: "/terms", name: "terms", component: TermsView },
     { path: "/contact", name: "contact", component: ContactView },

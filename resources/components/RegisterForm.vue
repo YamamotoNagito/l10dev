@@ -277,7 +277,7 @@
         data["role"] = response.data.role;
         // console.log(data['role']);
         store.dispatch("login", data);
-        router.push({ name: 'profile' });
+        router.push({ name: "profile" });
 
         // その他の処理
       } catch (error) {
@@ -309,7 +309,7 @@
               <v-text-field
                 v-model="userName"
                 :error-messages="v$.userName.$error ? ['1字以上32字以下の, 名前を入力してください. '] : []"
-                label="名前"
+                label="ユーザー名（本名非推奨）"
                 name="userName"
                 type="name"
                 clearable

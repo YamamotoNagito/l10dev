@@ -37,6 +37,12 @@ Route::post('/contact', [ContactController::class, 'store']);
 // プロフィール
 Route::get('/profile', [UserController::class, 'show']);
 
+// プロフィール情報の取得
+Route::get('/initialValues', [UserController::class, 'initialValues']);
+
+// プロフィール編集(プロフィール更新)
+Route::post('/update', [UserController::class, 'update']);
+
 // 講義コードを持つかどうかの検索画面
 Route::post('/hasLectureCode', [LectureDetailsController::class, 'hasLectureCode']);
 
@@ -58,3 +64,6 @@ Route::get('/searchByConditions', [LecturesController::class, 'searchByCondition
 
 // レビュー削除
 Route::delete('/deleteReview/{id}',[ReviewsController::class, 'destroy']);
+
+// 総レビュー数の取得
+Route::get('/allReviewCount',[ReviewsController::class, 'allReviewCount']);
