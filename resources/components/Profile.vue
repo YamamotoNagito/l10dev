@@ -1,7 +1,12 @@
 <template>
   <v-row class="d-flex justify-center">
     <v-col cols="12" sm="10" md="10" lg="8" xl="6">
-      <v-card v-if="userProfile" class="my-6" elevation="2">
+      <div class="d-flex justify-end">
+        <v-btn elevation="0" variant="text" color="primary" @click="clickButton">
+          <p class="text-primary">編集する</p>
+        </v-btn>
+      </div>
+      <v-card v-if="userProfile" class="mb-6" elevation="2">
         <v-card-text>
           <v-row v-for="item in tableData" :key="item.label" class="d-flex justify-center my-1">
             <v-col cols="6" sm="6" md="6" lg="6" xl="6">
@@ -12,11 +17,6 @@
             </v-col>
           </v-row>
         </v-card-text>
-        <v-col class="d-flex justify-center">
-          <v-btn color="primary" @click="clickButton">
-            <p class="text-white">編集する</p>
-          </v-btn>
-        </v-col>
       </v-card>
       <v-card v-else>
         <v-card-text justify>
@@ -91,6 +91,6 @@
     //   userEmail: userEmail.value,
     //   password: password.value
     // };
-    router.push({ name: 'profile/edit' });
-  }
+    router.push({ name: "profile/edit" });
+  };
 </script>
