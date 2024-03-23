@@ -2,7 +2,7 @@
   <v-row class="d-flex justify-center">
     <v-col cols="12" sm="10" md="10" lg="8" xl="6">
       <div class="d-flex justify-end">
-        <v-btn elevation="0" variant="text" color="primary" @click="clickButton">
+        <v-btn elevation="0" variant="text" size="large" color="primary" @click="clickButton">
           <p class="text-primary">編集する</p>
         </v-btn>
       </div>
