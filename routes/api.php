@@ -58,3 +58,6 @@ Route::get('/searchByConditions', [LecturesController::class, 'searchByCondition
 
 // レビュー削除
 Route::delete('/deleteReview/{id}',[ReviewsController::class, 'destroy']);
+
+// 総レビュー数の取得
+Route::get('/allReviewCount',[ReviewsController::class, 'allReviewCount']);
