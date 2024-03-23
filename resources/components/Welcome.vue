@@ -1,5 +1,13 @@
 <script setup>
   import welcomeRadar from "../assets/img/welcomeInfoRadar.png";
+  import { onMounted } from "vue";
+  import axios from "axios";
+
+  // レビュー総数の取得(response.data：レビュー総数)
+  onMounted(async () => {
+    const response = await axios.get("/api/allReviewCount");
+    console.log(response.data);
+  });
 </script>
 
 <template>

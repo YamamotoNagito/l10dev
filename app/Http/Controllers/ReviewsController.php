@@ -144,4 +144,13 @@ class ReviewsController extends Controller
     }
 
   }
+
+  public function allReviewCount()
+  {
+    $totalReviews = Reviews::count();
+    // $totalReviews = DB::table('reviews')->count();
+    Log::Debug("aaa");
+    Log::Debug($totalReviews);
+    return $totalReviews;
+  }
 }
