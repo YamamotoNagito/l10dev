@@ -311,96 +311,93 @@
 </script>
 
 <template>
-  <v-card class="auth-card pa-4 pt-7 mb-10" max-width="500" fluid>
+  <v-card class="auth-card mb-10" max-width="500">
     <v-row justify="center" align="center">
       <v-col cols="12" class="d-flex justify-center">
-        <v-row>
-          <v-form action="" method="post">
-            <v-col cols="12">
-              <v-card-text class="pt-2">
+        <v-card-text class="pt-2">
+          <v-row>
+            <v-form action="" method="post">
+              <v-col cols="12">
+                <p class="text-white text-h6">徹夜でユーザー名を変更できるようにしました。</p>
                 <h5 class="text-h5 font-weight-semibold mb-4 text-center">プロフィール編集</h5>
-              </v-card-text>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="userName"
-                :error-messages="v$.userName.$error ? ['1字以上32字以下の, 名前を入力してください. '] : []"
-                label="ユーザー名（本名非推奨）"
-                name="userName"
-                type="name"
-                clearable
-                variant="outlined"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="userEmail"
-                :error-messages="v$.userEmail.$error ? ['有効なメールアドレスを入力してください. '] : []"
-                label="メールアドレス"
-                name="userEmail"
-                type="email"
-                clearable
-                variant="outlined"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-select
-                v-model="category"
-                :error-messages="v$.category.$error ? ['所属を選択してください. '] : []"
-                :items="categoryItems"
-                label="所属"
-                name="category"
-                type="text"
-                variant="outlined"
-              ></v-select>
-            </v-col>
-            <v-col cols="12" v-if="isStudent">
-              <v-select
-                v-model="faculty"
-                :error-messages="v$.faculty.$error ? ['学部・研究科等を選択してください. '] : []"
-                :items="facultyItems"
-                label="学部・研究科"
-                name="faculty"
-                type="text"
-                variant="outlined"
-              ></v-select>
-            </v-col>
-            <v-col cols="12" v-if="isStudent">
-              <v-select
-                v-model="department"
-                :error-messages="v$.department.$error ? ['学科・類・専攻等を選択してください. '] : []"
-                :items="departmentItems"
-                label="学科・学類・専攻など"
-                name="department"
-                type="text"
-                variant="outlined"
-              ></v-select>
-            </v-col>
-            <v-col cols="12" v-if="isStudent">
-              <v-select
-                v-model="admissionYear"
-                :error-messages="v$.admissionYear.$error ? ['入学年度を選択してください. '] : []"
-                :items="admissionYearItems"
-                label="入学年度"
-                name="admissionYear"
-                type="text"
-                variant="outlined"
-              ></v-select>
-            </v-col>
-            <v-checkbox
-              v-model="termsAccepted"
-              label="当サイトの利用規約およびプライバシーポリシーに同意する. (ページ下部の「利用規約」「プライバシーポリシー」からご確認いただけます． )"
-            ></v-checkbox>
-            <v-col cols="12" class="d-flex justify-center">
-              <v-btn color="third ma-auto" @click="router.push({ name: 'profile' })">
-                <p class="text-black">キャンセル</p>
-              </v-btn>
-              <v-btn color="primary ma-auto" @click="clickUpdateButton">
-                <p class="text-white">更新する</p>
-              </v-btn>
-            </v-col>
-          </v-form>
-        </v-row>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="userName"
+                  :error-messages="v$.userName.$error ? ['1字以上32字以下の, 名前を入力してください. '] : []"
+                  label="ユーザー名（本名非推奨）"
+                  name="userName"
+                  type="name"
+                  clearable
+                  variant="outlined"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="userEmail"
+                  :error-messages="v$.userEmail.$error ? ['有効なメールアドレスを入力してください. '] : []"
+                  label="メールアドレス"
+                  name="userEmail"
+                  type="email"
+                  clearable
+                  variant="outlined"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-select
+                  v-model="category"
+                  :error-messages="v$.category.$error ? ['所属を選択してください. '] : []"
+                  :items="categoryItems"
+                  label="所属"
+                  name="category"
+                  type="text"
+                  variant="outlined"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" v-if="isStudent">
+                <v-select
+                  v-model="faculty"
+                  :error-messages="v$.faculty.$error ? ['学部・研究科等を選択してください. '] : []"
+                  :items="facultyItems"
+                  label="学部・研究科"
+                  name="faculty"
+                  type="text"
+                  variant="outlined"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" v-if="isStudent">
+                <v-select
+                  v-model="department"
+                  :error-messages="v$.department.$error ? ['学科・類・専攻等を選択してください. '] : []"
+                  :items="departmentItems"
+                  label="学科・学類・専攻など"
+                  name="department"
+                  type="text"
+                  variant="outlined"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" v-if="isStudent">
+                <v-select
+                  v-model="admissionYear"
+                  :error-messages="v$.admissionYear.$error ? ['入学年度を選択してください. '] : []"
+                  :items="admissionYearItems"
+                  label="入学年度"
+                  name="admissionYear"
+                  type="text"
+                  variant="outlined"
+                ></v-select>
+              </v-col>
+              <v-col cols="12" class="d-flex justify-center">
+                <v-btn color="third ma-auto" @click="router.push({ name: 'profile' })">
+                  <p class="text-black">キャンセル</p>
+                </v-btn>
+                <v-btn color="primary ma-auto" @click="clickUpdateButton">
+                  <p class="text-white">更新する</p>
+                </v-btn>
+              </v-col>
+            </v-form>
+          </v-row>
+        </v-card-text>
       </v-col>
     </v-row>
   </v-card>
