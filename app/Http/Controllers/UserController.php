@@ -13,6 +13,7 @@ use App\Models\Reviews;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserEditRequest;
 
 class UserController extends Controller
 {
@@ -154,7 +155,7 @@ class UserController extends Controller
     //    return redirect('/');
     }
 
-    public function update(Request $request)
+    public function update(UserEditRequest $request)
     {
           $userId = auth()->id();
           $user = User::find($userId);
