@@ -311,7 +311,7 @@
 </script>
 
 <template>
-  <v-card class="auth-card pa-4 pt-7 mb-15" max-width="500">
+  <v-card class="auth-card pa-4 pt-7 mb-10" max-width="500" fluid>
     <v-row justify="center" align="center">
       <v-col cols="12" class="d-flex justify-center">
         <v-row>
@@ -387,6 +387,10 @@
                 variant="outlined"
               ></v-select>
             </v-col>
+            <v-checkbox
+              v-model="termsAccepted"
+              label="当サイトの利用規約およびプライバシーポリシーに同意する. (ページ下部の「利用規約」「プライバシーポリシー」からご確認いただけます． )"
+            ></v-checkbox>
             <v-col cols="12" class="d-flex justify-center">
               <v-btn color="third ma-auto" @click="router.push({ name: 'profile' })">
                 <p class="text-black">キャンセル</p>
