@@ -40,7 +40,7 @@ const router = createRouter({
       props: true,
       meta: { requiresAuth: true }
     },
-    { path: "/class/post", name: "class/post", component: ClassPostView },
+    { path: "/class/post", name: "class/post", component: ClassPostView, meta: { requiresAuth: true } },
     { path: "/privacy-policy", name: "privacy-policy", component: PrivacyPolicyView },
     { path: "/terms", name: "terms", component: TermsView },
     { path: "/contact", name: "contact", component: ContactView },
