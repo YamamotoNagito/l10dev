@@ -19,38 +19,36 @@
   const department = ref("");
   const admissionYear = ref("");
 
-// 初期値を取得する関数
-const fetchInitialValues = async () => {
-  try {
-    const response = await axios.get("/api/initialValues");
-    console.log(response.data);
-    const data = response.data;
+  // 初期値を取得する関数
+  const fetchInitialValues = async () => {
+    try {
+      const response = await axios.get("/api/initialValues");
+      console.log(response.data);
+      const data = response.data;
 
-    userName.value = data.userName;
-    userEmail.value = data.userEmail;
-    category.value = data.category;
-    
-    nextTick(() => {
-      // DOM の更新後に行いたい処理を記述
-      faculty.value = data.faculty;
+      userName.value = data.userName;
+      userEmail.value = data.userEmail;
+      category.value = data.category;
+
       nextTick(() => {
-        department.value = data.department;
+        // DOM の更新後に行いたい処理を記述
+        faculty.value = data.faculty;
+        nextTick(() => {
+          department.value = data.department;
+        });
+        admissionYear.value = data.admissionYear;
       });
-      admissionYear.value = data.admissionYear;
-    });
-  } catch (error) {
-    console.error("初期値の取得に失敗しました。", error);
-  }
-};
+    } catch (error) {
+      console.error("初期値の取得に失敗しました。", error);
+    }
+  };
 
-// コンポーネントがマウントされたときに初期値を取得する
-onMounted(() => {
-  fetchInitialValues();
-});
+  // コンポーネントがマウントされたときに初期値を取得する
+  onMounted(() => {
+    fetchInitialValues();
+  });
 
-  const termsAccepted = ref(false);
   let isStudent = ref(false);
-  const visible = ref(false);
 
   const { message, messageType, uniqueKey, setErrorMessage } = useMessage();
 
