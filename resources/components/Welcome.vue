@@ -34,7 +34,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row class="mt-10">
+    <v-row class="mt-10 mb-16">
       <v-col class="text-center">
         <p class="text-h6 text-md-h5 text-lg-h5 ma-5">現在のレビュー件数</p>
         <p class="text-h3 text-md-h2 text-lg-h2 text-primary">{{ allReviewCount }}</p>
@@ -45,7 +45,7 @@
       <v-col></v-col>
     </v-row> -->
     <!-- 閲覧機能の紹介 -->
-    <v-row>
+    <v-row class="mt-10">
       <v-col>
         <v-row>
           <v-col cols="12" sm="12" md="6" lg="6" xl="6" class="d-flex flex-column justify-center align-center">
