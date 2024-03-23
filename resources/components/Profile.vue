@@ -1,7 +1,12 @@
 <template>
   <v-row class="d-flex justify-center">
     <v-col cols="12" sm="10" md="10" lg="8" xl="6">
-      <v-card v-if="userProfile" class="my-6" elevation="2">
+      <div class="d-flex justify-end">
+        <v-btn elevation="0" variant="text" size="large" color="primary" @click="clickButton">
+          <p class="text-primary">編集する</p>
+        </v-btn>
+      </div>
+      <v-card v-if="userProfile" class="mb-6" elevation="2">
         <v-card-text>
           <v-row v-for="item in tableData" :key="item.label" class="d-flex justify-center my-1">
             <v-col cols="6" sm="6" md="6" lg="6" xl="6">
@@ -49,7 +54,9 @@
   import { ref, defineProps, toRefs, computed } from "vue";
   import NoPost from "../assets/img/no_post_data_at_profile.svg";
   import GoodLuck from "../assets/img/good_luck_high_school_student.svg";
+  import { useRouter } from "vue-router";
 
+  const router = useRouter();
   const props = defineProps({
     userProfile: Object,
     reviewDataList: Array
@@ -78,4 +85,12 @@
     }
     return basicInfo;
   });
+
+  const clickButton = async () => {
+    // const data = {
+    //   userEmail: userEmail.value,
+    //   password: password.value
+    // };
+    router.push({ name: "profile/edit" });
+  };
 </script>
