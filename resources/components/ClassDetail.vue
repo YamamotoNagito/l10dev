@@ -84,15 +84,11 @@
                   </v-col>
                 </v-row>
                 <v-row>
-                  <v-col class="d-flex justify-center">
+                  <v-col class="d-flex justify-center" cols="12">
                     <v-window v-model="toggle">
-                      <v-row>
-                        <v-col cols="12">
-                          <v-window-item value="btn-1">
-                            <RadarChart :radar-chart-data="classDetailData?.classRadarChartData"></RadarChart>
-                          </v-window-item>
-                        </v-col>
-                      </v-row>
+                      <v-window-item value="btn-1">
+                        <RadarChart :radar-chart-data="classDetailData?.classRadarChartData"></RadarChart>
+                      </v-window-item>
                       <v-window-item value="btn-2">
                         <BarGraph
                           :bar-graph-data="classDetailData?.classBarGraphData?.grades"
