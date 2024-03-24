@@ -77,10 +77,5 @@
   /* css */
   .wrap-chart {
     width: 100%;
-    height: 400px;
-    position: relative;
-    right: 20px
-  }
-  
-  
+  } 
 </style>
