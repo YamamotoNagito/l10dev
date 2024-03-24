@@ -67,7 +67,7 @@
 
 <template>
   <div class="wrap-chart">
-    <div class="chart-container d-flex justity-center">
+    <div class="chart-container d-flex justify-center">
       <canvas ref="radarChart"></canvas>
     </div>
   </div>
