@@ -67,7 +67,7 @@
 
 <template>
   <div class="wrap-chart">
-    <div class="chart-container d-flex justify-center">
+    <div class="chart-container">
       <canvas ref="radarChart"></canvas>
     </div>
   </div>
@@ -78,5 +78,9 @@
   .wrap-chart {
     width: 100%;
     height: 400px;
+    position: relative;
+    right: 20px
   }
+  
+  
 </style>
