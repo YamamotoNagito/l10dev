@@ -24,16 +24,7 @@
 
 <template>
   <v-container max-width="900px">
-    <!-- レビュー投稿のキャンペーン中の案内 -->
-    <v-row class="mb-5">
-      <v-col class="text-center">
-        <p class="text-h5 text-md-h4 text-lg-h4 mb-5">「かえで」リリース記念</p>
-        <p class="text-h6 text-md-h5 text-lg-h5 mb-5">レビューを書いてamazonギフトカード受け取ろう！（先着2500件）</p>
-        <v-btn variant="text" rounded="xl" class="text-decoration-underline" @click="navigateToExternalUrl">
-          詳しくはこちらへ
-        </v-btn>
-      </v-col>
-    </v-row>
+    <!-- レビュー数 -->
     <v-row class="mt-10 mb-16">
       <v-col class="text-center">
         <p class="text-h6 text-md-h5 text-lg-h5 ma-5">現在のレビュー件数</p>
