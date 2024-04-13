@@ -32,7 +32,7 @@ class LectureDetailsSeeder extends Seeder
           'lectureDetailId' => 'required|integer',
           'lectureId' => 'required|integer',
           'lectureCode' => 'required|string|max:255',
-          'syllabusUrl' => 'required|url',
+          'syllabusUrl' => 'required',
           'location' => 'required|string',
           'faculty' => 'required|string',
           'category' => 'required|string',

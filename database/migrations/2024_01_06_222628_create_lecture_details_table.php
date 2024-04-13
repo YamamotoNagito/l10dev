@@ -19,7 +19,7 @@ class CreateLectureDetailsTable extends Migration
       $table->string('category');
       $table->string('grade');
 
-      $table->unique(['lectureId', 'syllabusUrl']);
+      $table->unique(['lectureId', 'lectureCode']);
     });
   }
 
